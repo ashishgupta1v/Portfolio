@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   Portfolio - Global Styles
+   ======================================== */
+
+:root {
+    --accent: #5eead4;
+    --accent-rgb: 94, 234, 212;
+    --bg-primary: #0a0e17;
+    --bg-secondary: #0f1420;
+    --container-max: 1300px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* Desktop cursor reset */
+@media (max-width: 1024px) {
+    body {
+        cursor: auto;
+    }
+}
+
+::selection {
+    background: rgba(94, 234, 212, 0.2);
+    color: white;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Section Container */
+.section-container {
+    width: 90%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 1600px) {
+    .section-container {
+        max-width: 1200px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .section-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 900px) {
+    .section-container {
+        max-width: 500px;
+    }
+}
+
+/* Split text animation utilities */
+.split-line {
+    overflow: hidden;
+}
+
+.split-word,
+.split-char {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+/* GPU acceleration */
+.gpu-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(94, 234, 212, 0.15);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(94, 234, 212, 0.3);
+}
