@@ -19,36 +19,32 @@ type BubbleState = {
     r: number
 }
 
-const stackSkills: BubbleSkill[] = [
-    { name: 'PHP 8.4+', size: 1.2, hue: 184 },
-    { name: 'Laravel 12', size: 1.28, hue: 192 },
-    { name: 'MySQL Perf Tuning', size: 1.12, hue: 200 },
-    { name: 'Redis', size: 1.05, hue: 176 },
-    { name: 'Vue 3', size: 1.22, hue: 170 },
-    { name: 'Inertia.js', size: 1.02, hue: 186 },
-    { name: 'Livewire', size: 0.97, hue: 196 },
-    { name: 'Alpine.js', size: 0.95, hue: 204 },
-    { name: 'Tailwind CSS', size: 1.07, hue: 178 },
-    { name: 'TypeScript', size: 1.03, hue: 210 },
-    { name: 'DDD', size: 1.08, hue: 188 },
-    { name: 'Event-Driven', size: 1.12, hue: 170 },
-    { name: 'SOLID', size: 0.95, hue: 198 },
-    { name: 'Microservices', size: 1.0, hue: 182 },
-    { name: 'REST API', size: 0.98, hue: 198 },
-    { name: 'Pest PHP', size: 0.95, hue: 184 },
-    { name: 'PHPStan', size: 0.93, hue: 192 },
-    { name: 'PHPInsights', size: 0.93, hue: 178 },
-    { name: 'Pulse/Telescope', size: 1.0, hue: 205 },
-    { name: 'Docker', size: 0.97, hue: 198 },
-    { name: 'Git', size: 0.92, hue: 210 },
-    { name: 'Cursor', size: 0.92, hue: 172 },
-    { name: 'Claude 3.5', size: 1.03, hue: 182 },
-    { name: 'AWS EC2', size: 0.93, hue: 196 },
-    { name: 'AWS S3', size: 0.92, hue: 190 },
-    { name: 'AWS Vapor', size: 0.97, hue: 184 },
-    { name: 'GitHub Actions', size: 1.02, hue: 176 },
-    { name: 'CI/CD', size: 0.92, hue: 202 },
+const baseSkills = [
+    { name: 'PHP 8.4+', hue: 184 },
+    { name: 'Laravel 12', hue: 192 },
+    { name: 'Vue 3', hue: 170 },
+    { name: 'Inertia.js', hue: 186 },
+    { name: 'Livewire', hue: 196 },
+    { name: 'Nuxt.js', hue: 204 },
+    { name: 'Tailwind CSS', hue: 178 },
+    { name: 'TypeScript', hue: 210 },
+    { name: 'DDD', hue: 188 },
+    { name: 'Microservices', hue: 182 },
+    { name: 'REST API', hue: 198 },
+    { name: 'Pest PHP', hue: 184 },
+    { name: 'Docker', hue: 198 },
+    { name: 'Git', hue: 210 },
+    { name: 'Claude 3.5', hue: 182 },
+    { name: 'AWS EC2', hue: 196 },
+    { name: 'AWS S3', hue: 190 },
+    { name: 'CI/CD', hue: 202 },
 ]
+
+const stackSkills: BubbleSkill[] = baseSkills.map((skill) => ({
+    ...skill,
+    // Dynamic size: longer text length generates a larger bubble
+    size: 0.68 + (skill.name.length * 0.06),
+}))
 
 const sectionRef = ref<HTMLElement | null>(null)
 const bubbleFieldRef = ref<HTMLElement | null>(null)
@@ -77,34 +73,27 @@ function initCluster() {
     const w = field.clientWidth
     const count = stackSkills.length
 
-    // Responsive grid — all bubbles visible, comfortable spacing
-    const cols = Math.max(1, Math.floor(w / 106))
-    const rows = Math.ceil(count / cols)
-    const cellW = w / cols
-    // Cell height: square-ish cells, minimum 88px
-    const cellH = Math.max(cellW * 0.9, 88)
-
-    // Dynamically expand the field to fit all rows
-    const neededH = rows * cellH + 24
+    // Set fixed central area for cluster
+    const neededH = 500
     field.style.minHeight = `${neededH}px`
 
-    const topPad = 12
+    const centerX = w / 2
+    const centerY = neededH / 2
 
     state.length = 0
     for (let i = 0; i < count; i++) {
-        const col = i % cols
-        const row = Math.floor(i / cols)
-        const homeX = cellW * (col + 0.5)
-        const homeY = topPad + cellH * (row + 0.5)
-        const r = 33 * stackSkills[i].size
+        // Base width calculation: 4.1rem is roughly 65.6px root -> r is half
+        const r = 32.8 * stackSkills[i].size
+        const homeX = centerX + (Math.random() - 0.5) * 50
+        const homeY = centerY + (Math.random() - 0.5) * 50
 
         state.push({
-            x: homeX + (Math.random() - 0.5) * 8,
-            y: homeY + (Math.random() - 0.5) * 8,
-            vx: 0,
-            vy: 0,
-            homeX,
-            homeY,
+            x: homeX,
+            y: homeY,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 0.5) * 2,
+            homeX: centerX,
+            homeY: centerY,
             r,
         })
     }
@@ -123,51 +112,50 @@ function animate() {
     for (let i = 0; i < state.length; i++) {
         const b = state[i]
 
-        // Per-bubble idle float: gentle, unique sine wave (golden ratio phase spread)
-        const phase = i * 1.618
-        const floatX = mouse.active ? 0 : Math.cos(t * 0.32 + phase) * 3.0
-        const floatY = mouse.active ? 0 : Math.sin(t * 0.45 + phase * 0.77) * 5.0
-        const targetX = b.homeX + floatX
-        const targetY = b.homeY + floatY
+        // Center console logic
+        const centerX = w / 2
+        const centerY = h / 2
 
-        // Very soft spring toward float target
-        let ax = (targetX - b.x) * 0.006
-        let ay = (targetY - b.y) * 0.006
+        // Soft pull to the center to group them together
+        const pullStrength = mouse.active ? 0.0005 : 0.003
+        let ax = (centerX - b.x) * pullStrength
+        let ay = (centerY - b.y) * pullStrength
 
+        // Expand behavior on hover
         if (mouse.active) {
             const dx = b.x - mouse.x
             const dy = b.y - mouse.y
             const dist = Math.hypot(dx, dy) || 0.001
-            const range = 130
+            const range = 260 // Larger range for striking expansion
 
             if (dist < range) {
-                // Quadratic falloff — very gentle push close to cursor
+                // Aggressive quadratic falloff for outward push
                 const t2 = 1 - dist / range
-                const force = t2 * t2 * 1.8
+                const force = t2 * t2 * 4.5
                 ax += (dx / dist) * force
                 ay += (dy / dist) * force
             }
         }
 
-        // High damping: bubbles glide and settle, never jitter
-        b.vx = (b.vx + ax) * 0.965
-        b.vy = (b.vy + ay) * 0.965
+        // Bouncy damping (less dampened than before to allow expansion fluidly)
+        b.vx = (b.vx + ax) * 0.94
+        b.vy = (b.vy + ay) * 0.94
 
-        // Hard velocity cap: max 2.5px/frame keeps motion visually smooth
+        // Increased speed cap for snappy expands
         const spd = Math.hypot(b.vx, b.vy)
-        if (spd > 2.5) {
-            b.vx = (b.vx / spd) * 2.5
-            b.vy = (b.vy / spd) * 2.5
+        if (spd > 5.8) {
+            b.vx = (b.vx / spd) * 5.8
+            b.vy = (b.vy / spd) * 5.8
         }
 
         b.x += b.vx
         b.y += b.vy
 
-        // Soft wall: minimal rebound so bubbles ease back from edges
-        if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.08 }
-        if (b.x > w - b.r) { b.x = w - b.r; b.vx = -Math.abs(b.vx) * 0.08 }
-        if (b.y < b.r) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.08 }
-        if (b.y > h - b.r) { b.y = h - b.r; b.vy = -Math.abs(b.vy) * 0.08 }
+        // Walls
+        if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.3 }
+        if (b.x > w - b.r) { b.x = w - b.r; b.vx = -Math.abs(b.vx) * 0.3 }
+        if (b.y < b.r) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.3 }
+        if (b.y > h - b.r) { b.y = h - b.r; b.vy = -Math.abs(b.vy) * 0.3 }
     }
 
     // Positional-only separation — no velocity transfer prevents cascade jitter
@@ -178,21 +166,22 @@ function animate() {
             const dx = b.x - a.x
             const dy = b.y - a.y
             const d = Math.hypot(dx, dy) || 0.001
-            const minD = a.r + b.r + 5
+            // Tight packing (less space in between)
+            const minD = a.r + b.r + 3 // 3px of padding for very tight clusters
 
             if (d < minD) {
-                const push = (minD - d) * 0.38
+                const push = (minD - d) * 0.45 // Harder separation force
                 const nx = dx / d
                 const ny = dy / d
                 a.x -= nx * push
                 a.y -= ny * push
                 b.x += nx * push
                 b.y += ny * push
-                // Tiny velocity damping at contact to prevent oscillation
-                a.vx *= 0.98
-                a.vy *= 0.98
-                b.vx *= 0.98
-                b.vy *= 0.98
+                
+                a.vx *= 0.96
+                a.vy *= 0.96
+                b.vx *= 0.96
+                b.vy *= 0.96
             }
         }
     }
