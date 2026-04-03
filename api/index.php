@@ -14,7 +14,8 @@ $tmpDirs = [
     '/tmp/storage/framework/cache',
     '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
-    '/tmp/storage/logs'
+    '/tmp/storage/logs',
+    '/tmp/bootstrap/cache'
 ];
 foreach ($tmpDirs as $dir) {
     if (!is_dir($dir)) {
@@ -22,11 +23,25 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
-$app = require_once __DIR__.'/../bootstrap/app.php';
+try {
+    // Bootstrap Laravel and handle the request...
+    /** @var Application $app */
+    $app = require_once __DIR__.'/../bootstrap/app.php';
 
-// Override storage path for read-only filesystem
-$app->useStoragePath('/tmp/storage');
+    // Override storage path for read-only filesystem
+    $app->useStoragePath('/tmp/storage');
+    
+    // Override bootstrap cache paths since /var/task/user is read-only
+    $app->useBootstrapPath('/tmp/bootstrap');
 
-$app->handleRequest(Request::capture());
+    // Override specific paths before boot
+    putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
+    $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+    $_SERVER['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+
+    $app->handleRequest(Request::capture());
+} catch (\Throwable $e) {
+    echo "<h1>Early Boot Error</h1>";
+    echo "<p>" . $e->getMessage() . "</p>";
+    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+}
