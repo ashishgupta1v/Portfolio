@@ -1,62 +1,58 @@
 <script setup lang="ts">
-import { ref, onMounted, provide, nextTick } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import type { PortfolioPageProps } from '@/types/portfolio'
-import LoadingScreen from '@/Components/Portfolio/LoadingScreen.vue'
-import MainContainer from '@/Components/Portfolio/MainContainer.vue'
 import CustomCursor from '@/Components/Portfolio/CustomCursor.vue'
+import ScrollySequence from '@/Components/PortfolioV2/ScrollySequence.vue'
+import TimelineSection from '@/Components/PortfolioV2/TimelineSection.vue'
+import WorksSection from '@/Components/PortfolioV2/WorksSection.vue'
 
-const props = defineProps<PortfolioPageProps>()
-
-const isLoading = ref(true)
-const loadProgress = ref(0)
-
-provide('portfolioData', props)
-
-function onLoadingComplete() {
-    isLoading.value = false
-}
-
-function updateProgress(percent: number) {
-    loadProgress.value = percent
-}
+defineProps<PortfolioPageProps>()
 </script>
 
 <template>
     <Head :title="profile.name + ' — ' + profile.title" />
 
-    <LoadingScreen
-        v-if="isLoading"
-        :progress="loadProgress"
-        :name="profile.name"
-        :title="profile.subtitle"
-        @complete="onLoadingComplete"
-    />
-
-    <div
-        :class="['main-body', { 'main-active': !isLoading }]"
-    >
+    <div class="v2-page">
         <CustomCursor />
-        <MainContainer
-            :profile="profile"
-            :experiences="experiences"
-            :projects="projects"
-            :skills="skills"
-            :social-links="socialLinks"
-            :educations="educations"
-            :services="services"
-            @progress="updateProgress"
+
+        <ScrollySequence
+            :name="profile.name"
+            :title="profile.title"
+            :subtitle="profile.subtitle"
+            :image-url="profile.avatarUrl"
         />
+
+        <TimelineSection :experiences="experiences" />
+        <WorksSection :projects="projects" />
+
+        <footer class="v2-footer">
+            <p>{{ profile.email }}</p>
+            <p>© {{ new Date().getFullYear() }} {{ profile.name }}</p>
+        </footer>
     </div>
 </template>
 
-<style>
-.main-body {
-    opacity: 0;
-    transition: opacity 0.6s ease;
+<style scoped>
+.v2-page {
+    min-height: 100vh;
+    background: #090e14;
 }
 
-.main-active {
-    opacity: 1;
+.v2-footer {
+    padding: 2.8rem 1rem 3.3rem;
+    text-align: center;
+    color: rgba(226, 232, 240, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #060b11;
+    display: grid;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .v2-footer {
+        padding: 2rem 1rem 2.4rem;
+        font-size: 0.8rem;
+    }
 }
 </style>
