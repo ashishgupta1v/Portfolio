@@ -38,6 +38,11 @@ try {
     putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
     $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
     $_SERVER['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+    
+    // Force APP_DEBUG to true to reveal the hidden 500 error!
+    putenv('APP_DEBUG=true');
+    $_ENV['APP_DEBUG'] = true;
+    $_SERVER['APP_DEBUG'] = true;
 
     $app->handleRequest(Request::capture());
 } catch (\Throwable $e) {
