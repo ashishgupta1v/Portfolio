@@ -1,17 +1,41 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import type { Project } from '@/types/portfolio'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 defineProps<{
     projects: Project[]
 }>()
+
+const sectionRef = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+    if (!sectionRef.value) return
+
+    gsap.from('.ws-eyebrow', {
+        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
+        y: 20, opacity: 0, duration: 0.6, ease: 'power3.out',
+    })
+    gsap.from('.ws-title', {
+        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
+        y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
+    })
+    gsap.from('.work-card', {
+        scrollTrigger: { trigger: '.works-grid', start: 'top 78%' },
+        y: 60, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
+    })
+})
 </script>
 
 <template>
-    <section class="works-section">
+    <section ref="sectionRef" class="works-section">
         <div class="section-shell">
             <div class="heading-wrap">
-                <p class="eyebrow">Portfolio</p>
-                <h2 class="title">Selected Works</h2>
+                <p class="ws-eyebrow eyebrow">Portfolio</p>
+                <h2 class="ws-title title">Selected Works</h2>
             </div>
 
             <div class="works-grid">
