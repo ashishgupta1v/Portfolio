@@ -1,0 +1,26 @@
+{
+  "resources/js/Pages/Portfolio/Index.vue": {
+    "file": "assets/Index-CKXvJEzh.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Portfolio/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ],
+    "css": [
+      "assets/Index-Dqs5EtcO.css"
+    ]
+  },
+  "resources/js/app.ts": {
+    "file": "assets/app-CpXdu-0d.js",
+    "name": "app",
+    "src": "resources/js/app.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Portfolio/Index.vue"
+    ],
+    "css": [
+      "assets/app-B0z1FZao.css"
+    ]
+  }
+}
