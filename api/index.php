@@ -22,11 +22,22 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
-$app = require_once __DIR__.'/../bootstrap/app.php';
+try {
+    // Bootstrap Laravel and handle the request...
+    /** @var Application $app */
+    $app = require_once __DIR__.'/../bootstrap/app.php';
 
-// Override storage path for read-only filesystem
-$app->useStoragePath('/tmp/storage');
+    // Override storage path for read-only filesystem
+    $app->useStoragePath('/tmp/storage');
 
-$app->handleRequest(Request::capture());
+    // Override specific paths before boot
+    putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
+    $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+    $_SERVER['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+
+    $app->handleRequest(Request::capture());
+} catch (\Throwable $e) {
+    echo "<h1>Early Boot Error</h1>";
+    echo "<p>" . $e->getMessage() . "</p>";
+    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+}
