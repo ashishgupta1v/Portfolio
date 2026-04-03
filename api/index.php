@@ -35,6 +35,30 @@ try {
     $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
     $_SERVER['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
+    // Override Exception Handler to catch the root cause without using views
+    $app->singleton(
+        \Illuminate\Contracts\Debug\ExceptionHandler::class,
+        function () {
+            return new class implements \Illuminate\Contracts\Debug\ExceptionHandler {
+                public function report(\Throwable $e) {}
+                public function shouldReport(\Throwable $e) { return false; }
+                public function render($request, \Throwable $e) {
+                    echo "<h1>ROOT EXCEPTION CAUGHT:</h1>";
+                    echo "<h3>" . get_class($e) . "</h3>";
+                    echo "<p>" . $e->getMessage() . "</p>";
+                    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+                    if ($e->getPrevious()) {
+                        echo "<h3>Previous:</h3>";
+                        echo "<p>" . $e->getPrevious()->getMessage() . "</p>";
+                        echo "<pre>" . $e->getPrevious()->getTraceAsString() . "</pre>";
+                    }
+                    exit(1);
+                }
+                public function renderForConsole($output, \Throwable $e) {}
+            };
+        }
+    );
+
     $app->handleRequest(Request::capture());
 } catch (\Throwable $e) {
     echo "<h1>Early Boot Error</h1>";
