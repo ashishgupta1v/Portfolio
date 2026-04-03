@@ -14,7 +14,8 @@ $tmpDirs = [
     '/tmp/storage/framework/cache',
     '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
-    '/tmp/storage/logs'
+    '/tmp/storage/logs',
+    '/tmp/bootstrap/cache'
 ];
 foreach ($tmpDirs as $dir) {
     if (!is_dir($dir)) {
@@ -29,6 +30,9 @@ try {
 
     // Override storage path for read-only filesystem
     $app->useStoragePath('/tmp/storage');
+    
+    // Override bootstrap cache paths since /var/task/user is read-only
+    $app->useBootstrapPath('/tmp/bootstrap');
 
     // Override specific paths before boot
     putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
