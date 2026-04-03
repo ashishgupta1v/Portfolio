@@ -20,21 +20,28 @@ function pad(n: number): string {
 
 onMounted(() => {
     if (!sectionRef.value) return
+    // Use next frame execution after DOM paint
+    setTimeout(() => {
+        if (!sectionRef.value) return
+        
+        const q = gsap.utils.selector(sectionRef.value)
+        
+        gsap.fromTo(q('.section-title-word'), 
+            { y: 50, opacity: 0 },
+            {
+                scrollTrigger: { trigger: sectionRef.value, start: 'top 85%' },
+                y: 0, opacity: 1, duration: 0.9, stagger: 0.1, ease: 'power3.out'
+            }
+        )
 
-    const titleLines = sectionRef.value.querySelectorAll('.ws-title-line')
-    gsap.from(titleLines, {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-        y: 50, opacity: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out',
-    })
-
-    const workRows = sectionRef.value.querySelectorAll('.work-row')
-    const workList = sectionRef.value.querySelector('.work-list')
-    if (workRows.length && workList) {
-        gsap.from(workRows, {
-            scrollTrigger: { trigger: workList, start: 'top 78%' },
-            y: 40, opacity: 0, duration: 0.65, stagger: 0.12, ease: 'power3.out',
-        })
-    }
+        gsap.fromTo(q('.work-row'), 
+            { y: 40, opacity: 0 },
+            {
+                scrollTrigger: { trigger: sectionRef.value, start: 'top 70%' },
+                y: 0, opacity: 1, duration: 0.65, stagger: 0.12, ease: 'power3.out'
+            }
+        )
+    }, 150)
 })
 </script>
 
@@ -45,8 +52,8 @@ onMounted(() => {
             <div class="section-header">
                 <div class="section-header-wrapper">
                     <h2 class="section-title">
-                        <span class="section-title-word">My </span>
-                        <span class="section-title-word accent">Work</span>
+                        <span ref="titleWordRefs" class="section-title-word">My </span>
+                        <span ref="titleWordRefs" class="section-title-word accent">Work</span>
                     </h2>
                 </div>
                 <div class="section-separator" />
@@ -57,6 +64,7 @@ onMounted(() => {
                 <article
                     v-for="(project, index) in projects"
                     :key="`${project.slug}-${index}`"
+                    ref="workRowRefs"
                     class="work-row"
                     @mouseenter="hoveredIndex = index"
                     @mouseleave="hoveredIndex = null"
