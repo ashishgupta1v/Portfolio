@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 /* ───────────────────────────────────────────────
    Types & Props
@@ -43,22 +43,22 @@ let rafId: number | null = null
    ─────────────────────────────────────────────── */
 const statements = computed<HeroStatement[]>(() => [
     {
-        title: props.name,
+        title: `Hello! I'm\n${props.name}`,
         subtitle: props.title,
         align: 'center',
         start: 0.05,
         end: 0.24,
     },
     {
-        title: '8+ Years Engineering',
-        subtitle: 'Building scalable systems with Vue, Laravel, and domain-driven architecture.',
+        title: '8+ Years Experience.',
+        subtitle: 'Specializing in Vue, Laravel, and Scalable Microservices.',
         align: 'left',
         start: 0.34,
         end: 0.56,
     },
     {
-        title: 'AI Native Delivery',
-        subtitle: 'Turning workflows into intelligent products with automation and modern cloud architecture.',
+        title: 'Innovating with AI.',
+        subtitle: 'Building AI Native Products & Intelligent Automation Systems.',
         align: 'right',
         start: 0.68,
         end: 0.90,
@@ -102,10 +102,10 @@ function drawCover(
     if (iR > cR) { dw = img.width * (h / img.height); ox = (w - dw) / 2 }
     else          { dh = img.height * (w / img.width); oy = (h - dh) / 2 }
 
-    // Apply zoom — scale from upper-center (where the face typically is)
+    // Apply zoom around upper-center to keep face stable while scrolling.
     if (zoom !== 1) {
         const cx = w / 2
-        const cy = h * 0.35  // face is roughly in upper third
+        const cy = h * 0.41
         const ndw = dw * zoom
         const ndh = dh * zoom
         ox = cx - (cx - ox) * zoom
@@ -121,15 +121,17 @@ function drawCover(
    Zoom & opacity curves driven by scroll progress
    ─────────────────────────────────────────────── */
 
-/** Smooth zoom: 1.0 → 1.35 as user scrolls 0→1 */
+/** Smooth zoom tuned for face framing quality: 1.0 → ~1.14 */
 function zoomAtProgress(p: number): number {
-    return 1 + 0.35 * easeInOutCubic(p)
+    const isMobile = window.innerWidth <= 768
+    const maxZoom = isMobile ? 1.09 : 1.14
+    return 1 + (maxZoom - 1) * easeInOutCubic(p)
 }
 
 /** Background opacity: starts dim, becomes fully opaque as you scroll down */
 function bgOpacityAtProgress(p: number): number {
     // 0.25 → 1.0  (starts 25% visible, fully visible at bottom)
-    return 0.25 + 0.75 * easeInOutCubic(clamp(p * 1.3, 0, 1))
+    return 0.42 + 0.58 * easeInOutCubic(clamp(p * 1.2, 0, 1))
 }
 
 function easeInOutCubic(t: number): number {
@@ -162,10 +164,11 @@ function render() {
             const p = progress.value
             const zoom   = zoomAtProgress(p)
             const alpha  = bgOpacityAtProgress(p)
+            const panY = -10 * easeInOutCubic(p)
 
             ctx.save()
             ctx.globalAlpha = alpha
-            drawCover(ctx, frame, w, h, zoom)
+            drawCover(ctx, frame, w, h, zoom, panY)
             ctx.restore()
         }
     }
@@ -290,7 +293,13 @@ onUnmounted(() => {
                     :class="`align-${item.align}`"
                     :style="statementStyle(item.start, item.end)"
                 >
-                    <h1 class="statement-title">{{ item.title }}</h1>
+                    <h1 class="statement-title">
+                        <template v-for="(line, li) in item.title.split('\n')" :key="li">
+                            <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }}</span>
+                            <span v-else class="name-line">{{ line }}</span>
+                            <br v-if="li < item.title.split('\n').length - 1" />
+                        </template>
+                    </h1>
                     <p class="statement-subtitle">{{ item.subtitle }}</p>
                 </div>
             </div>
@@ -379,6 +388,19 @@ onUnmounted(() => {
     max-width: 48rem;
     line-height: 1.5;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.greeting-line {
+    display: block;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: #5eead4;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+}
+
+.name-line {
+    display: inline;
 }
 
 /* ── Scroll hint ──────────────────────────────── */

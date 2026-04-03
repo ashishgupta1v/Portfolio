@@ -1,24 +1,40 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import type { Service } from '@/types/portfolio'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Layers, Code, Brain, Cpu, Zap, Globe } from 'lucide-vue-next'
+import { Boxes, Brain, ChevronDown, Gauge, Trophy } from 'lucide-vue-next'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const props = defineProps<{
-    services: Service[]
-}>()
-
-const iconMap: Record<string, any> = {
-    layers: Layers,
-    code: Code,
-    brain: Brain,
-    cpu: Cpu,
-    zap: Zap,
-    globe: Globe,
-}
+const capabilities = [
+    {
+        icon: Boxes,
+        title: 'Engineering Modular Monoliths with DDD',
+        description: 'I specialize in modernizing legacy architectures into decoupled Modular Monoliths using Domain-Driven Design (DDD). By strictly isolating Bounded Contexts (Domain/Application/Infrastructure layers), I eliminate technical debt and ensure systems remain maintainable as they scale to 10k+ requests per second.',
+        meta: [
+            'Core Stack: Laravel 13, Vue 3 (Strict TypeScript), Inertia.js, Tailwind CSS.',
+            'Pattern: Repository Pattern, DTO-driven data contracts, and Hexagonal Architecture.',
+        ],
+    },
+    {
+        icon: Brain,
+        title: 'Orchestrating Semantic Intelligence (AI/RAG)',
+        description: 'I move beyond traditional keyword-based systems to build AI-Native Applications. Utilizing Laravel Prism and Vector-Native Eloquent (pgvector), I engineer semantic search engines and RAG workflows that understand user intent and meaning. My current project, GyanFlow, serves as a benchmark for AI-driven micro-learning and habit transformation.',
+        meta: [],
+    },
+    {
+        icon: Gauge,
+        title: 'High-Performance Infrastructure Optimization',
+        description: 'I treat infrastructure as a first-class citizen. By leveraging Laravel Octane (Swoole/RoadRunner) and high-frequency Redis caching, I deliver enterprise-grade observability and speed. My architectural interventions have reduced annual cloud infrastructure costs by $1M+ while increasing throughput and reliability.',
+        meta: [],
+    },
+    {
+        icon: Trophy,
+        title: 'Product-Led Gamification & Retention',
+        description: 'I design Transformation Engines rather than mere content platforms. I implement complex Gyan Ledger gamification systems and Spaced Repetition (SM-2) algorithms to turn passive information into applied habits, creating high-retention moats for global products.',
+        meta: [],
+    },
+]
 
 const activeCard = ref<number | null>(null)
 
@@ -67,11 +83,20 @@ onMounted(() => {
                 </div>
             </div>
 
-            <!-- Right side: service cards -->
+            <!-- Right side: capability cards -->
             <div class="wid-cards">
+                <article class="wid-intro-card">
+                    <h3 class="intro-title">I Architect Scalable Transformation Engines.</h3>
+                    <p class="intro-sub">
+                        I bridge the gap between complex business requirements and elite-tier engineering.
+                        As a Staff Architect, I do not just build features; I design high-concurrency ecosystems
+                        that prioritize domain integrity, sub-10ms performance, and measurable business outcomes.
+                    </p>
+                </article>
+
                 <article
-                    v-for="(svc, i) in services"
-                    :key="svc.title"
+                    v-for="(item, i) in capabilities"
+                    :key="item.title"
                     class="wid-card"
                     :class="{ active: activeCard === i }"
                     @mouseenter="activeCard = i"
@@ -100,12 +125,20 @@ onMounted(() => {
                     </svg>
 
                     <div class="card-inner">
-                        <h3 class="card-title">{{ svc.title }}</h3>
-                        <p class="card-sub">{{ svc.description }}</p>
+                        <h3 class="card-title">{{ i + 1 }}. {{ item.title }}</h3>
+                        <p class="card-sub">{{ item.description }}</p>
 
-                        <div class="card-icon">
-                            <component :is="iconMap[svc.icon ?? 'code']" :size="20" />
+                        <div class="card-meta-wrap" :class="{ open: activeCard === i }">
+                            <p v-for="(line, lineIndex) in item.meta" :key="lineIndex" class="card-meta">{{ line }}</p>
                         </div>
+
+                        <div class="card-icon main-icon">
+                            <component :is="item.icon" :size="20" />
+                        </div>
+
+                        <button class="expand-btn" type="button" aria-label="Expand card details">
+                            <ChevronDown :size="16" :class="{ open: activeCard === i }" />
+                        </button>
                     </div>
                 </article>
             </div>
@@ -178,6 +211,27 @@ onMounted(() => {
     padding-top: 1rem;
 }
 
+.wid-intro-card {
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.35));
+    backdrop-filter: blur(10px);
+    border-radius: 0.6rem;
+    padding: 1.35rem 1.4rem;
+}
+
+.intro-title {
+    color: #f8fafc;
+    font-size: clamp(1.2rem, 2.1vw, 1.8rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.55rem;
+}
+
+.intro-sub {
+    color: rgba(226, 232, 240, 0.72);
+    line-height: 1.62;
+    font-size: 0.9rem;
+}
+
 .wid-card {
     position: relative;
     padding: 1.8rem 1.6rem;
@@ -226,6 +280,23 @@ onMounted(() => {
     transition: color 0.3s ease;
 }
 
+.card-meta-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.card-meta-wrap.open {
+    max-height: 140px;
+}
+
+.card-meta {
+    margin-top: 0.5rem;
+    font-size: 0.79rem;
+    line-height: 1.55;
+    color: rgba(148, 163, 184, 0.86);
+}
+
 .wid-card:hover .card-sub,
 .wid-card.active .card-sub {
     color: rgba(226, 232, 240, 0.75);
@@ -233,10 +304,42 @@ onMounted(() => {
 
 .card-icon {
     position: absolute;
-    bottom: 0;
     right: 0;
     color: rgba(94, 234, 212, 0.35);
     transition: color 0.3s ease;
+}
+
+.main-icon {
+    bottom: 0;
+}
+
+.expand-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1.95rem;
+    height: 1.95rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.5);
+    color: rgba(226, 232, 240, 0.78);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+}
+
+.expand-btn:hover {
+    border-color: rgba(94, 234, 212, 0.6);
+    color: #5eead4;
+}
+
+.expand-btn :deep(svg) {
+    transition: transform 0.25s ease;
+}
+
+.expand-btn :deep(svg.open) {
+    transform: rotate(180deg);
 }
 
 .wid-card:hover .card-icon { color: rgba(94, 234, 212, 0.8); }

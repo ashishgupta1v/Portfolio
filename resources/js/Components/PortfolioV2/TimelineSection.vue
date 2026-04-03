@@ -12,65 +12,90 @@ defineProps<{
 
 const sectionRef = ref<HTMLElement | null>(null)
 
+function formatDateRange(exp: Experience): string {
+    if (!exp.endDate || exp.endDate.toLowerCase() === 'present') return 'WORKING'
+    const start = new Date(exp.startDate).getFullYear()
+    const end = new Date(exp.endDate).getFullYear()
+    if (start === end) return String(start)
+    return `${start}–${String(end).slice(2)}`
+}
+
 onMounted(() => {
     if (!sectionRef.value) return
 
-    /* Heading reveal */
-    gsap.from('.tl-eyebrow', {
+    const titleWords = sectionRef.value.querySelectorAll('.tl-title-word')
+    gsap.from(titleWords, {
         scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-        y: 20, opacity: 0, duration: 0.6, ease: 'power3.out',
-    })
-    gsap.from('.tl-title', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
-        y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
+        y: 60, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out',
     })
 
-    /* Timeline progress line grows as you scroll */
-    gsap.to('.timeline-progress', {
-        scrollTrigger: {
-            trigger: '.timeline-column',
-            start: 'top 70%',
-            end: 'bottom 40%',
-            scrub: 1,
-        },
-        scaleY: 1,
-    })
+    /* Center line grows */
+    const progressEl = sectionRef.value.querySelector('.center-progress')
+    const gridEl = sectionRef.value.querySelector('.timeline-grid')
+    if (progressEl && gridEl) {
+        gsap.to(progressEl, {
+            scrollTrigger: {
+                trigger: gridEl,
+                start: 'top 70%',
+                end: 'bottom 40%',
+                scrub: 1,
+            },
+            scaleY: 1,
+        })
+    }
 
-    /* Items stagger in */
-    gsap.from('.timeline-item', {
-        scrollTrigger: { trigger: '.timeline-column', start: 'top 72%' },
-        x: -30, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
-    })
-
-    /* Dots glow pulse */
-    gsap.to('.dot', {
-        boxShadow: '0 0 24px rgba(94,234,212,0.8)',
-        duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut',
-    })
+    /* Row stagger */
+    const rows = sectionRef.value.querySelectorAll('.tl-row')
+    if (rows.length && gridEl) {
+        gsap.from(rows, {
+            scrollTrigger: { trigger: gridEl, start: 'top 72%' },
+            y: 40, opacity: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out',
+        })
+    }
 })
 </script>
 
 <template>
     <section ref="sectionRef" id="career" class="timeline-section">
-        <div class="section-shell">
-            <div class="heading-wrap">
-                <p class="tl-eyebrow eyebrow">Career</p>
-                <h2 class="tl-title title">Timeline</h2>
-            </div>
-
-            <div class="timeline-column">
-                <div class="timeline-line">
-                    <div class="timeline-progress" />
+        <div class="tl-shell">
+            <!-- Big heading -->
+            <div class="section-header">
+                <div class="section-header-wrapper">
+                    <h2 class="section-title">
+                        <span class="section-title-word">My career &</span>
+                        <span class="section-title-word accent">experience</span>
+                    </h2>
                 </div>
-                <article v-for="(item, index) in experiences" :key="`${item.company}-${index}`" class="timeline-item">
-                    <div class="dot" />
-                    <p class="period">{{ item.dateRange }}</p>
-                    <h3 class="company">{{ item.company }}</h3>
-                    <p class="role">{{ item.role }} · {{ item.location }}</p>
-                    <ul class="highlights">
-                        <li v-for="(point, pIndex) in item.highlights.slice(0, 3)" :key="`${index}-${pIndex}`">{{ point }}</li>
-                    </ul>
+                <div class="section-separator" />
+            </div>
+            <!-- Timeline grid -->
+            <div class="timeline-grid">
+                <!-- Center progress line -->
+                <div class="center-line">
+                    <div class="center-progress" />
+                </div>
+
+                <article
+                    v-for="(exp, index) in experiences"
+                    :key="`${exp.company}-${index}`"
+                    class="tl-row"
+                >
+                    <div class="tl-left">
+                        <span class="tl-date">{{ formatDateRange(exp) }}</span>
+                        <span v-if="!exp.endDate" class="now-pill">NOW</span>
+                    </div>
+
+                    <div class="tl-center">
+                        <h3 class="tl-role">{{ exp.role }}</h3>
+                        <p class="tl-company">{{ exp.company }} <span v-if="exp.location" class="tl-location">· {{ exp.location }}</span></p>
+                        <ul class="tl-list">
+                            <li v-for="(point, i) in exp.highlights.slice(0, 3)" :key="i">{{ point }}</li>
+                        </ul>
+                    </div>
                 </article>
+
+                <!-- Bottom dot -->
+                <div class="bottom-dot" />
             </div>
         </div>
     </section>
@@ -78,55 +103,113 @@ onMounted(() => {
 
 <style scoped>
 .timeline-section {
-    background: linear-gradient(180deg, #0b1118 0%, #0d1521 100%);
-    padding: 6rem 1.2rem;
+    background: linear-gradient(180deg, #0b1118 0%, #0d1521 50%, #0b1118 100%);
+    padding: 7rem 1.5rem 5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
 }
 
-.section-shell {
+.tl-shell {
     max-width: 1100px;
     margin: 0 auto;
 }
 
-.heading-wrap {
-    text-align: center;
-    margin-bottom: 3.6rem;
-}
-
-.eyebrow {
-    color: rgba(94, 234, 212, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.74rem;
-    margin-bottom: 0.8rem;
-}
-
-.title {
-    color: #f8fafc;
-    font-size: clamp(2rem, 6vw, 4.7rem);
-    letter-spacing: -0.03em;
-    line-height: 0.95;
-}
-
-.timeline-column {
+/* ── Timeline Grid ── */
+.timeline-grid {
     position: relative;
-    margin-left: 0.8rem;
-    padding-left: 2rem;
     display: grid;
-    gap: 2rem;
+    gap: 0;
 }
 
-.timeline-line {
+.tl-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.65rem 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.tl-row:first-of-type {
+    border-top: 1px solid rgba(148, 163, 184, 0.06);
+}
+
+/* ── Left column ── */
+.tl-left {
+    text-align: left;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+}
+
+.tl-role {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 0.35rem;
+}
+
+.tl-company {
+    font-size: 1rem;
+    color: #5eead4;
+    font-weight: 600;
+    margin-bottom: 0.55rem;
+}
+
+.tl-location {
+    font-size: 0.82rem;
+    color: rgba(226, 232, 240, 0.55);
+}
+
+/* ── Center column ── */
+.tl-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    min-width: 0;
+    padding-left: 1.25rem;
+}
+
+.tl-date {
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    font-weight: 800;
+    color: rgba(226, 232, 240, 0.9);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.now-pill {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #0b1118;
+    background: #5eead4;
+    font-weight: 800;
+    padding: 0.22rem 0.45rem;
+    border-radius: 999px;
+}
+
+/* ── Center progress line ── */
+.center-line {
     position: absolute;
-    left: 0;
+    left: 150px;
     top: 0;
     bottom: 0;
-    width: 1px;
-    background: rgba(148, 163, 184, 0.15);
+    width: 2px;
+    transform: translateX(0);
+    background: rgba(148, 163, 184, 0.1);
+    z-index: 0;
 }
 
-.timeline-progress {
+.center-progress {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, #5eead4, #93c5fd);
@@ -134,82 +217,100 @@ onMounted(() => {
     transform: scaleY(0);
 }
 
-.timeline-item {
-    position: relative;
-    background: rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-radius: 1rem;
-    padding: 1.3rem 1.2rem;
-    backdrop-filter: blur(10px);
-}
-
-.dot {
-    position: absolute;
-    left: -2.5rem;
-    top: 1.2rem;
-    width: 0.7rem;
-    height: 0.7rem;
+.bottom-dot {
+    width: 0.75rem;
+    height: 0.75rem;
     border-radius: 50%;
     background: #5eead4;
-    box-shadow: 0 0 18px rgba(94, 234, 212, 0.5);
+    box-shadow: 0 0 20px rgba(94, 234, 212, 0.6);
+    margin: 1.5rem auto 0;
+    position: relative;
+    z-index: 2;
 }
 
-.period {
-    color: #93c5fd;
-    font-size: 0.72rem;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    margin-bottom: 0.45rem;
+/* ── Right column ── */
+.tl-desc {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: rgba(226, 232, 240, 0.82);
+    font-weight: 400;
+    max-width: 100%;
 }
 
-.company {
-    color: #e2e8f0;
-    font-size: 1.5rem;
-    margin-bottom: 0.2rem;
-}
-
-.role {
-    color: rgba(226, 232, 240, 0.72);
-    margin-bottom: 0.85rem;
-}
-
-.highlights {
-    margin: 0;
-    padding-left: 1rem;
+.tl-list {
+    list-style: none;
     display: grid;
-    gap: 0.42rem;
-    color: rgba(226, 232, 240, 0.85);
-    line-height: 1.55;
+    gap: 0.45rem;
+    padding: 0;
+    margin: 0;
 }
 
+.tl-list li {
+    position: relative;
+    padding-left: 1rem;
+    color: rgba(226, 232, 240, 0.82);
+    line-height: 1.65;
+    font-size: 0.95rem;
+}
+
+.tl-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: rgba(94, 234, 212, 0.75);
+}
+
+/* ── Mobile ── */
 @media (max-width: 768px) {
     .timeline-section {
-        padding: 3.5rem 1rem;
+        padding: 4rem 1rem;
     }
-    .heading-wrap {
-        margin-bottom: 2.4rem;
+
+    .tl-heading {
+        margin-bottom: 2.5rem;
     }
-    .timeline-column {
-        margin-left: 0.4rem;
-        padding-left: 1.4rem;
-        gap: 1.4rem;
+
+    .tl-row {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        padding: 1.2rem 0;
+        text-align: left;
     }
-    .company {
-        font-size: 1.2rem;
+
+    .tl-left {
+        text-align: left;
+        padding-right: 0;
     }
-    .dot {
-        left: -1.85rem;
-        width: 0.55rem;
-        height: 0.55rem;
+
+    .tl-center {
+        justify-content: flex-start;
+        padding-left: 0;
+    }
+
+    .tl-date {
+        font-size: 1.4rem;
+        color: rgba(94, 234, 212, 0.6);
+    }
+
+    .center-line {
+        display: none;
+    }
+
+    .bottom-dot {
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
     .timeline-section {
-        padding: 2.5rem 0.8rem;
+        padding: 3rem 0.8rem;
     }
-    .timeline-item {
-        padding: 1rem;
+    .tl-role {
+        font-size: 1.1rem;
     }
 }
 </style>

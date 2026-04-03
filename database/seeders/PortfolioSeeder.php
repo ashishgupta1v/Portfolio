@@ -102,6 +102,17 @@ final class PortfolioSeeder extends Seeder
     {
         $projects = [
             [
+                'title' => 'Habuilt Tracker',
+                'slug' => 'habuilt-tracker',
+                'category' => 'Productivity',
+                'description' => "A personal discipline-tracking app built to turn habits into a measurable, gamified system. Features a daily task/point engine, carry-forward balance ledger, monthly performance chart, vacation milestone progress, and a habit checklist — all designed around the philosophy 'Discipline Equals Freedom'.",
+                'tools' => ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Vercel'],
+                'image_url' => null,
+                'video_url' => null,
+                'external_url' => 'https://habuilt-ashishgupta1vs-projects.vercel.app/',
+                'sort_order' => 0,
+            ],
+            [
                 'title' => 'GyanFlow',
                 'slug' => 'gyanflow',
                 'category' => 'AI Platform',

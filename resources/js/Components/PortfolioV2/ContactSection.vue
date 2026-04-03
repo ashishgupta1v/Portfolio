@@ -25,27 +25,37 @@ const sectionRef = ref<HTMLElement | null>(null)
 onMounted(() => {
     if (!sectionRef.value) return
 
-    gsap.from('.ct-eyebrow', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-        y: 20, opacity: 0, duration: 0.6, ease: 'power3.out',
-    })
-    gsap.from('.ct-title', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
-        y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
-    })
-    gsap.from('.ct-column', {
-        scrollTrigger: { trigger: '.ct-grid', start: 'top 78%' },
-        y: 40, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
-    })
+    const title = sectionRef.value.querySelector('.ct-title')
+    const grid = sectionRef.value.querySelector('.ct-grid')
+    const columns = sectionRef.value.querySelectorAll('.ct-column')
+
+    if (title) {
+        gsap.from(title, {
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
+            y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
+        })
+    }
+
+    if (columns.length > 0 && grid) {
+        gsap.from(columns, {
+            scrollTrigger: { trigger: grid, start: 'top 78%' },
+            y: 40, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+        })
+    }
 })
 </script>
 
 <template>
     <section ref="sectionRef" id="contact" class="ct-section">
         <div class="ct-shell">
-            <div class="heading-wrap">
-                <p class="ct-eyebrow">Get in Touch</p>
-                <h2 class="ct-title">Contact</h2>
+            <div class="section-header">
+                <div class="section-header-wrapper">
+                    <h2 class="section-title">
+                        <span class="section-title-word">Get In</span>
+                        <span class="section-title-word accent">Touch</span>
+                    </h2>
+                </div>
+                <div class="section-separator" />
             </div>
 
             <div class="ct-grid">
@@ -135,28 +145,6 @@ onMounted(() => {
 .ct-shell {
     max-width: 1100px;
     margin: 0 auto;
-}
-
-.heading-wrap {
-    text-align: center;
-    margin-bottom: 3.5rem;
-}
-
-.ct-eyebrow {
-    color: rgba(94, 234, 212, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.74rem;
-    margin-bottom: 0.8rem;
-    font-weight: 600;
-}
-
-.ct-title {
-    color: #f8fafc;
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
 }
 
 .ct-grid {

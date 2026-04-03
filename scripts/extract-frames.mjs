@@ -11,7 +11,7 @@
  * Output: public/sequence/0000.webp … 0119.webp
  */
 
-import { execSync, execFileSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import sharp from 'sharp';
 import { mkdirSync, existsSync, readdirSync, unlinkSync, rmSync, statSync } from 'fs';
 import { join, dirname } from 'path';
@@ -42,11 +42,11 @@ const CFG = {
     // Watermark region (bottom-right corner — Veo logo)
     // We'll crop this from the frame by inpainting/blending
     watermark: {
-        // Approximate Veo watermark region in 3840x2160
-        right:  220,    // px from right edge
-        bottom: 80,     // px from bottom edge
-        width:  200,    // watermark width
-        height: 60,     // watermark height
+        // Tight logo-only box to avoid visible delogo smearing
+        right:  230,
+        bottom: 90,
+        width:  210,
+        height: 72,
     },
 };
 
@@ -67,10 +67,15 @@ function extractRawFrames(videoPath) {
 
     console.log('  Extracting raw frames with ffmpeg...');
 
-    // Extract every frame as high-quality PNG
+    // Extract every frame as high-quality PNG.
+    // delogo removes the Veo mark at source level before per-frame post-processing.
+    const isFallback = videoPath === CFG.videoFallback;
+    const delogo = isFallback
+        ? 'fps=30,delogo=x=1040:y=625:w=180:h=62:show=0'
+        : `fps=30,delogo=x=${3840 - CFG.watermark.right}:y=${2160 - CFG.watermark.bottom}:w=${CFG.watermark.width}:h=${CFG.watermark.height}:show=0`;
     const args = [
         '-i', videoPath,
-        '-vf', 'fps=30',           // extract at source fps
+        '-vf', delogo,
         '-q:v', '1',               // best quality
         join(CFG.tempDir, 'raw_%06d.png'),
     ];
@@ -81,8 +86,9 @@ function extractRawFrames(videoPath) {
             maxBuffer: 50 * 1024 * 1024,
         });
     } catch (err) {
-        // ffmpeg writes info to stderr even on success
-        // Check if frames were actually created
+        const stderr = err?.stderr?.toString?.() || '';
+        if (stderr) console.error(stderr);
+        throw err;
     }
 
     const frames = readdirSync(CFG.tempDir)
@@ -94,43 +100,11 @@ function extractRawFrames(videoPath) {
 }
 
 // ──────────────────────────────────────
-// Step 2: Remove watermark via content-aware fill
+// Step 2: Optional post-pass
 // ──────────────────────────────────────
 async function removeWatermark(inputBuffer, frameWidth, frameHeight) {
-    const wm = CFG.watermark;
-
-    // Calculate the watermark region position
-    const wmLeft = frameWidth - wm.right - wm.width;
-    const wmTop  = frameHeight - wm.bottom - wm.height;
-
-    // Strategy: sample a clean area just above the watermark region
-    // and blend it over the watermark. Since the background is dark/moody
-    // smoke, this produces seamless results.
-
-    // Extract a patch from just above the watermark (same width, shifted up)
-    const patchTop = Math.max(0, wmTop - wm.height);
-    const patchRegion = {
-        left:   clamp(wmLeft, 0, frameWidth - wm.width),
-        top:    clamp(patchTop, 0, frameHeight - wm.height),
-        width:  wm.width,
-        height: wm.height,
-    };
-
-    const patch = await sharp(inputBuffer)
-        .extract(patchRegion)
-        .toBuffer();
-
-    // Composite the clean patch over the watermark area
-    const result = await sharp(inputBuffer)
-        .composite([{
-            input: patch,
-            left: clamp(wmLeft, 0, frameWidth - wm.width),
-            top:  clamp(wmTop, 0, frameHeight - wm.height),
-            blend: 'over',
-        }])
-        .toBuffer();
-
-    return result;
+    // Keep frame untouched after delogo; this avoids box artifacts.
+    return inputBuffer;
 }
 
 // ──────────────────────────────────────
