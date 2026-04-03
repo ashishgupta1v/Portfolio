@@ -5,7 +5,6 @@ import CustomCursor from '@/Components/Portfolio/CustomCursor.vue'
 import NavBar from '@/Components/PortfolioV2/NavBar.vue'
 import ScrollySequence from '@/Components/PortfolioV2/ScrollySequence.vue'
 import AboutSection from '@/Components/PortfolioV2/AboutSection.vue'
-import WhatIDoSection from '@/Components/PortfolioV2/WhatIDoSection.vue'
 import TimelineSection from '@/Components/PortfolioV2/TimelineSection.vue'
 import WorksSection from '@/Components/PortfolioV2/WorksSection.vue'
 import TechStackSection from '@/Components/PortfolioV2/TechStackSection.vue'
@@ -37,7 +36,6 @@ const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
         />
 
         <AboutSection :profile="profile" />
-        <WhatIDoSection :services="services" />
         <TimelineSection :experiences="experiences" />
         <WorksSection :projects="projects" />
         <TechStackSection :skills="skills" />

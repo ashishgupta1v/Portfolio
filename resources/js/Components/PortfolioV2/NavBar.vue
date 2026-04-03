@@ -44,29 +44,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <nav class="nav" :class="{ scrolled }">
+    <nav class="nav">
         <div class="nav-inner">
             <!-- Logo / Initials -->
             <button class="nav-logo" @click="scrollToTop">
-                <span class="logo-text">{{ initials }}</span>
+                {{ initials }}
             </button>
 
-            <!-- Center: LinkedIn URL (decorative) -->
-            <a
-                v-if="linkedinUrl"
-                :href="linkedinUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="nav-linkedin"
-            >
-                {{ linkedinUrl.replace('https://', '') }}
-            </a>
+            <span class="nav-spacer" aria-hidden="true" />
 
             <!-- Right: section links -->
             <div class="nav-links">
-                <button class="nav-link" @click="scrollTo('about')">About</button>
-                <button class="nav-link" @click="scrollTo('career')">Work</button>
-                <button class="nav-link" @click="scrollTo('contact')">Contact</button>
+                <button class="nav-link" @click="scrollTo('about')">ABOUT</button>
+                <button class="nav-link" @click="scrollTo('work')">WORK</button>
+                <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
             </div>
         </div>
     </nav>
@@ -94,7 +85,7 @@ onUnmounted(() => {
         rel="noopener noreferrer"
         class="resume-float"
     >
-        Resume ↗
+        RESUME
     </a>
 </template>
 
@@ -115,9 +106,6 @@ onUnmounted(() => {
 }
 
 .nav.scrolled {
-    background: rgba(9, 14, 20, 0.85);
-    backdrop-filter: blur(12px) saturate(1.4);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
 }
 
 .nav-inner {
@@ -131,26 +119,17 @@ onUnmounted(() => {
 
 .nav-logo {
     background: none;
-    border: 1px solid rgba(94, 234, 212, 0.3);
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    padding: 0;
+    color: #f8fafc;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 .nav-logo:hover {
-    border-color: rgba(94, 234, 212, 0.7);
-    background: rgba(94, 234, 212, 0.06);
-}
-
-.logo-text {
-    color: rgba(94, 234, 212, 0.9);
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    color: #5eead4;
 }
 
 .nav-linkedin {
@@ -161,6 +140,11 @@ onUnmounted(() => {
     transition: color 0.3s;
 }
 .nav-linkedin:hover { color: rgba(226, 232, 240, 0.8); }
+
+.nav-spacer {
+    width: 18rem;
+    max-width: 34vw;
+}
 
 .nav-links {
     display: flex;
@@ -219,8 +203,8 @@ onUnmounted(() => {
     bottom: 2rem;
     z-index: 999;
     color: rgba(226, 232, 240, 0.45);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     text-decoration: none;
     writing-mode: vertical-rl;
@@ -231,13 +215,12 @@ onUnmounted(() => {
 /* ── Mobile ── */
 @media (max-width: 768px) {
     .nav { padding: 0 1rem; height: 3.2rem; }
-    .nav-linkedin { display: none; }
+    .nav-spacer { display: none; }
     .nav-links { gap: 1.2rem; }
     .nav-link { font-size: 0.75rem; }
     .social-sidebar { display: none; }
     .resume-float { display: none; }
-    .nav-logo { width: 2.2rem; height: 2.2rem; }
-    .logo-text { font-size: 0.72rem; }
+    .nav-logo { font-size: 0.95rem; }
 }
 
 @media (max-width: 480px) {
