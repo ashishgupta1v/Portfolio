@@ -1,20 +1,67 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import type { Experience } from '@/types/portfolio'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 defineProps<{
     experiences: Experience[]
 }>()
+
+const sectionRef = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+    if (!sectionRef.value) return
+
+    /* Heading reveal */
+    gsap.from('.tl-eyebrow', {
+        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
+        y: 20, opacity: 0, duration: 0.6, ease: 'power3.out',
+    })
+    gsap.from('.tl-title', {
+        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
+        y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
+    })
+
+    /* Timeline progress line grows as you scroll */
+    gsap.to('.timeline-progress', {
+        scrollTrigger: {
+            trigger: '.timeline-column',
+            start: 'top 70%',
+            end: 'bottom 40%',
+            scrub: 1,
+        },
+        scaleY: 1,
+    })
+
+    /* Items stagger in */
+    gsap.from('.timeline-item', {
+        scrollTrigger: { trigger: '.timeline-column', start: 'top 72%' },
+        x: -30, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+    })
+
+    /* Dots glow pulse */
+    gsap.to('.dot', {
+        boxShadow: '0 0 24px rgba(94,234,212,0.8)',
+        duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut',
+    })
+})
 </script>
 
 <template>
-    <section class="timeline-section">
+    <section ref="sectionRef" id="career" class="timeline-section">
         <div class="section-shell">
             <div class="heading-wrap">
-                <p class="eyebrow">Career</p>
-                <h2 class="title">Timeline</h2>
+                <p class="tl-eyebrow eyebrow">Career</p>
+                <h2 class="tl-title title">Timeline</h2>
             </div>
 
             <div class="timeline-column">
+                <div class="timeline-line">
+                    <div class="timeline-progress" />
+                </div>
                 <article v-for="(item, index) in experiences" :key="`${item.company}-${index}`" class="timeline-item">
                     <div class="dot" />
                     <p class="period">{{ item.dateRange }}</p>
@@ -66,9 +113,25 @@ defineProps<{
     position: relative;
     margin-left: 0.8rem;
     padding-left: 2rem;
-    border-left: 1px solid rgba(148, 163, 184, 0.35);
     display: grid;
     gap: 2rem;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(148, 163, 184, 0.15);
+}
+
+.timeline-progress {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #5eead4, #93c5fd);
+    transform-origin: top;
+    transform: scaleY(0);
 }
 
 .timeline-item {
