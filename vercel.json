@@ -20,6 +20,22 @@
             "dest": "/public/assets/$1"
         },
         {
+            "src": "/sequence/(.*)",
+            "dest": "/public/sequence/$1"
+        },
+        {
+            "src": "/images/(.*)",
+            "dest": "/public/images/$1"
+        },
+        {
+            "src": "/models/(.*)",
+            "dest": "/public/models/$1"
+        },
+        {
+            "src": "/draco/(.*)",
+            "dest": "/public/draco/$1"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
