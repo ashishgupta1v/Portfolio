@@ -41,7 +41,13 @@ try {
 
     $app->handleRequest(Request::capture());
 } catch (\Throwable $e) {
-    echo "<h1>Early Boot Error</h1>";
-    echo "<p>" . $e->getMessage() . "</p>";
-    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+    http_response_code(500);
+    if (getenv('APP_DEBUG') === 'true' || getenv('APP_DEBUG') === '1') {
+        echo "<h1>Early Boot Error</h1>";
+        echo "<p>" . $e->getMessage() . "</p>";
+        echo "<pre>" . $e->getTraceAsString() . "</pre>";
+    } else {
+        echo "<h1>Internal Server Error</h1>";
+        echo "<p>Something went wrong. Please try again later.</p>";
+    }
 }
