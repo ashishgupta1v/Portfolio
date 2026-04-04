@@ -7,6 +7,10 @@
         <meta name="description" content="Ashish Gupta - Full Stack Developer Portfolio">
 
         <title inertia>{{ config('app.name', 'Ashish Gupta') }}</title>
+        
+        <!-- Favicon -->
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="/favicon.ico" sizes="any">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

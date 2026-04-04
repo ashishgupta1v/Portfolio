@@ -27,7 +27,7 @@ const props = defineProps<{
 const containerRef = ref<HTMLElement | null>(null)
 const canvasRef    = ref<HTMLCanvasElement | null>(null)
 const progress     = ref(0)
-const loadedFrames = ref<HTMLImageElement[]>([])
+const loadedFrames = ref<(HTMLImageElement | null)[]>([])
 const hasSequence  = ref(false)
 const seqLoaded    = ref(false)        // true once load attempt finishes
 const loadingPct   = ref(0)
@@ -65,7 +65,7 @@ const statements = computed<HeroStatement[]>(() => [
     },
 ])
 
-const effectiveFrameCount = computed(() => Math.max(1, props.frameCount ?? 120))
+const effectiveFrameCount = computed(() => Math.max(1, props.frameCount ?? 90))
 
 /* ───────────────────────────────────────────────
    Helpers
@@ -154,12 +154,24 @@ function render() {
     ctx.fillRect(0, 0, w, h)
 
     if (hasSequence.value && loadedFrames.value.length > 0) {
-        const idx = clamp(
-            Math.floor(progress.value * (loadedFrames.value.length - 1)),
-            0,
-            loadedFrames.value.length - 1,
-        )
-        const frame = loadedFrames.value[idx]
+        const total = loadedFrames.value.length
+        const idx = clamp(Math.floor(progress.value * (total - 1)), 0, total - 1)
+        
+        // Find nearest loaded frame if current isn't loaded yet
+        let frame = loadedFrames.value[idx]
+        if (!frame) {
+            for (let offset = 1; offset < total; offset++) {
+                if (idx - offset >= 0 && loadedFrames.value[idx - offset]) {
+                    frame = loadedFrames.value[idx - offset]
+                    break
+                }
+                if (idx + offset < total && loadedFrames.value[idx + offset]) {
+                    frame = loadedFrames.value[idx + offset]
+                    break
+                }
+            }
+        }
+
         if (frame) {
             const p = progress.value
             const zoom   = zoomAtProgress(p)
@@ -194,12 +206,29 @@ function updateProgress() {
    ─────────────────────────────────────────────── */
 async function loadSequence() {
     const total = effectiveFrameCount.value
-    const frames: HTMLImageElement[] = new Array(total)
+    const frames: (HTMLImageElement | null)[] = new Array(total).fill(null)
+    loadedFrames.value = frames
+
+    // Instant placeholder (base64) so it renders immediately
+    const placeholder = new Image()
+    placeholder.src = 'data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACwBACdASogABIAPzmSs+sUAAAzS/rFPJxHKSVI2VuB9sbB2yPkPBjy715okwo52Srolz2VILqC7dT5eyqnhxfs'
+    frames[0] = placeholder
+    hasSequence.value = true
+
     let loaded = 0
+
+    // Progressive loading arrays
+    const priority1 = [0, 1, 2] // First 3 frames for instant scroll start
+    const priority2: number[] = [] // Every 4th frame for rough animation
+    const priority3: number[] = [] // Remaining frames for smooth interpolation
+
+    for (let i = 3; i < total; i++) {
+        if (i % 4 === 0) priority2.push(i)
+        else priority3.push(i)
+    }
 
     async function loadOne(i: number): Promise<void> {
         const id = String(i).padStart(4, '0')
-        // Try webp first, then png
         for (const ext of ['webp', 'png']) {
             const ok = await new Promise<boolean>((resolve) => {
                 const img = new Image()
@@ -213,17 +242,24 @@ async function loadSequence() {
         loadingPct.value = Math.round((loaded / total) * 100)
     }
 
-    // Batch loading — 8 concurrent
-    const BATCH = 8
-    for (let b = 0; b < total; b += BATCH) {
-        const slice = Array.from({ length: Math.min(BATCH, total - b) }, (_, k) => loadOne(b + k))
-        await Promise.all(slice)
+    async function loadBatch(indices: number[], batchSize = 8) {
+        for (let b = 0; b < indices.length; b += batchSize) {
+            const slice = indices.slice(b, b + batchSize).map(loadOne)
+            await Promise.all(slice)
+            loadedFrames.value = [...frames] // Trigger reactivity
+        }
     }
 
-    const valid = frames.filter(Boolean)
-    loadedFrames.value = frames        // keep indexed positions
-    hasSequence.value  = valid.length > 10
-    seqLoaded.value    = true
+    // 1. Load priority 1
+    await loadBatch(priority1, 3)
+    
+    // 2. Load priority 2 (intermediate frames)
+    await loadBatch(priority2, 8)
+    
+    // 3. Load priority 3 (fill the gaps)
+    await loadBatch(priority3, 8)
+
+    seqLoaded.value = true
 }
 
 /* ───────────────────────────────────────────────
