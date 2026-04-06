@@ -19,7 +19,7 @@ const capabilities = [
     {
         icon: Brain,
         title: 'Orchestrating Semantic Intelligence (AI/RAG)',
-        description: 'I move beyond traditional keyword-based systems to build AI-Native Applications. Utilizing Laravel Prism and Vector-Native Eloquent (pgvector), I engineer semantic search engines and RAG workflows that understand user intent and meaning. My current project, GyanFlow, serves as a benchmark for AI-driven micro-learning and habit transformation.',
+        description: 'I move beyond traditional keyword-based systems to build AI-Native Applications. Utilizing Laravel Prism and Vector-Native Eloquent (pgvector), I engineer semantic search engines and RAG workflows that understand user intent and meaning. My current project, CoachSync AI, is a production RAG pipeline that automates personalized, hallucination-free habit verification directly on WhatsApp for professional coaches.',
         meta: [],
     },
     {
