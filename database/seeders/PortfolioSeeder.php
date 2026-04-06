@@ -109,7 +109,7 @@ final class PortfolioSeeder extends Seeder
                 'tools' => ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Vercel'],
                 'image_url' => null,
                 'video_url' => null,
-                'external_url' => 'https://www.ashgpt.dev/',
+                'external_url' => 'https://habuilt-ashishgupta1vs-projects.vercel.app/',
                 'sort_order' => 0,
             ],
             [
