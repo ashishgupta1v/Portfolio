@@ -21,6 +21,11 @@ const props = defineProps<{
     frameCount?: number
 }>()
 
+const emit = defineEmits<{
+    (e: 'hero-ready'): void
+    (e: 'hero-progress', value: number): void
+}>()
+
 /* ───────────────────────────────────────────────
    Reactive state
    ─────────────────────────────────────────────── */
@@ -31,6 +36,7 @@ const loadedFrames = ref<(HTMLImageElement | null)[]>([])
 const hasSequence  = ref(false)
 const seqLoaded    = ref(false)        // true once load attempt finishes
 const loadingPct   = ref(0)
+const heroReadyEmitted = ref(false)
 
 let rafId: number | null = null
 
@@ -240,6 +246,7 @@ async function loadSequence() {
         }
         loaded++
         loadingPct.value = Math.round((loaded / total) * 100)
+        emit('hero-progress', loadingPct.value)
     }
 
     async function loadBatch(indices: number[], batchSize = 8) {
@@ -252,6 +259,12 @@ async function loadSequence() {
 
     // 1. Load priority 1
     await loadBatch(priority1, 3)
+
+    // Hero is considered ready as soon as first critical frames are loaded.
+    if (!heroReadyEmitted.value) {
+        heroReadyEmitted.value = true
+        emit('hero-ready')
+    }
     
     // 2. Load priority 2 (intermediate frames)
     await loadBatch(priority2, 8)
@@ -260,6 +273,7 @@ async function loadSequence() {
     await loadBatch(priority3, 8)
 
     seqLoaded.value = true
+    emit('hero-progress', 100)
 }
 
 /* ───────────────────────────────────────────────
@@ -301,8 +315,11 @@ onMounted(async () => {
     window.addEventListener('resize',  handleResize, { passive: true })
     window.addEventListener('scroll',  updateProgress, { passive: true })
     updateProgress()
-    await loadSequence()
+
+    // Keep first paint responsive: render loop starts immediately,
+    // sequence continues loading in background.
     tick()
+    void loadSequence()
 })
 
 onUnmounted(() => {
