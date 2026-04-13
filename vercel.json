@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm ci && npm run build",
+    "buildCommand": "npm ci --include=dev && npm run build",
     "builds": [
         {
             "src": "api/index.php",
@@ -12,6 +12,10 @@
         }
     ],
     "routes": [
+        {
+            "src": "/favicon.svg",
+            "dest": "/public/favicon.svg"
+        },
         {
             "src": "/favicon.ico",
             "dest": "/public/favicon.ico"

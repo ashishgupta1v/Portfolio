@@ -1,21 +1,143 @@
 {
+  "_ScrollTrigger-DDEw5obw.js": {
+    "file": "assets/ScrollTrigger-DDEw5obw.js",
+    "name": "ScrollTrigger"
+  },
+  "__plugin-vue_export-helper-B67ILkmu.js": {
+    "file": "assets/_plugin-vue_export-helper-B67ILkmu.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_arrow-up-right-C6HBftgc.js": {
+    "file": "assets/arrow-up-right-C6HBftgc.js",
+    "name": "arrow-up-right",
+    "imports": [
+      "_createLucideIcon-DiVVHK5O.js"
+    ]
+  },
+  "_createLucideIcon-DiVVHK5O.js": {
+    "file": "assets/createLucideIcon-DiVVHK5O.js",
+    "name": "createLucideIcon",
+    "imports": [
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ]
+  },
+  "_mail-BAvqss0_.js": {
+    "file": "assets/mail-BAvqss0_.js",
+    "name": "mail",
+    "imports": [
+      "_createLucideIcon-DiVVHK5O.js"
+    ]
+  },
+  "_runtime-core.esm-bundler-0U_xRw2t.js": {
+    "file": "assets/runtime-core.esm-bundler-0U_xRw2t.js",
+    "name": "runtime-core.esm-bundler"
+  },
+  "resources/js/Components/PortfolioV2/AboutSection.vue": {
+    "file": "assets/AboutSection-BurjaIh1.js",
+    "name": "AboutSection",
+    "src": "resources/js/Components/PortfolioV2/AboutSection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "_runtime-core.esm-bundler-0U_xRw2t.js",
+      "_ScrollTrigger-DDEw5obw.js",
+      "_createLucideIcon-DiVVHK5O.js"
+    ],
+    "css": [
+      "assets/AboutSection-BjF6sv4X.css"
+    ]
+  },
+  "resources/js/Components/PortfolioV2/ContactSection.vue": {
+    "file": "assets/ContactSection-SD9v10ps.js",
+    "name": "ContactSection",
+    "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "_runtime-core.esm-bundler-0U_xRw2t.js",
+      "_ScrollTrigger-DDEw5obw.js",
+      "_createLucideIcon-DiVVHK5O.js",
+      "_arrow-up-right-C6HBftgc.js",
+      "_mail-BAvqss0_.js"
+    ],
+    "css": [
+      "assets/ContactSection-CpxXwIE9.css"
+    ]
+  },
+  "resources/js/Components/PortfolioV2/TechStackSection.vue": {
+    "file": "assets/TechStackSection-DjLAXEoC.js",
+    "name": "TechStackSection",
+    "src": "resources/js/Components/PortfolioV2/TechStackSection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ],
+    "css": [
+      "assets/TechStackSection-C00rLlfK.css"
+    ]
+  },
+  "resources/js/Components/PortfolioV2/TimelineSection.vue": {
+    "file": "assets/TimelineSection-DFtIVgNO.js",
+    "name": "TimelineSection",
+    "src": "resources/js/Components/PortfolioV2/TimelineSection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "_runtime-core.esm-bundler-0U_xRw2t.js",
+      "_ScrollTrigger-DDEw5obw.js"
+    ],
+    "css": [
+      "assets/TimelineSection-DztSpUaX.css"
+    ]
+  },
+  "resources/js/Components/PortfolioV2/WorksSection.vue": {
+    "file": "assets/WorksSection-CgklpYP2.js",
+    "name": "WorksSection",
+    "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "resources/js/app.ts",
+      "_runtime-core.esm-bundler-0U_xRw2t.js",
+      "_ScrollTrigger-DDEw5obw.js",
+      "_arrow-up-right-C6HBftgc.js"
+    ],
+    "css": [
+      "assets/WorksSection-CJfj-K94.css"
+    ]
+  },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-DKhLQReb.js",
+    "file": "assets/Index-sA33agqt.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.ts"
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "resources/js/app.ts",
+      "_runtime-core.esm-bundler-0U_xRw2t.js",
+      "_createLucideIcon-DiVVHK5O.js",
+      "_mail-BAvqss0_.js"
+    ],
+    "dynamicImports": [
+      "resources/js/Components/PortfolioV2/AboutSection.vue",
+      "resources/js/Components/PortfolioV2/TimelineSection.vue",
+      "resources/js/Components/PortfolioV2/WorksSection.vue",
+      "resources/js/Components/PortfolioV2/TechStackSection.vue",
+      "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-cNYwU1MO.css"
+      "assets/Index-CHVeQ15E.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-BxMe978E.js",
+    "file": "assets/app-DNGtwbiA.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ],
     "dynamicImports": [
       "resources/js/Pages/Portfolio/Index.vue"
     ],
