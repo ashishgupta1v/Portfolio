@@ -17,17 +17,19 @@ final class PortfolioSeeder extends Seeder
 {
     public function run(): void
     {
-        $profile = Profile::create([
-            'name' => 'Ashish Gupta',
-            'title' => 'Senior Full-Stack Architect',
-            'subtitle' => 'VILT Stack Specialist',
-            'bio' => 'High-performance Engineering Architect with 8+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
-            'email' => 'ashishgupta1v@gmail.com',
-            'phone' => '+91-9087021592',
-            'location' => 'Chandigarh, India',
-            'avatar_url' => null,
-            'resume_url' => null,
-        ]);
+        $profile = Profile::updateOrCreate(
+            ['email' => 'ashishgupta1v@gmail.com'],
+            [
+                'name' => 'Ashish Gupta',
+                'title' => 'Senior Full-Stack Architect',
+                'subtitle' => 'VILT Stack Specialist',
+                'bio' => 'High-performance Engineering Architect with 8+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
+                'phone' => '+91-9087021592',
+                'location' => 'Chandigarh, India',
+                'avatar_url' => null,
+                'resume_url' => null,
+            ]
+        );
 
         $this->seedExperiences($profile);
         $this->seedProjects($profile);
@@ -81,7 +83,7 @@ final class PortfolioSeeder extends Seeder
             [
                 'company' => 'Tata Consultancy Services (TCS)',
                 'role' => 'System Engineer',
-                'location' => 'Chandigarh, India',
+                'location' => 'Noida, India',
                 'start_date' => 'Jul 2017',
                 'end_date' => 'Mar 2022',
                 'highlights' => [
@@ -94,7 +96,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($experiences as $exp) {
-            $profile->experiences()->create($exp);
+            $profile->experiences()->updateOrCreate(
+                ['company' => $exp['company'], 'role' => $exp['role']],
+                $exp
+            );
         }
     }
 
@@ -159,7 +164,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($projects as $project) {
-            $profile->projects()->create($project);
+            $profile->projects()->updateOrCreate(
+                ['slug' => $project['slug']],
+                $project
+            );
         }
     }
 
@@ -199,7 +207,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($skills as $skill) {
-            $profile->skills()->create($skill);
+            $profile->skills()->updateOrCreate(
+                ['name' => $skill['name']],
+                $skill
+            );
         }
     }
 
@@ -212,7 +223,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($links as $link) {
-            $profile->socialLinks()->create($link);
+            $profile->socialLinks()->updateOrCreate(
+                ['platform' => $link['platform']],
+                $link
+            );
         }
     }
 
@@ -240,7 +254,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($educations as $edu) {
-            $profile->educations()->create($edu);
+            $profile->educations()->updateOrCreate(
+                ['institution' => $edu['institution']],
+                $edu
+            );
         }
     }
 
@@ -268,7 +285,10 @@ final class PortfolioSeeder extends Seeder
         ];
 
         foreach ($services as $service) {
-            $profile->services()->create($service);
+            $profile->services()->updateOrCreate(
+                ['title' => $service['title']],
+                $service
+            );
         }
     }
 }
