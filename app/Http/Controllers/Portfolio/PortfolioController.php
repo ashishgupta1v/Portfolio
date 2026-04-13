@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Portfolio;
 use App\Application\Portfolio\Actions\GetPortfolioAction;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PortfolioController
 {
@@ -23,6 +23,7 @@ final class PortfolioController
             'socialLinks' => $portfolio?->socialLinks ?? [],
             'educations' => $portfolio?->educations ?? [],
             'services' => $portfolio?->services ?? [],
-        ]);
+        ])->toResponse($request)
+          ->header('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     }
 }
