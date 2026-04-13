@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm ci --include=dev && npm run build",
+    "buildCommand": "npm ci --include=dev && npm run build && php artisan portfolio:prerender",
     "regions": ["sin1"],
     "builds": [
         {
@@ -13,6 +13,10 @@
         }
     ],
     "routes": [
+        {
+            "src": "^/$",
+            "dest": "/public/index.html"
+        },
         {
             "src": "/favicon.svg",
             "dest": "/public/favicon.svg"
