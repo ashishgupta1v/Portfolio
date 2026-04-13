@@ -129,7 +129,7 @@ function activateNode(index: number) {
 
                 <div class="play-row" aria-label="Interactive boot controls">
                     <button
-                        v-for="token in ['A', 'G']"
+                        v-for="token in ['A', 'G', '*']"
                         :key="token"
                         type="button"
                         class="play-node"
