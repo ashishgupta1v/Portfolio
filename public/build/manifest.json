@@ -92,7 +92,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-CgklpYP2.js",
+    "file": "assets/WorksSection-MtPQ8dlI.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -108,7 +108,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-sA33agqt.js",
+    "file": "assets/Index-sOo0THIY.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -127,11 +127,11 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-CHVeQ15E.css"
+      "assets/Index-_8slkDHp.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-DNGtwbiA.js",
+    "file": "assets/app-DcVTFB5n.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
