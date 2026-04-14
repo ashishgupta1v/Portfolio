@@ -12,10 +12,33 @@ defineProps<{
 
 const sectionRef = ref<HTMLElement | null>(null)
 
+function parseYear(value: string | null | undefined): number | null {
+    if (!value) return null
+
+    const text = value.trim()
+    if (!text || /^present$/i.test(text)) return null
+
+    const yearMatch = text.match(/\b(19|20)\d{2}\b/)
+    if (yearMatch) return Number(yearMatch[0])
+
+    const parsed = Date.parse(text)
+    if (!Number.isNaN(parsed)) return new Date(parsed).getUTCFullYear()
+
+    return null
+}
+
+function isOngoing(endDate: string | null): boolean {
+    return !endDate || endDate.trim().toLowerCase() === 'present'
+}
+
 function formatDateRange(exp: Experience): string {
-    if (!exp.endDate || exp.endDate.toLowerCase() === 'present') return 'WORKING'
-    const start = new Date(exp.startDate).getFullYear()
-    const end = new Date(exp.endDate).getFullYear()
+    if (isOngoing(exp.endDate)) return 'WORKING'
+
+    const start = parseYear(exp.startDate)
+    const end = parseYear(exp.endDate)
+
+    if (start === null || end === null) return exp.dateRange
+
     if (start === end) return String(start)
     return `${start}–${String(end).slice(2)}`
 }
@@ -82,7 +105,7 @@ onMounted(() => {
                 >
                     <div class="tl-left">
                         <span class="tl-date">{{ formatDateRange(exp) }}</span>
-                        <span v-if="!exp.endDate" class="now-pill">NOW</span>
+                        <span v-if="isOngoing(exp.endDate)" class="now-pill">NOW</span>
                     </div>
 
                     <div class="tl-center">

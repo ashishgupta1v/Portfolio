@@ -78,7 +78,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
-    "file": "assets/TimelineSection-DFtIVgNO.js",
+    "file": "assets/TimelineSection-Dn2XE_Cr.js",
     "name": "TimelineSection",
     "src": "resources/js/Components/PortfolioV2/TimelineSection.vue",
     "isDynamicEntry": true,
@@ -88,11 +88,11 @@
       "_ScrollTrigger-DDEw5obw.js"
     ],
     "css": [
-      "assets/TimelineSection-DztSpUaX.css"
+      "assets/TimelineSection-B8sMxy9J.css"
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-DOgpgvgS.js",
+    "file": "assets/WorksSection-CA8nU98m.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -108,7 +108,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-CCCXchL7.js",
+    "file": "assets/Index-CzpjwDiR.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -127,11 +127,11 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-CpC56Ol4.css"
+      "assets/Index-BEmzIq94.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-BJGW78_K.js",
+    "file": "assets/app-DGdvK_v_.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,

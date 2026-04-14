@@ -37,6 +37,7 @@ const hasSequence  = ref(false)
 const seqLoaded    = ref(false)        // true once load attempt finishes
 const loadingPct   = ref(0)
 const heroReadyEmitted = ref(false)
+const lastGoodFrame = ref<HTMLImageElement | null>(null)
 
 let rafId: number | null = null
 
@@ -77,6 +78,19 @@ const effectiveFrameCount = computed(() => Math.max(1, props.frameCount ?? 90))
    Helpers
    ─────────────────────────────────────────────── */
 function clamp(v: number, lo: number, hi: number) { return Math.min(hi, Math.max(lo, v)) }
+
+async function supportsWebP(): Promise<boolean> {
+    return new Promise((resolve) => {
+        const img = new Image()
+        img.onload = () => resolve(true)
+        img.onerror = () => resolve(false)
+        img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA='
+    })
+}
+
+function isRenderableImage(img: HTMLImageElement | null | undefined): img is HTMLImageElement {
+    return !!img && img.complete && img.naturalWidth > 0 && img.naturalHeight > 0
+}
 
 function handleResize() {
     const c = canvasRef.value
@@ -120,7 +134,11 @@ function drawCover(
         dh = ndh
     }
 
-    ctx.drawImage(img, ox, oy, dw, dh)
+    try {
+        ctx.drawImage(img, ox, oy, dw, dh)
+    } catch {
+        // Ignore transient decode/draw failures on some mobile browsers.
+    }
 }
 
 /* ───────────────────────────────────────────────
@@ -178,7 +196,8 @@ function render() {
             }
         }
 
-        if (frame) {
+        if (isRenderableImage(frame)) {
+            lastGoodFrame.value = frame
             const p = progress.value
             const zoom   = zoomAtProgress(p)
             const alpha  = bgOpacityAtProgress(p)
@@ -187,6 +206,11 @@ function render() {
             ctx.save()
             ctx.globalAlpha = alpha
             drawCover(ctx, frame, w, h, zoom, panY)
+            ctx.restore()
+        } else if (isRenderableImage(lastGoodFrame.value)) {
+            ctx.save()
+            ctx.globalAlpha = 0.92
+            drawCover(ctx, lastGoodFrame.value, w, h, 1, 0)
             ctx.restore()
         }
     }
@@ -214,14 +238,18 @@ async function loadSequence() {
     const total = effectiveFrameCount.value
     const frames: (HTMLImageElement | null)[] = new Array(total).fill(null)
     loadedFrames.value = frames
+    lastGoodFrame.value = null
 
-    // Instant placeholder (base64) so it renders immediately
-    const placeholder = new Image()
-    placeholder.src = 'data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACwBACdASogABIAPzmSs+sUAAAzS/rFPJxHKSVI2VuB9sbB2yPkPBjy715okwo52Srolz2VILqC7dT5eyqnhxfs'
-    frames[0] = placeholder
+    const webpSupported = await supportsWebP()
+    const extensionOrder = webpSupported
+        ? ['webp', 'jpg', 'jpeg', 'png']
+        : ['jpg', 'jpeg', 'png', 'webp']
+
     hasSequence.value = true
 
     let loaded = 0
+    let successfulLoads = 0
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
 
     // Progressive loading arrays
     const priority1 = [0, 1, 2] // First 3 frames for instant scroll start
@@ -229,23 +257,38 @@ async function loadSequence() {
     const priority3: number[] = [] // Remaining frames for smooth interpolation
 
     for (let i = 3; i < total; i++) {
+        // Reduce memory pressure on mobile browsers.
+        if (isMobile && i % 2 !== 0) continue
+
         if (i % 4 === 0) priority2.push(i)
         else priority3.push(i)
     }
 
+    if (!priority2.includes(total - 1) && !priority3.includes(total - 1)) {
+        priority3.push(total - 1)
+    }
+
+    const plannedTotal = priority1.length + priority2.length + priority3.length
+
     async function loadOne(i: number): Promise<void> {
         const id = String(i).padStart(4, '0')
-        for (const ext of ['webp', 'png']) {
+        for (const ext of extensionOrder) {
             const ok = await new Promise<boolean>((resolve) => {
                 const img = new Image()
+                img.decoding = 'async'
                 img.src = `/sequence/${id}.${ext}`
-                img.onload  = () => { frames[i] = img; resolve(true) }
+                img.onload  = () => {
+                    frames[i] = img
+                    lastGoodFrame.value = img
+                    successfulLoads++
+                    resolve(true)
+                }
                 img.onerror = () => resolve(false)
             })
             if (ok) break
         }
         loaded++
-        loadingPct.value = Math.round((loaded / total) * 100)
+        loadingPct.value = Math.round((loaded / Math.max(1, plannedTotal)) * 100)
         emit('hero-progress', loadingPct.value)
     }
 
@@ -271,6 +314,11 @@ async function loadSequence() {
     
     // 3. Load priority 3 (fill the gaps)
     await loadBatch(priority3, 8)
+
+    if (successfulLoads === 0 && !heroReadyEmitted.value) {
+        heroReadyEmitted.value = true
+        emit('hero-ready')
+    }
 
     seqLoaded.value = true
     emit('hero-progress', 100)
