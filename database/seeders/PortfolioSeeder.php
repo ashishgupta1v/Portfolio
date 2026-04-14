@@ -175,36 +175,42 @@ final class PortfolioSeeder extends Seeder
     {
         $skills = [
             // Core Stack
-            ['name' => 'PHP 8.4+', 'category' => 'Core Stack', 'sort_order' => 1],
-            ['name' => 'Laravel 12', 'category' => 'Core Stack', 'sort_order' => 2],
-            ['name' => 'MySQL', 'category' => 'Core Stack', 'sort_order' => 3],
-            ['name' => 'PostgreSQL', 'category' => 'Core Stack', 'sort_order' => 4],
-            ['name' => 'Redis', 'category' => 'Core Stack', 'sort_order' => 5],
+            ['name' => 'JavaScript', 'category' => 'Core Stack', 'sort_order' => 1],
+            ['name' => 'TypeScript', 'category' => 'Core Stack', 'sort_order' => 2],
+            ['name' => 'PHP', 'category' => 'Core Stack', 'sort_order' => 3],
+            ['name' => 'Node.js', 'category' => 'Core Stack', 'sort_order' => 4],
+            ['name' => 'Laravel', 'category' => 'Core Stack', 'sort_order' => 5],
+            ['name' => 'PostgreSQL', 'category' => 'Core Stack', 'sort_order' => 6],
+            ['name' => 'MySQL', 'category' => 'Core Stack', 'sort_order' => 7],
             // Frontend
-            ['name' => 'Vue 3', 'category' => 'Frontend', 'sort_order' => 6],
-            ['name' => 'Inertia.js', 'category' => 'Frontend', 'sort_order' => 7],
-            ['name' => 'Livewire', 'category' => 'Frontend', 'sort_order' => 8],
-            ['name' => 'Alpine.js', 'category' => 'Frontend', 'sort_order' => 9],
-            ['name' => 'Tailwind CSS', 'category' => 'Frontend', 'sort_order' => 10],
-            ['name' => 'TypeScript', 'category' => 'Frontend', 'sort_order' => 11],
+            ['name' => 'HTML5', 'category' => 'Frontend', 'sort_order' => 8],
+            ['name' => 'CSS3', 'category' => 'Frontend', 'sort_order' => 9],
+            ['name' => 'Vue 3', 'category' => 'Frontend', 'sort_order' => 10],
+            ['name' => 'Nuxt.js', 'category' => 'Frontend', 'sort_order' => 11],
+            ['name' => 'Tailwind CSS', 'category' => 'Frontend', 'sort_order' => 12],
+            ['name' => 'Inertia.js', 'category' => 'Frontend', 'sort_order' => 13],
+            ['name' => 'Vite', 'category' => 'Frontend', 'sort_order' => 14],
             // Architecture
-            ['name' => 'DDD', 'category' => 'Architecture', 'sort_order' => 12],
-            ['name' => 'Event-Driven Architecture', 'category' => 'Architecture', 'sort_order' => 13],
-            ['name' => 'SOLID', 'category' => 'Architecture', 'sort_order' => 14],
-            ['name' => 'Microservices', 'category' => 'Architecture', 'sort_order' => 15],
-            ['name' => 'RESTful API Design', 'category' => 'Architecture', 'sort_order' => 16],
+            ['name' => 'Domain-Driven Design', 'category' => 'Architecture', 'sort_order' => 15],
+            ['name' => 'Event-Driven Architecture', 'category' => 'Architecture', 'sort_order' => 16],
+            ['name' => 'SOLID', 'category' => 'Architecture', 'sort_order' => 17],
+            ['name' => 'Microservices', 'category' => 'Architecture', 'sort_order' => 18],
+            ['name' => 'RESTful API Design', 'category' => 'Architecture', 'sort_order' => 19],
             // Tooling & Quality
-            ['name' => 'Pest PHP', 'category' => 'Tooling & Quality', 'sort_order' => 17],
-            ['name' => 'PHPStan', 'category' => 'Tooling & Quality', 'sort_order' => 18],
-            ['name' => 'Docker', 'category' => 'Tooling & Quality', 'sort_order' => 19],
-            ['name' => 'Git', 'category' => 'Tooling & Quality', 'sort_order' => 20],
-            ['name' => 'Laravel Pulse/Telescope', 'category' => 'Tooling & Quality', 'sort_order' => 21],
+            ['name' => 'npm', 'category' => 'Tooling & Quality', 'sort_order' => 20],
+            ['name' => 'Docker', 'category' => 'Tooling & Quality', 'sort_order' => 21],
+            ['name' => 'Apache', 'category' => 'Tooling & Quality', 'sort_order' => 22],
+            ['name' => 'Nginx', 'category' => 'Tooling & Quality', 'sort_order' => 23],
+            ['name' => 'Jenkins', 'category' => 'Tooling & Quality', 'sort_order' => 24],
             // AI & Cloud
-            ['name' => 'Cursor', 'category' => 'AI & Cloud', 'sort_order' => 22],
-            ['name' => 'Claude 3.5 Sonnet', 'category' => 'AI & Cloud', 'sort_order' => 23],
-            ['name' => 'AWS (EC2, S3, Vapor)', 'category' => 'AI & Cloud', 'sort_order' => 24],
-            ['name' => 'GitHub Actions', 'category' => 'AI & Cloud', 'sort_order' => 25],
+            ['name' => 'Cursor', 'category' => 'AI & Cloud', 'sort_order' => 25],
+            ['name' => 'Claude Code', 'category' => 'AI & Cloud', 'sort_order' => 26],
+            ['name' => 'OpenClaw', 'category' => 'AI & Cloud', 'sort_order' => 27],
+            ['name' => 'AWS', 'category' => 'AI & Cloud', 'sort_order' => 28],
         ];
+
+        $allowedNames = array_column($skills, 'name');
+        $profile->skills()->whereNotIn('name', $allowedNames)->delete();
 
         foreach ($skills as $skill) {
             $profile->skills()->updateOrCreate(
