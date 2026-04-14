@@ -19,32 +19,37 @@ type BubbleState = {
     r: number
 }
 
-const baseSkills = [
-    { name: 'PHP 8.4+', hue: 184 },
-    { name: 'Laravel 12', hue: 192 },
-    { name: 'Vue 3', hue: 170 },
-    { name: 'Inertia.js', hue: 186 },
-    { name: 'Livewire', hue: 196 },
-    { name: 'Nuxt.js', hue: 204 },
-    { name: 'Tailwind CSS', hue: 178 },
-    { name: 'TypeScript', hue: 210 },
-    { name: 'DDD', hue: 188 },
-    { name: 'Microservices', hue: 182 },
-    { name: 'REST API', hue: 198 },
-    { name: 'Pest PHP', hue: 184 },
-    { name: 'Docker', hue: 198 },
-    { name: 'Git', hue: 210 },
-    { name: 'Claude 3.5', hue: 182 },
-    { name: 'AWS EC2', hue: 196 },
-    { name: 'AWS S3', hue: 190 },
-    { name: 'CI/CD', hue: 202 },
-]
+const BUBBLE_SCALE = 1.1
 
-const stackSkills: BubbleSkill[] = baseSkills.map((skill) => ({
-    ...skill,
-    // Dynamic size: longer text length generates a larger bubble
-    size: 0.68 + (skill.name.length * 0.06),
-}))
+const stackSkills: BubbleSkill[] = [
+    { name: 'Vue 3', hue: 160, size: 1.24 },
+    { name: 'Laravel', hue: 8, size: 1.28 },
+    { name: 'JavaScript', hue: 52, size: 1.32 },
+    { name: 'PHP', hue: 240, size: 1.26 },
+    { name: 'PostgreSQL', hue: 205, size: 1.4 },
+    { name: 'Inertia.js', hue: 258, size: 1.3 },
+    { name: 'TypeScript', hue: 212, size: 1.24 },
+    { name: 'Tailwind CSS', hue: 190, size: 1.18 },
+    { name: 'Domain Driven Design', hue: 210, size: 1.12 },
+    { name: 'Node.js', hue: 120, size: 1.08 },
+    { name: 'MySQL', hue: 200, size: 1.04 },
+    { name: 'HTML5', hue: 14, size: 1 },
+    { name: 'CSS3', hue: 206, size: 0.98 },
+    { name: 'Nuxt.js', hue: 152, size: 0.95 },
+    { name: 'Vite', hue: 238, size: 0.92 },
+    { name: 'SOLID', hue: 164, size: 0.89 },
+    { name: 'Microservices', hue: 222, size: 0.96 },
+    { name: 'RESTful API Design', hue: 2, size: 0.94 },
+    { name: 'NPM', hue: 355, size: 0.82 },
+    { name: 'Docker', hue: 204, size: 0.9 },
+    { name: 'AWS', hue: 38, size: 0.88 },
+    { name: 'Apache', hue: 355, size: 0.76 },
+    { name: 'Nginx', hue: 134, size: 0.74 },
+    { name: 'Jenkins', hue: 8, size: 0.72 },
+    { name: 'Cursor', hue: 220, size: 0.8 },
+    { name: 'Claude Code', hue: 36, size: 0.88 },
+    { name: 'OpenClaw', hue: 262, size: 0.86 },
+]
 
 const sectionRef = ref<HTMLElement | null>(null)
 const bubbleFieldRef = ref<HTMLElement | null>(null)
@@ -83,7 +88,7 @@ function initCluster() {
     state.length = 0
     for (let i = 0; i < count; i++) {
         // Base width calculation: 4.1rem is roughly 65.6px root -> r is half
-        const r = 32.8 * stackSkills[i].size
+        const r = 32.8 * stackSkills[i].size * BUBBLE_SCALE
         const homeX = centerX + (Math.random() - 0.5) * 50
         const homeY = centerY + (Math.random() - 0.5) * 50
 
@@ -291,9 +296,10 @@ onUnmounted(() => {
 
 .bubble-wrapper {
     --s: calc(var(--size, 1) * 1);
+    --bubble-scale: 1.1;
     position: absolute;
-    width: calc(4.1rem * var(--s));
-    height: calc(4.1rem * var(--s));
+    width: calc(4.1rem * var(--s) * var(--bubble-scale));
+    height: calc(4.1rem * var(--s) * var(--bubble-scale));
     min-width: 3.2rem;
     min-height: 3.2rem;
     will-change: transform, opacity;
@@ -362,14 +368,14 @@ onUnmounted(() => {
     }
 
     .bubble-wrapper {
-        width: calc(3.4rem * var(--s));
-        height: calc(3.4rem * var(--s));
+        width: calc(3.4rem * var(--s) * var(--bubble-scale));
+        height: calc(3.4rem * var(--s) * var(--bubble-scale));
         min-width: 2.75rem;
         min-height: 2.75rem;
     }
 
     .bubble-text {
-        font-size: calc(0.44rem * var(--s) + 0.26rem);
+        font-size: calc(0.44rem * var(--s) + 0.36rem);   
     }
 }
 

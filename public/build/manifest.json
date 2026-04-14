@@ -65,7 +65,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
-    "file": "assets/TechStackSection-DjLAXEoC.js",
+    "file": "assets/TechStackSection-DgN8iw4k.js",
     "name": "TechStackSection",
     "src": "resources/js/Components/PortfolioV2/TechStackSection.vue",
     "isDynamicEntry": true,
@@ -74,7 +74,7 @@
       "_runtime-core.esm-bundler-0U_xRw2t.js"
     ],
     "css": [
-      "assets/TechStackSection-C00rLlfK.css"
+      "assets/TechStackSection-CM2AKtlJ.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
@@ -92,7 +92,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-CA8nU98m.js",
+    "file": "assets/WorksSection-BqsJP9RD.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -108,7 +108,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-CzpjwDiR.js",
+    "file": "assets/Index-B-EMqxny.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -131,7 +131,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-DGdvK_v_.js",
+    "file": "assets/app-vkDMqJOw.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
