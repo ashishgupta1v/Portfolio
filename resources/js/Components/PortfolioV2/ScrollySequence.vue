@@ -45,7 +45,7 @@ let rafId: number | null = null
    Overlay statements — timings tuned to match the
    three-phase cinematic zoom from generate-frames:
      Phase 1  0-30%  : Reveal from dark  → show name/title
-     Phase 2  30-65% : Zoom transition   → show "8+ Years" statement
+     Phase 2  30-65% : Zoom transition   → show "9+ Years" statement
      Phase 3  65-100%: Hero close-up     → show "AI Native" statement
    ─────────────────────────────────────────────── */
 const statements = computed<HeroStatement[]>(() => [
@@ -57,7 +57,7 @@ const statements = computed<HeroStatement[]>(() => [
         end: 0.24,
     },
     {
-        title: '8+ Years Experience.',
+        title: '9+ Years Experience.',
         subtitle: 'Specializing in Vue, Laravel, and Scalable Microservices.',
         align: 'left',
         start: 0.34,
