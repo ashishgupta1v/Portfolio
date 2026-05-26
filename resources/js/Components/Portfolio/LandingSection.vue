@@ -64,9 +64,9 @@ onMounted(() => {
                     <div class="text-loop">
                         <div class="text-loop-inner">
                             <span>{{ profile.subtitle }}</span>
-                            <span>8+ Years Experience</span>
+                            <span>9+ Years Experience</span>
                             <span>{{ profile.subtitle }}</span>
-                            <span>8+ Years Experience</span>
+                            <span>9+ Years Experience</span>
                         </div>
                     </div>
                 </div>

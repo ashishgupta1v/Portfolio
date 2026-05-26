@@ -416,6 +416,6 @@ portfolio/
 
 ## Author
 
-**Ashish Gupta** · Staff Software Architect · 8+ Years Building Scalable Systems
+**Ashish Gupta** · Staff Software Architect · 9+ Years Building Scalable Systems
 
 Specializing in Vue 3, Laravel, Domain-Driven Design, and AI-Native product development.

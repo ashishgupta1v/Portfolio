@@ -23,7 +23,7 @@ final class PortfolioSeeder extends Seeder
                 'name' => 'Ashish Gupta',
                 'title' => 'Senior Full-Stack Architect',
                 'subtitle' => 'VILT Stack Specialist',
-                'bio' => 'High-performance Engineering Architect with 8+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
+                'bio' => 'High-performance Engineering Architect with 9+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
                 'phone' => '+91-9087021592',
                 'location' => 'Chandigarh, India',
                 'avatar_url' => null,
@@ -114,8 +114,8 @@ final class PortfolioSeeder extends Seeder
                 'tools' => ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Vercel'],
                 'image_url' => null,
                 'video_url' => null,
-                'external_url' => 'https://habuilt-ashishgupta1vs-projects.vercel.app/',
-                'sort_order' => 0,
+                'external_url' => 'https://habuilt.com/',
+                'sort_order' => 1,
             ],
             [
                 'title' => 'ZoetiCoach AI',
@@ -125,8 +125,19 @@ final class PortfolioSeeder extends Seeder
                 'tools' => ['Laravel 12', 'Vue 3', 'WhatsApp API', 'pgvector', 'AI Agents'],
                 'image_url' => null,
                 'video_url' => null,
-                'external_url' => null,
-                'sort_order' => 1,
+                'external_url' => 'https://zoeticoach.com/',
+                'sort_order' => 0,
+            ],
+            [
+                'title' => 'Digital Builders',
+                'slug' => 'digital-builders',
+                'category' => 'B2B Agency',
+                'description' => 'B2B delivery engine. It brings Silicon Valley engineering discipline and autonomous AI agents directly to high-scale businesses in the local market.',
+                'tools' => ['Laravel', 'Vue 3', 'AI Agents', 'Tailwind CSS', 'Vercel'],
+                'image_url' => null,
+                'video_url' => null,
+                'external_url' => 'https://digitalbuilders.in/',
+                'sort_order' => 2,
             ],
             [
                 'title' => 'SSK ERP',
@@ -137,31 +148,23 @@ final class PortfolioSeeder extends Seeder
                 'image_url' => null,
                 'video_url' => null,
                 'external_url' => 'https://sskerp.vercel.app/',
-                'sort_order' => 2,
-            ],
-            [
-                'title' => 'Aviation Diagnostics',
-                'slug' => 'aviation-diagnostics',
-                'category' => 'Aviation',
-                'description' => 'Predictive maintenance modules for Aviation Engine Diagnostics at TCS. Built complex interactive dashboards using Vue.js and Tableau for mission-critical engine health monitoring, reducing repair costs by 11%.',
-                'tools' => ['Vue.js', 'Tableau', 'Python', 'Laravel', 'MySQL'],
-                'image_url' => null,
-                'video_url' => null,
-                'external_url' => null,
                 'sort_order' => 3,
             ],
             [
-                'title' => 'Digital Marketplace',
-                'slug' => 'digital-marketplace',
-                'category' => 'E-Commerce',
-                'description' => 'Scalable digital marketplace built with the VILT stack, featuring real-time inventory management, payment processing, and seller analytics dashboards.',
-                'tools' => ['Vue 3', 'Inertia.js', 'Laravel', 'Tailwind CSS', 'Stripe'],
+                'title' => 'shaiyra',
+                'slug' => 'shaiyra',
+                'category' => 'Family Security',
+                'description' => 'The Legacy & Human Architecture Showcase: a highly secure, client-side encrypted baby-tracking journal and health ledger for your newborn daughter.',
+                'tools' => ['Vue 3', 'Laravel', 'Client-Side Encryption', 'TypeScript', 'PostgreSQL'],
                 'image_url' => null,
                 'video_url' => null,
-                'external_url' => null,
+                'external_url' => 'https://shaiyra.com/',
                 'sort_order' => 4,
             ],
         ];
+
+        $allowedSlugs = array_column($projects, 'slug');
+        $profile->projects()->whereNotIn('slug', $allowedSlugs)->delete();
 
         foreach ($projects as $project) {
             $profile->projects()->updateOrCreate(
