@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Laravel scheduler for the portfolio app
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/portfolio/current
+ExecStart=/usr/bin/php artisan schedule:run
