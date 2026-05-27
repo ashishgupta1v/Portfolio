@@ -1,0 +1,17 @@
+[Unit]
+Description=Portfolio Laravel queue worker
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=5
+WorkingDirectory=/var/www/portfolio/current
+ExecStart=/usr/bin/php artisan queue:work --queue=default --sleep=3 --tries=1 --max-time=3600
+ExecReload=/usr/bin/php artisan queue:restart
+KillSignal=SIGTERM
+TimeoutStopSec=3600
+
+[Install]
+WantedBy=multi-user.target
