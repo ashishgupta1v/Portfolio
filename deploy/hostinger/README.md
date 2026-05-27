@@ -244,5 +244,4 @@ Expected outcome:
 ## Notes for this repo
 
 - `public/index.php` is the entrypoint used on the VPS.
-- `api/index.php` remains only for the Vercel deployment path.
-- `vercel.json` can stay in the repository without affecting the VPS deployment.
+- Legacy serverless runtime/config files have been removed to keep deployment path VPS-only.
