@@ -34,14 +34,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    cursor: none;
-}
-
-/* Desktop cursor reset */
-@media (max-width: 1024px) {
-    body {
-        cursor: auto;
-    }
 }
 
 ::selection {

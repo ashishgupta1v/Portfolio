@@ -21,20 +21,15 @@ const iconMap: Record<string, any> = {
 
 const currentYear = new Date().getFullYear()
 const sectionRef = ref<HTMLElement | null>(null)
+const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
+    'Hi Ashish, I just read your ZoetiCoach AI: Building a WhatsApp-First Accountability Engine for Coaches case study on ashgpt.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.'
+)}`
 
 onMounted(() => {
     if (!sectionRef.value) return
 
-    const title = sectionRef.value.querySelector('.ct-title')
     const grid = sectionRef.value.querySelector('.ct-grid')
     const columns = sectionRef.value.querySelectorAll('.ct-column')
-
-    if (title) {
-        gsap.from(title, {
-            scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
-            y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out',
-        })
-    }
 
     if (columns.length > 0 && grid) {
         gsap.from(columns, {
@@ -71,6 +66,16 @@ onMounted(() => {
                     </a>
                     <p v-if="profile.phone" class="ct-phone">{{ profile.phone }}</p>
                     <p v-if="profile.location" class="ct-location">{{ profile.location }}</p>
+
+                    <a
+                        :href="whatsappHref"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="chat-btn"
+                    >
+                        Chat on WhatsApp
+                        <ArrowUpRight :size="14" />
+                    </a>
 
                     <div v-if="educations.length" class="edu-list">
                         <div
@@ -188,7 +193,31 @@ onMounted(() => {
 .ct-location {
     font-size: 0.82rem;
     color: rgba(226, 232, 240, 0.35);
+    margin-bottom: 1rem;
+}
+
+.chat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     margin-bottom: 1.8rem;
+    padding: 0.72rem 1rem;
+    border: 1px solid rgba(94, 234, 212, 0.28);
+    border-radius: 999px;
+    background: rgba(94, 234, 212, 0.08);
+    color: #dffcf6;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.chat-btn:hover {
+    color: #08111a;
+    background: #5eead4;
+    border-color: #5eead4;
 }
 
 .edu-list {

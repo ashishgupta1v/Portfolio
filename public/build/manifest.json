@@ -48,7 +48,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ContactSection.vue": {
-    "file": "assets/ContactSection-SD9v10ps.js",
+    "file": "assets/ContactSection-Bj1R770Z.js",
     "name": "ContactSection",
     "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
     "isDynamicEntry": true,
@@ -61,11 +61,25 @@
       "_mail-BAvqss0_.js"
     ],
     "css": [
-      "assets/ContactSection-CpxXwIE9.css"
+      "assets/ContactSection-LVyLIBiw.css"
+    ]
+  },
+  "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue": {
+    "file": "assets/FeaturedCaseStudySection-CZqQ7Vqc.js",
+    "name": "FeaturedCaseStudySection",
+    "src": "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "resources/js/app.ts",
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ],
+    "css": [
+      "assets/FeaturedCaseStudySection-DOcg1ZG6.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
-    "file": "assets/TechStackSection-DgN8iw4k.js",
+    "file": "assets/TechStackSection-BCmarysr.js",
     "name": "TechStackSection",
     "src": "resources/js/Components/PortfolioV2/TechStackSection.vue",
     "isDynamicEntry": true,
@@ -74,11 +88,11 @@
       "_runtime-core.esm-bundler-0U_xRw2t.js"
     ],
     "css": [
-      "assets/TechStackSection-CM2AKtlJ.css"
+      "assets/TechStackSection-CnCKQr_6.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
-    "file": "assets/TimelineSection-Dn2XE_Cr.js",
+    "file": "assets/TimelineSection-BcbSo_dT.js",
     "name": "TimelineSection",
     "src": "resources/js/Components/PortfolioV2/TimelineSection.vue",
     "isDynamicEntry": true,
@@ -92,7 +106,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-BqsJP9RD.js",
+    "file": "assets/WorksSection-BL4mYF5X.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -107,8 +121,36 @@
       "assets/WorksSection-CJfj-K94.css"
     ]
   },
+  "resources/js/Pages/CaseStudies/Index.vue": {
+    "file": "assets/Index-Blamu-lJ.js",
+    "name": "Index",
+    "src": "resources/js/Pages/CaseStudies/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "resources/js/app.ts",
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ],
+    "css": [
+      "assets/Index-Cez2Lxs1.css"
+    ]
+  },
+  "resources/js/Pages/CaseStudies/Show.vue": {
+    "file": "assets/Show-BN2CXc23.js",
+    "name": "Show",
+    "src": "resources/js/Pages/CaseStudies/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-B67ILkmu.js",
+      "resources/js/app.ts",
+      "_runtime-core.esm-bundler-0U_xRw2t.js"
+    ],
+    "css": [
+      "assets/Show-BIVOA3JW.css"
+    ]
+  },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-B-EMqxny.js",
+    "file": "assets/Index-DMpn5WHo.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -123,15 +165,16 @@
       "resources/js/Components/PortfolioV2/AboutSection.vue",
       "resources/js/Components/PortfolioV2/TimelineSection.vue",
       "resources/js/Components/PortfolioV2/WorksSection.vue",
+      "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue",
       "resources/js/Components/PortfolioV2/TechStackSection.vue",
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-BEmzIq94.css"
+      "assets/Index-C_s8Wjav.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-vkDMqJOw.js",
+    "file": "assets/app-ixsZH05g.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -139,10 +182,12 @@
       "_runtime-core.esm-bundler-0U_xRw2t.js"
     ],
     "dynamicImports": [
+      "resources/js/Pages/CaseStudies/Index.vue",
+      "resources/js/Pages/CaseStudies/Show.vue",
       "resources/js/Pages/Portfolio/Index.vue"
     ],
     "css": [
-      "assets/app-CVK4jCOI.css"
+      "assets/app-CtJtuyKO.css"
     ]
   }
 }
