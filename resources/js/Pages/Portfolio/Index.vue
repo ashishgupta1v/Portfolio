@@ -10,6 +10,7 @@ import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 const AboutSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/AboutSection.vue'))
 const TimelineSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TimelineSection.vue'))
 const WorksSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/WorksSection.vue'))
+const FeaturedCaseStudySection = defineAsyncComponent(() => import('@/Components/PortfolioV2/FeaturedCaseStudySection.vue'))
 const TechStackSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TechStackSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/ContactSection.vue'))
 
@@ -88,6 +89,7 @@ onUnmounted(() => {
         <AboutSection :profile="profile" />
         <TimelineSection :experiences="experiences" />
         <WorksSection :projects="projects" />
+        <FeaturedCaseStudySection />
         <TechStackSection :skills="skills" />
         <ContactSection
             :profile="profile"
@@ -101,5 +103,12 @@ onUnmounted(() => {
 .v2-page {
     min-height: 100vh;
     background: #090e14;
+}
+
+@media (min-width: 1024px) {
+    .v2-page,
+    .v2-page * {
+        cursor: none;
+    }
 }
 </style>

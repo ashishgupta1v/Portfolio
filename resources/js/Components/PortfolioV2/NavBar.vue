@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
 import { Github, Linkedin, Mail, Youtube, Instagram } from 'lucide-vue-next'
@@ -57,6 +58,7 @@ onUnmounted(() => {
             <div class="nav-links">
                 <button class="nav-link" @click="scrollTo('about')">ABOUT</button>
                 <button class="nav-link" @click="scrollTo('work')">WORK</button>
+                <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
                 <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
             </div>
         </div>
@@ -164,6 +166,12 @@ onUnmounted(() => {
     padding: 0;
 }
 .nav-link:hover { color: #f8fafc; }
+
+.nav-link-anchor {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
 
 /* ── Social sidebar ── */
 .social-sidebar {
