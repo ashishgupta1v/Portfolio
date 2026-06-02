@@ -1,11 +1,51 @@
 <script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import type { CaseStudyShowPageProps } from '@/types/caseStudies'
 
 const props = defineProps<CaseStudyShowPageProps>()
 const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
-    `Hi Ashish, I just read your ${props.caseStudy.title} case study on ashgpt.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.`
+    `Hi Ashish, I just read your ${props.caseStudy.title} case study on ashishgupta.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.`
 )}`
+
+// Reading progress
+const readingProgress = ref(0)
+function updateProgress() {
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+    readingProgress.value = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0
+}
+onMounted(() => window.addEventListener('scroll', updateProgress, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', updateProgress))
+
+const articleSchema = computed(() => JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: props.caseStudy.title,
+    description: props.caseStudy.seoDescription,
+    author: {
+        '@type': 'Person',
+        name: 'Ashish Gupta',
+        url: 'https://www.ashishgupta.dev/',
+    },
+    publisher: {
+        '@type': 'Person',
+        name: 'Ashish Gupta',
+        url: 'https://www.ashishgupta.dev/',
+    },
+    datePublished: props.caseStudy.publishedAt,
+    url: `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}`,
+    keywords: props.caseStudy.tags.join(', '),
+}))
+
+const breadcrumbSchema = computed(() => JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.ashishgupta.dev/' },
+        { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.ashishgupta.dev/case-studies' },
+        { '@type': 'ListItem', position: 3, name: props.caseStudy.title, item: `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}` },
+    ],
+}))
 </script>
 
 <template>
@@ -14,11 +54,21 @@ const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
         <meta property="og:title" :content="caseStudy.seoTitle" />
         <meta property="og:description" :content="caseStudy.seoDescription" />
         <meta property="og:type" content="article" />
-        <link rel="canonical" :href="`https://www.ashgpt.dev/case-studies/${caseStudy.slug}`" />
+        <meta property="og:url" :content="`https://www.ashishgupta.dev/case-studies/${caseStudy.slug}`" />
+        <meta property="og:site_name" content="Ashish Gupta" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="caseStudy.seoTitle" />
+        <meta name="twitter:description" :content="caseStudy.seoDescription" />
+        <link rel="canonical" :href="`https://www.ashishgupta.dev/case-studies/${caseStudy.slug}`" />
+        <component is="script" type="application/ld+json" v-html="articleSchema" />
+        <component is="script" type="application/ld+json" v-html="breadcrumbSchema" />
     </Head>
 
     <div class="case-study-page">
-        <header class="page-shell hero-shell">
+        <!-- Reading progress bar -->
+        <div class="reading-progress" :style="{ width: readingProgress + '%' }" aria-hidden="true" />
+
+        <header class="hero-shell page-shell">
             <div class="topbar">
                 <Link href="/" class="brand-link">Ashish Gupta</Link>
                 <div class="topbar-links">
@@ -99,6 +149,17 @@ const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
 </template>
 
 <style scoped>
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5eead4, #38bdf8);
+    z-index: 2000;
+    transition: width 0.1s linear;
+    border-radius: 0 2px 2px 0;
+}
+
 .case-study-page {
     min-height: 100vh;
     background:

@@ -26,8 +26,8 @@ final class PortfolioSeeder extends Seeder
                 'bio' => 'High-performance Engineering Architect with 9+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
                 'phone' => '+91-9087021592',
                 'location' => 'Chandigarh, India',
-                'avatar_url' => null,
-                'resume_url' => null,
+                'avatar_url' => '/images/ashish-gupta-avatar.webp',
+                'resume_url' => '/resume/ashish-gupta-resume.pdf',
             ]
         );
 

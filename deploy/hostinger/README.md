@@ -55,8 +55,10 @@ Recommended runtime choices for the current app:
 Create these DNS records at your domain registrar:
 
 ```text
-A     @      <your-kvm2-public-ip>
-A     www    <your-kvm2-public-ip>
+A     @                    <your-kvm2-public-ip>    # ashishgupta.dev
+A     www                  <your-kvm2-public-ip>    # www.ashishgupta.dev
+A     ashgpt.dev           <your-kvm2-public-ip>    # legacy redirect
+A     www.ashgpt.dev       <your-kvm2-public-ip>    # legacy redirect
 ```
 
 Wait until `dig your-domain.com` or `nslookup your-domain.com` resolves to the VPS.
@@ -145,7 +147,7 @@ sudo APP_DIR=/var/www/portfolio/current bash deploy/hostinger/scripts/fix-permis
 
 ### 8. Configure Nginx
 
-Replace `portfolio.example.com` with your real domain inside:
+Use the domain-aware templates in:
 
 - `deploy/hostinger/nginx/portfolio-http.conf`
 - `deploy/hostinger/nginx/portfolio-https.conf`
@@ -162,7 +164,7 @@ sudo systemctl reload nginx
 ### 9. Issue the SSL certificate
 
 ```bash
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+sudo certbot --nginx -d ashishgupta.dev -d www.ashishgupta.dev -d ashgpt.dev -d www.ashgpt.dev
 ```
 
 After cert issuance succeeds, switch to the HTTPS config:
@@ -228,7 +230,8 @@ Only enable this after you add scheduled tasks in Laravel.
 Run these after deployment:
 
 ```bash
-curl -I https://your-domain.com
+curl -I https://ashishgupta.dev
+curl -I https://ashgpt.dev
 php artisan about
 sudo systemctl status nginx --no-pager
 sudo systemctl status php8.3-fpm --no-pager
@@ -237,6 +240,7 @@ sudo systemctl status php8.3-fpm --no-pager
 Expected outcome:
 
 - The site responds with HTTP 200.
+- `https://ashgpt.dev/*` responds with a 301 redirect to `https://ashishgupta.dev/*`.
 - `public/build/manifest.json` exists.
 - `storage/` and `bootstrap/cache/` are writable by the web user.
 - The portfolio page renders without Vite dev-server references.
