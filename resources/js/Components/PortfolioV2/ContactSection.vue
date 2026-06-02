@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useForm } from '@inertiajs/vue3'
 import type { Profile, SocialLink, Education } from '@/types/portfolio'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -21,8 +22,27 @@ const iconMap: Record<string, any> = {
 
 const currentYear = new Date().getFullYear()
 const sectionRef = ref<HTMLElement | null>(null)
+const submitted = ref(false)
+
+const form = useForm({
+    name: '',
+    email: '',
+    budget: '',
+    message: '',
+})
+
+function submitContact() {
+    form.post('/contact', {
+        preserveScroll: true,
+        onSuccess: () => {
+            submitted.value = true
+            form.reset()
+        },
+    })
+}
+
 const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
-    'Hi Ashish, I just read your ZoetiCoach AI: Building a WhatsApp-First Accountability Engine for Coaches case study on ashgpt.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.'
+    'Hi Ashish, I just read your ZoetiCoach AI: Building a WhatsApp-First Accountability Engine for Coaches case study on ashishgupta.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.'
 )}`
 
 onMounted(() => {
@@ -134,6 +154,74 @@ onMounted(() => {
                         <span class="stack-detail">Vue 3 · Inertia.js · Laravel 12 · Tailwind CSS</span>
                     </p>
                 </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="ct-form-row">
+                <h3 class="form-title">Send a message</h3>
+                <div v-if="submitted" class="form-success">
+                    <p>Message sent — I'll get back to you within a business day.</p>
+                </div>
+                <form v-else class="contact-form" @submit.prevent="submitContact">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="cf-name" class="form-label">Name</label>
+                            <input
+                                id="cf-name"
+                                v-model="form.name"
+                                type="text"
+                                class="form-input"
+                                :class="{ 'form-input-error': form.errors.name }"
+                                placeholder="Your name"
+                                autocomplete="name"
+                                required
+                            />
+                            <span v-if="form.errors.name" class="form-error">{{ form.errors.name }}</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="cf-email" class="form-label">Email</label>
+                            <input
+                                id="cf-email"
+                                v-model="form.email"
+                                type="email"
+                                class="form-input"
+                                :class="{ 'form-input-error': form.errors.email }"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            />
+                            <span v-if="form.errors.email" class="form-error">{{ form.errors.email }}</span>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="cf-budget" class="form-label">Estimated budget (optional)</label>
+                        <select id="cf-budget" v-model="form.budget" class="form-input">
+                            <option value="">Select a range…</option>
+                            <option value="Under ₹50,000">Under ₹50,000</option>
+                            <option value="₹50,000 – ₹1,50,000">₹50,000 – ₹1,50,000</option>
+                            <option value="₹1,50,000 – ₹5,00,000">₹1,50,000 – ₹5,00,000</option>
+                            <option value="₹5,00,000+">₹5,00,000+</option>
+                            <option value="Let's discuss">Let's discuss</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="cf-message" class="form-label">Message</label>
+                        <textarea
+                            id="cf-message"
+                            v-model="form.message"
+                            class="form-input form-textarea"
+                            :class="{ 'form-input-error': form.errors.message }"
+                            placeholder="Describe what you need…"
+                            rows="4"
+                            required
+                        />
+                        <span v-if="form.errors.message" class="form-error">{{ form.errors.message }}</span>
+                    </div>
+                    <button type="submit" class="form-submit" :disabled="form.processing">
+                        {{ form.processing ? 'Sending…' : 'Send message' }}
+                        <ArrowUpRight :size="14" />
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -328,5 +416,107 @@ onMounted(() => {
     .ct-section {
         padding: 3rem 0.8rem 2rem;
     }
+}
+
+/* ── Contact form ── */
+.ct-form-row {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.form-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(94, 234, 212, 0.7);
+    font-weight: 600;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(94, 234, 212, 0.1);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 700px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: rgba(226, 232, 240, 0.55);
+    text-transform: uppercase;
+}
+
+.form-input {
+    background: rgba(8, 14, 24, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 4px;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-family: inherit;
+    padding: 0.65rem 0.85rem;
+    transition: border-color 0.25s;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+.form-input:focus { border-color: rgba(94, 234, 212, 0.5); }
+.form-input::placeholder { color: rgba(148, 163, 184, 0.35); }
+.form-input-error { border-color: rgba(239, 68, 68, 0.5) !important; }
+.form-input option { background: #060b11; color: #e2e8f0; }
+
+.form-textarea { resize: vertical; min-height: 110px; }
+
+.form-error {
+    font-size: 0.75rem;
+    color: #f87171;
+}
+
+.form-success {
+    background: rgba(94, 234, 212, 0.08);
+    border: 1px solid rgba(94, 234, 212, 0.25);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    color: #5eead4;
+    font-size: 0.9rem;
+    max-width: 700px;
+}
+
+.form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    background: #5eead4;
+    color: #050b14;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+.form-submit:hover:not(:disabled) { opacity: 0.88; }
+.form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
 }
 </style>

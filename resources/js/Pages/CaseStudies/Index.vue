@@ -11,7 +11,7 @@ defineProps<CaseStudiesIndexPageProps>()
             name="description"
             content="Deep architecture and delivery case studies from Ashish Gupta. Canonical long-form proof of systems thinking, execution quality, and product outcomes."
         />
-        <link rel="canonical" href="https://www.ashgpt.dev/case-studies" />
+        <link rel="canonical" href="https://www.ashishgupta.dev/case-studies" />
     </Head>
 
     <div class="case-studies-page">
@@ -28,7 +28,7 @@ defineProps<CaseStudiesIndexPageProps>()
                 <p class="eyebrow">Canonical Library</p>
                 <h1>Case studies that prove portfolio depth, not vanity metrics.</h1>
                 <p class="hero-text">
-                    This library is the long-form evidence layer behind ashgpt.dev: named systems,
+                    This library is the long-form evidence layer behind ashishgupta.dev: named systems,
                     architectural trade-offs, delivery choices, and measurable outcomes that a recruiter
                     or founder can assess in minutes.
                 </p>

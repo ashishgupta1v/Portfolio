@@ -18,6 +18,27 @@ const props = defineProps<PortfolioPageProps>()
 
 const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
 
+const personSchema = computed(() => JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: props.profile.name,
+    url: 'https://www.ashishgupta.dev/',
+    jobTitle: props.profile.title,
+    description: props.profile.bio,
+    email: props.profile.email,
+    sameAs: props.socialLinks.map(l => l.url).filter(u => !u.startsWith('mailto:')),
+    knowsAbout: Object.values(props.skills).flat().map((s: any) => s.name),
+    worksFor: { '@type': 'Organization', name: 'Infosys' },
+}))
+
+const websiteSchema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    url: 'https://www.ashishgupta.dev/',
+    name: 'Ashish Gupta',
+    description: 'Senior Full-Stack Architect — VILT Stack Specialist',
+})
+
 const heroReady = ref(false)
 const pageReady = ref(false)
 const heroProgress = ref(0)
@@ -61,8 +82,24 @@ onUnmounted(() => {
 
 <template>
     <Head :title="profile.name + ' — ' + profile.title">
+        <meta name="description" :content="profile.bio" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.ashishgupta.dev/" />
+        <meta :property="'og:title'" :content="profile.name + ' — ' + profile.title" />
+        <meta property="og:description" :content="profile.bio" />
+        <meta property="og:image" content="https://www.ashishgupta.dev/images/og-cover.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Ashish Gupta" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" :content="profile.name + ' — ' + profile.title" />
+        <meta name="twitter:description" :content="profile.bio" />
+        <meta name="twitter:image" content="https://www.ashishgupta.dev/images/og-cover.png" />
+        <link rel="canonical" href="https://www.ashishgupta.dev/" />
         <link rel="preload" as="image" href="/sequence/0000.webp" fetchpriority="high" />
         <link rel="preload" as="image" href="/sequence/0001.webp" fetchpriority="high" />
+        <component is="script" type="application/ld+json" v-html="personSchema" />
+        <component is="script" type="application/ld+json" v-html="websiteSchema" />
     </Head>
 
     <div class="v2-page">
