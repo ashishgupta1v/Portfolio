@@ -12,8 +12,8 @@ final class CaseStudiesPageTest extends TestCase
     {
         $this->get('/case-studies')
             ->assertOk()
-            ->assertSee('Canonical Library')
-            ->assertSee('ZoetiCoach AI');
+            ->assertSee('ZoetiCoach AI')
+            ->assertSee('Krishan Balram Gaushala');
     }
 
     public function test_case_study_detail_page_renders(): void
@@ -22,5 +22,14 @@ final class CaseStudiesPageTest extends TestCase
             ->assertOk()
             ->assertSee('ZoetiCoach AI: Building a WhatsApp-First Accountability Engine for Coaches')
             ->assertSee('Executive Summary');
+    }
+
+    public function test_gaushala_case_study_detail_page_renders(): void
+    {
+        $this->get('/case-studies/krishan-balram-gaushala-devotee-engagement-platform')
+            ->assertOk()
+            ->assertSee('Krishan Balram Gaushala: Building an Automation-Driven Devotee Engagement & Event Management Portal')
+            ->assertSee('The Situation')
+            ->assertSee('The Media Payload Challenge');
     }
 }

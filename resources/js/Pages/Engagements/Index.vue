@@ -226,7 +226,7 @@ import { Head, Link } from '@inertiajs/vue3'
 
         <!-- Footer -->
         <footer class="footer">
-            <p>© {{ new Date().getFullYear() }} Ashish Gupta · Chandigarh, India</p>
+            <p>© {{ new Date().getFullYear() }} Ashish Gupta · India</p>
         </footer>
     </div>
 </template>

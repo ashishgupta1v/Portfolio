@@ -28,7 +28,20 @@ const form = useForm({
     name: '',
     email: '',
     budget: '',
+    project_type: 'Website',
+    timeline: '',
     message: '',
+    company_website: '',
+    form_started_at: Date.now(),
+    source_page: '',
+    referrer_url: '',
+    utm_source: '',
+    utm_medium: '',
+    utm_campaign: '',
+    utm_term: '',
+    utm_content: '',
+    gclid: '',
+    fbclid: '',
 })
 
 function submitContact() {
@@ -37,6 +50,7 @@ function submitContact() {
         onSuccess: () => {
             submitted.value = true
             form.reset()
+            form.form_started_at = Date.now()
         },
     })
 }
@@ -46,6 +60,17 @@ const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
 )}`
 
 onMounted(() => {
+    const params = new URLSearchParams(window.location.search)
+    form.source_page = window.location.pathname
+    form.referrer_url = document.referrer
+    form.utm_source = params.get('utm_source') ?? ''
+    form.utm_medium = params.get('utm_medium') ?? ''
+    form.utm_campaign = params.get('utm_campaign') ?? ''
+    form.utm_term = params.get('utm_term') ?? ''
+    form.utm_content = params.get('utm_content') ?? ''
+    form.gclid = params.get('gclid') ?? ''
+    form.fbclid = params.get('fbclid') ?? ''
+
     if (!sectionRef.value) return
 
     const grid = sectionRef.value.querySelector('.ct-grid')
@@ -161,8 +186,19 @@ onMounted(() => {
                 <h3 class="form-title">Send a message</h3>
                 <div v-if="submitted" class="form-success">
                     <p>Message sent — I'll get back to you within a business day.</p>
+                    <div class="next-steps">
+                        <a href="/engagements" class="next-step-link">Review Engagement Models</a>
+                        <a :href="whatsappHref" target="_blank" rel="noopener noreferrer" class="next-step-link">Chat on WhatsApp</a>
+                    </div>
                 </div>
                 <form v-else class="contact-form" @submit.prevent="submitContact">
+                    <p class="form-note">
+                        Share a few details so I can reply with a relevant scope, timeline, and next-step recommendation.
+                    </p>
+                    <div class="honeypot-wrap" aria-hidden="true">
+                        <label for="cf-company-website">Company website</label>
+                        <input id="cf-company-website" v-model="form.company_website" type="text" tabindex="-1" autocomplete="off" />
+                    </div>
                     <div class="form-row">
                         <div class="form-field">
                             <label for="cf-name" class="form-label">Name</label>
@@ -191,6 +227,33 @@ onMounted(() => {
                                 required
                             />
                             <span v-if="form.errors.email" class="form-error">{{ form.errors.email }}</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="cf-project-type" class="form-label">Project type</label>
+                            <select id="cf-project-type" v-model="form.project_type" class="form-input" required>
+                                <option value="Website">Website</option>
+                                <option value="SaaS Product">SaaS Product</option>
+                                <option value="Internal Dashboard">Internal Dashboard</option>
+                                <option value="Automation Workflow">Automation Workflow</option>
+                                <option value="Legacy Modernization">Legacy Modernization</option>
+                                <option value="AI Integration">AI Integration</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span v-if="form.errors.project_type" class="form-error">{{ form.errors.project_type }}</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="cf-timeline" class="form-label">Preferred start</label>
+                            <select id="cf-timeline" v-model="form.timeline" class="form-input">
+                                <option value="">Select timeline…</option>
+                                <option value="Urgent (within 2 weeks)">Urgent (within 2 weeks)</option>
+                                <option value="This month">This month</option>
+                                <option value="1-2 months">1-2 months</option>
+                                <option value="3+ months">3+ months</option>
+                                <option value="Exploring options">Exploring options</option>
+                            </select>
+                            <span v-if="form.errors.timeline" class="form-error">{{ form.errors.timeline }}</span>
                         </div>
                     </div>
                     <div class="form-field">
@@ -443,6 +506,21 @@ onMounted(() => {
     max-width: 700px;
 }
 
+.form-note {
+    font-size: 0.84rem;
+    color: rgba(226, 232, 240, 0.6);
+    line-height: 1.45;
+    max-width: 640px;
+}
+
+.honeypot-wrap {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -495,6 +573,27 @@ onMounted(() => {
     color: #5eead4;
     font-size: 0.9rem;
     max-width: 700px;
+}
+
+.next-steps {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.next-step-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #0f172a;
+    background: #5eead4;
+    border-radius: 999px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .form-submit {

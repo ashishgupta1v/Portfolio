@@ -19,12 +19,47 @@ require_cmd npm
 
 cd "$APP_DIR"
 
+ensure_sqlite_database_file() {
+    # Read DB config from .env and make sure SQLite database file exists before migrations.
+    php -r '
+require __DIR__ . "/vendor/autoload.php";
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+$connection = $_ENV["DB_CONNECTION"] ?? $_SERVER["DB_CONNECTION"] ?? "sqlite";
+if ($connection !== "sqlite") {
+    exit(0);
+}
+
+$database = $_ENV["DB_DATABASE"] ?? $_SERVER["DB_DATABASE"] ?? (__DIR__ . "/database/database.sqlite");
+if ($database === "") {
+    $database = __DIR__ . "/database/database.sqlite";
+}
+
+$directory = dirname($database);
+if (!is_dir($directory) && !mkdir($directory, 0775, true) && !is_dir($directory)) {
+    fwrite(STDERR, "Failed to create SQLite directory: {$directory}" . PHP_EOL);
+    exit(1);
+}
+
+if (!file_exists($database) && !touch($database)) {
+    fwrite(STDERR, "Failed to create SQLite database file: {$database}" . PHP_EOL);
+    exit(1);
+}
+' || {
+        echo "Failed to prepare SQLite database file." >&2
+        exit 1
+    }
+}
+
 trap 'php artisan up || true' EXIT
 
 php artisan down --retry=60 || true
 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 npm ci
 npm run build
+ensure_sqlite_database_file
 php artisan migrate --force
 
 if [ "$RUN_SEEDER" = "1" ]; then
