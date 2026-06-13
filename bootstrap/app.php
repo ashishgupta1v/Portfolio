@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
 
+        $middleware->alias([
+            'admin.access' => \App\Http\Middleware\AdminAccess::class,
+        ]);
+
         $middleware->web(prepend: [
             \App\Http\Middleware\RedirectLegacyDomain::class,
         ]);

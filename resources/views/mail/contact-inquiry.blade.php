@@ -17,6 +17,11 @@
     <h2>New inquiry via ashishgupta.dev</h2>
 
     <div class="row">
+        <div class="label">Lead ID</div>
+        <div class="value">#{{ $leadId }}</div>
+    </div>
+
+    <div class="row">
         <div class="label">Name</div>
         <div class="value">{{ $senderName }}</div>
     </div>
@@ -34,9 +39,51 @@
     @endif
 
     <div class="row">
+        <div class="label">Project Type</div>
+        <div class="value">{{ $projectType }}</div>
+    </div>
+
+    @if($timeline)
+    <div class="row">
+        <div class="label">Timeline</div>
+        <div class="value">{{ $timeline }}</div>
+    </div>
+    @endif
+
+    <div class="row">
+        <div class="label">Lead Stage</div>
+        <div class="value">{{ ucfirst($leadStatus) }} · Score {{ $leadScore }}/100</div>
+    </div>
+
+    <div class="row">
         <div class="label">Message</div>
         <div class="value">{{ $message }}</div>
     </div>
+
+    @if($sourcePage)
+    <div class="row">
+        <div class="label">Source Page</div>
+        <div class="value">{{ $sourcePage }}</div>
+    </div>
+    @endif
+
+    @if($referrerUrl)
+    <div class="row">
+        <div class="label">Referrer</div>
+        <div class="value">{{ $referrerUrl }}</div>
+    </div>
+    @endif
+
+    @if($utmSource || $utmMedium || $utmCampaign)
+    <div class="row">
+        <div class="label">UTM Attribution</div>
+        <div class="value">
+            source={{ $utmSource ?: '-' }}
+            · medium={{ $utmMedium ?: '-' }}
+            · campaign={{ $utmCampaign ?: '-' }}
+        </div>
+    </div>
+    @endif
 
     <div class="footer">Reply directly to this email to respond to {{ $senderName }}.</div>
 </div>

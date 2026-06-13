@@ -25,7 +25,7 @@ final class PortfolioSeeder extends Seeder
                 'subtitle' => 'VILT Stack Specialist',
                 'bio' => 'High-performance Engineering Architect with 9+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 12, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
                 'phone' => '+91-9087021592',
-                'location' => 'Chandigarh, India',
+                'location' => 'India',
                 'avatar_url' => '/images/ashish-gupta-avatar.webp',
                 'resume_url' => '/resume/ashish-gupta-resume.pdf',
             ]
@@ -45,7 +45,7 @@ final class PortfolioSeeder extends Seeder
             [
                 'company' => 'Infosys',
                 'role' => 'Lead Product Engineer & Architect',
-                'location' => 'Chandigarh, India',
+                'location' => 'India',
                 'start_date' => 'Feb 2023',
                 'end_date' => null,
                 'highlights' => [
@@ -83,7 +83,7 @@ final class PortfolioSeeder extends Seeder
             [
                 'company' => 'Tata Consultancy Services (TCS)',
                 'role' => 'System Engineer',
-                'location' => 'Noida, India',
+                'location' => 'India',
                 'start_date' => 'Jul 2017',
                 'end_date' => 'Mar 2022',
                 'highlights' => [
@@ -107,17 +107,6 @@ final class PortfolioSeeder extends Seeder
     {
         $projects = [
             [
-                'title' => 'Habuilt Tracker',
-                'slug' => 'habuilt-tracker',
-                'category' => 'Productivity',
-                'description' => "A personal discipline-tracking app built to turn habits into a measurable, gamified system. Features a daily task/point engine, carry-forward balance ledger, monthly performance chart, vacation milestone progress, and a habit checklist — all designed around the philosophy 'Discipline Equals Freedom'.",
-                'tools' => ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js'],
-                'image_url' => null,
-                'video_url' => null,
-                'external_url' => 'https://habuilt.com/',
-                'sort_order' => 1,
-            ],
-            [
                 'title' => 'ZoetiCoach AI',
                 'slug' => 'zoeticoach-ai',
                 'category' => 'AI SaaS',
@@ -129,6 +118,28 @@ final class PortfolioSeeder extends Seeder
                 'sort_order' => 0,
             ],
             [
+                'title' => 'Krishan Balram Gaushala',
+                'slug' => 'krishan-balram-gaushala',
+                'category' => 'Community Portal',
+                'description' => 'An automation-driven devotee engagement and event management portal built for a prominent cow shelter in Ludhiana. Architected an automated daily wishing engine integrated with WhatsApp Business API that automatically dispatches template-based greetings. Optimized for mobile devices through client-side HTML5 canvas image compression (achieving a 99%+ bandwidth reduction on uploads) and SQLite Write-Ahead Logging (WAL) concurrency tuning.',
+                'tools' => ['Laravel', 'Vue 3', 'WhatsApp API', 'PWA', 'SQLite'],
+                'image_url' => null,
+                'video_url' => null,
+                'external_url' => 'https://krishanbalramgaushala.com/',
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'Habuilt Tracker',
+                'slug' => 'habuilt-tracker',
+                'category' => 'Productivity',
+                'description' => "A personal discipline-tracking app built to turn habits into a measurable, gamified system. Features a daily task/point engine, carry-forward balance ledger, monthly performance chart, vacation milestone progress, and a habit checklist — all designed around the philosophy 'Discipline Equals Freedom'.",
+                'tools' => ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js'],
+                'image_url' => null,
+                'video_url' => null,
+                'external_url' => 'https://habuilt.com/',
+                'sort_order' => 2,
+            ],
+            [
                 'title' => 'Digital Builders',
                 'slug' => 'digital-builders',
                 'category' => 'B2B Agency',
@@ -137,17 +148,6 @@ final class PortfolioSeeder extends Seeder
                 'image_url' => null,
                 'video_url' => null,
                 'external_url' => 'https://digitalbuilders.in/',
-                'sort_order' => 2,
-            ],
-            [
-                'title' => 'SSK ERP',
-                'slug' => 'ssk-erp',
-                'category' => 'ERP',
-                'description' => 'Order management and billing ERP built for knitwear operations. Includes party management, dynamic size-grid order entry, embroidery/batch/printing workflows, GST and surcharge calculations, image attachment support, printable invoices, dark/light theme support, and order history with search and delete confirmation modal. Designed for fast daily billing with Supabase-backed persistence and responsive UI.',
-                'tools' => ['Laravel', 'Vue 3',  'TypeScript', 'Vite', 'Tailwind CSS', 'PostgreSQL'],
-                'image_url' => null,
-                'video_url' => null,
-                'external_url' => null,
                 'sort_order' => 3,
             ],
             [

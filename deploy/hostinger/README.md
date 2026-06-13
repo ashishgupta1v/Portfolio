@@ -47,6 +47,7 @@ Recommended runtime choices for the current app:
 - `CACHE_STORE=file`
 - `QUEUE_CONNECTION=sync`
 - `DB_CONNECTION=sqlite`
+- `DB_DATABASE=/var/www/portfolio/shared/database/database.sqlite`
 
 ## Manual VPS setup
 
@@ -123,11 +124,23 @@ nano .env
 
 Paste the generated key into `APP_KEY`.
 
+One-time admin panel setup for lead management:
+
+```bash
+ADMIN_PANEL_USER=<your-admin-username>
+ADMIN_PANEL_PASS=<your-strong-password>
+```
+
+Set these only on the server `.env` file. Do not commit real admin credentials into the repository.
+
 If you are using SQLite:
 
 ```bash
-touch database/database.sqlite
+mkdir -p /var/www/portfolio/shared/database
+touch /var/www/portfolio/shared/database/database.sqlite
 ```
+
+The deploy script also validates and creates the SQLite file from `.env` before running migrations.
 
 ### 6. Install app dependencies and build assets
 
