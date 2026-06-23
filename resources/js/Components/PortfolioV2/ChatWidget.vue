@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
 import { MessageSquare, X, Send, Sparkles } from 'lucide-vue-next'
+import axios from 'axios'
 
 const isOpen = ref(false)
 const input = ref('')
@@ -31,20 +32,31 @@ const sendMessage = async () => {
     
     isTyping.value = true
     
-    // Simulate API call to LLM
-    setTimeout(() => {
-        let reply = "I'm a placeholder assistant. Please configure my API endpoint!"
-        const lowerMsg = userMsg.toLowerCase()
-        if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email')) {
-            reply = "You can contact Ashish at ashishgupta.dev@example.com or reach out to him on LinkedIn!"
-        } else if (lowerMsg.includes('tech') || lowerMsg.includes('stack') || lowerMsg.includes('skill')) {
-            reply = "Ashish specializes in Vue 3, Laravel 11, TypeScript, Three.js, and GenAI."
+    try {
+        const response = await axios.post('/chat', {
+            messages: messages.value
+        })
+        
+        messages.value.push({ 
+            role: 'assistant', 
+            content: response.data.reply 
+        })
+    } catch (error: any) {
+        console.error('Failed to get response from AI assistant:', error)
+        
+        let errorMessage = "Sorry, I am having trouble connecting to my system. Please try again, or contact Ashish directly at ashishgupta1v@gmail.com!"
+        if (error.response?.data?.error) {
+            errorMessage = error.response.data.error
         }
         
-        messages.value.push({ role: 'assistant', content: reply })
+        messages.value.push({
+            role: 'assistant',
+            content: errorMessage
+        })
+    } finally {
         isTyping.value = false
         scrollToBottom()
-    }, 1200)
+    }
 }
 </script>
 
