@@ -20,6 +20,11 @@
         @routes
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
+
+        @if(request()->routeIs('portfolio'))
+            <link rel="preload" as="image" href="/sequence/0000.webp" fetchpriority="high">
+            <link rel="preload" as="image" href="/sequence/0001.webp" fetchpriority="high">
+        @endif
     </head>
     <body>
         @inertia

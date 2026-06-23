@@ -40,25 +40,40 @@ const capabilities = [
 onMounted(() => {
     if (!sectionRef.value) return
 
-    gsap.from('.combo-eyebrow', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-        y: 20, opacity: 0, duration: 0.65, ease: 'power3.out',
-    })
+    const q = gsap.utils.selector(sectionRef.value)
 
-    gsap.from('.combo-heading-line', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
-        y: 48, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out',
-    })
+    const eyebrow = q('.combo-eyebrow')
+    if (eyebrow.length) {
+        gsap.from(eyebrow, {
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
+            y: 20, opacity: 0, duration: 0.65, ease: 'power3.out',
+        })
+    }
 
-    gsap.from('.combo-para', {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 72%' },
-        y: 32, opacity: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out',
-    })
+    const heading = q('.combo-heading-line')
+    if (heading.length) {
+        gsap.from(heading, {
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
+            y: 48, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out',
+        })
+    }
 
-    gsap.from('.combo-card', {
-        scrollTrigger: { trigger: '.combo-cards', start: 'top 78%' },
-        y: 44, opacity: 0, duration: 0.72, stagger: 0.12, ease: 'power3.out',
-    })
+    const paras = q('.combo-para')
+    if (paras.length) {
+        gsap.from(paras, {
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 72%' },
+            y: 32, opacity: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out',
+        })
+    }
+
+    const cards = q('.combo-card')
+    const cardsContainer = q('.combo-cards')
+    if (cards.length && cardsContainer.length) {
+        gsap.from(cards, {
+            scrollTrigger: { trigger: cardsContainer, start: 'top 78%' },
+            y: 44, opacity: 0, duration: 0.72, stagger: 0.12, ease: 'power3.out',
+        })
+    }
 })
 </script>
 

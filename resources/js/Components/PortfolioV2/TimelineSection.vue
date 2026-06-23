@@ -46,16 +46,20 @@ function formatDateRange(exp: Experience): string {
 onMounted(() => {
     if (!sectionRef.value) return
 
-    const titleWords = sectionRef.value.querySelectorAll('.tl-title-word')
-    gsap.from(titleWords, {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-        y: 60, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out',
-    })
+    const q = gsap.utils.selector(sectionRef.value)
+
+    const titleWords = q('.section-title-word')
+    if (titleWords.length) {
+        gsap.from(titleWords, {
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
+            y: 60, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out',
+        })
+    }
 
     /* Center line grows */
-    const progressEl = sectionRef.value.querySelector('.center-progress')
-    const gridEl = sectionRef.value.querySelector('.timeline-grid')
-    if (progressEl && gridEl) {
+    const progressEl = q('.center-progress')
+    const gridEl = q('.timeline-grid')
+    if (progressEl.length && gridEl.length) {
         gsap.to(progressEl, {
             scrollTrigger: {
                 trigger: gridEl,
@@ -68,8 +72,8 @@ onMounted(() => {
     }
 
     /* Row stagger */
-    const rows = sectionRef.value.querySelectorAll('.tl-row')
-    if (rows.length && gridEl) {
+    const rows = q('.tl-row')
+    if (rows.length && gridEl.length) {
         gsap.from(rows, {
             scrollTrigger: { trigger: gridEl, start: 'top 72%' },
             y: 40, opacity: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out',

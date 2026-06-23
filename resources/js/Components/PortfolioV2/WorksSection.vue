@@ -26,21 +26,27 @@ onMounted(() => {
         
         const q = gsap.utils.selector(sectionRef.value)
         
-        gsap.fromTo(q('.section-title-word'), 
-            { y: 50, opacity: 0 },
-            {
-                scrollTrigger: { trigger: sectionRef.value, start: 'top 85%' },
-                y: 0, opacity: 1, duration: 0.9, stagger: 0.1, ease: 'power3.out'
-            }
-        )
+        const titleWords = q('.section-title-word')
+        if (titleWords.length) {
+            gsap.fromTo(titleWords, 
+                { y: 50, opacity: 0 },
+                {
+                    scrollTrigger: { trigger: sectionRef.value, start: 'top 85%' },
+                    y: 0, opacity: 1, duration: 0.9, stagger: 0.1, ease: 'power3.out'
+                }
+            )
+        }
 
-        gsap.fromTo(q('.work-row'), 
-            { y: 40, opacity: 0 },
-            {
-                scrollTrigger: { trigger: sectionRef.value, start: 'top 70%' },
-                y: 0, opacity: 1, duration: 0.65, stagger: 0.12, ease: 'power3.out'
-            }
-        )
+        const rows = q('.work-row')
+        if (rows.length) {
+            gsap.fromTo(rows, 
+                { y: 40, opacity: 0 },
+                {
+                    scrollTrigger: { trigger: sectionRef.value, start: 'top 70%' },
+                    y: 0, opacity: 1, duration: 0.65, stagger: 0.12, ease: 'power3.out'
+                }
+            )
+        }
     }, 150)
 })
 </script>
