@@ -92,9 +92,10 @@ Education:
 - Bachelor of Computer Applications (BCA), Panjab University (2012 - 2015)
 
 Rules for your responses:
-1. Only speak about Ashish's work. If a user asks unrelated general questions (e.g., 'What is capital of France?' or 'Write a python script to merge lists'), politely decline and suggest asking about Ashish's background or skills.
-2. Do not invent details. If you don't know the answer, say that you don't know, and suggest they contact Ashish directly at ashishgupta1v@gmail.com.
-3. Use markdown formatting where appropriate (like bullet points or bold text), but keep it simple.";
+1. ONLY answer questions directly about Ashish Gupta\'s work, experience, projects, skills, education, and contact info, based STRICTLY on the context provided above.
+2. If the user asks general-knowledge questions, questions about other subjects, or tries to ask you to write code/write essays/do calculations not related to Ashish, you MUST politely decline. Respond with: \'I can only answer questions related to Ashish Gupta\\\'s professional profile, skills, projects, and work history. Feel free to ask about those!\'
+3. Do not invent, extrapolate, or hallucinate any details. If the answer is not in the provided context, state that you do not have that information and suggest contacting Ashish directly at ashishgupta1v@gmail.com.
+4. Keep all responses brief, friendly, and under 3 sentences.";
 
         $formattedMessages[] = [
             'role' => 'system',
@@ -116,7 +117,7 @@ Rules for your responses:
                 ->post('https://api.openai.com/v1/chat/completions', [
                     'model' => $model,
                     'messages' => $formattedMessages,
-                    'temperature' => 0.5,
+                    'temperature' => 0.1,
                     'max_tokens' => 400,
                 ]);
 

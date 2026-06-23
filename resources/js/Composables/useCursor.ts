@@ -2,8 +2,10 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 
 export function useCursor() {
-    const cursorX = ref(0)
-    const cursorY = ref(0)
+    const dotX = ref(0)
+    const dotY = ref(0)
+    const ringX = ref(0)
+    const ringY = ref(0)
     const cursorScale = ref(1)
     const cursorVisible = ref(true)
 
@@ -14,6 +16,10 @@ export function useCursor() {
     function onMouseMove(e: MouseEvent) {
         targetX = e.clientX
         targetY = e.clientY
+
+        // Update dot position instantly to match the hardware cursor speed
+        dotX.value = targetX
+        dotY.value = targetY
 
         const target = e.target as HTMLElement
         const cursorType = target?.closest('[data-cursor]')?.getAttribute('data-cursor')
@@ -36,8 +42,9 @@ export function useCursor() {
     }
 
     function updatePosition() {
-        cursorX.value += (targetX - cursorX.value) * 0.15
-        cursorY.value += (targetY - cursorY.value) * 0.15
+        // Smoothly interpolate the cursor ring
+        ringX.value += (targetX - ringX.value) * 0.15
+        ringY.value += (targetY - ringY.value) * 0.15
         rafId = requestAnimationFrame(updatePosition)
     }
 
@@ -55,5 +62,5 @@ export function useCursor() {
         if (rafId) cancelAnimationFrame(rafId)
     })
 
-    return { cursorX, cursorY, cursorScale, cursorVisible }
+    return { dotX, dotY, ringX, ringY, cursorScale, cursorVisible }
 }
