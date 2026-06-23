@@ -26,6 +26,10 @@ fi
 echo "Running migrations..."
 php artisan migrate --force
 
+# Seed the database
+echo "Seeding database..."
+php artisan db:seed --force
+
 # Warm Laravel config/route caches for production performance
 echo "Warming caches..."
 php artisan config:cache
