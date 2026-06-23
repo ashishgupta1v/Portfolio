@@ -6,7 +6,9 @@ RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --ignore-platform-reqs
+
 
 # Stage 2: Build Node.js assets
 FROM node:20-alpine AS build
