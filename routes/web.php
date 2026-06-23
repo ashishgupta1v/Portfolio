@@ -17,6 +17,10 @@ Route::post('/contact', ContactController::class)
 	->middleware('throttle:contact-submissions')
 	->name('contact.submit');
 
+Route::post('/chat', \App\Http\Controllers\Portfolio\ChatController::class)
+	->middleware('throttle:60,1')
+	->name('portfolio.chat');
+
 Route::prefix('admin')
 	->middleware(['admin.access'])
 	->group(function (): void {
