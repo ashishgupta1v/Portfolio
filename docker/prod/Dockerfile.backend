@@ -31,9 +31,10 @@ COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 # Adjust permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Remove frontend assets and docker configs from backend container (optional but good practice)
-RUN rm -rf node_modules resources/css resources/js docker
+# Copy and fix entrypoint (handles CRLF from Windows editors)
+COPY docker/prod/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["/entrypoint.sh"]
