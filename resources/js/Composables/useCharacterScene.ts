@@ -292,16 +292,17 @@ export function useCharacterScene(options: CharacterSceneOptions) {
     }
 
     function animate() {
-        if (!renderer) return
+        const activeRenderer = renderer
+        if (!activeRenderer) return
         
-        renderer.setAnimationLoop(() => {
+        activeRenderer.setAnimationLoop(() => {
             const delta = clock.getDelta()
             if (mixer) mixer.update(delta)
 
             updateHeadRotation()
 
             if (scene && camera) {
-                renderer.render(scene, camera)
+                activeRenderer.render(scene, camera)
             }
         })
     }
