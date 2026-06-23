@@ -97,8 +97,6 @@ onUnmounted(() => {
         <meta name="twitter:description" :content="profile.bio" />
         <meta name="twitter:image" content="https://www.ashishgupta.dev/images/og-cover.png" />
         <link rel="canonical" href="https://www.ashishgupta.dev/" />
-        <link rel="preload" as="image" href="/sequence/0000.webp" fetchpriority="high" />
-        <link rel="preload" as="image" href="/sequence/0001.webp" fetchpriority="high" />
         <component is="script" type="application/ld+json" v-html="personSchema" />
         <component is="script" type="application/ld+json" v-html="websiteSchema" />
     </Head>
