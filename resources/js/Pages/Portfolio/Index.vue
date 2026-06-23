@@ -13,6 +13,7 @@ const WorksSection = defineAsyncComponent(() => import('@/Components/PortfolioV2
 const FeaturedCaseStudySection = defineAsyncComponent(() => import('@/Components/PortfolioV2/FeaturedCaseStudySection.vue'))
 const TechStackSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TechStackSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/ContactSection.vue'))
+import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
 
 const props = defineProps<PortfolioPageProps>()
 
@@ -133,6 +134,8 @@ onUnmounted(() => {
             :social-links="socialLinks"
             :educations="educations"
         />
+        
+        <ChatWidget />
     </div>
 </template>
 
