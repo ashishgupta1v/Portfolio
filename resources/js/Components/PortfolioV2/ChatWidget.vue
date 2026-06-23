@@ -127,25 +127,26 @@ const sendMessage = async () => {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 50%;
-    background: #0ea5e9;
+    background: #14b8a6;
     color: white;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 4px 14px rgba(20, 184, 166, 0.4);
     transition: all 0.3s ease;
 }
 
 .chat-toggle-btn:hover {
     transform: scale(1.05);
-    background: #0284c7;
+    background: #0d9488;
 }
 
 .chat-toggle-btn.is-open {
-    background: #334155;
-    box-shadow: 0 4px 14px rgba(51, 65, 85, 0.4);
+    background: #1e293b;
+    border: 1px solid rgba(94, 234, 212, 0.3);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.4);
 }
 
 .chat-window {
@@ -173,7 +174,7 @@ const sendMessage = async () => {
 }
 
 .header-icon {
-    color: #38bdf8;
+    color: #5eead4;
 }
 
 .header-text h3 {
@@ -217,7 +218,7 @@ const sendMessage = async () => {
 
 .bubble-user {
     align-self: flex-end;
-    background: #0ea5e9;
+    background: #14b8a6;
     color: white;
     border-bottom-right-radius: 0.2rem;
 }
@@ -272,11 +273,11 @@ const sendMessage = async () => {
 }
 
 .chat-input-area input:focus {
-    border-color: #38bdf8;
+    border-color: #5eead4;
 }
 
 .chat-input-area button {
-    background: #38bdf8;
+    background: #5eead4;
     color: #0f172a;
     border: none;
     width: 2.2rem;
@@ -290,7 +291,7 @@ const sendMessage = async () => {
 }
 
 .chat-input-area button:hover:not(:disabled) {
-    background: #0ea5e9;
+    background: #14b8a6;
 }
 
 .chat-input-area button:disabled {
