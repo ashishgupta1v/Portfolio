@@ -10,7 +10,17 @@ RUN composer install \
     --optimize-autoloader \
     --ignore-platform-reqs
 
-# Stage 2: Production PHP-FPM
+# Stage 2: Build Node.js assets (needed so backend's manifest.json matches frontend)
+FROM node:20-alpine AS frontend-build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+# Copy vendor directory from composer stage so Vite/TypeScript can resolve Ziggy
+COPY --from=vendor /app/vendor/ ./vendor/
+RUN npm run build
+
+# Stage 3: Production PHP-FPM
 FROM php:8.3-fpm
 
 # Install system dependencies + libicu-dev for intl extension
@@ -28,6 +38,9 @@ COPY . .
 # Copy vendor directory from vendor stage
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 
+# Copy built public assets from frontend-build stage (so manifest.json matches Nginx)
+COPY --from=frontend-build /app/public/build/ /var/www/html/public/build/
+
 # Adjust permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -38,3 +51,4 @@ RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 EXPOSE 9000
 
 ENTRYPOINT ["/entrypoint.sh"]
+
