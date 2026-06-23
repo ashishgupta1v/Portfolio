@@ -22,5 +22,6 @@ Route::prefix('admin')
 	->group(function (): void {
 		Route::get('/leads', [LeadManagementController::class, 'index'])->name('admin.leads.index');
 		Route::patch('/leads/{lead}/status', [LeadManagementController::class, 'updateStatus'])->name('admin.leads.status.update');
+		Route::get('/telemetry', fn() => \Inertia\Inertia::render('Admin/Telemetry'))->name('admin.telemetry');
 	});
 

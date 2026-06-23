@@ -1,4 +1,14 @@
-# Stage 1: Build Node.js assets
+# Stage 1: Build Composer dependencies (needed for Ziggy route helper in frontend)
+FROM composer:2 AS composer
+WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader
+
+# Stage 2: Build Node.js assets
 FROM node:20-alpine AS build
 WORKDIR /app
 
@@ -8,11 +18,16 @@ RUN npm ci
 
 # Copy remaining application files
 COPY . .
+
+# Copy vendor directory from composer stage so Vite/TypeScript can resolve Ziggy
+COPY --from=composer /app/vendor/ ./vendor/
+
 # Build the Vite assets (compiles to public/build)
 RUN npm run build
 
-# Stage 2: Production Nginx
+# Stage 3: Production Nginx
 FROM nginx:alpine
+
 
 # Copy built frontend assets and public directory from build stage
 COPY --from=build /app/public /var/www/html/public

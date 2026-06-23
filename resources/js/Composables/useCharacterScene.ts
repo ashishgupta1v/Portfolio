@@ -3,8 +3,10 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three-stdlib'
 import { DRACOLoader } from 'three-stdlib'
 import { RGBELoader } from 'three-stdlib'
+import { ARButton } from 'three-stdlib'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { disposeThreeResource } from '@/Utils/threeDispose'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -30,6 +32,7 @@ export function useCharacterScene(options: CharacterSceneOptions) {
     let animationId: number | null = null
     let mouse = { x: 0, y: 0 }
     let interpolation = { x: 0.04, y: 0.04 }
+    let arButton: HTMLElement | null = null
     const triggers: ScrollTrigger[] = []
 
     function initScene() {
@@ -50,6 +53,14 @@ export function useCharacterScene(options: CharacterSceneOptions) {
         renderer.toneMappingExposure = 1
         renderer.shadowMap.enabled = true
         renderer.shadowMap.type = THREE.PCFSoftShadowMap
+        renderer.xr.enabled = true
+
+        arButton = ARButton.createButton(renderer)
+        // Add styling so it sits cleanly on mobile
+        arButton.style.position = 'fixed'
+        arButton.style.bottom = '20px'
+        arButton.style.zIndex = '9999'
+        document.body.appendChild(arButton)
 
         // Scene
         scene = new THREE.Scene()
@@ -281,16 +292,18 @@ export function useCharacterScene(options: CharacterSceneOptions) {
     }
 
     function animate() {
-        animationId = requestAnimationFrame(animate)
+        if (!renderer) return
+        
+        renderer.setAnimationLoop(() => {
+            const delta = clock.getDelta()
+            if (mixer) mixer.update(delta)
 
-        const delta = clock.getDelta()
-        if (mixer) mixer.update(delta)
+            updateHeadRotation()
 
-        updateHeadRotation()
-
-        if (renderer && scene && camera) {
-            renderer.render(scene, camera)
-        }
+            if (scene && camera) {
+                renderer.render(scene, camera)
+            }
+        })
     }
 
     function dispose() {
@@ -300,8 +313,12 @@ export function useCharacterScene(options: CharacterSceneOptions) {
         window.removeEventListener('mousemove', onMouseMove)
         window.removeEventListener('touchmove', onTouchMove)
         window.removeEventListener('resize', onResize)
+        if (scene) disposeThreeResource(scene)
+        renderer?.setAnimationLoop(null)
         renderer?.dispose()
-        scene?.clear()
+        if (arButton && arButton.parentNode) {
+            arButton.parentNode.removeChild(arButton)
+        }
     }
 
     onMounted(initScene)

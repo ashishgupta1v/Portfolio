@@ -2,7 +2,10 @@
 import { Link, router } from '@inertiajs/vue3'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
-import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X } from 'lucide-vue-next'
+import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X, Settings2 } from 'lucide-vue-next'
+import { useA11y } from '@/Composables/useA11y'
+
+const { reduceMotion, toggleMotion } = useA11y()
 
 const props = defineProps<{
     initials: string
@@ -65,6 +68,10 @@ onUnmounted(() => {
                 <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
                 <Link href="/engagements" class="nav-link nav-link-anchor">ENGAGEMENTS</Link>
                 <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
+                <button class="nav-link a11y-toggle" @click="toggleMotion" :title="reduceMotion ? 'Enable Animations' : 'Reduce Motion'">
+                    <Settings2 :size="16" /> 
+                    <span class="sr-only">Toggle Motion</span>
+                </button>
             </div>
 
             <!-- Hamburger button (mobile) -->
@@ -84,6 +91,9 @@ onUnmounted(() => {
                 <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
                 <Link href="/engagements" class="mobile-link" @click="mobileOpen = false">Engagements</Link>
                 <button class="mobile-link" @click="scrollTo('contact')">Contact</button>
+                <button class="mobile-link" @click="toggleMotion">
+                    {{ reduceMotion ? 'Enable Animations' : 'Reduce Motion' }}
+                </button>
                 <div v-if="socialLinks?.length" class="mobile-socials">
                     <a
                         v-for="link in socialLinks"
@@ -210,6 +220,23 @@ onUnmounted(() => {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+}
+
+.a11y-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.a11y-toggle:hover { color: #5eead4; }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 /* ── Social sidebar ── */

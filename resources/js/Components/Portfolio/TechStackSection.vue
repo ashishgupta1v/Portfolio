@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import type { Skill } from '@/types/portfolio'
 import * as THREE from 'three'
 import { useGsap } from '@/Composables/useGsap'
+import { disposeThreeResource } from '@/Utils/threeDispose'
 
 const props = defineProps<{
     skills: Record<string, Skill[]>
@@ -157,8 +158,8 @@ onMounted(() => {
 
 onUnmounted(() => {
     if (animationId) cancelAnimationFrame(animationId)
+    if (scene) disposeThreeResource(scene)
     renderer?.dispose()
-    scene?.clear()
     window.removeEventListener('mousemove', onMouseMove)
     window.removeEventListener('resize', onResize)
 })

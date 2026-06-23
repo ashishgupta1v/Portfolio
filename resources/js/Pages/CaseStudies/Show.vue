@@ -2,6 +2,10 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import type { CaseStudyShowPageProps } from '@/types/caseStudies'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const props = defineProps<CaseStudyShowPageProps>()
 const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
@@ -14,8 +18,44 @@ function updateProgress() {
     const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
     readingProgress.value = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0
 }
-onMounted(() => window.addEventListener('scroll', updateProgress, { passive: true }))
-onUnmounted(() => window.removeEventListener('scroll', updateProgress))
+// DOM Refs for animation
+const heroRef = ref<HTMLElement | null>(null)
+const articleRef = ref<HTMLElement | null>(null)
+const railRef = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    
+    // GSAP Animations
+    const tl = gsap.timeline()
+    if (heroRef.value) {
+        tl.from(heroRef.value.querySelectorAll('.hero-copy > *'), {
+            y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out'
+        })
+        .from(heroRef.value.querySelectorAll('.hero-aside, .signal-band'), {
+            y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out'
+        }, "-=0.4")
+    }
+
+    if (articleRef.value && railRef.value) {
+        ScrollTrigger.create({
+            trigger: articleRef.value,
+            start: 'top 85%',
+            animation: gsap.from(articleRef.value, { y: 40, opacity: 0, duration: 0.8, ease: 'power2.out' })
+        })
+        
+        ScrollTrigger.create({
+            trigger: railRef.value,
+            start: 'top 85%',
+            animation: gsap.from(railRef.value.children, { y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' })
+        })
+    }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', updateProgress)
+    ScrollTrigger.getAll().forEach(t => t.kill())
+})
 
 const articleSchema = computed(() => JSON.stringify({
     '@context': 'https://schema.org',
@@ -68,7 +108,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
         <!-- Reading progress bar -->
         <div class="reading-progress" :style="{ width: readingProgress + '%' }" aria-hidden="true" />
 
-        <header class="hero-shell page-shell">
+        <header class="hero-shell page-shell" ref="heroRef">
             <div class="topbar">
                 <Link href="/" class="brand-link">Ashish Gupta</Link>
                 <div class="topbar-links">
@@ -120,11 +160,11 @@ const breadcrumbSchema = computed(() => JSON.stringify({
         </header>
 
         <main class="page-shell article-shell">
-            <article class="article-card">
+            <article class="article-card" ref="articleRef">
                 <div class="article-prose" v-html="caseStudy.bodyHtml" />
             </article>
 
-            <aside class="article-rail">
+            <aside class="article-rail" ref="railRef">
                 <div class="rail-card">
                     <span class="rail-label">Permission status</span>
                     <p>{{ caseStudy.permissionStatus }}</p>
