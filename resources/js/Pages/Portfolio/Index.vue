@@ -2,11 +2,14 @@
 import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import type { PortfolioPageProps } from '@/types/portfolio'
+import { useDeviceCapability } from '@/Composables/useDeviceCapability'
 import CustomCursor from '@/Components/Portfolio/CustomCursor.vue'
 import NavBar from '@/Components/PortfolioV2/NavBar.vue'
-import ScrollySequence from '@/Components/PortfolioV2/ScrollySequence.vue'
 import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 
+const SceneCanvas = defineAsyncComponent(() => import('@/Components/Scene3D/SceneCanvas.vue'))
+
+const ScrollySequence = defineAsyncComponent(() => import('@/Components/PortfolioV2/ScrollySequence.vue'))
 const AboutSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/AboutSection.vue'))
 const TimelineSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TimelineSection.vue'))
 const WorksSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/WorksSection.vue'))
@@ -16,6 +19,8 @@ const ContactSection = defineAsyncComponent(() => import('@/Components/Portfolio
 import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
 
 const props = defineProps<PortfolioPageProps>()
+
+const { canRun3D, tier } = useDeviceCapability()
 
 const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
 
@@ -58,6 +63,15 @@ function handleHeroProgress(value: number) {
     heroProgress.value = value
 }
 
+function handleSceneReady() {
+    heroReady.value = true
+    heroProgress.value = 100
+}
+
+function handleSceneProgress(percent: number) {
+    heroProgress.value = percent
+}
+
 function handlePageLoaded() {
     pageReady.value = true
 }
@@ -72,7 +86,6 @@ onMounted(() => {
     } else {
         window.addEventListener('load', handlePageLoaded, { once: true })
     }
-
 })
 
 onUnmounted(() => {
@@ -113,26 +126,39 @@ onUnmounted(() => {
             :resume-url="profile.resumeUrl"
         />
 
-        <ScrollySequence
-            :name="profile.name"
-            :title="profile.title"
-            :subtitle="profile.subtitle"
-            :image-url="profile.avatarUrl"
-            @hero-ready="handleHeroReady"
-            @hero-progress="handleHeroProgress"
-        />
+        <!-- 3D Experience for capable devices -->
+        <template v-if="canRun3D">
+            <SceneCanvas
+                v-bind="props"
+                :tier="tier === 'fallback' ? 'full' : tier"
+                @scene-ready="handleSceneReady"
+                @scene-progress="handleSceneProgress"
+            />
+        </template>
 
-        <AboutSection :profile="profile" />
-        <TimelineSection :experiences="experiences" />
-        <WorksSection :projects="projects" />
-        <FeaturedCaseStudySection />
-        <TechStackSection :skills="skills" />
-        <ContactSection
-            :profile="profile"
-            :social-links="socialLinks"
-            :educations="educations"
-        />
-        
+        <!-- 2D Fallback for mobile / no WebGL2 -->
+        <template v-else>
+            <ScrollySequence
+                :name="profile.name"
+                :title="profile.title"
+                :subtitle="profile.subtitle"
+                :image-url="profile.avatarUrl"
+                @hero-ready="handleHeroReady"
+                @hero-progress="handleHeroProgress"
+            />
+
+            <AboutSection :profile="profile" />
+            <TimelineSection :experiences="experiences" />
+            <WorksSection :projects="projects" />
+            <FeaturedCaseStudySection />
+            <TechStackSection :skills="skills" />
+            <ContactSection
+                :profile="profile"
+                :social-links="socialLinks"
+                :educations="educations"
+            />
+        </template>
+
         <ChatWidget />
     </div>
 </template>
