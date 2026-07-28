@@ -10,7 +10,7 @@ export function useProceduralAnimation(boneRefs: BoneRefs) {
     let mouseX = 0
     let mouseY = 0
     let waveActive = false
-    let waveTween: gsap.core.Tween | null = null
+    let waveTween: gsap.core.Timeline | null = null
 
     const initialRotations: Partial<Record<keyof BoneRefs, THREE.Euler>> = {}
     for (const [key, bone] of Object.entries(boneRefs)) {
@@ -32,21 +32,21 @@ export function useProceduralAnimation(boneRefs: BoneRefs) {
         if (waveActive || !boneRefs.rightShoulder || !boneRefs.rightArm || !boneRefs.rightForeArm) return
         waveActive = true
 
-        const tl = gsap.timeline({
+        waveTween = gsap.timeline({
             onComplete: () => {
                 waveActive = false
             },
         })
 
-        tl.to(boneRefs.rightShoulder.rotation, { z: -0.8, duration: 0.4, ease: 'power2.out' })
-        tl.to(boneRefs.rightArm.rotation, { z: -1.2, duration: 0.3, ease: 'power2.out' }, '<0.1')
-        tl.to(boneRefs.rightForeArm.rotation, { z: -0.3, x: 0.4, duration: 0.3, ease: 'power2.out' }, '<0.1')
+        waveTween.to(boneRefs.rightShoulder.rotation, { z: -0.8, duration: 0.4, ease: 'power2.out' })
+        waveTween.to(boneRefs.rightArm.rotation, { z: -1.2, duration: 0.3, ease: 'power2.out' }, '<0.1')
+        waveTween.to(boneRefs.rightForeArm.rotation, { z: -0.3, x: 0.4, duration: 0.3, ease: 'power2.out' }, '<0.1')
 
-        tl.to(boneRefs.rightForeArm.rotation, { x: -0.3, duration: 0.25, ease: 'sine.inOut', yoyo: true, repeat: 3 })
+        waveTween.to(boneRefs.rightForeArm.rotation, { x: -0.3, duration: 0.25, ease: 'sine.inOut', yoyo: true, repeat: 3 })
 
-        tl.to(boneRefs.rightShoulder.rotation, { z: initialRotations.rightShoulder?.z ?? 0, duration: 0.4, ease: 'power2.inOut' })
-        tl.to(boneRefs.rightArm.rotation, { z: initialRotations.rightArm?.z ?? 0, duration: 0.3, ease: 'power2.inOut' }, '<0.1')
-        tl.to(boneRefs.rightForeArm.rotation, { z: initialRotations.rightForeArm?.z ?? 0, x: initialRotations.rightForeArm?.x ?? 0, duration: 0.3, ease: 'power2.inOut' }, '<0.1')
+        waveTween.to(boneRefs.rightShoulder.rotation, { z: initialRotations.rightShoulder?.z ?? 0, duration: 0.4, ease: 'power2.inOut' })
+        waveTween.to(boneRefs.rightArm.rotation, { z: initialRotations.rightArm?.z ?? 0, duration: 0.3, ease: 'power2.inOut' }, '<0.1')
+        waveTween.to(boneRefs.rightForeArm.rotation, { z: initialRotations.rightForeArm?.z ?? 0, x: initialRotations.rightForeArm?.x ?? 0, duration: 0.3, ease: 'power2.inOut' }, '<0.1')
     }
 
     function updateBreathing(elapsed: number) {
