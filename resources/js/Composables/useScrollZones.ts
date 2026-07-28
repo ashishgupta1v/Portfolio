@@ -38,6 +38,8 @@ const ZONE_CAMERAS: Record<ZoneId, { start: CameraKeyframe; end: CameraKeyframe 
 
 const ZONE_ORDER: ZoneId[] = ['workshop', 'screen', 'constellation', 'offering', 'return']
 
+const _lookTarget = new THREE.Vector3()
+
 export function useScrollZones(
     camera: THREE.PerspectiveCamera,
     zones: ZoneGroup[],
@@ -83,18 +85,15 @@ export function useScrollZones(
                         THREE.MathUtils.lerp(cam.start.position[2], cam.end.position[2], zoneProgress),
                     )
 
-                    const lookTarget = new THREE.Vector3(
+                    _lookTarget.set(
                         THREE.MathUtils.lerp(cam.start.lookAt[0], cam.end.lookAt[0], zoneProgress),
                         THREE.MathUtils.lerp(cam.start.lookAt[1], cam.end.lookAt[1], zoneProgress),
                         THREE.MathUtils.lerp(cam.start.lookAt[2], cam.end.lookAt[2], zoneProgress),
                     )
-                    camera.lookAt(lookTarget)
+                    camera.lookAt(_lookTarget)
 
                     camera.fov = THREE.MathUtils.lerp(cam.start.fov, cam.end.fov, zoneProgress)
                     camera.updateProjectionMatrix()
-
-                    const activeZone = zones.find(z => z.id === zoneId)
-                    activeZone?.update(0.016, zoneProgress)
                 },
             },
         })
