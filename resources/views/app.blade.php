@@ -4,9 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#090e14">
-        <meta name="description" content="Ashish Gupta - Full Stack Developer Portfolio">
 
-        <title inertia>{{ config('app.name', 'Ashish Gupta') }}</title>
+        {{-- Rendered server-side: social crawlers never execute the JS that
+             Inertia's <Head> component depends on. --}}
+        @include('partials.seo')
 
         <!-- Favicon / app icons -->
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">

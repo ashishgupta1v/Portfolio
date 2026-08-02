@@ -17,6 +17,11 @@ final class CaseStudyIndexController
 
         $response = Inertia::render('CaseStudies/Index', [
             'caseStudies' => $caseStudies->caseStudies,
+            'seo' => [
+                'title' => 'Case Studies — Ashish Gupta',
+                'description' => 'Detailed write-ups of production systems I have architected and shipped — the constraints, the trade-offs, and the measured outcomes.',
+                'path' => '/case-studies',
+            ],
         ])->toResponse($request);
 
         $response->headers->set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');

@@ -12,6 +12,12 @@ final class EngagementsPageController
 {
     public function __invoke(): InertiaResponse
     {
-        return Inertia::render('Engagements/Index');
+        return Inertia::render('Engagements/Index', [
+            'seo' => [
+                'title' => 'Engagement Models — Ashish Gupta',
+                'description' => 'How I work with clients: fixed-scope builds, embedded architecture support, and modernization engagements for teams carrying legacy systems.',
+                'path' => '/engagements',
+            ],
+        ]);
     }
 }

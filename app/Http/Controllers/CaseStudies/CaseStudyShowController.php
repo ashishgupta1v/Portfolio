@@ -17,8 +17,16 @@ final class CaseStudyShowController
 
         abort_if($caseStudy === null, 404);
 
+        $data = $caseStudy->toArray();
+
         $response = Inertia::render('CaseStudies/Show', [
-            'caseStudy' => $caseStudy->toArray(),
+            'caseStudy' => $data,
+            'seo' => [
+                'title' => ($data['title'] ?? 'Case Study') . ' — Ashish Gupta',
+                'description' => $data['summary'] ?? '',
+                'path' => '/case-studies/' . ($data['slug'] ?? $slug),
+                'type' => 'article',
+            ],
         ])->toResponse($request);
 
         $response->headers->set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');

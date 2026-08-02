@@ -9,7 +9,10 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 const appName = import.meta.env.VITE_APP_NAME || 'Ashish Gupta';
 
 createInertiaApp({
-    title: (title) => title ? `${title} - ${appName}` : appName,
+    // Page titles already carry the name (e.g. "Case Studies — Ashish Gupta"),
+    // and the server-rendered <title> has no suffix — appending appName here
+    // made the tab title change on hydration and read "… - AshishGupta".
+    title: (title) => title || appName,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
