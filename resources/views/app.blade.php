@@ -3,14 +3,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#0a0e17">
+        <meta name="theme-color" content="#090e14">
         <meta name="description" content="Ashish Gupta - Full Stack Developer Portfolio">
 
         <title inertia>{{ config('app.name', 'Ashish Gupta') }}</title>
-        
-        <!-- Favicon -->
+
+        <!-- Favicon / app icons -->
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="apple-touch-icon" href="/images/icon-192.png">
+
+        <!-- PWA -->
+        <link rel="manifest" href="/manifest.json">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="Ashish Gupta">
 
         <!-- Fonts (self-hosted — no third-party round-trip) -->
         <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -26,5 +32,15 @@
     </head>
     <body>
         @inertia
+
+        @production
+            <script>
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', () => {
+                        navigator.serviceWorker.register('/sw.js').catch(() => {});
+                    });
+                }
+            </script>
+        @endproduction
     </body>
 </html>
