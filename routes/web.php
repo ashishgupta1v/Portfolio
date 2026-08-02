@@ -17,8 +17,10 @@ Route::post('/contact', ContactController::class)
 	->middleware('throttle:contact-submissions')
 	->name('contact.submit');
 
+// 60/min was far more than a human conversation needs on a token-billed,
+// unauthenticated endpoint. 15/min still feels instant while capping abuse.
 Route::post('/chat', \App\Http\Controllers\Portfolio\ChatController::class)
-	->middleware('throttle:60,1')
+	->middleware('throttle:15,1')
 	->name('portfolio.chat');
 
 Route::prefix('admin')

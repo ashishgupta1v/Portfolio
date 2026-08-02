@@ -11,15 +11,28 @@ use Illuminate\Support\Facades\Log;
 
 final class ChatController
 {
+    /**
+     * Number of trailing messages forwarded to the model. The endpoint is
+     * unauthenticated and billed per token, so history is capped here rather
+     * than trusting whatever the client posts.
+     */
+    private const MAX_HISTORY = 10;
+
+    /** Per-message character cap, enforced before anything reaches the model. */
+    private const MAX_CONTENT_LENGTH = 1000;
+
     public function __invoke(Request $request): JsonResponse
     {
         $request->validate([
-            'messages' => ['required', 'array'],
+            'messages' => ['required', 'array', 'max:40'],
             'messages.*.role' => ['required', 'string', 'in:user,assistant'],
-            'messages.*.content' => ['required', 'string'],
+            'messages.*.content' => ['required', 'string', 'max:' . self::MAX_CONTENT_LENGTH],
         ]);
 
-        $messages = $request->input('messages');
+        // Keep only the tail of the conversation: cost scales with input
+        // tokens, and older turns add little for a scoped Q&A assistant.
+        $messages = array_slice($request->input('messages'), -self::MAX_HISTORY);
+
         $apiKey = config('services.openai.key');
 
         if (! $apiKey) {
@@ -37,7 +50,7 @@ final class ChatController
             if (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'phone')) {
                 $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, call him at +91-9087021592, or connect on LinkedIn (https://www.linkedin.com/in/ashishgupta1v/).";
             } elseif (str_contains($lastUserMessage, 'tech') || str_contains($lastUserMessage, 'stack') || str_contains($lastUserMessage, 'skill') || str_contains($lastUserMessage, 'framework')) {
-                $reply = "Ashish is a VILT Stack Specialist (Vue 3, Inertia.js, Laravel 12, Tailwind CSS) with 9+ years of experience. He is also skilled in TypeScript, Node.js, PostgreSQL, Docker, and AWS.";
+                $reply = "Ashish is a VILT Stack Specialist (Vue 3, Inertia.js, Laravel 13, Tailwind CSS) with 9+ years of experience. He is also skilled in TypeScript, Node.js, PostgreSQL, Docker, and AWS.";
             } elseif (str_contains($lastUserMessage, 'experience') || str_contains($lastUserMessage, 'work') || str_contains($lastUserMessage, 'job') || str_contains($lastUserMessage, 'infosys')) {
                 $reply = "Ashish is currently a Lead Product Engineer & Architect at Infosys. He has also worked at Capital Numbers Infotech, Logiware Inc., and TCS, specializing in modernizing legacy monoliths and designing domain-driven systems.";
             }

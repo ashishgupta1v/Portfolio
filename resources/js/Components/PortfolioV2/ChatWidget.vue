@@ -22,33 +22,49 @@ const scrollToBottom = async () => {
     }
 }
 
+// Mirrors the server-side caps in ChatController.
+const MAX_HISTORY = 10
+const MAX_INPUT_LENGTH = 1000
+
 const sendMessage = async () => {
-    if (!input.value.trim()) return
-    
-    const userMsg = input.value.trim()
+    // Guard re-entry: without this, a fast double-submit fires two requests
+    // and interleaves two replies into the transcript.
+    if (isTyping.value) return
+
+    const userMsg = input.value.trim().slice(0, MAX_INPUT_LENGTH)
+    if (!userMsg) return
+
     messages.value.push({ role: 'user', content: userMsg })
     input.value = ''
     scrollToBottom()
-    
+
     isTyping.value = true
-    
+
     try {
         const response = await axios.post('/chat', {
-            messages: messages.value
+            // Send only the trailing turns. The server caps this too, but
+            // there is no reason to put the whole transcript on the wire.
+            messages: messages.value.slice(-MAX_HISTORY)
         })
-        
+
         messages.value.push({ 
             role: 'assistant', 
             content: response.data.reply 
         })
     } catch (error: any) {
         console.error('Failed to get response from AI assistant:', error)
-        
+
         let errorMessage = "Sorry, I am having trouble connecting to my system. Please try again, or contact Ashish directly at ashishgupta1v@gmail.com!"
-        if (error.response?.data?.error) {
+
+        if (error.response?.status === 429) {
+            // Laravel's throttle middleware replies with `message`, not `error`,
+            // so this would otherwise surface as a generic connection failure.
+            errorMessage = "That's a lot of questions at once! Give me a moment and try again."
+        } else if (error.response?.data?.error) {
             errorMessage = error.response.data.error
         }
-        
+
+
         messages.value.push({
             role: 'assistant',
             content: errorMessage
@@ -100,10 +116,13 @@ const sendMessage = async () => {
                 </div>
                 
                 <div class="chat-input-area">
-                    <input 
-                        v-model="input" 
-                        type="text" 
-                        placeholder="Ask a question..." 
+                    <input
+                        v-model="input"
+                        type="text"
+                        :maxlength="MAX_INPUT_LENGTH"
+                        :disabled="isTyping"
+                        placeholder="Ask a question..."
+                        aria-label="Ask Ashish's AI assistant a question"
                         @keyup.enter="sendMessage"
                     />
                     <button @click="sendMessage" :disabled="!input.trim() || isTyping">
