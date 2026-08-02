@@ -8,6 +8,7 @@ use App\Http\Requests\ContactRequest;
 use App\Mail\ContactInquiry;
 use App\Models\ContactInquiryLead;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 final class ContactController
@@ -54,25 +55,39 @@ final class ContactController
             ],
         ]);
 
-        Mail::to(config('mail.contact_address', 'ashishgupta1v@gmail.com'))
-            ->send(new ContactInquiry(
-                leadId: $lead->id,
-                senderName: $payload['name'],
-                senderEmail: $payload['email'],
-                budget: (string) ($payload['budget'] ?? ''),
-                projectType: $payload['project_type'],
-                timeline: (string) ($payload['timeline'] ?? ''),
-                leadScore: $score,
-                leadStatus: $status,
-                message: $payload['message'],
-                sourcePage: $sourcePage,
-                referrerUrl: $referrerUrl,
-                utmSource: (string) ($payload['utm_source'] ?? ''),
-                utmMedium: (string) ($payload['utm_medium'] ?? ''),
-                utmCampaign: (string) ($payload['utm_campaign'] ?? ''),
-            ));
+        // The lead is already persisted above, so the enquiry is captured
+        // whether or not the notification email goes out. Letting a transient
+        // SMTP failure bubble would 500 the visitor *after* a successful
+        // capture — they would assume it failed and either give up or
+        // resubmit, duplicating the lead.
+        try {
+            Mail::to(config('mail.contact_address', 'ashishgupta1v@gmail.com'))
+                ->send(new ContactInquiry(
+                    leadId: $lead->id,
+                    senderName: $payload['name'],
+                    senderEmail: $payload['email'],
+                    budget: (string) ($payload['budget'] ?? ''),
+                    projectType: $payload['project_type'],
+                    timeline: (string) ($payload['timeline'] ?? ''),
+                    leadScore: $score,
+                    leadStatus: $status,
+                    message: $payload['message'],
+                    sourcePage: $sourcePage,
+                    referrerUrl: $referrerUrl,
+                    utmSource: (string) ($payload['utm_source'] ?? ''),
+                    utmMedium: (string) ($payload['utm_medium'] ?? ''),
+                    utmCampaign: (string) ($payload['utm_campaign'] ?? ''),
+                ));
+        } catch (\Throwable $e) {
+            // Loud in the logs, silent to the visitor — the lead is in the
+            // database and visible in /admin/leads regardless.
+            Log::error('Contact notification email failed to send.', [
+                'lead_id' => $lead->id,
+                'exception' => $e->getMessage(),
+            ]);
+        }
 
-        return back();
+        return back()->with('success', 'Thanks — your message is in. I read every enquiry personally and will reply within 24 hours.');
     }
 
     private function calculateLeadScore(string $budget, string $projectType, string $timeline, bool $hasAttribution): int

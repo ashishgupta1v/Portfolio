@@ -44,10 +44,16 @@ const form = useForm({
     fbclid: '',
 })
 
+// Prefer the server's own confirmation over a hardcoded client string, so the
+// success state reflects what actually happened server-side.
+const FALLBACK_SUCCESS = "Message sent — I'll get back to you within a business day."
+const successMessage = ref(FALLBACK_SUCCESS)
+
 function submitContact() {
     form.post('/contact', {
         preserveScroll: true,
-        onSuccess: () => {
+        onSuccess: (page: any) => {
+            successMessage.value = page?.props?.flash?.success ?? FALLBACK_SUCCESS
             submitted.value = true
             form.reset()
             form.form_started_at = Date.now()
@@ -184,8 +190,8 @@ onMounted(() => {
             <!-- Contact Form -->
             <div class="ct-form-row">
                 <h3 class="form-title">Send a message</h3>
-                <div v-if="submitted" class="form-success">
-                    <p>Message sent — I'll get back to you within a business day.</p>
+                <div v-if="submitted" class="form-success" role="status" aria-live="polite">
+                    <p>{{ successMessage }}</p>
                     <div class="next-steps">
                         <a href="/engagements" class="next-step-link">Review Engagement Models</a>
                         <a :href="whatsappHref" target="_blank" rel="noopener noreferrer" class="next-step-link">Chat on WhatsApp</a>
