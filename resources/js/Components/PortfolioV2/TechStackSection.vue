@@ -58,7 +58,12 @@ const bubbleRefs: HTMLElement[] = []
 const state: BubbleState[] = []
 
 let rafId: number | null = null
-let startTime = 0
+let observer: IntersectionObserver | null = null
+
+// The physics loop is O(n²) over 27 bubbles (351 pair checks) plus a DOM
+// write per bubble, every frame. Gate it on the section actually being
+// on-screen and the tab being focused so it costs nothing the rest of the time.
+let onScreen = false
 
 const mouse = {
     x: 0,
@@ -102,17 +107,19 @@ function initCluster() {
             r,
         })
     }
-
-    startTime = Date.now()
 }
 
 function animate() {
     const field = bubbleFieldRef.value
-    if (!field) return
+    if (!field) {
+        // Keep the loop alive — the ref can be transiently null across a
+        // re-render, and bailing outright would kill the animation for good.
+        rafId = requestAnimationFrame(animate)
+        return
+    }
 
     const w = field.clientWidth
     const h = field.clientHeight
-    const t = (Date.now() - startTime) / 1000
 
     for (let i = 0; i < state.length; i++) {
         const b = state[i]
@@ -218,15 +225,49 @@ function onResize() {
     initCluster()
 }
 
+function startLoop() {
+    if (rafId !== null) return
+    if (!onScreen || document.hidden) return
+    rafId = requestAnimationFrame(animate)
+}
+
+function stopLoop() {
+    if (rafId === null) return
+    cancelAnimationFrame(rafId)
+    rafId = null
+}
+
+function onVisibilityChange() {
+    if (document.hidden) stopLoop()
+    else startLoop()
+}
+
 onMounted(() => {
     initCluster()
-    animate()
+
+    observer = new IntersectionObserver(
+        ([entry]) => {
+            onScreen = entry.isIntersecting
+            if (onScreen) startLoop()
+            else stopLoop()
+        },
+        // Start a little before the section scrolls in, so the cluster has
+        // already settled by the time it is actually looked at.
+        { rootMargin: '200px 0px' }
+    )
+
+    if (sectionRef.value) observer.observe(sectionRef.value)
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
     window.addEventListener('resize', onResize)
 })
 
 onUnmounted(() => {
+    stopLoop()
+    observer?.disconnect()
+    observer = null
+    document.removeEventListener('visibilitychange', onVisibilityChange)
     window.removeEventListener('resize', onResize)
-    if (rafId) cancelAnimationFrame(rafId)
 })
 </script>
 
