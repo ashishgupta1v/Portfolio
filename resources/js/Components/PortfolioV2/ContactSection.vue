@@ -176,7 +176,7 @@ onMounted(() => {
                     <p class="credit-stack">
                         Built with VILT Stack
                         <br />
-                        <span class="stack-detail">Vue 3 · Inertia.js · Laravel 12 · Tailwind CSS</span>
+                        <span class="stack-detail">Vue 3 · Inertia.js · Laravel 13 · Tailwind CSS</span>
                     </p>
                 </div>
             </div>

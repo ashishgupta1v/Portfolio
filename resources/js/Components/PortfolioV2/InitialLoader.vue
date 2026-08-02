@@ -391,12 +391,14 @@ function activateNode(index: number) {
     opacity: 0;
 }
 
+/* .reactor-ring is centred by `inset: 0`, so these rotate in place —
+   no translate correction needed. */
 @keyframes spinA {
-    to { transform: translateX(-50%) rotate(360deg); }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes spinB {
-    to { transform: translateX(-50%) rotate(-360deg); }
+    to { transform: rotate(-360deg); }
 }
 
 @keyframes pulse {
@@ -413,14 +415,6 @@ function activateNode(index: number) {
         opacity: 0.92;
         transform: translateY(-8px) scale(1.15);
     }
-}
-
-@keyframes spinA {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spinB {
-    to { transform: rotate(-360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
