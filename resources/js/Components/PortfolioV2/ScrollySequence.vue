@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-/* ───────────────────────────────────────────────
-   Types & Props
-   ─────────────────────────────────────────────── */
 interface HeroStatement {
     title: string
     subtitle: string
     align: 'left' | 'center' | 'right'
-    /** scroll-progress window the statement is fully visible */
     start: number
     end: number
+    z: number
 }
 
 const props = defineProps<{
@@ -26,28 +23,18 @@ const emit = defineEmits<{
     (e: 'hero-progress', value: number): void
 }>()
 
-/* ───────────────────────────────────────────────
-   Reactive state
-   ─────────────────────────────────────────────── */
 const containerRef = ref<HTMLElement | null>(null)
-const canvasRef    = ref<HTMLCanvasElement | null>(null)
-const progress     = ref(0)
-const loadedFrames = ref<(HTMLImageElement | null)[]>([])
-const hasSequence  = ref(false)
-const seqLoaded    = ref(false)        // true once load attempt finishes
-const loadingPct   = ref(0)
+const videoRef = ref<HTMLVideoElement | null>(null)
+const progress = ref(0)
+const videoReady = ref(false)
 const heroReadyEmitted = ref(false)
-const lastGoodFrame = ref<HTMLImageElement | null>(null)
 
-let rafId: number | null = null
+function clamp(v: number, lo: number, hi: number) { return Math.min(hi, Math.max(lo, v)) }
 
-/* ───────────────────────────────────────────────
-   Overlay statements — timings tuned to match the
-   three-phase cinematic zoom from generate-frames:
-     Phase 1  0-30%  : Reveal from dark  → show name/title
-     Phase 2  30-65% : Zoom transition   → show "9+ Years" statement
-     Phase 3  65-100%: Hero close-up     → show "AI Native" statement
-   ─────────────────────────────────────────────── */
+function easeInOutCubic(t: number): number {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+}
+
 const statements = computed<HeroStatement[]>(() => [
     {
         title: `Hello! I'm\n${props.name}`,
@@ -55,6 +42,7 @@ const statements = computed<HeroStatement[]>(() => [
         align: 'center',
         start: 0.05,
         end: 0.24,
+        z: 60,
     },
     {
         title: '9+ Years Experience.',
@@ -62,6 +50,7 @@ const statements = computed<HeroStatement[]>(() => [
         align: 'left',
         start: 0.34,
         end: 0.56,
+        z: 40,
     },
     {
         title: 'Innovating with AI.',
@@ -69,330 +58,117 @@ const statements = computed<HeroStatement[]>(() => [
         align: 'right',
         start: 0.68,
         end: 0.90,
+        z: 50,
     },
 ])
 
-const effectiveFrameCount = computed(() => Math.max(1, props.frameCount ?? 90))
-
-/* ───────────────────────────────────────────────
-   Helpers
-   ─────────────────────────────────────────────── */
-function clamp(v: number, lo: number, hi: number) { return Math.min(hi, Math.max(lo, v)) }
-
-async function supportsWebP(): Promise<boolean> {
-    return new Promise((resolve) => {
-        const img = new Image()
-        img.onload = () => resolve(true)
-        img.onerror = () => resolve(false)
-        img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA='
-    })
-}
-
-function isRenderableImage(img: HTMLImageElement | null | undefined): img is HTMLImageElement {
-    return !!img && img.complete && img.naturalWidth > 0 && img.naturalHeight > 0
-}
-
-function handleResize() {
-    const c = canvasRef.value
-    if (!c) return
-    const dpr = Math.min(2, window.devicePixelRatio || 1)
-    c.width  = Math.floor(window.innerWidth  * dpr)
-    c.height = Math.floor(window.innerHeight * dpr)
-    c.style.width  = '100%'
-    c.style.height = '100%'
-    const ctx = c.getContext('2d')
-    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-}
-
-/**
- * Draw an image covering the full canvas (object-fit: cover)
- * with optional zoom centered on the face (upper-center).
- */
-function drawCover(
-    ctx: CanvasRenderingContext2D,
-    img: HTMLImageElement,
-    w: number,
-    h: number,
-    zoom: number = 1,
-    panY: number = 0,
-) {
-    const cR = w / h
-    const iR = img.width / img.height
-    let dw = w, dh = h, ox = 0, oy = 0
-    if (iR > cR) { dw = img.width * (h / img.height); ox = (w - dw) / 2 }
-    else          { dh = img.height * (w / img.width); oy = (h - dh) / 2 }
-
-    // Apply zoom around upper-center to keep face stable while scrolling.
-    if (zoom !== 1) {
-        const cx = w / 2
-        const cy = h * 0.41
-        const ndw = dw * zoom
-        const ndh = dh * zoom
-        ox = cx - (cx - ox) * zoom
-        oy = cy - (cy - oy) * zoom + panY
-        dw = ndw
-        dh = ndh
-    }
-
-    try {
-        ctx.drawImage(img, ox, oy, dw, dh)
-    } catch {
-        // Ignore transient decode/draw failures on some mobile browsers.
-    }
-}
-
-/* ───────────────────────────────────────────────
-   Zoom & opacity curves driven by scroll progress
-   ─────────────────────────────────────────────── */
-
-/** Smooth zoom tuned for face framing quality: 1.0 → ~1.14 */
-function zoomAtProgress(p: number): number {
-    const isMobile = window.innerWidth <= 768
-    const maxZoom = isMobile ? 1.09 : 1.14
-    return 1 + (maxZoom - 1) * easeInOutCubic(p)
-}
-
-/** Background opacity: starts dim, becomes fully opaque as you scroll down */
-function bgOpacityAtProgress(p: number): number {
-    // 0.25 → 1.0  (starts 25% visible, fully visible at bottom)
-    return 0.42 + 0.58 * easeInOutCubic(clamp(p * 1.2, 0, 1))
-}
-
-function easeInOutCubic(t: number): number {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
-}
-
-/* ───────────────────────────────────────────────
-   Render loop
-   ─────────────────────────────────────────────── */
-function render() {
-    const cv = canvasRef.value
-    if (!cv) return
-    const ctx = cv.getContext('2d')
-    if (!ctx) return
-
-    const w = window.innerWidth
-    const h = window.innerHeight
-    ctx.clearRect(0, 0, w, h)
-    ctx.fillStyle = '#090e14'
-    ctx.fillRect(0, 0, w, h)
-
-    if (hasSequence.value && loadedFrames.value.length > 0) {
-        const total = loadedFrames.value.length
-        const idx = clamp(Math.floor(progress.value * (total - 1)), 0, total - 1)
-        
-        // Find nearest loaded frame if current isn't loaded yet
-        let frame = loadedFrames.value[idx]
-        if (!frame) {
-            for (let offset = 1; offset < total; offset++) {
-                if (idx - offset >= 0 && loadedFrames.value[idx - offset]) {
-                    frame = loadedFrames.value[idx - offset]
-                    break
-                }
-                if (idx + offset < total && loadedFrames.value[idx + offset]) {
-                    frame = loadedFrames.value[idx + offset]
-                    break
-                }
-            }
-        }
-
-        if (isRenderableImage(frame)) {
-            lastGoodFrame.value = frame
-            const p = progress.value
-            const zoom   = zoomAtProgress(p)
-            const alpha  = bgOpacityAtProgress(p)
-            const panY = -10 * easeInOutCubic(p)
-
-            ctx.save()
-            ctx.globalAlpha = alpha
-            drawCover(ctx, frame, w, h, zoom, panY)
-            ctx.restore()
-        } else if (isRenderableImage(lastGoodFrame.value)) {
-            ctx.save()
-            ctx.globalAlpha = 0.92
-            drawCover(ctx, lastGoodFrame.value, w, h, 1, 0)
-            ctx.restore()
-        }
-    }
-}
-
-function tick() { render(); rafId = requestAnimationFrame(tick) }
-
-/* ───────────────────────────────────────────────
-   Scroll tracking
-   ─────────────────────────────────────────────── */
 function updateProgress() {
     const el = containerRef.value
     if (!el) return
     const rect = el.getBoundingClientRect()
     const total = Math.max(1, rect.height - window.innerHeight)
     progress.value = clamp(-rect.top / total, 0, 1)
+
+    if (videoRef.value && videoReady.value && videoRef.value.duration) {
+        videoRef.value.currentTime = progress.value * videoRef.value.duration
+    }
 }
 
-/* ───────────────────────────────────────────────
-   Frame loading — tries .webp first, falls back to .png
-   Batched in groups of 8 for fast parallel loading
-   without flooding the browser.
-   ─────────────────────────────────────────────── */
-async function loadSequence() {
-    const total = effectiveFrameCount.value
-    const frames: (HTMLImageElement | null)[] = new Array(total).fill(null)
-    loadedFrames.value = frames
-    lastGoodFrame.value = null
-
-    const webpSupported = await supportsWebP()
-    const extensionOrder = webpSupported
-        ? ['webp', 'jpg', 'jpeg', 'png']
-        : ['jpg', 'jpeg', 'png', 'webp']
-
-    hasSequence.value = true
-
-    let loaded = 0
-    let successfulLoads = 0
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-
-    // Progressive loading arrays
-    const priority1 = [0, 1, 2] // First 3 frames for instant scroll start
-    const priority2: number[] = [] // Every 4th frame for rough animation
-    const priority3: number[] = [] // Remaining frames for smooth interpolation
-
-    for (let i = 3; i < total; i++) {
-        // Reduce memory pressure on mobile browsers.
-        if (isMobile && i % 2 !== 0) continue
-
-        if (i % 4 === 0) priority2.push(i)
-        else priority3.push(i)
-    }
-
-    if (!priority2.includes(total - 1) && !priority3.includes(total - 1)) {
-        priority3.push(total - 1)
-    }
-
-    const plannedTotal = priority1.length + priority2.length + priority3.length
-
-    async function loadOne(i: number): Promise<void> {
-        const id = String(i).padStart(4, '0')
-        for (const ext of extensionOrder) {
-            const ok = await new Promise<boolean>((resolve) => {
-                const img = new Image()
-                img.decoding = 'async'
-                img.src = `/sequence/${id}.${ext}`
-                img.onload  = () => {
-                    frames[i] = img
-                    lastGoodFrame.value = img
-                    successfulLoads++
-                    resolve(true)
-                }
-                img.onerror = () => resolve(false)
-            })
-            if (ok) break
-        }
-        loaded++
-        loadingPct.value = Math.round((loaded / Math.max(1, plannedTotal)) * 100)
-        emit('hero-progress', loadingPct.value)
-    }
-
-    async function loadBatch(indices: number[], batchSize = 8) {
-        for (let b = 0; b < indices.length; b += batchSize) {
-            const slice = indices.slice(b, b + batchSize).map(loadOne)
-            await Promise.all(slice)
-            loadedFrames.value = [...frames] // Trigger reactivity
-        }
-    }
-
-    // 1. Load priority 1
-    await loadBatch(priority1, 3)
-
-    // Hero is considered ready as soon as first critical frames are loaded.
-    if (!heroReadyEmitted.value) {
-        heroReadyEmitted.value = true
-        emit('hero-ready')
-    }
-    
-    // 2. Load priority 2 (intermediate frames)
-    await loadBatch(priority2, 8)
-    
-    // 3. Load priority 3 (fill the gaps)
-    await loadBatch(priority3, 8)
-
-    if (successfulLoads === 0 && !heroReadyEmitted.value) {
-        heroReadyEmitted.value = true
-        emit('hero-ready')
-    }
-
-    seqLoaded.value = true
-    emit('hero-progress', 100)
-}
-
-/* ───────────────────────────────────────────────
-   Overlay style per statement
-   ─────────────────────────────────────────────── */
-function statementStyle(start: number, end: number) {
+function statementStyle(stmt: HeroStatement) {
     const p = progress.value
-    const fadeIn  = 0.07   // scroll-fraction for fade-in ramp
+    const fadeIn = 0.07
     const fadeOut = 0.07
 
     let opacity = 0
-    if (p >= start - fadeIn && p <= start)
-        opacity = (p - (start - fadeIn)) / fadeIn
-    else if (p > start && p <= end)
+    if (p >= stmt.start - fadeIn && p <= stmt.start)
+        opacity = (p - (stmt.start - fadeIn)) / fadeIn
+    else if (p > stmt.start && p <= stmt.end)
         opacity = 1
-    else if (p > end && p <= end + fadeOut)
-        opacity = 1 - (p - end) / fadeOut
+    else if (p > stmt.end && p <= stmt.end + fadeOut)
+        opacity = 1 - (p - stmt.end) / fadeOut
 
     opacity = clamp(opacity, 0, 1)
-    const y = 36 * (1 - opacity)          // slide up as it appears
-    const scale = 0.96 + 0.04 * opacity   // subtle scale-in
+    const y = 36 * (1 - opacity)
+    const scale = 0.96 + 0.04 * opacity
+    const z = stmt.z * opacity
 
     return {
         opacity,
-        transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
+        transform: `translate3d(calc(var(--depth-tx, 0px) * ${stmt.z / 50}), ${y}px, ${z}px) scale(${scale})`,
     }
 }
 
-/* ───────────────────────────────────────────────
-   Scroll indicator opacity (hidden once you begin scrolling)
-   ─────────────────────────────────────────────── */
+const videoOpacity = computed(() => {
+    return 0.42 + 0.58 * easeInOutCubic(clamp(progress.value * 1.2, 0, 1))
+})
+
+const videoScale = computed(() => {
+    const maxZoom = window.innerWidth <= 768 ? 1.09 : 1.14
+    return 1 + (maxZoom - 1) * easeInOutCubic(progress.value)
+})
+
 const scrollHintOpacity = computed(() => clamp(1 - progress.value * 12, 0, 1))
 
-/* ───────────────────────────────────────────────
-   Lifecycle
-   ─────────────────────────────────────────────── */
-onMounted(async () => {
-    handleResize()
-    window.addEventListener('resize',  handleResize, { passive: true })
-    window.addEventListener('scroll',  updateProgress, { passive: true })
-    updateProgress()
+function onVideoCanPlay() {
+    videoReady.value = true
+    if (!heroReadyEmitted.value) {
+        heroReadyEmitted.value = true
+        emit('hero-ready')
+        emit('hero-progress', 100)
+    }
+}
 
-    // Keep first paint responsive: render loop starts immediately,
-    // sequence continues loading in background.
-    tick()
-    void loadSequence()
+function onVideoError() {
+    if (!heroReadyEmitted.value) {
+        heroReadyEmitted.value = true
+        emit('hero-ready')
+        emit('hero-progress', 100)
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    updateProgress()
 })
 
 onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
     window.removeEventListener('scroll', updateProgress)
-    if (rafId) cancelAnimationFrame(rafId)
 })
 </script>
 
 <template>
     <section ref="containerRef" class="scrolly-root">
         <div class="scrolly-sticky">
-            <canvas ref="canvasRef" class="hero-canvas" />
+            <div
+                class="video-wrap"
+                :style="{
+                    opacity: videoOpacity,
+                    transform: `scale(${videoScale})`,
+                }"
+            >
+                <video
+                    ref="videoRef"
+                    muted
+                    playsinline
+                    preload="auto"
+                    class="hero-video"
+                    @canplaythrough="onVideoCanPlay"
+                    @error="onVideoError"
+                >
+                    <source src="/videos/hero-sequence.webm" type="video/webm">
+                    <source src="/videos/hero-sequence.mp4" type="video/mp4">
+                </video>
+            </div>
 
-            <!-- film grain -->
             <div class="grain" />
 
-            <!-- text overlays -->
             <div class="overlay-layer">
                 <div
                     v-for="(item, idx) in statements"
                     :key="idx"
                     class="statement"
                     :class="`align-${item.align}`"
-                    :style="statementStyle(item.start, item.end)"
+                    :style="statementStyle(item)"
                 >
                     <h1 class="statement-title">
                         <template v-for="(line, li) in item.title.split('\n')" :key="li">
@@ -405,26 +181,20 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <!-- scroll hint at top -->
             <div class="scroll-hint" :style="{ opacity: scrollHintOpacity }">
                 <span class="scroll-hint-line" />
                 <span class="scroll-hint-text">Scroll</span>
-            </div>
-
-            <!-- loading bar while sequence loads -->
-            <div v-if="!seqLoaded" class="load-bar-wrap">
-                <div class="load-bar" :style="{ width: loadingPct + '%' }" />
             </div>
         </div>
     </section>
 </template>
 
 <style scoped>
-/* ── Container ────────────────────────────────── */
 .scrolly-root {
     height: 520vh;
     position: relative;
 }
+
 .scrolly-sticky {
     position: sticky;
     top: 0;
@@ -432,14 +202,25 @@ onUnmounted(() => {
     height: 100vh;
     overflow: hidden;
     background: #090e14;
+    perspective: 800px;
+    perspective-origin: 50% 50%;
 }
-.hero-canvas {
+
+.video-wrap {
+    position: absolute;
+    inset: 0;
+    will-change: transform, opacity;
+    transform-origin: 50% 41%;
+}
+
+.hero-video {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center 41%;
     display: block;
 }
 
-/* ── Film grain ───────────────────────────────── */
 .grain {
     position: absolute;
     inset: 0;
@@ -451,14 +232,13 @@ onUnmounted(() => {
     background-size: 3px 3px;
 }
 
-/* ── Overlay layer ────────────────────────────── */
 .overlay-layer {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    transform-style: preserve-3d;
 }
 
-/* ── Statement cards ──────────────────────────── */
 .statement {
     position: absolute;
     inset: 0;
@@ -468,7 +248,9 @@ onUnmounted(() => {
     gap: 0.85rem;
     padding: 2rem 3.5rem;
     will-change: transform, opacity;
+    transform-style: preserve-3d;
 }
+
 .align-left   { align-items: flex-start; text-align: left; }
 .align-center  { align-items: center;    text-align: center; }
 .align-right   { align-items: flex-end;  text-align: right; }
@@ -483,6 +265,7 @@ onUnmounted(() => {
         0 4px 30px rgba(0, 0, 0, 0.6),
         0 1px 4px rgba(0, 0, 0, 0.45);
 }
+
 .statement-subtitle {
     color: rgba(226, 232, 240, 0.88);
     font-size: clamp(0.95rem, 2vw, 1.45rem);
@@ -504,7 +287,6 @@ onUnmounted(() => {
     display: inline;
 }
 
-/* ── Scroll hint ──────────────────────────────── */
 .scroll-hint {
     position: absolute;
     bottom: 2.2rem;
@@ -517,39 +299,26 @@ onUnmounted(() => {
     pointer-events: none;
     transition: opacity 200ms ease;
 }
+
 .scroll-hint-line {
     width: 1px;
     height: 38px;
     background: linear-gradient(to bottom, transparent, rgba(248,250,252,0.55));
     animation: scrollPulse 1.8s ease-in-out infinite;
 }
+
 .scroll-hint-text {
     font-size: 0.65rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgba(226, 232, 240, 0.5);
 }
+
 @keyframes scrollPulse {
     0%, 100% { opacity: 0.35; transform: scaleY(0.85); }
     50%      { opacity: 1;    transform: scaleY(1); }
 }
 
-/* ── Loading bar ──────────────────────────────── */
-.load-bar-wrap {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: rgba(255,255,255,0.06);
-}
-.load-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #f59e0b, #25ebba);
-    transition: width 120ms ease;
-}
-
-/* ── Mobile ───────────────────────────────────── */
 @media (max-width: 768px) {
     .statement {
         padding: 1.2rem 1.4rem;
@@ -565,8 +334,14 @@ onUnmounted(() => {
     .scroll-hint { bottom: 1.4rem; }
     .scroll-hint-line { height: 28px; }
 }
+
 @media (max-width: 480px) {
     .scrolly-root { height: 480vh; }
     .statement { padding: 1rem 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-hint-line { animation: none; }
+    .statement { transition: none; }
 }
 </style>

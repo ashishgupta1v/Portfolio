@@ -25,3 +25,10 @@ Thumbs.db
 
 /bootstrap/cache/*.php
 !/bootstrap/cache/.gitignore
+.superpowers/
+
+# Local screen recordings / scratch media
+/*.mp4
+
+# MCP local caches
+docs/motion-docs.db

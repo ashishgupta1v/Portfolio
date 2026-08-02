@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, nextTick } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import type { PortfolioPageProps } from '@/types/portfolio'
-import { useDeviceCapability } from '@/Composables/useDeviceCapability'
+import { useMouseDepth } from '@/Composables/useMouseDepth'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CustomCursor from '@/Components/Portfolio/CustomCursor.vue'
 import NavBar from '@/Components/PortfolioV2/NavBar.vue'
 import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 
-const SceneCanvas = defineAsyncComponent(() => import('@/Components/Scene3D/SceneCanvas.vue'))
+gsap.registerPlugin(ScrollTrigger)
 
 const ScrollySequence = defineAsyncComponent(() => import('@/Components/PortfolioV2/ScrollySequence.vue'))
 const AboutSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/AboutSection.vue'))
@@ -20,7 +22,8 @@ import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
 
 const props = defineProps<PortfolioPageProps>()
 
-const { canRun3D, tier } = useDeviceCapability()
+const { depthVars } = useMouseDepth(1)
+const depthRef = ref<HTMLElement | null>(null)
 
 const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
 
@@ -63,17 +66,31 @@ function handleHeroProgress(value: number) {
     heroProgress.value = value
 }
 
-function handleSceneReady() {
-    heroReady.value = true
-    heroProgress.value = 100
-}
-
-function handleSceneProgress(percent: number) {
-    heroProgress.value = percent
-}
-
 function handlePageLoaded() {
     pageReady.value = true
+}
+
+function initScrollDepth() {
+    if (!depthRef.value) return
+    const sections = depthRef.value.querySelectorAll(':scope > *')
+    sections.forEach((section, i) => {
+        gsap.fromTo(section,
+            { z: -80, opacity: 0.3, rotateX: 2 },
+            {
+                z: 0,
+                opacity: 1,
+                rotateX: 0,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: section as Element,
+                    start: 'top 90%',
+                    end: 'top 40%',
+                    scrub: 0.8,
+                },
+            }
+        )
+    })
 }
 
 onMounted(() => {
@@ -86,6 +103,8 @@ onMounted(() => {
     } else {
         window.addEventListener('load', handlePageLoaded, { once: true })
     }
+
+    setTimeout(() => nextTick(initScrollDepth), 300)
 })
 
 onUnmounted(() => {
@@ -114,7 +133,7 @@ onUnmounted(() => {
         <component is="script" type="application/ld+json" v-html="websiteSchema" />
     </Head>
 
-    <div class="v2-page">
+    <div class="v2-page" :style="depthVars">
         <InitialLoader :visible="showInitialLoader" :progress="heroProgress" />
 
         <CustomCursor />
@@ -126,27 +145,16 @@ onUnmounted(() => {
             :resume-url="profile.resumeUrl"
         />
 
-        <!-- 3D Experience for capable devices -->
-        <template v-if="canRun3D">
-            <SceneCanvas
-                v-bind="props"
-                :tier="tier === 'fallback' ? 'full' : tier"
-                @scene-ready="handleSceneReady"
-                @scene-progress="handleSceneProgress"
-            />
-        </template>
+        <ScrollySequence
+            :name="profile.name"
+            :title="profile.title"
+            :subtitle="profile.subtitle"
+            :image-url="profile.avatarUrl"
+            @hero-ready="handleHeroReady"
+            @hero-progress="handleHeroProgress"
+        />
 
-        <!-- 2D Fallback for mobile / no WebGL2 -->
-        <template v-else>
-            <ScrollySequence
-                :name="profile.name"
-                :title="profile.title"
-                :subtitle="profile.subtitle"
-                :image-url="profile.avatarUrl"
-                @hero-ready="handleHeroReady"
-                @hero-progress="handleHeroProgress"
-            />
-
+        <div ref="depthRef" class="depth-sections">
             <AboutSection :profile="profile" />
             <TimelineSection :experiences="experiences" />
             <WorksSection :projects="projects" />
@@ -157,7 +165,7 @@ onUnmounted(() => {
                 :social-links="socialLinks"
                 :educations="educations"
             />
-        </template>
+        </div>
 
         <ChatWidget />
     </div>
@@ -169,10 +177,47 @@ onUnmounted(() => {
     background: #090e14;
 }
 
+.depth-sections {
+    position: relative;
+    z-index: 1;
+    perspective: 1200px;
+    perspective-origin: 50% 0%;
+}
+
+.depth-sections :deep(> *) {
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.depth-sections :deep(article),
+.depth-sections :deep(.capability-card),
+.depth-sections :deep(.work-row),
+.depth-sections :deep(.timeline-node) {
+    transition: transform 0.3s ease;
+}
+
+.depth-sections :deep(article:hover),
+.depth-sections :deep(.capability-card:hover),
+.depth-sections :deep(.work-row:hover) {
+    transform:
+        perspective(800px)
+        rotateX(calc(var(--my, 0) * -1.5deg))
+        rotateY(calc(var(--mx, 0) * 1.5deg))
+        translateZ(12px);
+}
+
 @media (min-width: 1024px) {
     .v2-page,
     .v2-page * {
         cursor: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .depth-sections :deep(article:hover),
+    .depth-sections :deep(.capability-card:hover),
+    .depth-sections :deep(.work-row:hover) {
+        transform: none;
     }
 }
 </style>
