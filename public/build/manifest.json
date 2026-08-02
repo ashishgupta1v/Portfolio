@@ -93,7 +93,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ScrollySequence.vue": {
-    "file": "assets/ScrollySequence-C57TsOnH.js",
+    "file": "assets/ScrollySequence-BfBFh03w.js",
     "name": "ScrollySequence",
     "src": "resources/js/Components/PortfolioV2/ScrollySequence.vue",
     "isDynamicEntry": true,
@@ -102,7 +102,7 @@
       "_vendor-inertia-CNzhfsFX.js"
     ],
     "css": [
-      "assets/ScrollySequence-4Qr2U2if.css"
+      "assets/ScrollySequence-Czflvqog.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
@@ -202,7 +202,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-Dl-TEdq1.js",
+    "file": "assets/Index-7NZSh9Np.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -229,7 +229,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-DZWK86Go.js",
+    "file": "assets/app-Dk6S5wJT.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,

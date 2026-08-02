@@ -102,8 +102,18 @@ const videoOpacity = computed(() => {
     return 0.42 + 0.58 * easeInOutCubic(clamp(progress.value * 1.2, 0, 1))
 })
 
+// Tracked as reactive state rather than read inline in the computed below:
+// `window.innerWidth` is not reactive, so the zoom factor was resolved once
+// and then cached — rotating a phone or resizing never updated it. Defaulting
+// to false also keeps this render-safe where `window` does not exist.
+const isNarrowViewport = ref(false)
+
+function updateViewport() {
+    isNarrowViewport.value = window.innerWidth <= 768
+}
+
 const videoScale = computed(() => {
-    const maxZoom = window.innerWidth <= 768 ? 1.09 : 1.14
+    const maxZoom = isNarrowViewport.value ? 1.09 : 1.14
     return 1 + (maxZoom - 1) * easeInOutCubic(progress.value)
 })
 
@@ -127,12 +137,15 @@ function onVideoError() {
 }
 
 onMounted(() => {
+    updateViewport()
     window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateViewport, { passive: true })
     updateProgress()
 })
 
 onUnmounted(() => {
     window.removeEventListener('scroll', updateProgress)
+    window.removeEventListener('resize', updateViewport)
 })
 </script>
 
