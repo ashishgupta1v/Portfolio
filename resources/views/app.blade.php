@@ -22,8 +22,7 @@
         @inertiaHead
 
         @if(request()->routeIs('portfolio'))
-            <link rel="preload" as="image" href="/sequence/0000.webp" fetchpriority="high">
-            <link rel="preload" as="image" href="/sequence/0001.webp" fetchpriority="high">
+            <link rel="preload" as="video" href="/videos/hero-sequence.webm" type="video/webm" fetchpriority="high">
         @endif
     </head>
     <body>
