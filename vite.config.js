@@ -32,4 +32,22 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'resources/js'),
         },
     },
+    build: {
+        rollupOptions: {
+            output: {
+                // Vite already code-splits the async page sections well on its
+                // own. What it does not do is separate third-party code from
+                // ours, so every copy tweak invalidated the whole ~227KB entry
+                // chunk for returning visitors. Pinning the dependencies that
+                // only change on upgrade into their own chunks keeps them
+                // cached across ordinary deploys.
+                // Rolldown (Vite 8) only accepts the function form here.
+                manualChunks(id) {
+                    if (!id.includes('node_modules')) return;
+                    if (id.includes('@inertiajs')) return 'vendor-inertia';
+                    if (id.includes('axios')) return 'vendor-http';
+                },
+            },
+        },
+    },
 });
