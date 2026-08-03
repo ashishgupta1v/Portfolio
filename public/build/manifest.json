@@ -161,8 +161,34 @@
       "assets/Telemetry-DX9aIPjD.css"
     ]
   },
+  "resources/js/Pages/Blog/Index.vue": {
+    "file": "assets/Index-CXI0eXvq.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Blog/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-V-yks4gF.js",
+      "_vendor-inertia-CNzhfsFX.js"
+    ],
+    "css": [
+      "assets/Index-WqWpyJwP.css"
+    ]
+  },
+  "resources/js/Pages/Blog/Show.vue": {
+    "file": "assets/Show-DTFX7pqp.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Blog/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-V-yks4gF.js",
+      "_vendor-inertia-CNzhfsFX.js"
+    ],
+    "css": [
+      "assets/Show-MF0kgG0F.css"
+    ]
+  },
   "resources/js/Pages/CaseStudies/Index.vue": {
-    "file": "assets/Index-apB6kO2x.js",
+    "file": "assets/Index-DE87cU2e.js",
     "name": "Index",
     "src": "resources/js/Pages/CaseStudies/Index.vue",
     "isDynamicEntry": true,
@@ -175,7 +201,7 @@
     ]
   },
   "resources/js/Pages/CaseStudies/Show.vue": {
-    "file": "assets/Show-DgPoZsC7.js",
+    "file": "assets/Show-D9MwhvnO.js",
     "name": "Show",
     "src": "resources/js/Pages/CaseStudies/Show.vue",
     "isDynamicEntry": true,
@@ -189,7 +215,7 @@
     ]
   },
   "resources/js/Pages/Engagements/Index.vue": {
-    "file": "assets/Index-DAILsxAD.js",
+    "file": "assets/Index-Cb8r7GHI.js",
     "name": "Index",
     "src": "resources/js/Pages/Engagements/Index.vue",
     "isDynamicEntry": true,
@@ -202,7 +228,7 @@
     ]
   },
   "resources/js/Pages/Errors/NotFound.vue": {
-    "file": "assets/NotFound-CsZYa99S.js",
+    "file": "assets/NotFound-DUlua5d2.js",
     "name": "NotFound",
     "src": "resources/js/Pages/Errors/NotFound.vue",
     "isDynamicEntry": true,
@@ -217,7 +243,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-DstXdcvf.js",
+    "file": "assets/Index-46GqVa01.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -240,11 +266,11 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-DspyxbvD.css"
+      "assets/Index-CtmYWPCG.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-zpZCgtO6.js",
+    "file": "assets/app-DkpK4ytV.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -254,6 +280,8 @@
     ],
     "dynamicImports": [
       "resources/js/Pages/Admin/Telemetry.vue",
+      "resources/js/Pages/Blog/Index.vue",
+      "resources/js/Pages/Blog/Show.vue",
       "resources/js/Pages/CaseStudies/Index.vue",
       "resources/js/Pages/CaseStudies/Show.vue",
       "resources/js/Pages/Engagements/Index.vue",

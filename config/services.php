@@ -40,4 +40,14 @@ return [
         'model' => env('OPENAI_MODEL', 'gpt-4o-mini'),
     ],
 
+    /*
+     * Analytics — Plausible (or a Plausible-compatible endpoint like Umami's
+     * self-hosted proxy). Leave PLAUSIBLE_DOMAIN unset in .env to disable
+     * analytics entirely — the script tag is only emitted when configured.
+     */
+    'plausible' => [
+        'domain' => env('PLAUSIBLE_DOMAIN'),
+        'src' => env('PLAUSIBLE_SRC', 'https://plausible.io/js/script.js'),
+    ],
+
 ];

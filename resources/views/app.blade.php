@@ -21,6 +21,18 @@
              Inertia's <Head> component depends on. --}}
         @include('partials.seo')
 
+        {{-- Privacy-friendly analytics. Loaded only if configured, so local
+             dev and unauthenticated preview environments send nothing. Set
+             PLAUSIBLE_DOMAIN in .env (e.g. "ashishgupta.dev") to enable.
+             The script is async — no blocking on first paint. --}}
+        @if(config('services.plausible.domain'))
+            <script
+                defer
+                data-domain="{{ config('services.plausible.domain') }}"
+                src="{{ config('services.plausible.src', 'https://plausible.io/js/script.js') }}"
+            ></script>
+        @endif
+
         <!-- Favicon / app icons -->
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/images/icon-192.png">
