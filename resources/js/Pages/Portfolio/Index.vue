@@ -19,11 +19,18 @@ const FeaturedCaseStudySection = defineAsyncComponent(() => import('@/Components
 const TechStackSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TechStackSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/ContactSection.vue'))
 import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
+import ScrollUtilities from '@/Components/PortfolioV2/ScrollUtilities.vue'
+import CookieConsent from '@/Components/PortfolioV2/CookieConsent.vue'
+import { useKeyboardShortcuts } from '@/Composables/useKeyboardShortcuts'
 
 const props = defineProps<PortfolioPageProps>()
 
 const { depthVars } = useMouseDepth(1)
 const depthRef = ref<HTMLElement | null>(null)
+
+// Keyboard shortcuts: digits jump between sections, `g h` returns to top,
+// `/` scrolls to and focuses the contact form. Never fires while typing.
+useKeyboardShortcuts()
 
 const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
 
@@ -140,6 +147,8 @@ onUnmounted(() => {
         </div>
 
         <ChatWidget />
+        <ScrollUtilities />
+        <CookieConsent />
     </div>
 </template>
 

@@ -106,7 +106,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
-    "file": "assets/TechStackSection-rvGedBkb.js",
+    "file": "assets/TechStackSection-CJfnvJ4-.js",
     "name": "TechStackSection",
     "src": "resources/js/Components/PortfolioV2/TechStackSection.vue",
     "isDynamicEntry": true,
@@ -115,7 +115,7 @@
       "_vendor-inertia-CNzhfsFX.js"
     ],
     "css": [
-      "assets/TechStackSection-CJoTXkfA.css"
+      "assets/TechStackSection-CRsC91oh.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
@@ -217,7 +217,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-l03W0vZZ.js",
+    "file": "assets/Index-DstXdcvf.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -240,11 +240,11 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-B96NLxV-.css"
+      "assets/Index-DspyxbvD.css"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-DKFG__AR.js",
+    "file": "assets/app-zpZCgtO6.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -261,7 +261,7 @@
       "resources/js/Pages/Portfolio/Index.vue"
     ],
     "css": [
-      "assets/app-cEAl8yFl.css"
+      "assets/app-BNveLtus.css"
     ]
   }
 }

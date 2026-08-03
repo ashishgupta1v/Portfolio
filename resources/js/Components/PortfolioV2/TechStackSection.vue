@@ -272,7 +272,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <section ref="sectionRef" class="ts-section">
+    <section ref="sectionRef" id="tech" class="ts-section">
         <div class="ts-shell">
             <div class="section-header">
                 <div class="section-header-wrapper">

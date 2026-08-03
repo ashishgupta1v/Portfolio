@@ -214,3 +214,81 @@ a {
 .section-separator-short {
     display: none;
 }
+
+/* ================================================================
+   Print stylesheet
+   ---------------------------------------------------------------- */
+/* Portfolio ships as a scroll-driven cinematic experience; the video hero,
+   custom cursor, and floating widgets have no meaning on paper. Reset to a
+   readable document with the resume-relevant bits kept. */
+@media print {
+    :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #ffffff;
+        --bg-elevated: #ffffff;
+        --surface: #ffffff;
+        --surface-raised: #ffffff;
+        --text-1: #0f172a;
+        --text-2: #334155;
+        --text-3: #64748b;
+        --border: rgba(15, 23, 42, 0.15);
+        --border-strong: rgba(15, 23, 42, 0.35);
+        --accent: #0d9488;
+    }
+
+    html, body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    /* Hide anything that is decorative, interactive, or spatial-scroll only. */
+    .scrolly-root,                  /* the video hero */
+    .scroll-progress,
+    .back-to-top,
+    .privacy-notice,
+    .chat-widget-wrapper,
+    .chat-toggle-btn,
+    .theme-toggle,
+    .a11y-toggle,
+    .nav-bar,
+    .initial-loader,
+    video,
+    canvas {
+        display: none !important;
+    }
+
+    /* Cursor gets forced to none on desktop for the custom cursor; undo. */
+    * {
+        cursor: auto !important;
+    }
+
+    /* Sections stack cleanly, no scroll perspective. */
+    .depth-sections,
+    .depth-sections :deep(> *) {
+        perspective: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    section {
+        page-break-inside: avoid;
+        padding: 1.5rem 0 !important;
+    }
+
+    /* Keep long headings from breaking mid-word. */
+    h1, h2, h3 {
+        page-break-after: avoid;
+        color: #0f172a !important;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+        color: #64748b;
+    }
+    /* Suppress URL-appending on in-page anchors — clutters output. */
+    a[href^="#"]:after,
+    a[href^="/"]:not([href^="//"]):after {
+        content: "";
+    }
+}
