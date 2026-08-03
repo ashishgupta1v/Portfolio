@@ -146,7 +146,7 @@ onUnmounted(() => {
 <style scoped>
 .v2-page {
     min-height: 100vh;
-    background: #090e14;
+    background: var(--bg-primary);
 }
 
 .depth-sections {

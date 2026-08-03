@@ -3,6 +3,69 @@ import { ref, onMounted, nextTick } from 'vue'
 import { MessageSquare, X, Send, Sparkles } from 'lucide-vue-next'
 import axios from 'axios'
 
+/**
+ * Renders a small, whitelisted subset of Markdown to HTML.
+ *
+ * Deliberately not a real Markdown library: the input comes from an LLM whose
+ * output can be prompt-injected, so we HTML-escape first and only then apply
+ * transformations for a fixed set of patterns. That means no <script> tag,
+ * event handler, or arbitrary HTML can survive from the model's reply — even
+ * if the model tries. Supported: **bold**, *italic*, `code`, [text](url) with
+ * an http(s) URL, single-level bullet and numbered lists, paragraph breaks.
+ */
+function renderChatMarkdown(input: string): string {
+    const escaped = input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+
+    const lines = escaped.split(/\r?\n/)
+    const out: string[] = []
+    let listMode: 'ul' | 'ol' | null = null
+
+    function closeList() {
+        if (listMode) {
+            out.push(`</${listMode}>`)
+            listMode = null
+        }
+    }
+
+    for (const raw of lines) {
+        const line = raw.trimEnd()
+        const bullet = line.match(/^\s*[-*]\s+(.*)$/)
+        const numbered = line.match(/^\s*\d+\.\s+(.*)$/)
+
+        if (bullet) {
+            if (listMode !== 'ul') { closeList(); out.push('<ul>'); listMode = 'ul' }
+            out.push(`<li>${inline(bullet[1])}</li>`)
+        } else if (numbered) {
+            if (listMode !== 'ol') { closeList(); out.push('<ol>'); listMode = 'ol' }
+            out.push(`<li>${inline(numbered[1])}</li>`)
+        } else if (line === '') {
+            closeList()
+            out.push('')
+        } else {
+            closeList()
+            out.push(`<p>${inline(line)}</p>`)
+        }
+    }
+    closeList()
+    return out.join('')
+}
+
+function inline(text: string): string {
+    return text
+        // Inline code first, so ** inside `` is treated as code.
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        // Links — only http/https, and the URL is re-escaped for quotes.
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+            (_m, label, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`)
+        // Bold before italic so **word** doesn't consume as italic-in-italic.
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+}
+
 const isOpen = ref(false)
 const input = ref('')
 const messages = ref<{role: 'user' | 'assistant', content: string}[]>([
@@ -101,13 +164,17 @@ const sendMessage = async () => {
                 </div>
                 
                 <div class="chat-messages" ref="messagesContainer">
-                    <div 
-                        v-for="(msg, idx) in messages" 
-                        :key="idx" 
+                    <div
+                        v-for="(msg, idx) in messages"
+                        :key="idx"
                         class="chat-bubble"
                         :class="msg.role === 'user' ? 'bubble-user' : 'bubble-assistant'"
                     >
-                        {{ msg.content }}
+                        <!-- User input stays plain text (no HTML escape needed, Vue does it).
+                             Assistant replies pass through the whitelist renderer so lists,
+                             links, bold and inline code from the model render correctly. -->
+                        <template v-if="msg.role === 'user'">{{ msg.content }}</template>
+                        <div v-else class="bubble-md" v-html="renderChatMarkdown(msg.content)" />
                     </div>
                     
                     <div v-if="isTyping" class="chat-bubble bubble-assistant typing-indicator">
@@ -248,6 +315,30 @@ const sendMessage = async () => {
     color: #e2e8f0;
     border-bottom-left-radius: 0.2rem;
 }
+
+/* Markdown-rendered assistant replies. Kept tight so a short reply doesn't
+   grow tall from block spacing that a chat bubble does not need. */
+.bubble-md :deep(p) { margin: 0; }
+.bubble-md :deep(p + p) { margin-top: 0.5rem; }
+.bubble-md :deep(ul),
+.bubble-md :deep(ol) { margin: 0.4rem 0 0.4rem 1.1rem; padding: 0; display: grid; gap: 0.2rem; }
+.bubble-md :deep(li) { line-height: 1.45; }
+.bubble-md :deep(strong) { color: #f8fafc; font-weight: 700; }
+.bubble-md :deep(em) { font-style: italic; color: #cbd5e1; }
+.bubble-md :deep(code) {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.82em;
+    padding: 0.08rem 0.32rem;
+    border-radius: 0.28rem;
+    background: rgba(15, 23, 42, 0.7);
+    color: #5eead4;
+}
+.bubble-md :deep(a) {
+    color: #5eead4;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.bubble-md :deep(a:hover) { color: #99f6e4; }
 
 .typing-indicator {
     display: flex;

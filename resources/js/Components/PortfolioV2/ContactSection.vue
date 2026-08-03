@@ -299,9 +299,9 @@ onMounted(() => {
 <style scoped>
 .ct-section {
     position: relative;
-    background: linear-gradient(180deg, #0a0f17 0%, #060b11 100%);
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
     padding: 7rem 1.5rem 4rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border);
 }
 
 .ct-shell {
@@ -319,11 +319,11 @@ onMounted(() => {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(94, 234, 212, 0.7);
+    color: rgba(var(--accent-rgb), 0.75);
     font-weight: 600;
     margin-bottom: 1.4rem;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(94, 234, 212, 0.1);
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
 }
 
 /* ── Connect ── */
@@ -332,24 +332,24 @@ onMounted(() => {
     align-items: center;
     gap: 0.4rem;
     font-size: 1rem;
-    color: #f8fafc;
+    color: var(--text-1);
     text-decoration: none;
     transition: color 0.3s ease;
     margin-bottom: 0.4rem;
 }
-.ct-email:hover { color: #5eead4; }
+.ct-email:hover { color: var(--accent); }
 .ct-email .arrow { opacity: 0; transition: opacity 0.3s; }
 .ct-email:hover .arrow { opacity: 1; }
 
 .ct-phone {
     font-size: 0.88rem;
-    color: rgba(226, 232, 240, 0.5);
+    color: var(--text-2);
     margin-bottom: 0.25rem;
 }
 
 .ct-location {
     font-size: 0.82rem;
-    color: rgba(226, 232, 240, 0.35);
+    color: var(--text-3);
     margin-bottom: 1rem;
 }
 
@@ -359,10 +359,10 @@ onMounted(() => {
     gap: 0.45rem;
     margin-bottom: 1.8rem;
     padding: 0.72rem 1rem;
-    border: 1px solid rgba(94, 234, 212, 0.28);
+    border: 1px solid rgba(var(--accent-rgb), 0.28);
     border-radius: 999px;
-    background: rgba(94, 234, 212, 0.08);
-    color: #dffcf6;
+    background: rgba(var(--accent-rgb), 0.08);
+    color: var(--text-1);
     text-decoration: none;
     font-size: 0.78rem;
     font-weight: 700;
@@ -373,8 +373,8 @@ onMounted(() => {
 
 .chat-btn:hover {
     color: #08111a;
-    background: #5eead4;
-    border-color: #5eead4;
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 .edu-list {
@@ -385,16 +385,16 @@ onMounted(() => {
 
 .edu-degree {
     font-size: 0.88rem;
-    color: rgba(226, 232, 240, 0.75);
+    color: var(--text-2);
     font-weight: 500;
 }
 .edu-inst {
     font-size: 0.82rem;
-    color: rgba(226, 232, 240, 0.4);
+    color: var(--text-3);
 }
 .edu-year {
     font-size: 0.75rem;
-    color: rgba(94, 234, 212, 0.5);
+    color: rgba(var(--accent-rgb), 0.6);
 }
 
 /* ── Social ── */
@@ -409,12 +409,12 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    color: rgba(226, 232, 240, 0.6);
+    color: var(--text-2);
     text-decoration: none;
     font-size: 0.88rem;
     transition: color 0.3s ease;
 }
-.social-link:hover { color: #5eead4; }
+.social-link:hover { color: var(--accent); }
 
 .ext-icon {
     opacity: 0;
@@ -430,43 +430,43 @@ onMounted(() => {
     font-size: 0.82rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-2);
     text-decoration: none;
     padding: 0.5rem 1.2rem;
-    border: 1px solid rgba(94, 234, 212, 0.25);
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
     border-radius: 4px;
     transition: all 0.3s ease;
 }
 .resume-btn:hover {
-    color: #5eead4;
-    border-color: rgba(94, 234, 212, 0.6);
-    background: rgba(94, 234, 212, 0.06);
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.6);
+    background: rgba(var(--accent-rgb), 0.06);
 }
 
 /* ── Credit ── */
 .credit-text {
     font-size: 0.88rem;
-    color: rgba(226, 232, 240, 0.5);
+    color: var(--text-2);
     line-height: 1.6;
 }
 .credit-name {
-    color: #f8fafc;
+    color: var(--text-1);
     font-weight: 500;
 }
 .credit-year {
     font-size: 0.82rem;
-    color: rgba(226, 232, 240, 0.3);
+    color: var(--text-3);
     margin-top: 0.5rem;
 }
 .credit-stack {
     margin-top: 1.5rem;
     font-size: 0.82rem;
-    color: rgba(226, 232, 240, 0.4);
+    color: var(--text-3);
     line-height: 1.6;
 }
 .stack-detail {
     font-size: 0.72rem;
-    color: rgba(94, 234, 212, 0.4);
+    color: rgba(var(--accent-rgb), 0.5);
     letter-spacing: 0.05em;
 }
 
@@ -491,18 +491,18 @@ onMounted(() => {
 .ct-form-row {
     margin-top: 4rem;
     padding-top: 3rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    border-top: 1px solid var(--border);
 }
 
 .form-title {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(94, 234, 212, 0.7);
+    color: rgba(var(--accent-rgb), 0.75);
     font-weight: 600;
     margin-bottom: 1.8rem;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(94, 234, 212, 0.1);
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
 }
 
 .contact-form {
@@ -514,7 +514,7 @@ onMounted(() => {
 
 .form-note {
     font-size: 0.84rem;
-    color: rgba(226, 232, 240, 0.6);
+    color: var(--text-2);
     line-height: 1.45;
     max-width: 640px;
 }
@@ -542,15 +542,15 @@ onMounted(() => {
 .form-label {
     font-size: 0.75rem;
     letter-spacing: 0.06em;
-    color: rgba(226, 232, 240, 0.55);
+    color: var(--text-3);
     text-transform: uppercase;
 }
 
 .form-input {
-    background: rgba(8, 14, 24, 0.8);
-    border: 1px solid rgba(148, 163, 184, 0.15);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 4px;
-    color: #e2e8f0;
+    color: var(--text-1);
     font-size: 0.9rem;
     font-family: inherit;
     padding: 0.65rem 0.85rem;
@@ -559,10 +559,10 @@ onMounted(() => {
     width: 100%;
     box-sizing: border-box;
 }
-.form-input:focus { border-color: rgba(94, 234, 212, 0.5); }
-.form-input::placeholder { color: rgba(148, 163, 184, 0.35); }
+.form-input:focus { border-color: rgba(var(--accent-rgb), 0.5); }
+.form-input::placeholder { color: var(--text-3); }
 .form-input-error { border-color: rgba(239, 68, 68, 0.5) !important; }
-.form-input option { background: #060b11; color: #e2e8f0; }
+.form-input option { background: var(--bg-secondary); color: var(--text-1); }
 
 .form-textarea { resize: vertical; min-height: 110px; }
 
@@ -572,11 +572,11 @@ onMounted(() => {
 }
 
 .form-success {
-    background: rgba(94, 234, 212, 0.08);
-    border: 1px solid rgba(94, 234, 212, 0.25);
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
     border-radius: 4px;
     padding: 1rem 1.2rem;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.9rem;
     max-width: 700px;
 }
@@ -593,7 +593,7 @@ onMounted(() => {
     align-items: center;
     text-decoration: none;
     color: #0f172a;
-    background: #5eead4;
+    background: var(--accent);
     border-radius: 999px;
     padding: 0.45rem 0.85rem;
     font-size: 0.78rem;
@@ -607,7 +607,7 @@ onMounted(() => {
     align-items: center;
     gap: 0.4rem;
     align-self: flex-start;
-    background: #5eead4;
+    background: var(--accent);
     color: #050b14;
     border: none;
     border-radius: 4px;

@@ -4,6 +4,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
 import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X, Settings2 } from 'lucide-vue-next'
 import { useA11y } from '@/Composables/useA11y'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 const { reduceMotion, toggleMotion } = useA11y()
 
@@ -69,9 +70,10 @@ onUnmounted(() => {
                 <Link href="/engagements" class="nav-link nav-link-anchor">ENGAGEMENTS</Link>
                 <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
                 <button class="nav-link a11y-toggle" @click="toggleMotion" :title="reduceMotion ? 'Enable Animations' : 'Reduce Motion'">
-                    <Settings2 :size="16" /> 
+                    <Settings2 :size="16" />
                     <span class="sr-only">Toggle Motion</span>
                 </button>
+                <ThemeToggle class="nav-link a11y-toggle" />
             </div>
 
             <!-- Hamburger button (mobile) -->
@@ -94,6 +96,10 @@ onUnmounted(() => {
                 <button class="mobile-link" @click="toggleMotion">
                     {{ reduceMotion ? 'Enable Animations' : 'Reduce Motion' }}
                 </button>
+                <div class="mobile-theme-row">
+                    <span class="mobile-theme-label">Theme</span>
+                    <ThemeToggle class="mobile-theme-toggle" />
+                </div>
                 <div v-if="socialLinks?.length" class="mobile-socials">
                     <a
                         v-for="link in socialLinks"
@@ -172,7 +178,7 @@ onUnmounted(() => {
     background: none;
     border: none;
     padding: 0;
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 1.05rem;
     font-weight: 800;
     letter-spacing: 0.05em;
@@ -180,17 +186,17 @@ onUnmounted(() => {
     transition: color 0.3s ease;
 }
 .nav-logo:hover {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .nav-linkedin {
-    color: rgba(226, 232, 240, 0.45);
+    color: var(--text-3);
     font-size: 0.78rem;
     text-decoration: none;
     letter-spacing: 0.02em;
     transition: color 0.3s;
 }
-.nav-linkedin:hover { color: rgba(226, 232, 240, 0.8); }
+.nav-linkedin:hover { color: var(--text-2); }
 
 .nav-spacer {
     width: 18rem;
@@ -205,7 +211,7 @@ onUnmounted(() => {
 .nav-link {
     background: none;
     border: none;
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-2);
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -214,7 +220,7 @@ onUnmounted(() => {
     transition: color 0.3s ease;
     padding: 0;
 }
-.nav-link:hover { color: #f8fafc; }
+.nav-link:hover { color: var(--text-1); }
 
 .nav-link-anchor {
     display: inline-flex;
@@ -227,7 +233,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
 }
-.a11y-toggle:hover { color: #5eead4; }
+.a11y-toggle:hover { color: var(--accent); }
 .sr-only {
     position: absolute;
     width: 1px;
@@ -256,17 +262,17 @@ onUnmounted(() => {
     display: block;
     width: 1px;
     height: 5rem;
-    background: linear-gradient(to bottom, rgba(148, 163, 184, 0.35), transparent);
+    background: linear-gradient(to bottom, var(--border-strong), transparent);
     margin-top: 0.5rem;
 }
 
 .sidebar-icon {
-    color: rgba(226, 232, 240, 0.45);
+    color: var(--text-3);
     transition: all 0.3s ease;
     display: flex;
 }
 .sidebar-icon:hover {
-    color: #5eead4;
+    color: var(--accent);
     transform: translateY(-2px);
 }
 
@@ -276,7 +282,7 @@ onUnmounted(() => {
     right: 1.5rem;
     bottom: 2rem;
     z-index: 999;
-    color: rgba(226, 232, 240, 0.45);
+    color: var(--text-3);
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -284,14 +290,14 @@ onUnmounted(() => {
     writing-mode: vertical-rl;
     transition: color 0.3s ease;
 }
-.resume-float:hover { color: #5eead4; }
+.resume-float:hover { color: var(--accent); }
 
 /* ── Hamburger ── */
 .hamburger {
     display: none;
     background: none;
     border: none;
-    color: rgba(226, 232, 240, 0.8);
+    color: var(--text-2);
     cursor: pointer;
     padding: 0.25rem;
     align-items: center;
@@ -299,14 +305,14 @@ onUnmounted(() => {
     transition: color 0.25s;
     z-index: 1001;
 }
-.hamburger:hover { color: #5eead4; }
+.hamburger:hover { color: var(--accent); }
 
 /* ── Mobile overlay ── */
 .mobile-overlay {
     position: fixed;
     inset: 0;
     z-index: 998;
-    background: rgba(5, 8, 20, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
 }
 .mobile-menu {
@@ -315,8 +321,8 @@ onUnmounted(() => {
     right: 0;
     width: min(320px, 85vw);
     height: 100vh;
-    background: #060d1c;
-    border-left: 1px solid rgba(148, 163, 184, 0.12);
+    background: var(--bg-elevated);
+    border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     padding: 5rem 2rem 2.5rem;
@@ -325,44 +331,60 @@ onUnmounted(() => {
 .mobile-link {
     background: none;
     border: none;
-    color: rgba(226, 232, 240, 0.65);
+    color: var(--text-2);
     font-size: 1.1rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     text-align: left;
     text-decoration: none;
     padding: 0.7rem 0;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: color 0.2s;
     display: block;
 }
-.mobile-link:hover { color: #5eead4; }
+.mobile-link:hover { color: var(--accent); }
+.mobile-theme-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.mobile-theme-label {
+    color: var(--text-2);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+.mobile-theme-toggle {
+    color: var(--text-2);
+}
 .mobile-socials {
     display: flex;
     gap: 1.2rem;
     padding: 1.5rem 0 0.5rem;
 }
 .mobile-social-icon {
-    color: rgba(226, 232, 240, 0.45);
+    color: var(--text-3);
     display: flex;
     transition: color 0.2s;
 }
-.mobile-social-icon:hover { color: #5eead4; }
+.mobile-social-icon:hover { color: var(--accent); }
 .mobile-resume {
     margin-top: auto;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.82rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid rgba(94, 234, 212, 0.3);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
     padding: 0.65rem 1rem;
     border-radius: 4px;
     text-align: center;
     transition: background 0.2s;
 }
-.mobile-resume:hover { background: rgba(94, 234, 212, 0.08); }
+.mobile-resume:hover { background: rgba(var(--accent-rgb), 0.08); }
 
 /* Transition */
 .mobile-menu-enter-active,

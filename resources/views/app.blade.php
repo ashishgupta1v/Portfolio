@@ -3,7 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#090e14">
+
+        {{-- Sets data-theme before any CSS/JS loads, so the page never paints
+             the wrong palette then flashes to the right one. --}}
+        <script>
+            (function () {
+                var stored = localStorage.getItem('theme');
+                var dark = stored === 'dark' || (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            })();
+        </script>
+
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc">
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090e14">
 
         {{-- Rendered server-side: social crawlers never execute the JS that
              Inertia's <Head> component depends on. --}}

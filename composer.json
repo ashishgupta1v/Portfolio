@@ -12,8 +12,10 @@
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
+        "league/commonmark": "*",
         "sentry/sentry-laravel": "^4.25",
         "spatie/laravel-sitemap": "^8.0",
+        "spatie/yaml-front-matter": "*",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
