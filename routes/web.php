@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Blog\BlogIndexController;
+use App\Http\Controllers\Blog\BlogShowController;
 use App\Http\Controllers\CaseStudies\CaseStudyIndexController;
 use App\Http\Controllers\CaseStudies\CaseStudyShowController;
 use App\Http\Controllers\ContactController;
@@ -11,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', PortfolioController::class)->name('portfolio');
 Route::get('/case-studies', CaseStudyIndexController::class)->name('case-studies.index');
 Route::get('/case-studies/{slug}', CaseStudyShowController::class)->name('case-studies.show');
+Route::get('/blog', BlogIndexController::class)->name('blog.index');
+Route::get('/blog/{slug}', BlogShowController::class)->name('blog.show');
 Route::get('/engagements', EngagementsPageController::class)->name('engagements.index');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 Route::post('/contact', ContactController::class)

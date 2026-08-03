@@ -67,6 +67,7 @@ onUnmounted(() => {
                 <button class="nav-link" @click="scrollTo('about')">ABOUT</button>
                 <button class="nav-link" @click="scrollTo('work')">WORK</button>
                 <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
+                <Link href="/blog" class="nav-link nav-link-anchor">BLOG</Link>
                 <Link href="/engagements" class="nav-link nav-link-anchor">ENGAGEMENTS</Link>
                 <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
                 <button class="nav-link a11y-toggle" @click="toggleMotion" :title="reduceMotion ? 'Enable Animations' : 'Reduce Motion'">
@@ -91,6 +92,7 @@ onUnmounted(() => {
                 <button class="mobile-link" @click="scrollTo('about')">About</button>
                 <button class="mobile-link" @click="scrollTo('work')">Work</button>
                 <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
+                <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
                 <Link href="/engagements" class="mobile-link" @click="mobileOpen = false">Engagements</Link>
                 <button class="mobile-link" @click="scrollTo('contact')">Contact</button>
                 <button class="mobile-link" @click="toggleMotion">

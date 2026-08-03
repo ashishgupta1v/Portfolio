@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Domain\Blog\Repositories\BlogRepositoryInterface;
 use App\Domain\CaseStudies\Repositories\CaseStudyRepositoryInterface;
+use App\Infrastructure\Blog\Repositories\FileBlogRepository;
 use App\Infrastructure\CaseStudies\Repositories\FileCaseStudyRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -20,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CaseStudyRepositoryInterface::class,
             FileCaseStudyRepository::class,
+        );
+
+        $this->app->bind(
+            BlogRepositoryInterface::class,
+            FileBlogRepository::class,
         );
     }
 
