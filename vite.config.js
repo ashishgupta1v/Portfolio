@@ -7,6 +7,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: 'resources/js/app.ts',
+            ssr: 'resources/js/ssr.ts',
             refresh: true,
         }),
         vue({
@@ -31,6 +32,9 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, 'resources/js'),
         },
+    },
+    ssr: {
+        noExternal: ['@inertiajs/vue3'],
     },
     build: {
         rollupOptions: {

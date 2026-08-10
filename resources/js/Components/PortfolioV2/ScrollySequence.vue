@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useVisitorPersonalization } from '@/Composables/useVisitorPersonalization'
 
 interface HeroStatement {
     title: string
@@ -17,6 +18,8 @@ const props = defineProps<{
     imageUrl?: string | null
     frameCount?: number
 }>()
+
+const { context: visitorContext } = useVisitorPersonalization()
 
 const emit = defineEmits<{
     (e: 'hero-ready'): void
@@ -45,16 +48,16 @@ const statements = computed<HeroStatement[]>(() => [
         z: 60,
     },
     {
-        title: '9+ Years Experience.',
-        subtitle: 'Specializing in Vue, Laravel, and Scalable Microservices.',
+        title: '9+ Years Shipping.',
+        subtitle: 'Vue, Laravel, DDD — from legacy modernization to greenfield at scale.',
         align: 'left',
         start: 0.34,
         end: 0.56,
         z: 40,
     },
     {
-        title: 'Innovating with AI.',
-        subtitle: 'Building AI Native Products & Intelligent Automation Systems.',
+        title: 'Building with AI.',
+        subtitle: 'Production RAG pipelines, intelligent automation, and AI-native products.',
         align: 'right',
         start: 0.68,
         end: 0.90,
@@ -183,6 +186,11 @@ onUnmounted(() => {
                     :class="`align-${item.align}`"
                     :style="statementStyle(item)"
                 >
+                    <Transition name="greeting-fade">
+                        <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting">
+                            {{ visitorContext.greeting }}
+                        </span>
+                    </Transition>
                     <h1 class="statement-title">
                         <template v-for="(line, li) in item.title.split('\n')" :key="li">
                             <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }}</span>
@@ -299,6 +307,23 @@ onUnmounted(() => {
 .name-line {
     display: inline;
 }
+
+.hero-greeting {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent, #14b8a6);
+    background: rgba(20, 184, 166, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+}
+.greeting-fade-enter-active { transition: opacity 0.6s ease 0.8s; }
+.greeting-fade-leave-active { transition: opacity 0.3s ease; }
+.greeting-fade-enter-from, .greeting-fade-leave-to { opacity: 0; }
 
 .scroll-hint {
     position: absolute;

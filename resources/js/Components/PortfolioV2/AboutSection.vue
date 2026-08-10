@@ -89,8 +89,8 @@ onMounted(() => {
 
                 <p class="combo-para combo-primary">{{ profile.bio }}</p>
                 <p class="combo-para combo-secondary">
-                    I bridge complex business requirements and elite-tier engineering by building high-concurrency ecosystems
-                    focused on domain integrity, performance, and measurable outcomes.
+                    I thrive in fast-moving teams where ownership matters — taking systems from architecture through
+                    production, mentoring engineers along the way, and shipping measurable outcomes.
                 </p>
             </div>
 
@@ -118,7 +118,7 @@ onMounted(() => {
 <style scoped>
 .combo-section {
     position: relative;
-    background: linear-gradient(180deg, #090e14 0%, #0c1521 55%, #0b1118 100%);
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 55%, var(--section-bg-mid) 100%);
     padding: 7rem 1.5rem 6.5rem;
     overflow: hidden;
 }
@@ -142,8 +142,8 @@ onMounted(() => {
 .glass {
     position: relative;
     z-index: 1;
-    background: linear-gradient(135deg, rgba(9, 14, 20, 0.75), rgba(15, 23, 42, 0.52));
-    border: 1px solid rgba(148, 163, 184, 0.18);
+    background: linear-gradient(135deg, var(--glass-bg), var(--glass-fg));
+    border: 1px solid var(--border);
     backdrop-filter: blur(10px);
     border-radius: 1rem;
 }
@@ -153,7 +153,7 @@ onMounted(() => {
 }
 
 .combo-eyebrow {
-    color: rgba(94, 234, 212, 0.92);
+    color: rgba(var(--accent-rgb), 0.92);
     text-transform: uppercase;
     letter-spacing: 0.18em;
     font-size: 0.75rem;
@@ -171,17 +171,17 @@ onMounted(() => {
     font-size: clamp(1.9rem, 4.3vw, 3.3rem);
     line-height: 1.06;
     letter-spacing: -0.03em;
-    color: #e2e8f0;
+    color: var(--text-heading);
     font-style: normal;
     font-weight: 800;
 }
 
 .combo-heading-line.accent {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .combo-primary {
-    color: rgba(226, 232, 240, 0.9);
+    color: var(--text-body);
     font-size: clamp(1rem, 1.55vw, 1.22rem);
     line-height: 1.78;
     margin-bottom: 0.9rem;
@@ -202,7 +202,7 @@ onMounted(() => {
 
 .combo-card {
     position: relative;
-    border: 1px dashed rgba(148, 163, 184, 0.32);
+    border: 1px dashed var(--border-strong);
     border-radius: 0.75rem;
     padding: 1rem 1rem 1rem 0.95rem;
     transition: border-color 0.28s ease, background-color 0.28s ease;
@@ -210,18 +210,18 @@ onMounted(() => {
 
 .combo-card.active,
 .combo-card:hover {
-    border-color: rgba(94, 234, 212, 0.55);
-    background: rgba(94, 234, 212, 0.04);
+    border-color: rgba(var(--accent-rgb), 0.55);
+    background: rgba(var(--accent-rgb), 0.04);
 }
 
 .card-icon {
-    color: rgba(94, 234, 212, 0.72);
+    color: rgba(var(--accent-rgb), 0.72);
     margin-bottom: 0.55rem;
 }
 
 .card-title {
     font-size: 1.02rem;
-    color: #f8fafc;
+    color: var(--text-1);
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
 }
@@ -229,7 +229,7 @@ onMounted(() => {
 .card-text {
     font-size: 0.86rem;
     line-height: 1.6;
-    color: rgba(226, 232, 240, 0.62);
+    color: var(--text-muted);
     padding-right: 2rem;
 }
 
@@ -239,9 +239,9 @@ onMounted(() => {
     right: 0.65rem;
     width: 1.7rem;
     height: 1.7rem;
-    border: 1px solid rgba(148, 163, 184, 0.32);
-    background: rgba(15, 23, 42, 0.5);
-    color: rgba(226, 232, 240, 0.75);
+    border: 1px solid var(--border-strong);
+    background: var(--card-bg);
+    color: var(--text-2);
     display: inline-flex;
     align-items: center;
     justify-content: center;

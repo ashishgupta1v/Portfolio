@@ -144,7 +144,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #5eead4, #38bdf8);
+    background: linear-gradient(90deg, var(--accent), #93c5fd);
     z-index: 2000;
     transition: width 0.1s linear;
     border-radius: 0 2px 2px 0;
@@ -154,8 +154,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     min-height: 100vh;
     background:
         radial-gradient(circle at top right, rgba(56, 189, 248, 0.09), transparent 28%),
-        linear-gradient(180deg, #081019 0%, #0b1320 42%, #08111a 100%);
-    color: #e2e8f0;
+        linear-gradient(180deg, var(--section-bg-deep) 0%, var(--section-bg-mid) 42%, var(--section-bg-deep) 100%);
+    color: var(--text-body);
 }
 
 .page-shell {
@@ -182,7 +182,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .brand-link {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.96rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -195,7 +195,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .topbar-link {
-    color: rgba(226, 232, 240, 0.72);
+    color: var(--text-muted);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -205,7 +205,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .brand-link:hover,
 .cta-link:hover,
 .rail-link:hover {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .hero-grid {
@@ -218,7 +218,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .eyebrow,
 .meta-label,
 .rail-label {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.76rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -226,7 +226,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 .hero-copy h1 {
     margin: 0.7rem 0 0;
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: clamp(2.6rem, 5vw, 4.8rem);
     line-height: 0.95;
     letter-spacing: -0.05em;
@@ -236,7 +236,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .hero-summary {
     max-width: 720px;
     margin: 1.2rem 0 0;
-    color: rgba(226, 232, 240, 0.76);
+    color: var(--text-muted);
     font-size: 1.02rem;
     line-height: 1.85;
 }
@@ -244,8 +244,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .hero-aside,
 .article-card,
 .rail-card {
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    background: rgba(8, 14, 23, 0.84);
+    border: 1px solid var(--border);
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
 }
 
@@ -262,7 +262,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .meta-value {
-    color: rgba(226, 232, 240, 0.84);
+    color: var(--text-body);
     line-height: 1.6;
 }
 
@@ -275,9 +275,9 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .tag-chip {
     padding: 0.35rem 0.78rem;
     border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: rgba(15, 23, 42, 0.84);
-    color: rgba(226, 232, 240, 0.82);
+    border: 1px solid var(--border);
+    background: var(--card-bg-strong);
+    color: var(--text-body);
     font-size: 0.72rem;
 }
 
@@ -295,7 +295,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 :deep(.article-prose h2),
 :deep(.article-prose h3) {
-    color: #f8fafc;
+    color: var(--text-1);
     letter-spacing: -0.03em;
 }
 
@@ -311,7 +311,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 :deep(.article-prose p),
 :deep(.article-prose li) {
-    color: rgba(226, 232, 240, 0.82);
+    color: var(--text-body);
     line-height: 1.9;
     font-size: 1rem;
 }
@@ -322,15 +322,90 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 :deep(.article-prose strong) {
-    color: #f8fafc;
+    color: var(--text-1);
 }
 
 :deep(.article-prose code) {
-    background: rgba(94, 234, 212, 0.1);
-    color: #5eead4;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    background: rgba(var(--accent-rgb), 0.1);
+    color: var(--accent);
     padding: 0.15rem 0.4rem;
     border-radius: 0.35rem;
-    font-size: 0.9em;
+    font-size: 0.88em;
+}
+
+:deep(.article-prose pre) {
+    background: var(--card-bg-solid);
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+:deep(.article-prose pre code) {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    background: transparent;
+    color: var(--text-body);
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+:deep(.article-prose a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 160ms;
+}
+
+:deep(.article-prose a:hover) {
+    color: rgba(var(--accent-rgb), 0.7);
+}
+
+:deep(.article-prose blockquote) {
+    border-left: 3px solid var(--accent);
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+:deep(.article-prose img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+}
+
+:deep(.article-prose hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+:deep(.article-prose table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    display: block;
+}
+
+:deep(.article-prose th),
+:deep(.article-prose td) {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+:deep(.article-prose th) {
+    background: var(--glass-bg);
+    font-weight: 700;
+    color: var(--text-1);
 }
 
 .article-rail {
@@ -346,19 +421,19 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 .rail-card p {
     margin: 0.55rem 0 0;
-    color: rgba(226, 232, 240, 0.74);
+    color: var(--text-muted);
     line-height: 1.75;
 }
 
 .rail-link {
-    color: #5eead4;
+    color: var(--accent);
     font-weight: 700;
 }
 
 .cta-link {
     display: inline-flex;
     margin-top: 1rem;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;

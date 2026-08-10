@@ -226,13 +226,13 @@ const sendMessage = async () => {
 
 .chat-toggle-btn:hover {
     transform: scale(1.05);
-    background: #0d9488;
+    background: var(--accent);
 }
 
 .chat-toggle-btn.is-open {
-    background: #1e293b;
-    border: 1px solid rgba(94, 234, 212, 0.3);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.4);
+    background: var(--card-bg-solid);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .chat-window {
@@ -241,8 +241,8 @@ const sendMessage = async () => {
     left: 0;
     width: 340px;
     height: 480px;
-    background: #0f172a;
-    border: 1px solid rgba(148, 163, 184, 0.15);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -252,26 +252,26 @@ const sendMessage = async () => {
 
 .chat-header {
     padding: 1rem;
-    background: rgba(30, 41, 59, 0.8);
+    background: var(--card-bg-strong);
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    border-bottom: 1px solid var(--border);
 }
 
 .header-icon {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .header-text h3 {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
 }
 
 .header-text p {
-    color: #94a3b8;
+    color: var(--text-2);
     font-size: 0.75rem;
     margin: 0;
 }
@@ -290,7 +290,7 @@ const sendMessage = async () => {
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.3);
+    background: var(--border-strong);
     border-radius: 4px;
 }
 
@@ -311,8 +311,8 @@ const sendMessage = async () => {
 
 .bubble-assistant {
     align-self: flex-start;
-    background: #1e293b;
-    color: #e2e8f0;
+    background: var(--card-bg-solid);
+    color: var(--text-heading);
     border-bottom-left-radius: 0.2rem;
 }
 
@@ -323,22 +323,22 @@ const sendMessage = async () => {
 .bubble-md :deep(ul),
 .bubble-md :deep(ol) { margin: 0.4rem 0 0.4rem 1.1rem; padding: 0; display: grid; gap: 0.2rem; }
 .bubble-md :deep(li) { line-height: 1.45; }
-.bubble-md :deep(strong) { color: #f8fafc; font-weight: 700; }
-.bubble-md :deep(em) { font-style: italic; color: #cbd5e1; }
+.bubble-md :deep(strong) { color: var(--text-1); font-weight: 700; }
+.bubble-md :deep(em) { font-style: italic; color: var(--text-2); }
 .bubble-md :deep(code) {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
     font-size: 0.82em;
     padding: 0.08rem 0.32rem;
     border-radius: 0.28rem;
-    background: rgba(15, 23, 42, 0.7);
-    color: #5eead4;
+    background: var(--card-bg);
+    color: var(--accent);
 }
 .bubble-md :deep(a) {
-    color: #5eead4;
+    color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 2px;
 }
-.bubble-md :deep(a:hover) { color: #99f6e4; }
+.bubble-md :deep(a:hover) { color: rgba(var(--accent-rgb), 0.7); }
 
 .typing-indicator {
     display: flex;
@@ -349,7 +349,7 @@ const sendMessage = async () => {
 .typing-indicator span {
     width: 6px;
     height: 6px;
-    background: #94a3b8;
+    background: var(--text-2);
     border-radius: 50%;
     animation: bounce 1.4s infinite ease-in-out;
 }
@@ -364,31 +364,31 @@ const sendMessage = async () => {
 
 .chat-input-area {
     padding: 1rem;
-    background: #0f172a;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
     display: flex;
     gap: 0.5rem;
 }
 
 .chat-input-area input {
     flex: 1;
-    background: #1e293b;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    background: var(--card-bg-solid);
+    border: 1px solid var(--border);
     border-radius: 2rem;
     padding: 0.5rem 1rem;
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.85rem;
     outline: none;
     transition: border-color 0.2s;
 }
 
 .chat-input-area input:focus {
-    border-color: #5eead4;
+    border-color: var(--accent);
 }
 
 .chat-input-area button {
-    background: #5eead4;
-    color: #0f172a;
+    background: var(--accent);
+    color: var(--text-on-accent);
     border: none;
     width: 2.2rem;
     height: 2.2rem;

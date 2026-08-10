@@ -10,7 +10,9 @@ use App\Http\Controllers\Engagements\EngagementsPageController;
 use App\Http\Controllers\Portfolio\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
+Route::view('/offline', 'offline')->name('offline');
 Route::get('/', PortfolioController::class)->name('portfolio');
+Route::get('/projects/{slug}', \App\Http\Controllers\Portfolio\ProjectShowController::class)->name('projects.show');
 Route::get('/case-studies', CaseStudyIndexController::class)->name('case-studies.index');
 Route::get('/case-studies/{slug}', CaseStudyShowController::class)->name('case-studies.show');
 Route::get('/blog', BlogIndexController::class)->name('blog.index');
@@ -20,6 +22,17 @@ Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name
 Route::post('/contact', ContactController::class)
 	->middleware('throttle:contact-submissions')
 	->name('contact.submit');
+
+Route::get('/api/github-stats', [App\Http\Controllers\Portfolio\GitHubController::class, 'stats'])
+	->name('github.stats');
+
+Route::get('/api/visitor-count', App\Http\Controllers\Portfolio\VisitorCountController::class)
+	->middleware('throttle:30,1')
+	->name('visitor.count');
+
+Route::post('/newsletter/subscribe', [App\Http\Controllers\NewsletterController::class, 'subscribe'])
+	->middleware('throttle:5,1')
+	->name('newsletter.subscribe');
 
 // 60/min was far more than a human conversation needs on a token-billed,
 // unauthenticated endpoint. 15/min still feels instant while capping abuse.

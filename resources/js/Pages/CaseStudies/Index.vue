@@ -75,9 +75,9 @@ defineProps<CaseStudiesIndexPageProps>()
 .case-studies-page {
     min-height: 100vh;
     background:
-        radial-gradient(circle at top left, rgba(94, 234, 212, 0.12), transparent 30%),
-        linear-gradient(180deg, #081019 0%, #0a111b 48%, #071018 100%);
-    color: #e2e8f0;
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.12), transparent 30%),
+        linear-gradient(180deg, var(--section-bg-deep) 0%, var(--section-bg-mid) 48%, var(--section-bg-deep) 100%);
+    color: var(--text-body);
 }
 
 .hero-shell,
@@ -105,7 +105,7 @@ defineProps<CaseStudiesIndexPageProps>()
 }
 
 .brand-link {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.95rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -120,19 +120,19 @@ defineProps<CaseStudiesIndexPageProps>()
 
 .topbar-link,
 .topbar-current {
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-muted);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .topbar-current {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .eyebrow {
     margin: 0 0 1rem;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.78rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -141,7 +141,7 @@ defineProps<CaseStudiesIndexPageProps>()
 .hero-copy h1 {
     margin: 0;
     max-width: 11ch;
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: clamp(2.8rem, 6vw, 5rem);
     line-height: 0.95;
     letter-spacing: -0.05em;
@@ -150,7 +150,7 @@ defineProps<CaseStudiesIndexPageProps>()
 .hero-text {
     max-width: 700px;
     margin: 1.4rem 0 0;
-    color: rgba(226, 232, 240, 0.74);
+    color: var(--text-muted);
     font-size: 1.02rem;
     line-height: 1.8;
 }
@@ -163,9 +163,9 @@ defineProps<CaseStudiesIndexPageProps>()
 
 .study-card {
     padding: 1.7rem 1.8rem;
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    border: 1px solid var(--border);
     border-radius: 1.25rem;
-    background: rgba(11, 18, 30, 0.82);
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
 }
 
@@ -193,12 +193,12 @@ defineProps<CaseStudiesIndexPageProps>()
 
 .study-client,
 .highlight-label {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .study-reading,
 .study-detail-row span {
-    color: rgba(226, 232, 240, 0.56);
+    color: var(--text-muted);
 }
 
 .study-title {
@@ -206,7 +206,7 @@ defineProps<CaseStudiesIndexPageProps>()
 }
 
 .study-title-link {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: clamp(1.6rem, 3vw, 2.3rem);
     line-height: 1.05;
     letter-spacing: -0.04em;
@@ -214,13 +214,13 @@ defineProps<CaseStudiesIndexPageProps>()
 
 .study-title-link:hover,
 .read-link:hover {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .study-summary,
 .study-highlight p {
     margin: 0;
-    color: rgba(226, 232, 240, 0.72);
+    color: var(--text-muted);
     line-height: 1.8;
 }
 
@@ -228,8 +228,8 @@ defineProps<CaseStudiesIndexPageProps>()
     margin: 1.2rem 0;
     padding: 1rem 1.1rem;
     border-radius: 1rem;
-    background: rgba(94, 234, 212, 0.06);
-    border: 1px solid rgba(94, 234, 212, 0.14);
+    background: rgba(var(--accent-rgb), 0.06);
+    border: 1px solid rgba(var(--accent-rgb), 0.14);
 }
 
 .tag-row {
@@ -239,16 +239,16 @@ defineProps<CaseStudiesIndexPageProps>()
 .tag-chip {
     padding: 0.36rem 0.78rem;
     border-radius: 999px;
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    color: rgba(226, 232, 240, 0.78);
+    background: var(--card-bg-strong);
+    border: 1px solid var(--border-strong);
+    color: var(--text-body);
     font-size: 0.72rem;
 }
 
 .read-link {
     display: inline-flex;
     margin-top: 1.2rem;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.82rem;
     font-weight: 700;
     text-transform: uppercase;

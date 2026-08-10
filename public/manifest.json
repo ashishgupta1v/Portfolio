@@ -5,11 +5,11 @@
     "start_url": "/",
     "scope": "/",
     "display": "standalone",
-    "background_color": "#090e14",
-    "theme_color": "#090e14",
+    "background_color": "#0a0a0f",
+    "theme_color": "#14b8a6",
     "orientation": "portrait-primary",
     "lang": "en",
-    "categories": ["business", "productivity"],
+    "categories": ["business", "portfolio", "productivity"],
     "icons": [
         {
             "src": "/images/icon-192.png",
@@ -32,14 +32,19 @@
     ],
     "shortcuts": [
         {
+            "name": "Blog",
+            "url": "/blog",
+            "description": "Read articles and insights"
+        },
+        {
             "name": "Case Studies",
             "url": "/case-studies",
             "description": "Read detailed project case studies"
         },
         {
-            "name": "Engagement Models",
-            "url": "/engagements",
-            "description": "How we can work together"
+            "name": "Contact",
+            "url": "/#contact",
+            "description": "Get in touch"
         }
     ]
 }

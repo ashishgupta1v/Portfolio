@@ -76,12 +76,12 @@ onUnmounted(() => {
     height: 3px;
     z-index: 9999;
     pointer-events: none;
-    background: rgba(148, 163, 184, 0.06);
+    background: var(--border);
 }
 
 .scroll-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #5eead4 0%, #93c5fd 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, #93c5fd 100%);
     transform-origin: left center;
     /* transform is written every scroll frame — no transition, so the bar
        tracks the pointer immediately without lag. */
@@ -101,9 +101,9 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
 
-    color: #f8fafc;
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(148, 163, 184, 0.22);
+    color: var(--text-1);
+    background: var(--card-bg-strong);
+    border: 1px solid var(--border-strong);
     border-radius: 0.6rem;
     backdrop-filter: blur(8px);
     cursor: pointer;
@@ -117,14 +117,14 @@ onUnmounted(() => {
 
 @media (hover: hover) and (pointer: fine) {
     .back-to-top:hover {
-        background: rgba(94, 234, 212, 0.15);
-        border-color: rgba(94, 234, 212, 0.5);
-        color: #5eead4;
+        background: rgba(var(--accent-rgb), 0.15);
+        border-color: rgba(var(--accent-rgb), 0.5);
+        color: var(--accent);
     }
 }
 
 .back-to-top:focus-visible {
-    outline: 2px solid #5eead4;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 

@@ -74,9 +74,9 @@ onMounted(() => {
     gap: 0.75rem;
     padding: 0.85rem 0.9rem 0.85rem 1rem;
 
-    color: #e2e8f0;
-    background: rgba(9, 14, 20, 0.92);
-    border: 1px solid rgba(148, 163, 184, 0.22);
+    color: var(--text-body);
+    background: var(--glass-bg);
+    border: 1px solid var(--border);
     border-radius: 0.6rem;
     backdrop-filter: blur(10px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
@@ -86,7 +86,7 @@ onMounted(() => {
 
 .privacy-notice-body p {
     margin: 0;
-    color: rgba(226, 232, 240, 0.85);
+    color: var(--text-body);
 }
 
 .privacy-notice-close {
@@ -97,7 +97,7 @@ onMounted(() => {
     width: 1.6rem;
     height: 1.6rem;
 
-    color: rgba(148, 163, 184, 0.75);
+    color: var(--text-muted);
     background: transparent;
     border: 0;
     border-radius: 0.35rem;
@@ -108,13 +108,13 @@ onMounted(() => {
 
 @media (hover: hover) and (pointer: fine) {
     .privacy-notice-close:hover {
-        color: #5eead4;
-        background: rgba(94, 234, 212, 0.08);
+        color: var(--accent);
+        background: rgba(var(--accent-rgb), 0.08);
     }
 }
 
 .privacy-notice-close:focus-visible {
-    outline: 2px solid #5eead4;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 

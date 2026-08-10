@@ -50,8 +50,8 @@ const suggestions = [
     display: grid;
     place-items: center;
     padding: 2rem 1.5rem;
-    background: radial-gradient(circle at 30% 25%, #182537 0%, #0c1119 55%, #080d14 100%);
-    color: #e8edf3;
+    background: radial-gradient(circle at 30% 25%, var(--section-bg-tint) 0%, var(--section-bg-mid) 55%, var(--section-bg-deep) 100%);
+    color: var(--text-heading);
 }
 
 .err-wrap {
@@ -64,7 +64,7 @@ const suggestions = [
     font-size: clamp(4rem, 12vw, 7rem);
     font-weight: 900;
     letter-spacing: -0.05em;
-    color: #5eead4;
+    color: var(--accent);
     line-height: 1;
     margin-bottom: 0.75rem;
 }
@@ -79,7 +79,7 @@ const suggestions = [
 }
 
 .err-sub {
-    color: rgba(148, 163, 184, 0.85);
+    color: var(--text-2);
     line-height: 1.65;
     margin-bottom: 1.75rem;
     text-wrap: pretty;
@@ -100,10 +100,10 @@ const suggestions = [
     justify-content: space-between;
     gap: 0.5rem;
     padding: 0.7rem 1rem;
-    border: 1px solid rgba(148, 163, 184, 0.22);
+    border: 1px solid var(--border-strong);
     border-radius: 0.5rem;
-    color: #e8edf3;
-    background: rgba(15, 23, 42, 0.55);
+    color: var(--text-heading);
+    background: var(--card-bg);
     text-decoration: none;
     font-weight: 600;
     transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
@@ -113,9 +113,9 @@ const suggestions = [
 
 @media (hover: hover) and (pointer: fine) {
     .err-suggest-link:hover {
-        border-color: rgba(94, 234, 212, 0.55);
-        color: #5eead4;
-        background: rgba(94, 234, 212, 0.06);
+        border-color: rgba(var(--accent-rgb), 0.55);
+        color: var(--accent);
+        background: rgba(var(--accent-rgb), 0.06);
     }
 }
 
@@ -123,7 +123,7 @@ const suggestions = [
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: rgba(226, 232, 240, 0.65);
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 0.9rem;
     padding: 0.5rem 0.75rem;
@@ -132,6 +132,6 @@ const suggestions = [
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .err-back:hover { color: #5eead4; }
+    .err-back:hover { color: var(--accent); }
 }
 </style>

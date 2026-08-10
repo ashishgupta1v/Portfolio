@@ -56,6 +56,7 @@
         @endif
     </head>
     <body>
+        <a href="#main-content" class="skip-link">Skip to content</a>
         @inertia
 
         @production

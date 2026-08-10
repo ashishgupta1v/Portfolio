@@ -11,16 +11,30 @@ import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ScrollySequence = defineAsyncComponent(() => import('@/Components/PortfolioV2/ScrollySequence.vue'))
-const AboutSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/AboutSection.vue'))
-const TimelineSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TimelineSection.vue'))
-const WorksSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/WorksSection.vue'))
-const FeaturedCaseStudySection = defineAsyncComponent(() => import('@/Components/PortfolioV2/FeaturedCaseStudySection.vue'))
-const TechStackSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/TechStackSection.vue'))
-const ContactSection = defineAsyncComponent(() => import('@/Components/PortfolioV2/ContactSection.vue'))
+import SectionSkeleton from '@/Components/PortfolioV2/SectionSkeleton.vue'
+
+// Each async section shares the same skeleton placeholder while its chunk
+// loads. `delay` prevents a flash of skeleton on fast connections — nothing
+// shows for the first 200ms, so a chunk that resolves quickly never blinks.
+// `timeout` gives up after 12s and lets `errorComponent` render (we reuse
+// the skeleton silently rather than showing a scary error box).
+const asyncOpts = { loadingComponent: SectionSkeleton, delay: 200, timeout: 12_000 } as const
+
+const ScrollySequence = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/ScrollySequence.vue'), ...asyncOpts })
+const AboutSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/AboutSection.vue'), ...asyncOpts })
+const TimelineSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/TimelineSection.vue'), ...asyncOpts })
+const WorksSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/WorksSection.vue'), ...asyncOpts })
+const MetricsSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/MetricsSection.vue'), ...asyncOpts })
+const TestimonialsSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/TestimonialsSection.vue'), ...asyncOpts })
+const FeaturedCaseStudySection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/FeaturedCaseStudySection.vue'), ...asyncOpts })
+const TechStackSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/TechStackSection.vue'), ...asyncOpts })
+const GitHubActivity = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/GitHubActivity.vue'), ...asyncOpts })
+const ContactSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/ContactSection.vue'), ...asyncOpts })
 import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
 import ScrollUtilities from '@/Components/PortfolioV2/ScrollUtilities.vue'
-import CookieConsent from '@/Components/PortfolioV2/CookieConsent.vue'
+import CommandPalette from '@/Components/PortfolioV2/CommandPalette.vue'
+import TerminalMode from '@/Components/PortfolioV2/TerminalMode.vue'
+import ToastContainer from '@/Components/PortfolioV2/ToastContainer.vue'
 import { useKeyboardShortcuts } from '@/Composables/useKeyboardShortcuts'
 
 const props = defineProps<PortfolioPageProps>()
@@ -116,6 +130,7 @@ onUnmounted(() => {
         <InitialLoader :visible="showInitialLoader" :progress="heroProgress" />
 
         <CustomCursor />
+        <ToastContainer />
 
         <NavBar
             :initials="profile.name.split(' ').map(w => w[0]).join('')"
@@ -133,22 +148,26 @@ onUnmounted(() => {
             @hero-progress="handleHeroProgress"
         />
 
-        <div ref="depthRef" class="depth-sections">
+        <main id="main-content" ref="depthRef" class="depth-sections" role="main">
             <AboutSection :profile="profile" />
             <TimelineSection :experiences="experiences" />
             <WorksSection :projects="projects" />
+            <MetricsSection />
+            <TestimonialsSection />
             <FeaturedCaseStudySection />
             <TechStackSection :skills="skills" />
+            <GitHubActivity />
             <ContactSection
                 :profile="profile"
                 :social-links="socialLinks"
                 :educations="educations"
             />
-        </div>
+        </main>
 
         <ChatWidget />
         <ScrollUtilities />
-        <CookieConsent />
+        <CommandPalette />
+        <TerminalMode />
     </div>
 </template>
 

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import type { Profile, SocialLink, Education } from '@/types/portfolio'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight } from 'lucide-vue-next'
+import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight, MessageSquare } from 'lucide-vue-next'
+import AvailabilityBadge from '@/Components/PortfolioV2/AvailabilityBadge.vue'
+import NewsletterSignup from '@/Components/PortfolioV2/NewsletterSignup.vue'
+import ScheduleCall from '@/Components/PortfolioV2/ScheduleCall.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -28,7 +31,7 @@ const form = useForm({
     name: '',
     email: '',
     budget: '',
-    project_type: 'Website',
+    project_type: 'Full-Time Role',
     timeline: '',
     message: '',
     company_website: '',
@@ -46,7 +49,11 @@ const form = useForm({
 
 // Prefer the server's own confirmation over a hardcoded client string, so the
 // success state reflects what actually happened server-side.
-const FALLBACK_SUCCESS = "Message sent — I'll get back to you within a business day."
+const MESSAGE_MAX = 2000
+const messageCharCount = computed(() => form.message.length)
+const messageNearLimit = computed(() => messageCharCount.value > MESSAGE_MAX * 0.9)
+
+const FALLBACK_SUCCESS = "Message received — I'll get back to you within a business day."
 const successMessage = ref(FALLBACK_SUCCESS)
 
 function submitContact() {
@@ -61,8 +68,13 @@ function submitContact() {
     })
 }
 
+function openAiChat() {
+    const chatBtn = document.querySelector('.chat-toggle-btn:not(.is-open)') as HTMLButtonElement | null
+    if (chatBtn) chatBtn.click()
+}
+
 const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
-    'Hi Ashish, I just read your ZoetiCoach AI: Building a WhatsApp-First Accountability Engine for Coaches case study on ashishgupta.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.'
+    'Hi Ashish, I came across your portfolio at ashishgupta.dev and would like to discuss a potential role or opportunity with you. Let me know a good time to connect.'
 )}`
 
 onMounted(() => {
@@ -102,6 +114,7 @@ onMounted(() => {
                     </h2>
                 </div>
                 <div class="section-separator" />
+                <AvailabilityBadge class="contact-availability" />
             </div>
 
             <div class="ct-grid">
@@ -124,9 +137,13 @@ onMounted(() => {
                         rel="noopener noreferrer"
                         class="chat-btn"
                     >
-                        Chat on WhatsApp
+                        Quick chat on WhatsApp
                         <ArrowUpRight :size="14" />
                     </a>
+
+                    <div class="schedule-call-wrap">
+                        <ScheduleCall />
+                    </div>
 
                     <div v-if="educations.length" class="edu-list">
                         <div
@@ -189,17 +206,20 @@ onMounted(() => {
 
             <!-- Contact Form -->
             <div class="ct-form-row">
-                <h3 class="form-title">Send a message</h3>
+                <h3 class="form-title">Get in touch</h3>
                 <div v-if="submitted" class="form-success" role="status" aria-live="polite">
                     <p>{{ successMessage }}</p>
+                    <p class="ai-prequalify-hint">
+                        <MessageSquare :size="14" class="ai-hint-icon" />
+                        While you wait, try the <button type="button" class="ai-hint-btn" @click="openAiChat">AI Assistant</button> to learn more about my experience and stack.
+                    </p>
                     <div class="next-steps">
-                        <a href="/engagements" class="next-step-link">Review Engagement Models</a>
                         <a :href="whatsappHref" target="_blank" rel="noopener noreferrer" class="next-step-link">Chat on WhatsApp</a>
                     </div>
                 </div>
                 <form v-else class="contact-form" @submit.prevent="submitContact">
                     <p class="form-note">
-                        Share a few details so I can reply with a relevant scope, timeline, and next-step recommendation.
+                        Hiring, collaborating, or just want to connect? Drop me a note and I'll respond within a business day.
                     </p>
                     <div class="honeypot-wrap" aria-hidden="true">
                         <label for="cf-company-website">Company website</label>
@@ -228,50 +248,24 @@ onMounted(() => {
                                 type="email"
                                 class="form-input"
                                 :class="{ 'form-input-error': form.errors.email }"
-                                placeholder="you@example.com"
+                                placeholder="you@company.com"
                                 autocomplete="email"
                                 required
                             />
                             <span v-if="form.errors.email" class="form-error">{{ form.errors.email }}</span>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="cf-project-type" class="form-label">Project type</label>
-                            <select id="cf-project-type" v-model="form.project_type" class="form-input" required>
-                                <option value="Website">Website</option>
-                                <option value="SaaS Product">SaaS Product</option>
-                                <option value="Internal Dashboard">Internal Dashboard</option>
-                                <option value="Automation Workflow">Automation Workflow</option>
-                                <option value="Legacy Modernization">Legacy Modernization</option>
-                                <option value="AI Integration">AI Integration</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            <span v-if="form.errors.project_type" class="form-error">{{ form.errors.project_type }}</span>
-                        </div>
-                        <div class="form-field">
-                            <label for="cf-timeline" class="form-label">Preferred start</label>
-                            <select id="cf-timeline" v-model="form.timeline" class="form-input">
-                                <option value="">Select timeline…</option>
-                                <option value="Urgent (within 2 weeks)">Urgent (within 2 weeks)</option>
-                                <option value="This month">This month</option>
-                                <option value="1-2 months">1-2 months</option>
-                                <option value="3+ months">3+ months</option>
-                                <option value="Exploring options">Exploring options</option>
-                            </select>
-                            <span v-if="form.errors.timeline" class="form-error">{{ form.errors.timeline }}</span>
-                        </div>
-                    </div>
                     <div class="form-field">
-                        <label for="cf-budget" class="form-label">Estimated budget (optional)</label>
-                        <select id="cf-budget" v-model="form.budget" class="form-input">
-                            <option value="">Select a range…</option>
-                            <option value="Under ₹50,000">Under ₹50,000</option>
-                            <option value="₹50,000 – ₹1,50,000">₹50,000 – ₹1,50,000</option>
-                            <option value="₹1,50,000 – ₹5,00,000">₹1,50,000 – ₹5,00,000</option>
-                            <option value="₹5,00,000+">₹5,00,000+</option>
-                            <option value="Let's discuss">Let's discuss</option>
+                        <label for="cf-project-type" class="form-label">What brings you here?</label>
+                        <select id="cf-project-type" v-model="form.project_type" class="form-input" required>
+                            <option value="Full-Time Role">Full-time role</option>
+                            <option value="Contract / Freelance">Contract / Freelance</option>
+                            <option value="Technical Co-founder">Technical co-founder opportunity</option>
+                            <option value="Consulting">Consulting / Advisory</option>
+                            <option value="Collaboration">Open-source / Collaboration</option>
+                            <option value="Other">Other</option>
                         </select>
+                        <span v-if="form.errors.project_type" class="form-error">{{ form.errors.project_type }}</span>
                     </div>
                     <div class="form-field">
                         <label for="cf-message" class="form-label">Message</label>
@@ -280,17 +274,30 @@ onMounted(() => {
                             v-model="form.message"
                             class="form-input form-textarea"
                             :class="{ 'form-input-error': form.errors.message }"
-                            placeholder="Describe what you need…"
+                            placeholder="Tell me about the role, your team, or what you're building…"
                             rows="4"
+                            :maxlength="MESSAGE_MAX"
                             required
                         />
-                        <span v-if="form.errors.message" class="form-error">{{ form.errors.message }}</span>
+                        <div class="form-field-footer">
+                            <span v-if="form.errors.message" class="form-error">{{ form.errors.message }}</span>
+                            <span class="char-count" :class="{ 'char-count--warn': messageNearLimit }">
+                                {{ messageCharCount }}/{{ MESSAGE_MAX }}
+                            </span>
+                        </div>
                     </div>
                     <button type="submit" class="form-submit" :disabled="form.processing">
                         {{ form.processing ? 'Sending…' : 'Send message' }}
                         <ArrowUpRight :size="14" />
                     </button>
                 </form>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="ct-newsletter-row">
+                <h3 class="nl-title">Stay Updated</h3>
+                <p class="nl-desc">Get notified about new articles and projects.</p>
+                <NewsletterSignup />
             </div>
         </div>
     </section>
@@ -372,9 +379,13 @@ onMounted(() => {
 }
 
 .chat-btn:hover {
-    color: #08111a;
+    color: var(--text-on-accent);
     background: var(--accent);
     border-color: var(--accent);
+}
+
+.schedule-call-wrap {
+    margin-bottom: 1.8rem;
 }
 
 .edu-list {
@@ -470,6 +481,11 @@ onMounted(() => {
     letter-spacing: 0.05em;
 }
 
+/* ── Availability badge ── */
+.contact-availability {
+    margin-top: 1.2rem;
+}
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
     .ct-grid {
@@ -554,21 +570,47 @@ onMounted(() => {
     font-size: 0.9rem;
     font-family: inherit;
     padding: 0.65rem 0.85rem;
-    transition: border-color 0.25s;
+    transition: border-color 0.25s, box-shadow 0.25s;
     outline: none;
     width: 100%;
     box-sizing: border-box;
 }
-.form-input:focus { border-color: rgba(var(--accent-rgb), 0.5); }
+.form-input:focus {
+    border-color: rgba(var(--accent-rgb), 0.5);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
+}
 .form-input::placeholder { color: var(--text-3); }
 .form-input-error { border-color: rgba(239, 68, 68, 0.5) !important; }
 .form-input option { background: var(--bg-secondary); color: var(--text-1); }
 
 .form-textarea { resize: vertical; min-height: 110px; }
 
+.form-field-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 1.2rem;
+}
+
+.char-count {
+    font-size: 0.72rem;
+    color: var(--text-3);
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.25s;
+}
+.char-count--warn { color: #f59e0b; }
+
 .form-error {
     font-size: 0.75rem;
     color: #f87171;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
 }
 
 .form-success {
@@ -588,11 +630,41 @@ onMounted(() => {
     gap: 0.65rem;
 }
 
+.ai-prequalify-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    color: var(--text-body);
+    font-size: 0.82rem;
+}
+
+.ai-hint-icon {
+    flex-shrink: 0;
+    color: var(--accent);
+}
+
+.ai-hint-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-size: inherit;
+    padding: 0;
+}
+
+.ai-hint-btn:hover {
+    opacity: 0.8;
+}
+
 .next-step-link {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: #0f172a;
+    color: var(--text-on-accent);
     background: var(--accent);
     border-radius: 999px;
     padding: 0.45rem 0.85rem;
@@ -608,7 +680,7 @@ onMounted(() => {
     gap: 0.4rem;
     align-self: flex-start;
     background: var(--accent);
-    color: #050b14;
+    color: var(--text-on-accent);
     border: none;
     border-radius: 4px;
     font-size: 0.88rem;
@@ -623,5 +695,29 @@ onMounted(() => {
 
 @media (max-width: 640px) {
     .form-row { grid-template-columns: 1fr; }
+}
+
+/* ── Newsletter ── */
+.ct-newsletter-row {
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 700px;
+}
+
+.nl-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(var(--accent-rgb), 0.75);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.nl-desc {
+    font-size: 0.84rem;
+    color: var(--text-2);
+    line-height: 1.45;
+    margin-bottom: 0.2rem;
 }
 </style>

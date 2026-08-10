@@ -2,11 +2,8 @@
 import { Link, router } from '@inertiajs/vue3'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
-import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X, Settings2 } from 'lucide-vue-next'
-import { useA11y } from '@/Composables/useA11y'
+import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X } from 'lucide-vue-next'
 import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
-
-const { reduceMotion, toggleMotion } = useA11y()
 
 const props = defineProps<{
     initials: string
@@ -25,6 +22,10 @@ const iconMap: Record<string, any> = {
 
 const scrolled = ref(false)
 const mobileOpen = ref(false)
+const activeSection = ref('')
+
+const SECTION_IDS = ['about', 'career', 'work', 'metrics', 'tech', 'contact']
+let sectionObserver: IntersectionObserver | null = null
 
 function onScroll() {
     scrolled.value = window.scrollY > 60
@@ -45,15 +46,43 @@ onMounted(() => {
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     router.on('navigate', () => { mobileOpen.value = false })
+
+    sectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    activeSection.value = entry.target.id
+                }
+            }
+        },
+        { rootMargin: '-30% 0px -60% 0px' },
+    )
+
+    function observeSections() {
+        for (const id of SECTION_IDS) {
+            const el = document.getElementById(id)
+            if (el) sectionObserver!.observe(el)
+        }
+    }
+
+    // Async sections may not be in the DOM yet when NavBar mounts.
+    // Retry until they appear, then stop.
+    let attempts = 0
+    const poll = setInterval(() => {
+        observeSections()
+        attempts++
+        if (attempts >= 10) clearInterval(poll)
+    }, 500)
 })
 
 onUnmounted(() => {
     window.removeEventListener('scroll', onScroll)
+    sectionObserver?.disconnect()
 })
 </script>
 
 <template>
-    <nav class="nav">
+    <nav class="nav" aria-label="Main navigation">
         <div class="nav-inner">
             <!-- Logo / Initials -->
             <button class="nav-logo" @click="scrollToTop">
@@ -64,16 +93,11 @@ onUnmounted(() => {
 
             <!-- Right: section links (desktop) -->
             <div class="nav-links">
-                <button class="nav-link" @click="scrollTo('about')">ABOUT</button>
-                <button class="nav-link" @click="scrollTo('work')">WORK</button>
+                <button class="nav-link" :class="{ active: activeSection === 'about' }" @click="scrollTo('about')">ABOUT</button>
+                <button class="nav-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">WORK</button>
                 <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
                 <Link href="/blog" class="nav-link nav-link-anchor">BLOG</Link>
-                <Link href="/engagements" class="nav-link nav-link-anchor">ENGAGEMENTS</Link>
-                <button class="nav-link" @click="scrollTo('contact')">CONTACT</button>
-                <button class="nav-link a11y-toggle" @click="toggleMotion" :title="reduceMotion ? 'Enable Animations' : 'Reduce Motion'">
-                    <Settings2 :size="16" />
-                    <span class="sr-only">Toggle Motion</span>
-                </button>
+                <button class="nav-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">CONTACT</button>
                 <ThemeToggle class="nav-link a11y-toggle" />
             </div>
 
@@ -89,15 +113,11 @@ onUnmounted(() => {
     <Transition name="mobile-menu">
         <div v-if="mobileOpen" class="mobile-overlay" @click.self="mobileOpen = false">
             <nav class="mobile-menu">
-                <button class="mobile-link" @click="scrollTo('about')">About</button>
-                <button class="mobile-link" @click="scrollTo('work')">Work</button>
+                <button class="mobile-link" :class="{ active: activeSection === 'about' }" @click="scrollTo('about')">About</button>
+                <button class="mobile-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">Work</button>
                 <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
                 <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
-                <Link href="/engagements" class="mobile-link" @click="mobileOpen = false">Engagements</Link>
-                <button class="mobile-link" @click="scrollTo('contact')">Contact</button>
-                <button class="mobile-link" @click="toggleMotion">
-                    {{ reduceMotion ? 'Enable Animations' : 'Reduce Motion' }}
-                </button>
+                <button class="mobile-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">Contact</button>
                 <div class="mobile-theme-row">
                     <span class="mobile-theme-label">Theme</span>
                     <ThemeToggle class="mobile-theme-toggle" />
@@ -223,6 +243,7 @@ onUnmounted(() => {
     padding: 0;
 }
 .nav-link:hover { color: var(--text-1); }
+.nav-link.active { color: var(--accent); }
 
 .nav-link-anchor {
     display: inline-flex;
@@ -236,16 +257,6 @@ onUnmounted(() => {
     justify-content: center;
 }
 .a11y-toggle:hover { color: var(--accent); }
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
 
 /* ── Social sidebar ── */
 .social-sidebar {
@@ -346,6 +357,7 @@ onUnmounted(() => {
     display: block;
 }
 .mobile-link:hover { color: var(--accent); }
+.mobile-link.active { color: var(--accent); }
 .mobile-theme-row {
     display: flex;
     align-items: center;

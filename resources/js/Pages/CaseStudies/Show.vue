@@ -2,6 +2,9 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import type { CaseStudyShowPageProps } from '@/types/caseStudies'
+import { Download } from 'lucide-vue-next'
+import ArchitectureDiagram from '@/Components/PortfolioV2/ArchitectureDiagram.vue'
+import ShareButtons from '@/Components/PortfolioV2/ShareButtons.vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -11,6 +14,8 @@ const props = defineProps<CaseStudyShowPageProps>()
 const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
     `Hi Ashish, I just read your ${props.caseStudy.title} case study on ashishgupta.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.`
 )}`
+
+const shareUrl = computed(() => `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}`)
 
 // Reading progress
 const readingProgress = ref(0)
@@ -86,6 +91,10 @@ const breadcrumbSchema = computed(() => JSON.stringify({
         { '@type': 'ListItem', position: 3, name: props.caseStudy.title, item: `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}` },
     ],
 }))
+
+function downloadPdf() {
+    window.print()
+}
 </script>
 
 <template>
@@ -114,6 +123,11 @@ const breadcrumbSchema = computed(() => JSON.stringify({
                 <div class="topbar-links">
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
+                    <ShareButtons :url="shareUrl" :title="caseStudy.title" :description="caseStudy.seoDescription" />
+                    <button class="pdf-download-btn" @click="downloadPdf" aria-label="Download as PDF">
+                        <Download :size="14" />
+                        <span>Download PDF</span>
+                    </button>
                 </div>
             </div>
 
@@ -164,6 +178,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
                 <div class="article-prose" v-html="caseStudy.bodyHtml" />
             </article>
 
+            <ArchitectureDiagram :slug="caseStudy.slug" />
+
             <aside class="article-rail" ref="railRef">
                 <div class="rail-card">
                     <span class="rail-label">Permission status</span>
@@ -194,7 +210,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #5eead4, #38bdf8);
+    background: linear-gradient(90deg, var(--accent), #93c5fd);
     z-index: 2000;
     transition: width 0.1s linear;
     border-radius: 0 2px 2px 0;
@@ -204,8 +220,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     min-height: 100vh;
     background:
         radial-gradient(circle at top right, rgba(56, 189, 248, 0.09), transparent 28%),
-        linear-gradient(180deg, #081019 0%, #0b1320 42%, #08111a 100%);
-    color: #e2e8f0;
+        linear-gradient(180deg, var(--section-bg-deep) 0%, var(--section-bg-mid) 42%, var(--section-bg-deep) 100%);
+    color: var(--text-body);
 }
 
 .page-shell {
@@ -231,7 +247,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .brand-link {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.96rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -244,7 +260,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .topbar-link {
-    color: rgba(226, 232, 240, 0.72);
+    color: var(--text-muted);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -253,7 +269,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .topbar-link:hover,
 .brand-link:hover,
 .cta-link:hover {
-    color: #5eead4;
+    color: var(--accent);
 }
 
 .hero-grid {
@@ -267,7 +283,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .meta-label,
 .signal-label,
 .rail-label {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.76rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -275,7 +291,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 .hero-copy h1 {
     margin: 0.7rem 0 0;
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: clamp(2.6rem, 5vw, 4.8rem);
     line-height: 0.95;
     letter-spacing: -0.05em;
@@ -285,7 +301,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .hero-summary {
     max-width: 720px;
     margin: 1.2rem 0 0;
-    color: rgba(226, 232, 240, 0.76);
+    color: var(--text-muted);
     font-size: 1.02rem;
     line-height: 1.85;
 }
@@ -294,8 +310,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .signal-band,
 .article-card,
 .rail-card {
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    background: rgba(8, 14, 23, 0.84);
+    border: 1px solid var(--border);
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
 }
 
@@ -312,7 +328,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 .meta-value {
-    color: rgba(226, 232, 240, 0.84);
+    color: var(--text-body);
     line-height: 1.6;
 }
 
@@ -329,7 +345,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .signal-band p,
 .rail-card p {
     margin: 0.55rem 0 0;
-    color: rgba(226, 232, 240, 0.74);
+    color: var(--text-muted);
     line-height: 1.75;
 }
 
@@ -344,9 +360,9 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .tag-chip {
     padding: 0.35rem 0.78rem;
     border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: rgba(15, 23, 42, 0.84);
-    color: rgba(226, 232, 240, 0.82);
+    border: 1px solid var(--border-strong);
+    background: var(--card-bg-strong);
+    color: var(--text-body);
     font-size: 0.72rem;
 }
 
@@ -364,7 +380,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 :deep(.article-prose h2),
 :deep(.article-prose h3) {
-    color: #f8fafc;
+    color: var(--text-1);
     letter-spacing: -0.03em;
 }
 
@@ -380,7 +396,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 
 :deep(.article-prose p),
 :deep(.article-prose li) {
-    color: rgba(226, 232, 240, 0.82);
+    color: var(--text-body);
     line-height: 1.9;
     font-size: 1rem;
 }
@@ -390,7 +406,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 }
 
 :deep(.article-prose strong) {
-    color: #f8fafc;
+    color: var(--text-1);
 }
 
 .article-rail {
@@ -407,7 +423,7 @@ const breadcrumbSchema = computed(() => JSON.stringify({
 .cta-link {
     display: inline-flex;
     margin-top: 1rem;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -437,6 +453,60 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     .signal-band,
     .rail-card {
         padding: 1rem;
+    }
+}
+
+/* Download PDF button */
+.pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pdf-download-btn:hover {
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    background: rgba(var(--accent-rgb), 0.06);
+}
+
+/* Print-specific overrides for case study page */
+@media print {
+    .reading-progress,
+    .topbar,
+    .pdf-download-btn,
+    .share-buttons {
+        display: none !important;
+    }
+
+    .case-study-page {
+        background: #ffffff !important;
+    }
+
+    .hero-shell {
+        padding-top: 0 !important;
+    }
+
+    .hero-aside,
+    .signal-band,
+    .article-card,
+    .rail-card {
+        border-color: rgba(15, 23, 42, 0.15) !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+    }
+
+    .cta-card {
+        display: none !important;
     }
 }
 </style>

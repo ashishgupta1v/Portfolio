@@ -149,7 +149,7 @@ onMounted(() => {
 <style scoped>
 .wid-section {
     position: relative;
-    background: linear-gradient(175deg, #0b1118 0%, #0a0f17 40%, #0d1521 100%);
+    background: linear-gradient(175deg, var(--section-bg-tint) 0%, var(--section-bg-mid) 40%, var(--section-bg-deep) 100%);
     padding: 7rem 1.5rem 7rem;
     overflow: hidden;
 }
@@ -187,7 +187,7 @@ onMounted(() => {
 }
 
 .wid-title-line .accent {
-    color: rgba(94, 234, 212, 0.85);
+    color: rgba(var(--accent-rgb), 0.85);
     -webkit-text-stroke: 0;
 }
 
@@ -212,22 +212,22 @@ onMounted(() => {
 }
 
 .wid-intro-card {
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.35));
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--glass-fg), var(--card-bg));
     backdrop-filter: blur(10px);
     border-radius: 0.6rem;
     padding: 1.35rem 1.4rem;
 }
 
 .intro-title {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: clamp(1.2rem, 2.1vw, 1.8rem);
     letter-spacing: -0.02em;
     margin-bottom: 0.55rem;
 }
 
 .intro-sub {
-    color: rgba(226, 232, 240, 0.72);
+    color: var(--text-muted);
     line-height: 1.62;
     font-size: 0.9rem;
 }
@@ -250,12 +250,12 @@ onMounted(() => {
 
 .wid-card:hover .card-border rect,
 .wid-card.active .card-border rect {
-    stroke: rgba(94, 234, 212, 0.45);
+    stroke: rgba(var(--accent-rgb), 0.45);
 }
 
 .wid-card:hover .card-border line,
 .wid-card.active .card-border line {
-    stroke: rgba(94, 234, 212, 0.7);
+    stroke: rgba(var(--accent-rgb), 0.7);
 }
 
 .card-inner {
@@ -266,7 +266,7 @@ onMounted(() => {
 .card-title {
     font-size: 1.35rem;
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--text-1);
     margin-bottom: 0.5rem;
     letter-spacing: -0.01em;
 }
@@ -274,7 +274,7 @@ onMounted(() => {
 .card-sub {
     font-size: 0.88rem;
     line-height: 1.65;
-    color: rgba(226, 232, 240, 0.5);
+    color: var(--text-muted);
     font-weight: 300;
     max-width: 36rem;
     transition: color 0.3s ease;
@@ -294,18 +294,18 @@ onMounted(() => {
     margin-top: 0.5rem;
     font-size: 0.79rem;
     line-height: 1.55;
-    color: rgba(148, 163, 184, 0.86);
+    color: var(--text-muted);
 }
 
 .wid-card:hover .card-sub,
 .wid-card.active .card-sub {
-    color: rgba(226, 232, 240, 0.75);
+    color: var(--text-body);
 }
 
 .card-icon {
     position: absolute;
     right: 0;
-    color: rgba(94, 234, 212, 0.35);
+    color: rgba(var(--accent-rgb), 0.35);
     transition: color 0.3s ease;
 }
 
@@ -319,9 +319,9 @@ onMounted(() => {
     top: 0;
     width: 1.95rem;
     height: 1.95rem;
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    background: rgba(15, 23, 42, 0.5);
-    color: rgba(226, 232, 240, 0.78);
+    border: 1px solid var(--border-strong);
+    background: var(--card-bg);
+    color: var(--text-body);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -330,8 +330,8 @@ onMounted(() => {
 }
 
 .expand-btn:hover {
-    border-color: rgba(94, 234, 212, 0.6);
-    color: #5eead4;
+    border-color: rgba(var(--accent-rgb), 0.6);
+    color: var(--accent);
 }
 
 .expand-btn :deep(svg) {
@@ -342,7 +342,7 @@ onMounted(() => {
     transform: rotate(180deg);
 }
 
-.wid-card:hover .card-icon { color: rgba(94, 234, 212, 0.8); }
+.wid-card:hover .card-icon { color: rgba(var(--accent-rgb), 0.8); }
 
 /* ── Mobile ── */
 @media (max-width: 900px) {

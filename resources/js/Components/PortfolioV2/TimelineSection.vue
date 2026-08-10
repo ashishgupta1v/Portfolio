@@ -32,9 +32,12 @@ function isOngoing(endDate: string | null): boolean {
 }
 
 function formatDateRange(exp: Experience): string {
-    if (isOngoing(exp.endDate)) return 'WORKING'
-
     const start = parseYear(exp.startDate)
+
+    if (isOngoing(exp.endDate)) {
+        return start ? `${start}–Present` : 'Present'
+    }
+
     const end = parseYear(exp.endDate)
 
     if (start === null || end === null) return exp.dateRange
@@ -130,9 +133,9 @@ onMounted(() => {
 
 <style scoped>
 .timeline-section {
-    background: linear-gradient(180deg, #0b1118 0%, #0d1521 50%, #0b1118 100%);
+    background: linear-gradient(180deg, var(--section-bg-mid) 0%, var(--bg-secondary) 50%, var(--section-bg-mid) 100%);
     padding: 7rem 1.5rem 5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
 }
@@ -155,11 +158,11 @@ onMounted(() => {
     gap: 1.25rem;
     align-items: start;
     padding: 1.65rem 0;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    border-bottom: 1px solid var(--border);
 }
 
 .tl-row:first-of-type {
-    border-top: 1px solid rgba(148, 163, 184, 0.06);
+    border-top: 1px solid var(--border);
 }
 
 /* ── Left column ── */
@@ -175,7 +178,7 @@ onMounted(() => {
 .tl-role {
     font-size: 1.35rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--text-1);
     letter-spacing: -0.01em;
     line-height: 1.25;
     margin-bottom: 0.35rem;
@@ -183,14 +186,14 @@ onMounted(() => {
 
 .tl-company {
     font-size: 1rem;
-    color: #5eead4;
+    color: var(--accent);
     font-weight: 600;
     margin-bottom: 0.55rem;
 }
 
 .tl-location {
     font-size: 0.82rem;
-    color: rgba(226, 232, 240, 0.55);
+    color: var(--text-muted);
 }
 
 /* ── Center column ── */
@@ -207,7 +210,7 @@ onMounted(() => {
 .tl-date {
     font-size: clamp(1.15rem, 2.2vw, 1.5rem);
     font-weight: 800;
-    color: rgba(226, 232, 240, 0.9);
+    color: var(--text-body);
     letter-spacing: -0.02em;
     line-height: 1;
     white-space: nowrap;
@@ -217,8 +220,8 @@ onMounted(() => {
     font-size: 0.62rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #0b1118;
-    background: #5eead4;
+    color: var(--text-on-accent);
+    background: var(--accent);
     font-weight: 800;
     padding: 0.22rem 0.45rem;
     border-radius: 999px;
@@ -232,7 +235,7 @@ onMounted(() => {
     bottom: 0;
     width: 2px;
     transform: translateX(0);
-    background: rgba(148, 163, 184, 0.1);
+    background: var(--border);
     z-index: 0;
 }
 
@@ -248,7 +251,7 @@ onMounted(() => {
     width: 0.75rem;
     height: 0.75rem;
     border-radius: 50%;
-    background: #5eead4;
+    background: var(--accent);
     box-shadow: 0 0 20px rgba(94, 234, 212, 0.6);
     margin: 1.5rem auto 0;
     position: relative;
@@ -259,7 +262,7 @@ onMounted(() => {
 .tl-desc {
     font-size: 0.98rem;
     line-height: 1.7;
-    color: rgba(226, 232, 240, 0.82);
+    color: var(--text-body);
     font-weight: 400;
     max-width: 100%;
 }
@@ -275,7 +278,7 @@ onMounted(() => {
 .tl-list li {
     position: relative;
     padding-left: 1rem;
-    color: rgba(226, 232, 240, 0.82);
+    color: var(--text-body);
     line-height: 1.65;
     font-size: 0.95rem;
 }
@@ -288,7 +291,7 @@ onMounted(() => {
     width: 0.38rem;
     height: 0.38rem;
     border-radius: 50%;
-    background: rgba(94, 234, 212, 0.75);
+    background: var(--accent);
 }
 
 /* ── Mobile ── */
@@ -320,7 +323,7 @@ onMounted(() => {
 
     .tl-date {
         font-size: 1.4rem;
-        color: rgba(94, 234, 212, 0.6);
+        color: var(--accent);
     }
 
     .center-line {

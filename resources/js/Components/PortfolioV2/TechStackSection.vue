@@ -48,7 +48,7 @@ const stackSkills: BubbleSkill[] = [
     { name: 'Jenkins', hue: 8, size: 0.72 },
     { name: 'Cursor', hue: 220, size: 0.8 },
     { name: 'Claude Code', hue: 36, size: 0.88 },
-    { name: 'OpenClaw', hue: 262, size: 0.86 },
+    { name: 'OpenAI', hue: 262, size: 0.86 },
 ]
 
 const sectionRef = ref<HTMLElement | null>(null)
@@ -312,7 +312,7 @@ onUnmounted(() => {
 <style scoped>
 .ts-section {
     position: relative;
-    background: linear-gradient(180deg, #0b1320 0%, #0a111c 52%, #090f17 100%);
+    background: linear-gradient(180deg, var(--section-bg-mid) 0%, var(--bg-secondary) 52%, var(--section-bg-deep) 100%);
     padding: 4.2rem 1.2rem 4.4rem;
     overflow: hidden;
 }
@@ -327,11 +327,11 @@ onUnmounted(() => {
     position: relative;
     width: 100%;
     min-height: 540px;
-    border: 1px solid rgba(148, 163, 184, 0.14);
+    border: 1px solid var(--border);
     border-radius: 1rem;
     background:
-        radial-gradient(circle at 50% 46%, rgba(94, 234, 212, 0.1), transparent 46%),
-        linear-gradient(180deg, rgba(10, 18, 29, 0.8), rgba(8, 14, 23, 0.9));
+        radial-gradient(circle at 50% 46%, rgba(var(--accent-rgb), 0.1), transparent 46%),
+        linear-gradient(180deg, var(--glass-bg), var(--glass-fg));
     overflow: hidden;
 }
 
@@ -374,13 +374,13 @@ onUnmounted(() => {
     border-color: hsla(var(--hue, 190), 90%, 74%, 0.65);
     box-shadow:
         inset 0 -4px 12px rgba(0, 0, 0, 0.08),
-        0 10px 32px rgba(94, 234, 212, 0.22);
+        0 10px 32px rgba(var(--accent-rgb), 0.22);
 }
 
 .bubble-text {
     font-size: calc(0.48rem * var(--s) + 0.3rem);
     font-weight: 700;
-    color: rgba(248, 250, 252, 0.95);
+    color: var(--text-1);
     text-align: center;
     line-height: 1.2;
     padding: 0.22rem;

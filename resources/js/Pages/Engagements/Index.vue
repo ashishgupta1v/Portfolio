@@ -235,9 +235,9 @@ import { Head, Link } from '@inertiajs/vue3'
 .page {
     min-height: 100vh;
     background:
-        radial-gradient(circle at 80% 10%, rgba(94, 234, 212, 0.06), transparent 35%),
-        linear-gradient(180deg, #050b14 0%, #080e18 50%, #050a12 100%);
-    color: #e2e8f0;
+        radial-gradient(circle at 80% 10%, rgba(var(--accent-rgb), 0.06), transparent 35%),
+        linear-gradient(180deg, var(--section-bg-deep) 0%, var(--section-bg-mid) 50%, var(--section-bg-deep) 100%);
+    color: var(--text-body);
     font-family: 'Inter', system-ui, sans-serif;
 }
 
@@ -251,24 +251,24 @@ import { Head, Link } from '@inertiajs/vue3'
     margin: 0 auto;
 }
 .brand {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.96rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
 }
-.brand:hover { color: #5eead4; }
+.brand:hover { color: var(--accent); }
 .topbar-nav { display: flex; gap: 1.2rem; }
 .topbar-link {
-    color: rgba(226, 232, 240, 0.6);
+    color: var(--text-muted);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
     transition: color 0.25s;
 }
-.topbar-link:hover { color: #5eead4; }
+.topbar-link:hover { color: var(--accent); }
 
 /* ── Section wrapper ── */
 .hero,
@@ -283,7 +283,7 @@ import { Head, Link } from '@inertiajs/vue3'
 
 /* ── Hero ── */
 .eyebrow {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -294,15 +294,15 @@ import { Head, Link } from '@inertiajs/vue3'
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.04em;
-    color: #f8fafc;
+    color: var(--text-1);
     margin: 0 0 1.4rem;
 }
-.accent { color: #5eead4; }
+.accent { color: var(--accent); }
 .hero-sub {
     max-width: 620px;
     font-size: 1.05rem;
     line-height: 1.75;
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-muted);
     margin-bottom: 2rem;
 }
 .hero-cta-row {
@@ -314,8 +314,8 @@ import { Head, Link } from '@inertiajs/vue3'
 /* ── Buttons ── */
 .btn-primary {
     display: inline-block;
-    background: #5eead4;
-    color: #050b14;
+    background: var(--accent);
+    color: var(--text-on-accent);
     font-weight: 700;
     font-size: 0.9rem;
     letter-spacing: 0.02em;
@@ -328,30 +328,30 @@ import { Head, Link } from '@inertiajs/vue3'
 .btn-primary.btn-lg { padding: 1rem 2.4rem; font-size: 1rem; }
 .btn-ghost {
     display: inline-block;
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-muted);
     font-size: 0.9rem;
-    border: 1px solid rgba(148, 163, 184, 0.25);
+    border: 1px solid var(--border-strong);
     padding: 0.8rem 1.8rem;
     border-radius: 4px;
     text-decoration: none;
     transition: border-color 0.25s, color 0.25s;
 }
-.btn-ghost:hover { border-color: #5eead4; color: #5eead4; }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 .btn-ghost-teal {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.9rem;
     text-decoration: none;
-    border-bottom: 1px solid rgba(94, 234, 212, 0.3);
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.3);
     padding-bottom: 2px;
     transition: border-color 0.25s;
 }
-.btn-ghost-teal:hover { border-color: #5eead4; }
+.btn-ghost-teal:hover { border-color: var(--accent); }
 
 /* ── Section title ── */
 .section-title {
     font-size: clamp(1.6rem, 3vw, 2.4rem);
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--text-1);
     letter-spacing: -0.03em;
     margin-bottom: 2.5rem;
 }
@@ -364,8 +364,8 @@ import { Head, Link } from '@inertiajs/vue3'
     gap: 1.5rem;
 }
 .tier-card {
-    background: rgba(8, 14, 24, 0.9);
-    border: 1px solid rgba(148, 163, 184, 0.14);
+    background: var(--glass-bg);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 2rem;
     display: flex;
@@ -373,15 +373,15 @@ import { Head, Link } from '@inertiajs/vue3'
     gap: 1rem;
     transition: border-color 0.25s;
 }
-.tier-card:hover { border-color: rgba(94, 234, 212, 0.3); }
+.tier-card:hover { border-color: rgba(var(--accent-rgb), 0.3); }
 .tier-featured {
-    border-color: rgba(94, 234, 212, 0.4);
-    background: rgba(8, 20, 30, 0.95);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    background: var(--glass-bg);
 }
 .tier-badge {
     display: inline-block;
-    background: rgba(148, 163, 184, 0.12);
-    color: rgba(226, 232, 240, 0.6);
+    background: var(--card-bg);
+    color: var(--text-muted);
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -390,23 +390,23 @@ import { Head, Link } from '@inertiajs/vue3'
     margin-bottom: 0.3rem;
 }
 .tier-badge-accent {
-    background: rgba(94, 234, 212, 0.12);
-    color: #5eead4;
+    background: rgba(var(--accent-rgb), 0.12);
+    color: var(--accent);
 }
 .tier-name {
     font-size: 1.35rem;
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--text-1);
     margin: 0;
 }
 .tier-price {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.9rem;
     font-weight: 600;
     margin: 0;
 }
 .tier-desc {
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-muted);
     font-size: 0.9rem;
     line-height: 1.7;
     margin: 0;
@@ -420,7 +420,7 @@ import { Head, Link } from '@inertiajs/vue3'
     gap: 0.5rem;
 }
 .tier-list li {
-    color: rgba(226, 232, 240, 0.75);
+    color: var(--text-muted);
     font-size: 0.85rem;
     padding-left: 1.2rem;
     position: relative;
@@ -429,21 +429,21 @@ import { Head, Link } from '@inertiajs/vue3'
     content: '✓';
     position: absolute;
     left: 0;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.75rem;
 }
 .tier-ideal {
-    color: rgba(226, 232, 240, 0.55);
+    color: var(--text-muted);
     font-size: 0.82rem;
     line-height: 1.6;
     margin: 0;
     padding-top: 0.5rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    border-top: 1px solid var(--border);
 }
-.tier-ideal strong { color: rgba(226, 232, 240, 0.75); }
+.tier-ideal strong { color: var(--text-muted); }
 .tier-cta {
     display: inline-block;
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.84rem;
     text-decoration: none;
     margin-top: auto;
@@ -466,7 +466,7 @@ import { Head, Link } from '@inertiajs/vue3'
     align-items: flex-start;
 }
 .step-num {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -474,13 +474,13 @@ import { Head, Link } from '@inertiajs/vue3'
     padding-top: 0.15rem;
 }
 .process-step strong {
-    color: #f8fafc;
+    color: var(--text-1);
     font-size: 0.95rem;
     display: block;
     margin-bottom: 0.3rem;
 }
 .process-step p {
-    color: rgba(226, 232, 240, 0.65);
+    color: var(--text-muted);
     font-size: 0.88rem;
     line-height: 1.65;
     margin: 0;
@@ -494,8 +494,8 @@ import { Head, Link } from '@inertiajs/vue3'
     margin-bottom: 2rem;
 }
 .proof-stat {
-    background: rgba(8, 14, 24, 0.7);
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: var(--glass-bg);
+    border: 1px solid var(--border);
     border-radius: 6px;
     padding: 1.5rem;
     display: flex;
@@ -503,13 +503,13 @@ import { Head, Link } from '@inertiajs/vue3'
     gap: 0.4rem;
 }
 .proof-num {
-    color: #5eead4;
+    color: var(--accent);
     font-size: 2rem;
     font-weight: 800;
     letter-spacing: -0.03em;
 }
 .proof-label {
-    color: rgba(226, 232, 240, 0.6);
+    color: var(--text-muted);
     font-size: 0.8rem;
     line-height: 1.5;
 }
@@ -518,27 +518,27 @@ import { Head, Link } from '@inertiajs/vue3'
 /* ── Final CTA ── */
 .final-cta {
     text-align: center;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    border-top: 1px solid var(--border);
     padding-top: 4rem;
 }
 .final-cta h2 {
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--text-1);
     margin-bottom: 0.8rem;
 }
 .final-cta > p {
-    color: rgba(226, 232, 240, 0.65);
+    color: var(--text-muted);
     font-size: 0.95rem;
     margin-bottom: 1.8rem;
 }
 .final-alt {
     margin-top: 1rem;
-    color: rgba(226, 232, 240, 0.45);
+    color: var(--text-muted);
     font-size: 0.85rem;
 }
 .inline-link {
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-muted);
     text-decoration: underline;
     text-underline-offset: 3px;
 }
@@ -547,9 +547,9 @@ import { Head, Link } from '@inertiajs/vue3'
 .footer {
     text-align: center;
     padding: 2rem;
-    color: rgba(148, 163, 184, 0.35);
+    color: var(--text-muted);
     font-size: 0.78rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    border-top: 1px solid var(--border);
 }
 
 /* ── Responsive ── */
