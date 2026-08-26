@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 
 final class GitHubController
 {
-    private const GITHUB_USERNAME = 'ashishgup1';
+    private const GITHUB_USERNAME = 'ashishgupta1v';
     private const CACHE_TTL = 3600; // 1 hour
 
     public function stats(): JsonResponse

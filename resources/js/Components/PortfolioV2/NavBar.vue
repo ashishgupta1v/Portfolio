@@ -82,7 +82,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <nav class="nav" aria-label="Main navigation">
+    <nav class="nav" :class="{ scrolled }" aria-label="Main navigation">
         <div class="nav-inner">
             <!-- Logo / Initials -->
             <button class="nav-logo" @click="scrollToTop">
@@ -185,6 +185,31 @@ onUnmounted(() => {
 }
 
 .nav.scrolled {
+    background: var(--nav-bg, rgba(15, 20, 25, 0.88));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav:not(.scrolled) .nav-logo {
+    color: #f8fafc;
+}
+
+.nav:not(.scrolled) .nav-link {
+    color: rgba(248, 250, 252, 0.85);
+}
+
+.nav:not(.scrolled) .nav-link:hover {
+    color: #ffffff;
+}
+
+.nav:not(.scrolled) .nav-link.active {
+    color: var(--accent);
+}
+
+.nav:not(.scrolled) .hamburger {
+    color: #f8fafc;
 }
 
 .nav-inner {

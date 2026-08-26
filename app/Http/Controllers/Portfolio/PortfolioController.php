@@ -71,7 +71,7 @@ final class PortfolioController
                     '@context' => 'https://schema.org',
                     '@type' => 'Person',
                     'name' => $name,
-                    'url' => 'https://www.ashishgupta.dev/',
+                    'url' => 'https://ashishgupta.dev/',
                     'jobTitle' => $title,
                     'description' => $bio,
                     'email' => $profile['email'] ?? null,
@@ -82,7 +82,7 @@ final class PortfolioController
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'WebSite',
-                    'url' => 'https://www.ashishgupta.dev/',
+                    'url' => 'https://ashishgupta.dev/',
                     'name' => $name,
                     'description' => "{$title} — VILT Stack Specialist",
                 ],

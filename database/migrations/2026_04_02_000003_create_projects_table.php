@@ -14,7 +14,17 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('category');
+            $table->string('positioning')->nullable();
+            $table->string('metric_badge')->nullable();
             $table->text('description');
+            $table->text('solution')->nullable();
+            $table->text('impact')->nullable();
+            $table->string('case_study_slug')->nullable();
+            $table->boolean('is_mobile')->default(false);
+            $table->text('problem')->nullable();
+            $table->text('challenge')->nullable();
+            $table->json('architecture_actions')->nullable();
+            $table->json('business_impact')->nullable();
             $table->json('tools')->default('[]');
             $table->string('image_url')->nullable();
             $table->string('video_url')->nullable();

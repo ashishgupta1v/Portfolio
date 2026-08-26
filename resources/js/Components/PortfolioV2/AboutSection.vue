@@ -19,21 +19,41 @@ const capabilities = [
         icon: Boxes,
         title: 'Engineering Modular Monoliths with DDD',
         description: 'I modernize legacy systems into decoupled modular monoliths with strict bounded contexts and clean domain isolation.',
+        details: [
+            'Bounded contexts & domain events eliminating tight coupling',
+            'Safe strangler-fig refactoring patterns with zero downtime',
+            'Independent domain modules with automated boundary testing',
+        ],
     },
     {
         icon: Brain,
         title: 'Semantic Intelligence (AI/RAG)',
         description: 'I build intent-aware search and RAG systems that transform generic content into adaptive, meaningful product experiences.',
+        details: [
+            'pgvector & hybrid lexical-vector embedding pipelines',
+            'Multi-stage query classification with prompt injection defense',
+            'Real-time streaming agent response generation with fallback safety',
+        ],
     },
     {
         icon: Gauge,
         title: 'High-Performance Infrastructure',
         description: 'I optimize throughput, latency, and observability with event-driven architecture, Redis-first patterns, and production resilience.',
+        details: [
+            'Redis cache-aside, job pipelines, and sub-50ms query optimization',
+            'SQLite WAL concurrency & high-throughput PostgreSQL tuning',
+            'Proactive OpenTelemetry, error tracking, and automated recovery loops',
+        ],
     },
     {
         icon: Trophy,
         title: 'Gamification and Retention Systems',
         description: 'I design transformation engines that convert passive consumption into action through smart loops and behavior-aware systems.',
+        details: [
+            'Event-sourced discipline & point balance ledgers',
+            'WhatsApp-native automated accountability & check-in bots',
+            'Streak mechanics, progressive milestone tracking, and user retention loops',
+        ],
     },
 ]
 
@@ -100,14 +120,33 @@ onMounted(() => {
                     :key="item.title"
                     class="combo-card"
                     :class="{ active: activeCard === i }"
+                    tabindex="0"
+                    :aria-expanded="activeCard === i"
                     @mouseenter="activeCard = i"
                     @click="activeCard = activeCard === i ? null : i"
+                    @keydown.enter.prevent="activeCard = activeCard === i ? null : i"
+                    @keydown.space.prevent="activeCard = activeCard === i ? null : i"
                 >
                     <div class="card-icon"><component :is="item.icon" :size="18" /></div>
                     <h3 class="card-title">{{ i + 1 }}. {{ item.title }}</h3>
                     <p class="card-text">{{ item.description }}</p>
-                    <button class="expand-btn" type="button" aria-label="Expand">
-                        <ChevronDown :size="15" :class="{ open: activeCard === i }" />
+
+                    <div v-show="activeCard === i" class="card-disclosure">
+                        <ul class="card-detail-list">
+                            <li v-for="(detail, di) in item.details" :key="di" class="card-detail-item">
+                                <span class="detail-dot" aria-hidden="true">›</span>
+                                <span>{{ detail }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button
+                        class="expand-btn"
+                        type="button"
+                        :aria-expanded="activeCard === i"
+                        :aria-label="activeCard === i ? 'Collapse card details' : 'Expand card details'"
+                    >
+                        <ChevronDown :size="15" :class="{ open: activeCard === i }" aria-hidden="true" />
                     </button>
                 </article>
             </div>
@@ -231,6 +270,44 @@ onMounted(() => {
     line-height: 1.6;
     color: var(--text-muted);
     padding-right: 2rem;
+}
+
+.card-disclosure {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(var(--accent-rgb), 0.15);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-detail-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.card-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-2);
+}
+
+.detail-dot {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    flex-shrink: 0;
 }
 
 .expand-btn {

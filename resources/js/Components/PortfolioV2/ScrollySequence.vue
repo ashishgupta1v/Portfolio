@@ -191,13 +191,13 @@ onUnmounted(() => {
                             {{ visitorContext.greeting }}
                         </span>
                     </Transition>
-                    <h1 class="statement-title">
+                    <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
                         <template v-for="(line, li) in item.title.split('\n')" :key="li">
-                            <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }}</span>
+                            <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }} </span>
                             <span v-else class="name-line">{{ line }}</span>
                             <br v-if="li < item.title.split('\n').length - 1" />
                         </template>
-                    </h1>
+                    </component>
                     <p class="statement-subtitle">{{ item.subtitle }}</p>
                 </div>
             </div>

@@ -16,7 +16,7 @@ namespace App\Support;
 final readonly class SeoMeta
 {
     private const SITE_NAME = 'Ashish Gupta';
-    private const BASE_URL = 'https://www.ashishgupta.dev';
+    private const BASE_URL = 'https://ashishgupta.dev';
     private const DEFAULT_IMAGE = '/images/og-cover.png';
 
     public function __construct(

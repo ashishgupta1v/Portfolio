@@ -137,7 +137,7 @@ function formatMetric(index: number): string {
                     :key="metric.label"
                     class="metric-card"
                 >
-                    <span class="metric-number" aria-label="metric.prefix + metric.target + metric.suffix">
+                    <span class="metric-number" :aria-label="`${metric.prefix}${metric.target}${metric.suffix} ${metric.label}`">
                         {{ formatMetric(i) }}
                     </span>
                     <h3 class="metric-label">{{ metric.label }}</h3>

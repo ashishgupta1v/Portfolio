@@ -8,8 +8,8 @@ import { Head, Link } from '@inertiajs/vue3'
         <meta property="og:title" content="Engagements — Ashish Gupta" />
         <meta property="og:description" content="Work with Ashish Gupta — Senior Full-Stack Architect. Project-based builds, retained advisory, and fractional CTO engagements for growing businesses." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.ashishgupta.dev/engagements" />
-        <link rel="canonical" href="https://www.ashishgupta.dev/engagements" />
+        <meta property="og:url" content="https://ashishgupta.dev/engagements" />
+        <link rel="canonical" href="https://ashishgupta.dev/engagements" />
     </Head>
 
     <div class="page">
@@ -19,6 +19,8 @@ import { Head, Link } from '@inertiajs/vue3'
             <nav class="topbar-nav">
                 <Link href="/" class="topbar-link">Portfolio</Link>
                 <Link href="/case-studies" class="topbar-link">Case Studies</Link>
+                <Link href="/blog" class="topbar-link">Blog</Link>
+                <span class="topbar-current">Engagements</span>
             </nav>
         </header>
 
@@ -226,7 +228,14 @@ import { Head, Link } from '@inertiajs/vue3'
 
         <!-- Footer -->
         <footer class="footer">
-            <p>© {{ new Date().getFullYear() }} Ashish Gupta · India</p>
+            <div class="footer-links">
+                <Link href="/" class="footer-link">Portfolio</Link>
+                <Link href="/case-studies" class="footer-link">Case Studies</Link>
+                <Link href="/blog" class="footer-link">Blog</Link>
+                <a href="https://github.com/ashishgupta1v" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/ashishgupta1v/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+            </div>
+            <p class="footer-copy">© {{ new Date().getFullYear() }} Ashish Gupta · Senior Full-Stack Architect</p>
         </footer>
     </div>
 </template>
@@ -546,10 +555,38 @@ import { Head, Link } from '@inertiajs/vue3'
 /* ── Footer ── */
 .footer {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 1.5rem 2.5rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.footer-link {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 0.84rem;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--accent);
+}
+
+.footer-copy {
     color: var(--text-muted);
     font-size: 0.78rem;
-    border-top: 1px solid var(--border);
+    margin: 0;
 }
 
 /* ── Responsive ── */

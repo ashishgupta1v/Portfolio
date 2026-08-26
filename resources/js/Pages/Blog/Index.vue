@@ -19,7 +19,7 @@ function formatDate(value: string): string {
             name="description"
             content="Notes on domain-driven architecture, Laravel, Vue, and building production systems that hold up under real load — from Ashish Gupta."
         />
-        <link rel="canonical" href="https://www.ashishgupta.dev/blog" />
+        <link rel="canonical" href="https://ashishgupta.dev/blog" />
     </Head>
 
     <div class="blog-page">
@@ -30,6 +30,7 @@ function formatDate(value: string): string {
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <span class="topbar-current">Blog</span>
+                    <Link href="/engagements" class="topbar-link">Engagements</Link>
                 </div>
             </div>
 

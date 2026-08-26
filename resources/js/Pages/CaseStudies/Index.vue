@@ -11,7 +11,7 @@ defineProps<CaseStudiesIndexPageProps>()
             name="description"
             content="Deep architecture and delivery case studies from Ashish Gupta. Canonical long-form proof of systems thinking, execution quality, and product outcomes."
         />
-        <link rel="canonical" href="https://www.ashishgupta.dev/case-studies" />
+        <link rel="canonical" href="https://ashishgupta.dev/case-studies" />
     </Head>
 
     <div class="case-studies-page">
@@ -21,6 +21,8 @@ defineProps<CaseStudiesIndexPageProps>()
                 <div class="topbar-links">
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <span class="topbar-current">Case Studies</span>
+                    <Link href="/blog" class="topbar-link">Blog</Link>
+                    <Link href="/engagements" class="topbar-link">Engagements</Link>
                 </div>
             </div>
 

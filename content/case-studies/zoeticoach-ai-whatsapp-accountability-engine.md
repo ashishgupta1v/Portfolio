@@ -12,7 +12,7 @@ permission_status: "owned product"
 seo_title: "ZoetiCoach AI Case Study | WhatsApp-First Coaching Accountability System"
 seo_description: "A deep systems case study on designing ZoetiCoach AI: a WhatsApp-first accountability product for coaches built with Laravel, event-driven workflows, and AI-assisted habit verification."
 tags: ["Case Study", "AI Systems", "B2B2C", "WhatsApp", "Architecture"]
-stack: ["Laravel 12", "Vue 3", "WhatsApp API", "pgvector", "OpenAI", "Event-Driven Architecture"]
+stack: ["Laravel 13", "Vue 3", "WhatsApp API", "pgvector", "OpenAI", "Event-Driven Architecture"]
 ---
 
 ## Executive Summary

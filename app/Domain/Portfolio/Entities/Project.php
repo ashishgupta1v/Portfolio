@@ -14,7 +14,17 @@ final class Project extends Model
         'title',
         'slug',
         'category',
+        'positioning',
+        'metric_badge',
         'description',
+        'solution',
+        'impact',
+        'case_study_slug',
+        'is_mobile',
+        'problem',
+        'challenge',
+        'architecture_actions',
+        'business_impact',
         'tools',
         'image_url',
         'video_url',
@@ -26,6 +36,9 @@ final class Project extends Model
     {
         return [
             'tools' => 'array',
+            'is_mobile' => 'boolean',
+            'architecture_actions' => 'array',
+            'business_impact' => 'array',
             'sort_order' => 'integer',
         ];
     }

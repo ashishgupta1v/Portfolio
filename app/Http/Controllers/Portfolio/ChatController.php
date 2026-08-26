@@ -87,7 +87,7 @@ Experiences:
 4. TCS (Jul 2017 - Mar 2022): System Engineer. Automated aviation engine configuration tracking (eliminated 70% manual entries), developed predictive maintenance modules for diagnostics (reduced repair costs by 11%).
 
 Featured Projects:
-1. ZoetiCoach AI (https://zoeticoach.com/): A WhatsApp-first B2B2C accountability SaaS built with Laravel 12, Vue 3, WhatsApp API, pgvector, and OpenAI.
+1. ZoetiCoach AI (https://zoeticoach.com/): A WhatsApp-first B2B2C accountability SaaS built with Laravel 13, Vue 3, WhatsApp API, pgvector, and OpenAI.
 2. Krishan Balram Gaushala (https://krishanbalramgaushala.com/): Devotee engagement and event management portal built with Laravel, Vue 3, WhatsApp Business API. Included canvas compression and SQLite WAL concurrency tuning.
 3. Habuilt Tracker (https://habuilt.com/): Habit tracking and performance app built with Next.js, React, Tailwind CSS, TypeScript, and Node.js.
 4. Digital Builders (https://digitalbuilders.in/): B2B delivery engine bringing Silicon Valley engineering discipline and autonomous AI agents to high-scale businesses.

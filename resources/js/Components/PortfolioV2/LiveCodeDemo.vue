@@ -44,35 +44,39 @@ const demos: Record<string, DemoConfig> = {
 }
 
 const demo = computed(() => demos[props.slug] || null)
-const iframeRef = ref<HTMLIFrameElement | null>(null)
 const running = ref(false)
 
-function runDemo() {
-    if (!demo.value || !iframeRef.value) return
-    const doc = iframeRef.value.contentDocument
-    if (!doc) return
+const srcDoc = computed(() => {
+    if (!demo.value || !running.value) {
+        return `<!DOCTYPE html><html><head><style>body { margin: 0; background: #0f1419; }</style></head><body></body></html>`
+    }
+    return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { padding: 18px 16px; background: #0f1419; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    ${demo.value.css}
+  </style>
+</head>
+<body>
+  ${demo.value.html}
+  <script>
+    ${demo.value.js}
+  <\/script>
+</body>
+</html>`
+})
 
-    doc.open()
-    doc.write(`<!DOCTYPE html>
-<html><head><style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { padding: 16px; background: #0f1419; color: #e2e8f0; }
-${demo.value.css}
-</style></head><body>
-${demo.value.html}
-<script>${demo.value.js}<\/script>
-</body></html>`)
-    doc.close()
+function runDemo() {
+    if (!demo.value) return
     running.value = true
 }
 
 function resetDemo() {
     running.value = false
-    if (iframeRef.value?.contentDocument) {
-        iframeRef.value.contentDocument.open()
-        iframeRef.value.contentDocument.write('')
-        iframeRef.value.contentDocument.close()
-    }
 }
 </script>
 
@@ -84,23 +88,32 @@ function resetDemo() {
         </div>
         <div class="demo-preview">
             <iframe
-                ref="iframeRef"
                 class="demo-iframe"
+                :srcdoc="srcDoc"
                 sandbox="allow-scripts"
                 title="Interactive demo"
             />
-            <div v-if="!running" class="demo-overlay" @click="runDemo">
-                <Play :size="32" class="demo-play-icon" />
+            <div
+                v-if="!running"
+                class="demo-overlay"
+                role="button"
+                tabindex="0"
+                aria-label="Run interactive demo"
+                @click="runDemo"
+                @keydown.enter.prevent="runDemo"
+                @keydown.space.prevent="runDemo"
+            >
+                <Play :size="32" class="demo-play-icon" aria-hidden="true" />
                 <span>Run Demo</span>
             </div>
         </div>
         <div class="demo-controls">
-            <button class="demo-btn" @click="runDemo">
-                <Play :size="14" />
+            <button class="demo-btn" type="button" @click="runDemo">
+                <Play :size="14" aria-hidden="true" />
                 Run
             </button>
-            <button class="demo-btn demo-btn--ghost" @click="resetDemo">
-                <RotateCcw :size="14" />
+            <button class="demo-btn demo-btn--ghost" type="button" @click="resetDemo">
+                <RotateCcw :size="14" aria-hidden="true" />
                 Reset
             </button>
         </div>

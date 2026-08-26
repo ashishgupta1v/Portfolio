@@ -20,9 +20,14 @@ final class ContactRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email:rfc,dns', 'max:254'],
+            'email' => ['required', 'email:rfc', 'max:254'],
             'budget' => ['nullable', 'string', 'max:100'],
             'project_type' => ['required', Rule::in([
+                'Full-Time Role',
+                'Contract / Freelance',
+                'Technical Co-founder',
+                'Consulting',
+                'Collaboration',
                 'Website',
                 'SaaS Product',
                 'Internal Dashboard',

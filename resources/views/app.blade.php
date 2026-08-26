@@ -50,10 +50,6 @@
         @routes
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
-
-        @if(request()->routeIs('portfolio'))
-            <link rel="preload" as="video" href="/videos/hero-sequence.webm" type="video/webm" fetchpriority="high">
-        @endif
     </head>
     <body>
         <a href="#main-content" class="skip-link">Skip to content</a>

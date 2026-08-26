@@ -23,7 +23,10 @@ interface Project {
     externalUrl: string | null
 }
 
-const props = defineProps<{ project: Project }>()
+const props = defineProps<{
+    project: Project
+    caseStudySlug?: string | null
+}>()
 
 const whatsappHref = computed(() => {
     const msg = `Hi Ashish, I saw your ${props.project.title} project on ashishgupta.dev. I'd like to discuss something similar for my business.`
@@ -58,7 +61,8 @@ const whatsappHref = computed(() => {
                         <ExternalLink :size="14" aria-hidden="true" />
                     </a>
                     <Link
-                        :href="`/case-studies/${project.slug}`"
+                        v-if="caseStudySlug"
+                        :href="`/case-studies/${caseStudySlug}`"
                         class="project-cta project-cta--ghost"
                     >
                         <span>Read case study</span>

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /build/
 
-Sitemap: https://www.ashishgupta.dev/sitemap.xml
+Sitemap: https://ashishgupta.dev/sitemap.xml

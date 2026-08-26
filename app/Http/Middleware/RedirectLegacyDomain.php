@@ -14,7 +14,7 @@ final class RedirectLegacyDomain
     {
         $host = strtolower($request->getHost());
 
-        if (in_array($host, ['ashgpt.dev', 'www.ashgpt.dev'], true)) {
+        if (in_array($host, ['ashgpt.dev', 'www.ashgpt.dev', 'www.ashishgupta.dev'], true)) {
             return redirect()->to('https://ashishgupta.dev'.$request->getRequestUri(), 301);
         }
 

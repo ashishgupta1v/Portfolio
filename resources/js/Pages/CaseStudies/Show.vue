@@ -15,7 +15,7 @@ const whatsappHref = `https://wa.me/919087021592?text=${encodeURIComponent(
     `Hi Ashish, I just read your ${props.caseStudy.title} case study on ashishgupta.dev. I need a similar website, app, dashboard, software improvement, or automation for my business. Please tell me how you can help and what the next step should be.`
 )}`
 
-const shareUrl = computed(() => `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}`)
+const shareUrl = computed(() => `https://ashishgupta.dev/case-studies/${props.caseStudy.slug}`)
 
 // Reading progress
 const readingProgress = ref(0)
@@ -70,15 +70,15 @@ const articleSchema = computed(() => JSON.stringify({
     author: {
         '@type': 'Person',
         name: 'Ashish Gupta',
-        url: 'https://www.ashishgupta.dev/',
+        url: 'https://ashishgupta.dev/',
     },
     publisher: {
         '@type': 'Person',
         name: 'Ashish Gupta',
-        url: 'https://www.ashishgupta.dev/',
+        url: 'https://ashishgupta.dev/',
     },
     datePublished: props.caseStudy.publishedAt,
-    url: `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}`,
+    url: `https://ashishgupta.dev/case-studies/${props.caseStudy.slug}`,
     keywords: props.caseStudy.tags.join(', '),
 }))
 
@@ -86,9 +86,9 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.ashishgupta.dev/' },
-        { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.ashishgupta.dev/case-studies' },
-        { '@type': 'ListItem', position: 3, name: props.caseStudy.title, item: `https://www.ashishgupta.dev/case-studies/${props.caseStudy.slug}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ashishgupta.dev/' },
+        { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://ashishgupta.dev/case-studies' },
+        { '@type': 'ListItem', position: 3, name: props.caseStudy.title, item: `https://ashishgupta.dev/case-studies/${props.caseStudy.slug}` },
     ],
 }))
 
@@ -103,12 +103,12 @@ function downloadPdf() {
         <meta property="og:title" :content="caseStudy.seoTitle" />
         <meta property="og:description" :content="caseStudy.seoDescription" />
         <meta property="og:type" content="article" />
-        <meta property="og:url" :content="`https://www.ashishgupta.dev/case-studies/${caseStudy.slug}`" />
+        <meta property="og:url" :content="`https://ashishgupta.dev/case-studies/${caseStudy.slug}`" />
         <meta property="og:site_name" content="Ashish Gupta" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" :content="caseStudy.seoTitle" />
         <meta name="twitter:description" :content="caseStudy.seoDescription" />
-        <link rel="canonical" :href="`https://www.ashishgupta.dev/case-studies/${caseStudy.slug}`" />
+        <link rel="canonical" :href="`https://ashishgupta.dev/case-studies/${caseStudy.slug}`" />
         <component is="script" type="application/ld+json" v-html="articleSchema" />
         <component is="script" type="application/ld+json" v-html="breadcrumbSchema" />
     </Head>
@@ -123,6 +123,8 @@ function downloadPdf() {
                 <div class="topbar-links">
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
+                    <Link href="/blog" class="topbar-link">Blog</Link>
+                    <Link href="/engagements" class="topbar-link">Engagements</Link>
                     <ShareButtons :url="shareUrl" :title="caseStudy.title" :description="caseStudy.seoDescription" />
                     <button class="pdf-download-btn" @click="downloadPdf" aria-label="Download as PDF">
                         <Download :size="14" />

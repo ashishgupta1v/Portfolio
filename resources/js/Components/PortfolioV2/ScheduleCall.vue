@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { Calendar } from 'lucide-vue-next'
 
 const showModal = ref(false)
+const closeBtnRef = ref<HTMLButtonElement | null>(null)
+const triggerBtnRef = ref<HTMLButtonElement | null>(null)
 const CALENDLY_URL = 'https://calendly.com/ashishgupta1v/30min'
 
 function openScheduler() {
@@ -12,22 +14,65 @@ function openScheduler() {
 function closeModal() {
     showModal.value = false
 }
+
+function onKeydown(e: KeyboardEvent) {
+    if (e.key === 'Escape' && showModal.value) {
+        closeModal()
+    }
+}
+
+watch(showModal, async (isOpen) => {
+    if (isOpen) {
+        await nextTick()
+        closeBtnRef.value?.focus()
+    } else {
+        triggerBtnRef.value?.focus()
+    }
+})
+
+onMounted(() => {
+    window.addEventListener('keydown', onKeydown)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <template>
     <div class="schedule-call">
-        <button class="schedule-btn" @click="openScheduler">
-            <Calendar :size="16" />
+        <button
+            ref="triggerBtnRef"
+            class="schedule-btn"
+            type="button"
+            aria-haspopup="dialog"
+            :aria-expanded="showModal"
+            @click="openScheduler"
+        >
+            <Calendar :size="16" aria-hidden="true" />
             <span>Schedule a Call</span>
         </button>
 
         <Teleport to="body">
             <Transition name="modal-fade">
-                <div v-if="showModal" class="schedule-overlay" @click.self="closeModal">
+                <div
+                    v-if="showModal"
+                    class="schedule-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="schedule-modal-title"
+                    @click.self="closeModal"
+                >
                     <div class="schedule-modal">
                         <div class="schedule-modal-header">
-                            <h3>Schedule a Call</h3>
-                            <button class="schedule-close" @click="closeModal" aria-label="Close">×</button>
+                            <h3 id="schedule-modal-title">Schedule a Call</h3>
+                            <button
+                                ref="closeBtnRef"
+                                class="schedule-close"
+                                type="button"
+                                aria-label="Close dialog"
+                                @click="closeModal"
+                            >×</button>
                         </div>
                         <div class="schedule-modal-body">
                             <p class="schedule-info">
@@ -40,7 +85,7 @@ function closeModal() {
                                 class="schedule-external-link"
                                 @click="closeModal"
                             >
-                                <Calendar :size="18" />
+                                <Calendar :size="18" aria-hidden="true" />
                                 <span>Open Calendly to book a slot</span>
                             </a>
                             <p class="schedule-alt">

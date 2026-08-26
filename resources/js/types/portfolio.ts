@@ -24,7 +24,17 @@ export interface Project {
     title: string
     slug: string
     category: string
+    positioning?: string | null
+    metricBadge?: string | null
     description: string
+    solution?: string | null
+    impact?: string | null
+    caseStudySlug?: string | null
+    isMobile?: boolean
+    problem?: string | null
+    challenge?: string | null
+    architectureActions?: string[]
+    businessImpact?: string[]
     tools: string[]
     imageUrl: string | null
     videoUrl: string | null

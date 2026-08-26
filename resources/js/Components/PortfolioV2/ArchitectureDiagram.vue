@@ -33,7 +33,7 @@ const architectures: Record<string, ArchitectureData> = {
         title: 'ZoetiCoach AI Architecture',
         nodes: [
             { id: 'wa', label: 'WhatsApp API', tech: 'Webhook', x: 50, y: 30, color: '#25D366' },
-            { id: 'api', label: 'Laravel API', tech: 'Laravel 12', x: 200, y: 30, color: '#FF2D20' },
+            { id: 'api', label: 'Laravel API', tech: 'Laravel 13', x: 200, y: 30, color: '#FF2D20' },
             { id: 'ai', label: 'AI Engine', tech: 'OpenAI + pgvector', x: 350, y: 30, color: '#10a37f' },
             { id: 'db', label: 'Database', tech: 'PostgreSQL', x: 200, y: 130, color: '#336791' },
             { id: 'queue', label: 'Queue Worker', tech: 'Redis / Horizon', x: 350, y: 130, color: '#DC382D' },

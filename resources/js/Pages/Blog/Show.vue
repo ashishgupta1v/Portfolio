@@ -37,15 +37,15 @@ const articleSchema = computed(() => JSON.stringify({
     author: {
         '@type': 'Person',
         name: 'Ashish Gupta',
-        url: 'https://www.ashishgupta.dev/',
+        url: 'https://ashishgupta.dev/',
     },
     publisher: {
         '@type': 'Person',
         name: 'Ashish Gupta',
-        url: 'https://www.ashishgupta.dev/',
+        url: 'https://ashishgupta.dev/',
     },
     datePublished: props.post.publishedAt,
-    url: `https://www.ashishgupta.dev/blog/${props.post.slug}`,
+    url: `https://ashishgupta.dev/blog/${props.post.slug}`,
     keywords: props.post.tags.join(', '),
 }))
 
@@ -53,9 +53,9 @@ const breadcrumbSchema = computed(() => JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.ashishgupta.dev/' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.ashishgupta.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: props.post.title, item: `https://www.ashishgupta.dev/blog/${props.post.slug}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ashishgupta.dev/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://ashishgupta.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: props.post.title, item: `https://ashishgupta.dev/blog/${props.post.slug}` },
     ],
 }))
 </script>
@@ -66,12 +66,12 @@ const breadcrumbSchema = computed(() => JSON.stringify({
         <meta property="og:title" :content="post.title" />
         <meta property="og:description" :content="post.excerpt" />
         <meta property="og:type" content="article" />
-        <meta property="og:url" :content="`https://www.ashishgupta.dev/blog/${post.slug}`" />
+        <meta property="og:url" :content="`https://ashishgupta.dev/blog/${post.slug}`" />
         <meta property="og:site_name" content="Ashish Gupta" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" :content="post.title" />
         <meta name="twitter:description" :content="post.excerpt" />
-        <link rel="canonical" :href="`https://www.ashishgupta.dev/blog/${post.slug}`" />
+        <link rel="canonical" :href="`https://ashishgupta.dev/blog/${post.slug}`" />
         <component is="script" type="application/ld+json" v-html="articleSchema" />
         <component is="script" type="application/ld+json" v-html="breadcrumbSchema" />
     </Head>
@@ -85,7 +85,9 @@ const breadcrumbSchema = computed(() => JSON.stringify({
                 <Link href="/" class="brand-link">Ashish Gupta</Link>
                 <div class="topbar-links">
                     <Link href="/" class="topbar-link">Portfolio</Link>
+                    <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <Link href="/blog" class="topbar-link">Blog</Link>
+                    <Link href="/engagements" class="topbar-link">Engagements</Link>
                 </div>
             </div>
 
