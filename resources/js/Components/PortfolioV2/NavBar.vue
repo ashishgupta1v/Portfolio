@@ -185,10 +185,10 @@ onUnmounted(() => {
 }
 
 .nav.scrolled {
-    background: var(--nav-bg, rgba(15, 20, 25, 0.88));
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--nav-border, var(--border));
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 

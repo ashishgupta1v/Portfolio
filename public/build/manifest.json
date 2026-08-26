@@ -178,7 +178,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
-    "file": "assets/TechStackSection-BtSm_q9u.js",
+    "file": "assets/TechStackSection-e2LOtcRk.js",
     "name": "TechStackSection",
     "src": "resources/js/Components/PortfolioV2/TechStackSection.vue",
     "isDynamicEntry": true,
@@ -187,7 +187,7 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/TechStackSection-BiOlSK-1.css"
+      "assets/TechStackSection-B29QZ_Gh.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TestimonialsSection.vue": {
@@ -220,7 +220,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-CJFrTiUB.js",
+    "file": "assets/WorksSection-C-n9XiZg.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -233,7 +233,7 @@
       "_x-7wqJzS1g.js"
     ],
     "css": [
-      "assets/WorksSection-CHiuGIuy.css"
+      "assets/WorksSection-BKh3kq1c.css"
     ]
   },
   "resources/js/Pages/Admin/Telemetry.vue": {
@@ -335,7 +335,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-Dvs1wbWE.js",
+    "file": "assets/Index-BfWtRHPi.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -363,7 +363,7 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-ByVUOANP.css"
+      "assets/Index-CxQ0sDae.css"
     ]
   },
   "resources/js/Pages/Projects/Show.vue": {
@@ -385,7 +385,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-CLLz4Qru.js",
+    "file": "assets/app-hF_37_i8.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -405,7 +405,7 @@
       "resources/js/Pages/Projects/Show.vue"
     ],
     "css": [
-      "assets/app-NmH21x-W.css"
+      "assets/app-DguK8z36.css"
     ]
   }
 }

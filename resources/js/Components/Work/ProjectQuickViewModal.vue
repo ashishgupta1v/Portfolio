@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
                         <div class="modal-badge-row">
                             <span
                                 class="badge-type"
-                                :class="{ 'badge-type--mobile': project.isMobile || project.type.includes('Mobile') }"
+                                :class="{ 'badge-type--mobile': project.isMobile || (project.type ?? '').includes('Mobile') }"
                             >
                                 <span class="pulse-dot" />
                                 {{ project.type }}

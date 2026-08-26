@@ -147,6 +147,10 @@
     --text-body: rgba(226, 232, 240, 0.9);
     --text-muted: rgba(226, 232, 240, 0.62);
     --text-on-accent: #052e2b;
+
+    /* Navigation */
+    --nav-bg: rgba(9, 14, 20, 0.92);
+    --nav-border: rgba(148, 163, 184, 0.15);
 }
 
 [data-theme="light"] {
@@ -183,6 +187,10 @@
     --text-body: rgba(15, 23, 42, 0.88);
     --text-muted: rgba(51, 65, 85, 0.72);
     --text-on-accent: #052e2b;
+
+    /* Navigation — light translucent bar so dark link text is readable */
+    --nav-bg: rgba(248, 250, 252, 0.94);
+    --nav-border: rgba(15, 23, 42, 0.12);
 }
 
 * {

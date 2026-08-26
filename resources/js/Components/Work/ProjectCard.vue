@@ -62,7 +62,7 @@ function handleQuickView() {
         <div class="card-badges">
             <span
                 class="badge-type"
-                :class="{ 'badge-type--mobile': project.isMobile || project.type.includes('Mobile') }"
+                :class="{ 'badge-type--mobile': project.isMobile || (project.type ?? '').includes('Mobile') }"
             >
                 <span class="pulse-dot" />
                 {{ project.type }}
@@ -203,8 +203,8 @@ function handleQuickView() {
 <style scoped>
 .work-card {
     --card-accent: var(--work-accent, #2dd4bf);
-    --card-bg-color: var(--work-card, #0f1621);
-    --card-border-color: var(--work-border, rgba(255, 255, 255, 0.08));
+    --card-bg-color: var(--work-card, var(--surface, #0f1621));
+    --card-border-color: var(--work-border, var(--border, rgba(255, 255, 255, 0.08)));
 
     display: flex;
     flex-direction: column;

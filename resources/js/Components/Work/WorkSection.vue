@@ -168,7 +168,7 @@ onMounted(() => {
 <style scoped>
 .work-section {
     --work-accent: var(--accent, #2dd4bf);
-    --work-card: var(--card-bg, #0f1621);
+    --work-card: var(--surface, #0f1621);
     --work-border: var(--border, rgba(255, 255, 255, 0.08));
 
     background: radial-gradient(circle at 15% 20%, var(--section-bg-tint) 0%, var(--section-bg-mid) 45%, var(--section-bg-deep) 100%);
@@ -200,7 +200,7 @@ onMounted(() => {
     font-size: clamp(2rem, 5vw, 3.25rem);
     font-weight: 900;
     letter-spacing: -0.035em;
-    color: var(--text-1, #f8fafc);
+    color: var(--text-1);
     margin: 0 0 0.85rem;
     line-height: 1.1;
 }

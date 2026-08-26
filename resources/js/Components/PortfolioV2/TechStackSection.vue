@@ -386,7 +386,10 @@ onUnmounted(() => {
     padding: 0.22rem;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
     user-select: none;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
 }
 
 @media (max-width: 768px) {
@@ -416,7 +419,7 @@ onUnmounted(() => {
     }
 
     .bubble-text {
-        font-size: calc(0.44rem * var(--s) + 0.36rem);   
+        font-size: calc(0.44rem * var(--s) + 0.36rem);
     }
 }
 
@@ -428,5 +431,38 @@ onUnmounted(() => {
     .bubble-field {
         min-height: 360px;
     }
+}
+
+/* ── Light-mode overrides: make bubbles visible against white/light backgrounds ── */
+:global([data-theme="light"]) .bubble {
+    background: radial-gradient(
+        ellipse at 30% 30%,
+        hsla(var(--hue, 190), 65%, 52%, 0.22) 0%,
+        hsla(var(--hue, 190), 55%, 60%, 0.18) 45%,
+        rgba(241, 245, 249, 0.85) 100%
+    );
+    border: 1px solid hsla(var(--hue, 190), 55%, 45%, 0.45);
+    box-shadow:
+        inset 0 -3px 10px rgba(0, 0, 0, 0.06),
+        0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+:global([data-theme="light"]) .bubble:hover {
+    border-color: hsla(var(--hue, 190), 70%, 38%, 0.7);
+    box-shadow:
+        inset 0 -3px 10px rgba(0, 0, 0, 0.04),
+        0 8px 24px rgba(var(--accent-rgb), 0.2);
+}
+
+:global([data-theme="light"]) .bubble-text {
+    color: #1e293b;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+:global([data-theme="light"]) .bubble-field {
+    background:
+        radial-gradient(circle at 50% 46%, rgba(var(--accent-rgb), 0.07), transparent 46%),
+        linear-gradient(180deg, rgba(241, 245, 249, 0.9), rgba(255, 255, 255, 0.95));
+    border-color: var(--border);
 }
 </style>
