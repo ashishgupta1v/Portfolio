@@ -114,7 +114,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ContactSection.vue": {
-    "file": "assets/ContactSection-DPRZBfBv.js",
+    "file": "assets/ContactSection-BxHLTNwI.js",
     "name": "ContactSection",
     "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
     "isDynamicEntry": true,
@@ -129,11 +129,11 @@
       "_message-square-Bvd_ioeL.js"
     ],
     "css": [
-      "assets/ContactSection-ikiLMtS9.css"
+      "assets/ContactSection-B6bXPcCi.css"
     ]
   },
   "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue": {
-    "file": "assets/FeaturedCaseStudySection-D3_nhv56.js",
+    "file": "assets/FeaturedCaseStudySection-jTtjIsAm.js",
     "name": "FeaturedCaseStudySection",
     "src": "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue",
     "isDynamicEntry": true,
@@ -142,11 +142,11 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/FeaturedCaseStudySection-eku4wC-G.css"
+      "assets/FeaturedCaseStudySection-yKJBMozO.css"
     ]
   },
   "resources/js/Components/PortfolioV2/GitHubActivity.vue": {
-    "file": "assets/GitHubActivity-QYqHs8Yz.js",
+    "file": "assets/GitHubActivity-DFVv9Z_9.js",
     "name": "GitHubActivity",
     "src": "resources/js/Components/PortfolioV2/GitHubActivity.vue",
     "isDynamicEntry": true,
@@ -155,7 +155,7 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/GitHubActivity-BqAyHMSs.css"
+      "assets/GitHubActivity-CbuIFpSP.css"
     ]
   },
   "resources/js/Components/PortfolioV2/MetricsSection.vue": {
@@ -173,7 +173,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ScrollySequence.vue": {
-    "file": "assets/ScrollySequence-B59W5lpF.js",
+    "file": "assets/ScrollySequence-Bq0omTnP.js",
     "name": "ScrollySequence",
     "src": "resources/js/Components/PortfolioV2/ScrollySequence.vue",
     "isDynamicEntry": true,
@@ -182,7 +182,7 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/ScrollySequence-B1cvNYNI.css"
+      "assets/ScrollySequence-CaHvnX-q.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
@@ -199,7 +199,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TestimonialsSection.vue": {
-    "file": "assets/TestimonialsSection-CxOhsfku.js",
+    "file": "assets/TestimonialsSection-DYmWI8xX.js",
     "name": "TestimonialsSection",
     "src": "resources/js/Components/PortfolioV2/TestimonialsSection.vue",
     "isDynamicEntry": true,
@@ -210,7 +210,7 @@
       "_createLucideIcon-DYQFh9rd.js"
     ],
     "css": [
-      "assets/TestimonialsSection-DGfge2A7.css"
+      "assets/TestimonialsSection-CeqpB3RH.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
@@ -370,7 +370,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-CQG-LRxA.js",
+    "file": "assets/Index-Buk9ytNR.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -399,7 +399,7 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-C8YdT09o.css"
+      "assets/Index-w7Z8udxw.css"
     ]
   },
   "resources/js/Pages/Projects/Show.vue": {
@@ -421,7 +421,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-Bj__Eh1E.js",
+    "file": "assets/app-dgJ9X35L.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -443,7 +443,7 @@
       "resources/js/Pages/Projects/Show.vue"
     ],
     "css": [
-      "assets/app-UE0jIlnf.css"
+      "assets/app-BkofYf79.css"
     ]
   }
 }

@@ -85,6 +85,16 @@ function timeAgo(dateStr: string): string {
     return years === 1 ? '1 year ago' : `${years} years ago`
 }
 
+function handleCardPointerMove(event: PointerEvent) {
+    const card = event.currentTarget as HTMLElement | null
+    if (!card) return
+    const rect = card.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    card.style.setProperty('--mouse-x', `${x}px`)
+    card.style.setProperty('--mouse-y', `${y}px`)
+}
+
 onMounted(async () => {
     try {
         const res = await fetch('/api/github-stats')
@@ -98,7 +108,40 @@ onMounted(async () => {
             following: 0,
             totalStars: 0,
             topLanguages: ['PHP', 'Vue', 'TypeScript', 'JavaScript', 'Python'],
-            recentRepos: [],
+            recentRepos: [
+                {
+                    name: 'Portfolio',
+                    description: 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+                    language: 'Vue',
+                    stars: 0,
+                    url: 'https://github.com/ashishgupta1v/Portfolio',
+                    updatedAt: new Date().toISOString(),
+                },
+                {
+                    name: 'DigitalBuilders',
+                    description: 'Autonomous AI-assisted agency platform & conversion engine.',
+                    language: 'PHP',
+                    stars: 0,
+                    url: 'https://github.com/ashishgupta1v/DigitalBuilders',
+                    updatedAt: new Date().toISOString(),
+                },
+                {
+                    name: 'Habuilt',
+                    description: 'High-performance habit tracking and personal accountability engine.',
+                    language: 'TypeScript',
+                    stars: 0,
+                    url: 'https://github.com/ashishgupta1v/Habuilt',
+                    updatedAt: new Date().toISOString(),
+                },
+                {
+                    name: 'JobBot',
+                    description: 'Automated job discovery and application workflow tool.',
+                    language: 'JavaScript',
+                    stars: 0,
+                    url: 'https://github.com/ashishgupta1v/JobBot',
+                    updatedAt: new Date().toISOString(),
+                },
+            ],
             profileUrl: 'https://github.com/ashishgupta1v',
             avatarUrl: null,
         }
@@ -110,17 +153,18 @@ onMounted(async () => {
 
 <template>
     <section id="github" class="github-section">
+        <div class="github-ambient-glow" aria-hidden="true" />
         <div class="github-shell">
             <div class="section-header">
                 <div class="section-header-wrapper">
                     <h2 class="section-title">
-                        <span class="section-title-word">Open</span>
-                        <span class="section-title-word accent">Source</span>
+                        <span class="section-title-word">Open Source &amp;</span>
+                        <span class="section-title-word accent">Activity</span>
                     </h2>
-                    <p class="section-subtitle">
-                        Recent work and contributions on GitHub.
-                    </p>
                 </div>
+                <p class="section-subtitle">
+                    Recent repositories, architecture components, and contributions on GitHub.
+                </p>
                 <div class="section-separator" />
             </div>
 
@@ -147,9 +191,9 @@ onMounted(async () => {
                     <div
                         v-for="stat in statsCards"
                         :key="stat.label"
-                        class="stat-card"
+                        class="stat-card glass-panel"
                     >
-                        <span class="stat-value">{{ stat.value }}</span>
+                        <span class="stat-value text-gradient-accent">{{ stat.value }}</span>
                         <span class="stat-label">{{ stat.label }}</span>
                     </div>
                 </div>
@@ -164,8 +208,14 @@ onMounted(async () => {
                         :href="repo.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="repo-card"
+                        class="repo-card glass-panel"
+                        @pointermove="handleCardPointerMove"
                     >
+                        <!-- Dynamic spotlight -->
+                        <div class="repo-spotlight" aria-hidden="true" />
+
+                        <div class="repo-top-indicator" :style="{ background: `linear-gradient(90deg, ${langColor(repo.language)}, transparent)` }" />
+
                         <div class="repo-header">
                             <svg class="repo-icon" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
                                 <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z" />
@@ -204,7 +254,7 @@ onMounted(async () => {
                         :href="data.profileUrl"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="github-profile-link"
+                        class="github-profile-link glow-pill"
                     >
                         <svg class="gh-logo" viewBox="0 0 16 16" fill="currentColor" width="18" height="18">
                             <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
@@ -229,21 +279,33 @@ onMounted(async () => {
         var(--bg-secondary) 50%,
         var(--section-bg-deep) 100%
     );
-    padding: 4.2rem 1.2rem 4.4rem;
+    padding: 7rem 1.5rem 6rem;
     overflow: hidden;
 }
 
+.github-ambient-glow {
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    width: 600px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(94, 234, 212, 0.08) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+}
+
 .github-shell {
-    max-width: 1180px;
+    max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    z-index: 1;
 }
 
 /* ---------- Stats grid ---------- */
 .github-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
     margin-bottom: 2rem;
 }
 
@@ -251,64 +313,92 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
-    padding: 1.5rem 1rem;
-    border-radius: 0.75rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    gap: 0.45rem;
+    padding: 1.8rem 1.25rem;
+    border-radius: 1.15rem;
+    background: var(--card-bg-strong);
+    box-shadow: var(--shadow-elevation-1);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .stat-card:hover {
     border-color: rgba(var(--accent-rgb), 0.35);
-    box-shadow: 0 4px 24px rgba(var(--accent-rgb), 0.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(94, 234, 212, 0.1);
+    transform: translateY(-2px);
 }
 
 .stat-value {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: -0.02em;
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -0.03em;
     line-height: 1;
 }
 
 .stat-label {
-    font-size: 0.78rem;
-    font-weight: 500;
+    font-size: 0.76rem;
+    font-weight: 650;
     color: var(--text-2);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
 }
 
 /* ---------- Repos grid ---------- */
 .github-repos {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 1.4rem;
+    margin-bottom: 2.5rem;
 }
 
 .repo-card {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.25rem 1.35rem;
-    border-radius: 0.75rem;
+    gap: 0.65rem;
+    padding: 1.6rem 1.6rem 1.5rem;
+    border-radius: 1.15rem;
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    overflow: hidden;
     text-decoration: none;
     color: inherit;
+    box-shadow: var(--shadow-elevation-1);
     transition:
         border-color 0.25s ease,
         box-shadow 0.25s ease,
-        transform 0.25s ease;
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .repo-card:hover {
-    border-color: rgba(var(--accent-rgb), 0.3);
-    box-shadow: 0 8px 32px rgba(var(--accent-rgb), 0.06);
-    transform: translateY(-2px);
+    border-color: rgba(94, 234, 212, 0.4);
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.6), 0 0 25px rgba(94, 234, 212, 0.12);
+    transform: translateY(-3px);
+}
+
+.repo-top-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0.8;
+}
+
+.repo-spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 1.15rem;
+    background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(94, 234, 212, 0.12),
+        transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.repo-card:hover .repo-spotlight {
+    opacity: 1;
 }
 
 .repo-header {

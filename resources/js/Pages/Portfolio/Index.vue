@@ -37,10 +37,13 @@ import TerminalMode from '@/Components/PortfolioV2/TerminalMode.vue'
 import ToastContainer from '@/Components/PortfolioV2/ToastContainer.vue'
 import { useKeyboardShortcuts } from '@/Composables/useKeyboardShortcuts'
 
+import { useLenisSmoothScroll } from '@/Composables/useLenisSmoothScroll'
+
 const props = defineProps<PortfolioPageProps>()
 
 const { depthVars } = useMouseDepth(1)
 const depthRef = ref<HTMLElement | null>(null)
+const { initLenis, destroyLenis } = useLenisSmoothScroll()
 
 // Keyboard shortcuts: digits jump between sections, `g h` returns to top,
 // `/` scrolls to and focuses the contact form. Never fires while typing.
@@ -108,6 +111,8 @@ function initScrollDepth() {
 }
 
 onMounted(() => {
+    initLenis()
+
     minTimer = window.setTimeout(() => {
         minLoaderElapsed.value = true
         if (typeof window !== 'undefined') {
@@ -125,6 +130,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+    destroyLenis()
     if (minTimer) clearTimeout(minTimer)
     window.removeEventListener('load', handlePageLoaded)
 })

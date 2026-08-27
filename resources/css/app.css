@@ -544,3 +544,33 @@ body:not(.inertia-navigating) #app {
     color: var(--accent-violet);
     box-shadow: 0 0 15px rgba(var(--accent-violet-rgb), 0.12);
 }
+
+.border-gradient-subtle {
+    border: 1px solid transparent;
+    background-image: linear-gradient(var(--card-bg), var(--card-bg)), var(--accent-gradient-glow);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+[data-theme="light"] .text-gradient-hero {
+    background: linear-gradient(135deg, #0f172a 25%, #0d9488 70%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .name-line {
+    color: #0f172a !important;
+    text-shadow: 0 2px 16px rgba(15, 23, 42, 0.15) !important;
+}
+
+[data-theme="light"] .statement-scrim {
+    background: radial-gradient(ellipse at 25% 50%, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.75) 70%, rgba(248, 250, 252, 0.35) 100%) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"] .statement-subtitle {
+    color: #334155 !important;
+    text-shadow: none !important;
+}
+

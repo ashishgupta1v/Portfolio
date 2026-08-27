@@ -627,25 +627,25 @@ onMounted(() => {
 .form-input {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 0.65rem;
     color: var(--text-1);
     font-size: 0.9rem;
     font-family: inherit;
-    padding: 0.65rem 0.85rem;
-    transition: border-color 0.25s, box-shadow 0.25s;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s ease;
     outline: none;
     width: 100%;
     box-sizing: border-box;
 }
 .form-input:focus {
-    border-color: rgba(var(--accent-rgb), 0.5);
-    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
+    border-color: rgba(var(--accent-rgb), 0.6);
+    box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.18), 0 0 20px rgba(94, 234, 212, 0.1);
 }
 .form-input::placeholder { color: var(--text-3); }
-.form-input-error { border-color: rgba(239, 68, 68, 0.5) !important; }
+.form-input-error { border-color: rgba(239, 68, 68, 0.6) !important; }
 .form-input option { background: var(--bg-secondary); color: var(--text-1); }
 
-.form-textarea { resize: vertical; min-height: 110px; }
+.form-textarea { resize: vertical; min-height: 120px; }
 
 .form-field-footer {
     display: flex;
@@ -678,10 +678,10 @@ onMounted(() => {
 .form-success {
     background: rgba(var(--accent-rgb), 0.08);
     border: 1px solid rgba(var(--accent-rgb), 0.25);
-    border-radius: 4px;
-    padding: 1rem 1.2rem;
+    border-radius: 0.75rem;
+    padding: 1.2rem 1.4rem;
     color: var(--accent);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     max-width: 700px;
 }
 
@@ -739,20 +739,24 @@ onMounted(() => {
 .form-submit {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     align-self: flex-start;
-    background: var(--accent);
-    color: var(--text-on-accent);
+    background: linear-gradient(135deg, #5eead4, #2dd4bf);
+    color: #03211e;
     border: none;
-    border-radius: 4px;
+    border-radius: 999px;
     font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    padding: 0.7rem 1.5rem;
+    font-weight: 750;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 1.8rem;
     cursor: pointer;
-    transition: opacity 0.25s;
+    box-shadow: 0 0 20px rgba(94, 234, 212, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease;
 }
-.form-submit:hover:not(:disabled) { opacity: 0.88; }
+.form-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(94, 234, 212, 0.45), 0 6px 18px rgba(0, 0, 0, 0.4);
+}
 .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
 @media (max-width: 640px) {

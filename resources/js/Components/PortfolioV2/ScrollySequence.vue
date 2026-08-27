@@ -200,25 +200,45 @@ onBeforeUnmount(() => {
                     <div class="statement-card">
                         <div class="statement-scrim" aria-hidden="true" />
                         <Transition name="greeting-fade">
-                            <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting">
+                            <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting glow-pill">
                                 {{ visitorContext.greeting }}
                             </span>
                         </Transition>
                         <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
-                            <template v-for="(line, li) in item.title.split('\n')" :key="li">
-                                <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }} </span>
-                                <span v-else class="name-line">{{ line }}</span>
-                                <br v-if="li < item.title.split('\n').length - 1" />
+                            <template v-if="idx === 0">
+                                <span class="name-line">Ashish <span class="name-surname">Gupta</span></span>
+                            </template>
+                            <template v-else>
+                                <template v-for="(line, li) in item.title.split('\n')" :key="li">
+                                    <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }} </span>
+                                    <span v-else class="title-line">{{ line }}</span>
+                                    <br v-if="li < item.title.split('\n').length - 1" />
+                                </template>
                             </template>
                         </component>
                         <p class="statement-subtitle">{{ item.subtitle }}</p>
+
+                        <!-- Above-the-fold Hero Action Row -->
+                        <div v-if="idx === 0" class="hero-actions">
+                            <a href="#about" class="hero-btn hero-btn--primary glow-pill">
+                                <span>Explore Architecture</span>
+                                <span class="hero-btn-arrow" aria-hidden="true">↓</span>
+                            </a>
+                            <a href="#works" class="hero-btn hero-btn--secondary">
+                                <span>View Work</span>
+                                <span class="hero-btn-arrow" aria-hidden="true">↗</span>
+                            </a>
+                            <a href="#contact" class="hero-btn hero-btn--ghost">
+                                <span>Let's Talk</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="scroll-hint" :style="{ opacity: scrollHintOpacity }">
                 <span class="scroll-hint-line" />
-                <span class="scroll-hint-text">Scroll</span>
+                <span class="scroll-hint-text">Scroll to explore</span>
             </div>
         </div>
     </section>
@@ -330,53 +350,133 @@ onBeforeUnmount(() => {
 .statement-scrim {
     position: absolute;
     inset: 0;
-    border-radius: 1.25rem;
-    background: radial-gradient(ellipse at center, rgba(9, 14, 20, 0.78) 0%, rgba(9, 14, 20, 0.42) 75%, transparent 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.4rem;
+    background: radial-gradient(ellipse at 25% 50%, rgba(6, 10, 18, 0.88) 0%, rgba(9, 14, 24, 0.65) 70%, rgba(9, 14, 24, 0.25) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.65);
     z-index: -1;
 }
 
 .statement-title {
-    color: #f8fafc;
-    font-size: clamp(2.4rem, 6.2vw, 5.4rem);
-    line-height: 0.96;
-    font-weight: 850;
-    letter-spacing: -0.038em;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    font-size: clamp(2.6rem, 6.6vw, 5.8rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.9);
 }
 
 .statement-subtitle {
-    color: rgba(226, 232, 240, 0.92);
-    font-size: clamp(1rem, 2.2vw, 1.45rem);
-    max-width: 44rem;
+    color: rgba(226, 232, 240, 0.94);
+    font-size: clamp(1rem, 2.2vw, 1.42rem);
+    max-width: 46rem;
     line-height: 1.5;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
 }
 
 .greeting-line {
     display: block;
-    font-size: clamp(1rem, 2.4vw, 1.4rem);
-    font-weight: 600;
+    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+    font-weight: 700;
     color: var(--accent, #5eead4);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
 }
 
 .name-line {
     display: inline-block;
-    background: linear-gradient(135deg, #ffffff 40%, #5eead4 80%, #c4b5fd 100%);
+    color: #ffffff;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.95), 0 0 60px rgba(94, 234, 212, 0.25);
+}
+
+.name-surname {
+    color: #5eead4;
+    background: linear-gradient(135deg, #5eead4 25%, #c4b5fd 90%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 0 25px rgba(94, 234, 212, 0.3));
+}
+
+.title-line {
+    display: inline-block;
+    color: #ffffff;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.hero-btn--primary {
+    background: linear-gradient(135deg, #5eead4, #2dd4bf);
+    color: #03211e;
+    box-shadow: 0 0 20px rgba(94, 234, 212, 0.35), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(94, 234, 212, 0.5), 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.hero-btn--secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+}
+
+.hero-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(94, 234, 212, 0.5);
+    transform: translateY(-2px);
+}
+
+.hero-btn--ghost {
+    background: transparent;
+    color: var(--text-2);
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+}
+
+.hero-btn--ghost:hover {
+    color: var(--accent);
+}
+
+.hero-btn-arrow {
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+}
+
+.hero-btn:hover .hero-btn-arrow {
+    transform: translateY(2px);
 }
 
 .hero-greeting {
     display: inline-block;
     padding: 0.3rem 0.85rem;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -384,7 +484,7 @@ onBeforeUnmount(() => {
     background: rgba(94, 234, 212, 0.12);
     border: 1px solid rgba(94, 234, 212, 0.25);
     border-radius: 999px;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
     box-shadow: 0 0 16px rgba(94, 234, 212, 0.18);
 }
 
