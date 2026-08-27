@@ -116,15 +116,16 @@ function formatMetric(index: number): string {
 
 <template>
     <section ref="sectionRef" id="metrics" class="metrics-section">
+        <div class="metrics-ambient-glow" aria-hidden="true" />
         <div class="metrics-shell">
             <div class="section-header">
                 <div class="section-header-wrapper">
                     <h2 class="section-title">
                         <span class="section-title-word">Impact &amp;</span>
-                        <span class="section-title-word accent">Results</span>
+                        <span class="section-title-word accent">Outcomes</span>
                     </h2>
                 </div>
-                <p class="section-subtitle">Quantified outcomes from real production systems.</p>
+                <p class="section-subtitle">Quantified business and architectural outcomes from high-scale production systems.</p>
                 <div class="section-separator" />
             </div>
 
@@ -132,9 +133,22 @@ function formatMetric(index: number): string {
                 <article
                     v-for="(metric, i) in METRICS"
                     :key="metric.label"
-                    class="metric-card"
+                    class="metric-card glass-panel"
+                    :class="{ 'metric-card--featured': i === 0 }"
                 >
-                    <span class="metric-number" :aria-label="`${metric.prefix}${metric.target}${metric.suffix} ${metric.label}`">
+                    <div class="metric-top-bar">
+                        <span class="metric-chip glow-pill">
+                            <span v-if="i === 0">Enterprise Scale</span>
+                            <span v-else-if="i === 1">Performance</span>
+                            <span v-else-if="i === 2">Efficiency</span>
+                            <span v-else>Experience</span>
+                        </span>
+                    </div>
+                    <span
+                        class="metric-number"
+                        :class="{ 'text-gradient-hero': i === 0 }"
+                        :aria-label="`${metric.prefix}${metric.target}${metric.suffix} ${metric.label}`"
+                    >
                         {{ formatMetric(i) }}
                     </span>
                     <h3 class="metric-label">{{ metric.label }}</h3>
@@ -154,14 +168,27 @@ function formatMetric(index: number): string {
         var(--section-bg-mid) 50%,
         var(--section-bg-deep) 100%
     );
-    padding: 6rem 1.5rem 5rem;
+    padding: 7rem 1.5rem 6rem;
     border-top: 1px solid var(--border);
     overflow: hidden;
 }
 
+.metrics-ambient-glow {
+    position: absolute;
+    top: 30%;
+    right: 15%;
+    width: 600px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(94, 234, 212, 0.1) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+}
+
 .metrics-shell {
-    max-width: 1180px;
+    max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 /* ── Grid ─────────────────────────────────────────────────────────── */
@@ -169,59 +196,68 @@ function formatMetric(index: number): string {
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    margin-top: 1.75rem;
+    gap: 1.4rem;
+    margin-top: 2rem;
 }
 
 /* ── Card ─────────────────────────────────────────────────────────── */
 
 .metric-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--border);
-    border-radius: 0.9rem;
-    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 1.15rem;
+    padding: 2.2rem 1.6rem 1.8rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    transition:
-        border-color 220ms cubic-bezier(0.23, 1, 0.32, 1),
-        background 220ms cubic-bezier(0.23, 1, 0.32, 1);
+    gap: 0.75rem;
+    background: var(--card-bg);
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .metric-card:hover {
-        border-color: rgba(var(--accent-rgb), 0.35);
-        background: linear-gradient(160deg, var(--card-bg-strong, var(--glass-bg)), rgba(var(--accent-rgb), 0.04));
-    }
+.metric-card--featured {
+    background: linear-gradient(135deg, var(--card-bg-strong), rgba(94, 234, 212, 0.06));
+    border-color: rgba(94, 234, 212, 0.35);
+    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 0 25px rgba(94, 234, 212, 0.12);
+}
+
+.metric-top-bar {
+    margin-bottom: 0.25rem;
+}
+
+.metric-chip {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
 }
 
 /* ── Number ────────────────────────────────────────────────────────── */
 
 .metric-number {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.6rem, 4.5vw, 4.2rem);
     font-weight: 900;
     color: var(--accent);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
     font-variant-numeric: tabular-nums;
 }
 
 /* ── Label ─────────────────────────────────────────────────────────── */
 
 .metric-label {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.05rem;
+    font-weight: 750;
     color: var(--text-1);
-    line-height: 1.3;
+    line-height: 1.35;
     margin: 0;
+    letter-spacing: -0.01em;
 }
 
 /* ── Description ───────────────────────────────────────────────────── */
 
 .metric-desc {
-    font-size: 0.84rem;
-    color: var(--text-muted, var(--text-2));
-    line-height: 1.45;
+    font-size: 0.86rem;
+    color: var(--text-2);
+    line-height: 1.5;
     margin: 0;
 }
 
@@ -235,13 +271,13 @@ function formatMetric(index: number): string {
 
 @media (max-width: 768px) {
     .metrics-section {
-        padding: 4rem 1rem 3.5rem;
+        padding: 4.5rem 1rem 3.5rem;
     }
 }
 
 @media (max-width: 480px) {
     .metrics-section {
-        padding: 3rem 0.8rem;
+        padding: 3.5rem 0.8rem;
     }
 
     .metrics-grid {
@@ -249,15 +285,7 @@ function formatMetric(index: number): string {
     }
 
     .metric-card {
-        padding: 1.5rem 1.25rem 1.35rem;
-    }
-}
-
-/* ── Reduced motion ────────────────────────────────────────────────── */
-
-@media (prefers-reduced-motion: reduce) {
-    .metric-card {
-        transition: none;
+        padding: 1.6rem 1.4rem;
     }
 }
 </style>

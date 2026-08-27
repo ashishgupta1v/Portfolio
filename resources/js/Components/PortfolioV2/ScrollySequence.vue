@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useVisitorPersonalization } from '@/Composables/useVisitorPersonalization'
 
 interface HeroStatement {
@@ -42,9 +42,9 @@ const statements = computed<HeroStatement[]>(() => [
     {
         title: `Hello! I'm\n${props.name}`,
         subtitle: props.title,
-        align: 'center',
-        start: 0.05,
-        end: 0.24,
+        align: 'left',
+        start: 0.04,
+        end: 0.26,
         z: 60,
     },
     {
@@ -105,10 +105,6 @@ const videoOpacity = computed(() => {
     return 0.42 + 0.58 * easeInOutCubic(clamp(progress.value * 1.2, 0, 1))
 })
 
-// Tracked as reactive state rather than read inline in the computed below:
-// `window.innerWidth` is not reactive, so the zoom factor was resolved once
-// and then cached — rotating a phone or resizing never updated it. Defaulting
-// to false also keeps this render-safe where `window` does not exist.
 const isNarrowViewport = ref(false)
 
 function updateViewport() {
@@ -120,14 +116,15 @@ const videoScale = computed(() => {
     return 1 + (maxZoom - 1) * easeInOutCubic(progress.value)
 })
 
-const scrollHintOpacity = computed(() => clamp(1 - progress.value * 12, 0, 1))
+const scrollHintOpacity = computed(() => {
+    return clamp(1 - progress.value * 14, 0, 1)
+})
 
 function onVideoCanPlay() {
     videoReady.value = true
     if (!heroReadyEmitted.value) {
         heroReadyEmitted.value = true
         emit('hero-ready')
-        emit('hero-progress', 100)
     }
 }
 
@@ -135,18 +132,27 @@ function onVideoError() {
     if (!heroReadyEmitted.value) {
         heroReadyEmitted.value = true
         emit('hero-ready')
-        emit('hero-progress', 100)
     }
 }
 
+let timer: ReturnType<typeof setTimeout> | null = null
+
 onMounted(() => {
     updateViewport()
+    updateProgress()
     window.addEventListener('scroll', updateProgress, { passive: true })
     window.addEventListener('resize', updateViewport, { passive: true })
-    updateProgress()
+
+    timer = setTimeout(() => {
+        if (!heroReadyEmitted.value) {
+            heroReadyEmitted.value = true
+            emit('hero-ready')
+        }
+    }, 1800)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+    if (timer) clearTimeout(timer)
     window.removeEventListener('scroll', updateProgress)
     window.removeEventListener('resize', updateViewport)
 })
@@ -178,29 +184,35 @@ onUnmounted(() => {
                 </video>
             </div>
 
-            <div class="grain" />
+            <!-- Atmospheric Lighting & Textures -->
+            <div class="hero-ambient-glow" aria-hidden="true" />
+            <div class="hero-vignette" aria-hidden="true" />
+            <div class="grain" aria-hidden="true" />
 
             <div class="overlay-layer">
                 <div
                     v-for="(item, idx) in statements"
                     :key="idx"
                     class="statement"
-                    :class="`align-${item.align}`"
+                    :class="[`align-${item.align}`, { 'is-primary-hero': idx === 0 }]"
                     :style="statementStyle(item)"
                 >
-                    <Transition name="greeting-fade">
-                        <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting">
-                            {{ visitorContext.greeting }}
-                        </span>
-                    </Transition>
-                    <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
-                        <template v-for="(line, li) in item.title.split('\n')" :key="li">
-                            <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }} </span>
-                            <span v-else class="name-line">{{ line }}</span>
-                            <br v-if="li < item.title.split('\n').length - 1" />
-                        </template>
-                    </component>
-                    <p class="statement-subtitle">{{ item.subtitle }}</p>
+                    <div class="statement-card">
+                        <div class="statement-scrim" aria-hidden="true" />
+                        <Transition name="greeting-fade">
+                            <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting">
+                                {{ visitorContext.greeting }}
+                            </span>
+                        </Transition>
+                        <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
+                            <template v-for="(line, li) in item.title.split('\n')" :key="li">
+                                <span v-if="li === 0 && item.title.includes('\n')" class="greeting-line">{{ line }} </span>
+                                <span v-else class="name-line">{{ line }}</span>
+                                <br v-if="li < item.title.split('\n').length - 1" />
+                            </template>
+                        </component>
+                        <p class="statement-subtitle">{{ item.subtitle }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -221,27 +233,48 @@ onUnmounted(() => {
 .scrolly-sticky {
     position: sticky;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
-    background: #090e14;
-    perspective: 800px;
-    perspective-origin: 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
 }
 
 .video-wrap {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     will-change: transform, opacity;
-    transform-origin: 50% 41%;
 }
 
 .hero-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 41%;
-    display: block;
+    object-position: center 38%;
+}
+
+/* Ambient glow & atmospheric textures */
+.hero-ambient-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 65% 55% at 30% 65%, rgba(94, 234, 212, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 75% 35%, rgba(139, 92, 246, 0.14) 0%, transparent 65%);
+    mix-blend-mode: screen;
+}
+
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 35%, rgba(9, 14, 20, 0.72) 100%);
 }
 
 .grain {
@@ -250,8 +283,7 @@ onUnmounted(() => {
     pointer-events: none;
     opacity: 0.18;
     mix-blend-mode: soft-light;
-    background-image:
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0);
     background-size: 3px 3px;
 }
 
@@ -260,6 +292,8 @@ onUnmounted(() => {
     inset: 0;
     pointer-events: none;
     transform-style: preserve-3d;
+    max-width: var(--container-max, 1300px);
+    margin: 0 auto;
 }
 
 .statement {
@@ -268,68 +302,99 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.85rem;
     padding: 2rem 3.5rem;
     will-change: transform, opacity;
     transform-style: preserve-3d;
+}
+
+.statement.is-primary-hero {
+    justify-content: flex-end;
+    padding-bottom: 7.5rem;
 }
 
 .align-left   { align-items: flex-start; text-align: left; }
 .align-center  { align-items: center;    text-align: center; }
 .align-right   { align-items: flex-end;  text-align: right; }
 
+.statement-card {
+    position: relative;
+    max-width: 54rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem 1.6rem;
+    border-radius: 1.25rem;
+    z-index: 1;
+}
+
+.statement-scrim {
+    position: absolute;
+    inset: 0;
+    border-radius: 1.25rem;
+    background: radial-gradient(ellipse at center, rgba(9, 14, 20, 0.78) 0%, rgba(9, 14, 20, 0.42) 75%, transparent 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: -1;
+}
+
 .statement-title {
     color: #f8fafc;
-    font-size: clamp(2.2rem, 6vw, 5.2rem);
-    line-height: 0.95;
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    text-shadow:
-        0 4px 30px rgba(0, 0, 0, 0.6),
-        0 1px 4px rgba(0, 0, 0, 0.45);
+    font-size: clamp(2.4rem, 6.2vw, 5.4rem);
+    line-height: 0.96;
+    font-weight: 850;
+    letter-spacing: -0.038em;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
 }
 
 .statement-subtitle {
-    color: rgba(226, 232, 240, 0.88);
-    font-size: clamp(0.95rem, 2vw, 1.45rem);
-    max-width: 48rem;
+    color: rgba(226, 232, 240, 0.92);
+    font-size: clamp(1rem, 2.2vw, 1.45rem);
+    max-width: 44rem;
     line-height: 1.5;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
 }
 
 .greeting-line {
     display: block;
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    font-weight: 400;
-    color: #5eead4;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.3rem;
+    font-size: clamp(1rem, 2.4vw, 1.4rem);
+    font-weight: 600;
+    color: var(--accent, #5eead4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
 }
 
 .name-line {
-    display: inline;
+    display: inline-block;
+    background: linear-gradient(135deg, #ffffff 40%, #5eead4 80%, #c4b5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5));
 }
 
 .hero-greeting {
     display: inline-block;
-    padding: 0.3rem 0.8rem;
+    padding: 0.3rem 0.85rem;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent, #14b8a6);
-    background: rgba(20, 184, 166, 0.1);
-    border: 1px solid rgba(20, 184, 166, 0.2);
+    color: var(--accent, #5eead4);
+    background: rgba(94, 234, 212, 0.12);
+    border: 1px solid rgba(94, 234, 212, 0.25);
     border-radius: 999px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
+    box-shadow: 0 0 16px rgba(94, 234, 212, 0.18);
 }
+
 .greeting-fade-enter-active { transition: opacity 0.6s ease 0.8s; }
 .greeting-fade-leave-active { transition: opacity 0.3s ease; }
 .greeting-fade-enter-from, .greeting-fade-leave-to { opacity: 0; }
 
 .scroll-hint {
     position: absolute;
-    bottom: 2.2rem;
+    bottom: 2.4rem;
     left: 50%;
     translate: -50% 0;
     display: flex;
@@ -338,46 +403,53 @@ onUnmounted(() => {
     gap: 0.5rem;
     pointer-events: none;
     transition: opacity 200ms ease;
+    z-index: 10;
 }
 
 .scroll-hint-line {
-    width: 1px;
-    height: 38px;
-    background: linear-gradient(to bottom, transparent, rgba(248,250,252,0.55));
-    animation: scrollPulse 1.8s ease-in-out infinite;
+    width: 1.5px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--accent, #5eead4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
 }
 
 .scroll-hint-text {
     font-size: 0.65rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(226, 232, 240, 0.5);
+    font-weight: 700;
+    color: rgba(226, 232, 240, 0.7);
 }
 
 @keyframes scrollPulse {
-    0%, 100% { opacity: 0.35; transform: scaleY(0.85); }
-    50%      { opacity: 1;    transform: scaleY(1); }
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50%      { opacity: 1;   transform: scaleY(1.1); }
 }
 
 @media (max-width: 768px) {
     .statement {
-        padding: 1.2rem 1.4rem;
-        gap: 0.6rem;
+        padding: 1.2rem 1.2rem;
+    }
+    .statement.is-primary-hero {
+        padding-bottom: 5rem;
+    }
+    .statement-card {
+        padding: 0.9rem 1.1rem;
     }
     .statement-title {
-        font-size: clamp(1.6rem, 8vw, 2.8rem);
+        font-size: clamp(1.8rem, 8.5vw, 3.2rem);
     }
     .statement-subtitle {
-        font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+        font-size: clamp(0.9rem, 3.8vw, 1.15rem);
         max-width: 100%;
     }
-    .scroll-hint { bottom: 1.4rem; }
-    .scroll-hint-line { height: 28px; }
+    .scroll-hint { bottom: 1.2rem; }
+    .scroll-hint-line { height: 26px; }
 }
 
 @media (max-width: 480px) {
     .scrolly-root { height: 480vh; }
-    .statement { padding: 1rem 1rem; }
+    .statement { padding: 1rem 0.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

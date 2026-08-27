@@ -105,21 +105,23 @@ onMounted(() => {
 
 <template>
     <section ref="sectionRef" id="contact" class="ct-section">
+        <div class="ct-ambient-glow" aria-hidden="true" />
         <div class="ct-shell">
             <div class="section-header">
                 <div class="section-header-wrapper">
                     <h2 class="section-title">
-                        <span class="section-title-word">Get In</span>
-                        <span class="section-title-word accent">Touch</span>
+                        <span class="section-title-word">Let's Build</span>
+                        <span class="section-title-word accent">Something Great</span>
                     </h2>
                 </div>
+                <p class="section-subtitle">Hiring, consulting, or technical co-founding — let's engineer something measurable.</p>
                 <div class="section-separator" />
                 <AvailabilityBadge class="contact-availability" />
             </div>
 
             <div class="ct-grid">
                 <!-- Connect -->
-                <div class="ct-column">
+                <div class="ct-column glass-panel">
                     <h3 class="col-title">Connect</h3>
                     <a
                         :href="`mailto:${profile.email}`"
@@ -135,7 +137,7 @@ onMounted(() => {
                         :href="whatsappHref"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="chat-btn"
+                        class="chat-btn glow-pill"
                     >
                         Quick chat on WhatsApp
                         <ArrowUpRight :size="14" />
@@ -159,7 +161,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Social -->
-                <div class="ct-column">
+                <div class="ct-column glass-panel">
                     <h3 class="col-title">Social</h3>
                     <div class="social-list">
                         <a
@@ -181,7 +183,7 @@ onMounted(() => {
                         :href="profile.resumeUrl"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="resume-btn"
+                        class="resume-btn glow-pill-violet"
                     >
                         Resume
                         <ArrowUpRight :size="14" />
@@ -189,7 +191,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Credit -->
-                <div class="ct-column">
+                <div class="ct-column glass-panel">
                     <h3 class="col-title">Credit</h3>
                     <p class="credit-text">
                         Designed &amp; Developed by
@@ -210,7 +212,7 @@ onMounted(() => {
             </div>
 
             <!-- Contact Form -->
-            <div class="ct-form-row">
+            <div class="ct-form-row glass-panel">
                 <h3 class="form-title">Get in touch</h3>
                 <div v-if="submitted" class="form-success" role="status" aria-live="polite">
                     <p>{{ successMessage }}</p>
@@ -316,30 +318,51 @@ onMounted(() => {
 .ct-section {
     position: relative;
     background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-    padding: 7rem 1.5rem 4rem;
+    padding: 7.5rem 1.5rem 5rem;
     border-top: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.ct-ambient-glow {
+    position: absolute;
+    bottom: 10%;
+    left: 30%;
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(94, 234, 212, 0.08) 50%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
 }
 
 .ct-shell {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .ct-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3.5rem;
+    gap: 1.5rem;
+}
+
+.ct-column {
+    border-radius: 1.15rem;
+    padding: 2rem 1.8rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .col-title {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(var(--accent-rgb), 0.75);
-    font-weight: 600;
+    color: var(--accent);
+    font-weight: 700;
     margin-bottom: 1.4rem;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ── Connect ── */
@@ -544,20 +567,20 @@ onMounted(() => {
 
 /* ── Contact form ── */
 .ct-form-row {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--border);
+    margin-top: 2.5rem;
+    padding: 2.5rem 2.2rem;
+    border-radius: 1.25rem;
 }
 
 .form-title {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(var(--accent-rgb), 0.75);
-    font-weight: 600;
+    color: var(--accent);
+    font-weight: 700;
     margin-bottom: 1.8rem;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .contact-form {

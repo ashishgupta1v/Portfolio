@@ -101,31 +101,44 @@ onMounted(() => {
             <!-- Timeline grid -->
             <div class="timeline-grid">
                 <!-- Center progress line -->
-                <div class="center-line">
+                <div class="center-line" aria-hidden="true">
                     <div class="center-progress" />
                 </div>
 
                 <article
                     v-for="(exp, index) in experiences"
                     :key="`${exp.company}-${index}`"
-                    class="tl-row"
+                    class="tl-row glass-panel"
                 >
                     <div class="tl-left">
                         <span class="tl-date">{{ formatDateRange(exp) }}</span>
-                        <span v-if="isOngoing(exp.endDate)" class="now-pill">NOW</span>
+                        <span v-if="isOngoing(exp.endDate)" class="now-pill glow-pill">CURRENT ROLE</span>
+                    </div>
+
+                    <!-- Milestone Node Indicator -->
+                    <div class="tl-node" aria-hidden="true">
+                        <span class="node-dot" :class="{ 'is-now': isOngoing(exp.endDate) }" />
                     </div>
 
                     <div class="tl-center">
-                        <h3 class="tl-role">{{ exp.role }}</h3>
-                        <p class="tl-company">{{ exp.company }} <span v-if="exp.location" class="tl-location">· {{ exp.location }}</span></p>
+                        <div class="role-header">
+                            <h3 class="tl-role">{{ exp.role }}</h3>
+                            <div class="company-badge-wrap">
+                                <span class="tl-company">{{ exp.company }}</span>
+                                <span v-if="exp.location" class="tl-location">· {{ exp.location }}</span>
+                            </div>
+                        </div>
                         <ul class="tl-list">
-                            <li v-for="(point, i) in exp.highlights.slice(0, 3)" :key="i">{{ point }}</li>
+                            <li v-for="(point, i) in exp.highlights.slice(0, 3)" :key="i">
+                                <span class="tl-bullet-dot" aria-hidden="true">◆</span>
+                                <span>{{ point }}</span>
+                            </li>
                         </ul>
                     </div>
                 </article>
 
                 <!-- Bottom dot -->
-                <div class="bottom-dot" />
+                <div class="bottom-dot" aria-hidden="true" />
             </div>
         </div>
     </section>
@@ -134,7 +147,7 @@ onMounted(() => {
 <style scoped>
 .timeline-section {
     background: linear-gradient(180deg, var(--section-bg-mid) 0%, var(--bg-secondary) 50%, var(--section-bg-mid) 100%);
-    padding: 7rem 1.5rem 5rem;
+    padding: 7.5rem 1.5rem 6rem;
     border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
@@ -148,52 +161,96 @@ onMounted(() => {
 /* ── Timeline Grid ── */
 .timeline-grid {
     position: relative;
-    display: grid;
-    gap: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-left: 2rem;
+}
+
+/* ── Progress line ── */
+.center-line {
+    position: absolute;
+    left: 0.75rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    z-index: 0;
+}
+
+.center-progress {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-violet) 50%, #38bdf8 100%);
+    box-shadow: 0 0 12px rgba(94, 234, 212, 0.5);
+    transform-origin: top;
+    transform: scaleY(0);
 }
 
 .tl-row {
+    position: relative;
     display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 1.25rem;
+    grid-template-columns: 160px 1fr;
+    gap: 1.8rem;
     align-items: start;
-    padding: 1.65rem 0;
-    border-bottom: 1px solid var(--border);
+    padding: 1.8rem 2rem;
+    border-radius: 1.15rem;
+    z-index: 1;
 }
 
-.tl-row:first-of-type {
-    border-top: 1px solid var(--border);
+.tl-row:hover {
+    border-color: rgba(var(--accent-rgb), 0.35);
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.6), 0 0 25px rgba(94, 234, 212, 0.1);
+}
+
+/* Node indicator */
+.tl-node {
+    position: absolute;
+    left: calc(-2rem + 0.75rem - 6px);
+    top: 2.2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--bg-primary);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 12px rgba(94, 234, 212, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.node-dot.is-now {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    animation: pulse 2s infinite;
 }
 
 /* ── Left column ── */
 .tl-left {
     text-align: left;
-    padding-right: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.45rem;
+    gap: 0.6rem;
 }
 
-.tl-role {
-    font-size: 1.35rem;
+.tl-date {
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
     font-weight: 800;
     color: var(--text-1);
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
-.tl-company {
-    font-size: 1rem;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 0.55rem;
-}
-
-.tl-location {
-    font-size: 0.82rem;
-    color: var(--text-muted);
+.now-pill {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    padding: 0.22rem 0.55rem;
 }
 
 /* ── Center column ── */
@@ -204,47 +261,62 @@ onMounted(() => {
     align-items: flex-start;
     position: relative;
     min-width: 0;
-    padding-left: 1.25rem;
 }
 
-.tl-date {
-    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+.role-header {
+    margin-bottom: 0.85rem;
+}
+
+.tl-role {
+    font-size: 1.28rem;
     font-weight: 800;
-    color: var(--text-body);
+    color: var(--text-1);
     letter-spacing: -0.02em;
-    line-height: 1;
-    white-space: nowrap;
+    line-height: 1.25;
+    margin-bottom: 0.3rem;
 }
 
-.now-pill {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-on-accent);
-    background: var(--accent);
-    font-weight: 800;
-    padding: 0.22rem 0.45rem;
-    border-radius: 999px;
+.company-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
-/* ── Center progress line ── */
-.center-line {
-    position: absolute;
-    left: 150px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    transform: translateX(0);
-    background: var(--border);
-    z-index: 0;
+.tl-company {
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 700;
 }
 
-.center-progress {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, #5eead4, #93c5fd);
-    transform-origin: top;
-    transform: scaleY(0);
+.tl-location {
+    font-size: 0.82rem;
+    color: var(--text-3);
+}
+
+.tl-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.tl-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-2);
+}
+
+.tl-bullet-dot {
+    color: var(--accent-violet);
+    font-size: 0.65rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
 }
 
 .bottom-dot {

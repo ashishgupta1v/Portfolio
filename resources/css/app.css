@@ -114,6 +114,12 @@
 :root {
     --accent: #5eead4;
     --accent-rgb: 94, 234, 212;
+    --accent-violet: #8b5cf6;
+    --accent-violet-rgb: 139, 92, 246;
+    --accent-amber: #f59e0b;
+    --accent-gradient: linear-gradient(135deg, #5eead4 0%, #8b5cf6 100%);
+    --accent-gradient-text: linear-gradient(135deg, #ffffff 30%, #5eead4 70%, #a78bfa 100%);
+    --accent-gradient-glow: linear-gradient(135deg, rgba(94, 234, 212, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
     --container-max: 1300px;
 
     /* Theme tokens — dark palette (default) */
@@ -129,6 +135,7 @@
 
     --border: rgba(148, 163, 184, 0.15);
     --border-strong: rgba(148, 163, 184, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.08);
 
     /* Section gradient stops */
     --section-bg-deep: #080d14;
@@ -138,9 +145,15 @@
     /* Glass / card surfaces */
     --glass-bg: rgba(9, 14, 20, 0.75);
     --glass-fg: rgba(15, 23, 42, 0.52);
-    --card-bg: rgba(15, 23, 42, 0.4);
-    --card-bg-strong: rgba(15, 23, 42, 0.85);
+    --card-bg: rgba(15, 23, 42, 0.5);
+    --card-bg-strong: rgba(15, 23, 42, 0.88);
     --card-bg-solid: #1e293b;
+
+    /* Elevation & Layered Shadows */
+    --shadow-elevation-1: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    --shadow-elevation-2: 0 16px 40px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(94, 234, 212, 0.18);
+    --shadow-glow-accent: 0 0 40px -5px rgba(94, 234, 212, 0.3);
+    --shadow-glow-violet: 0 0 40px -5px rgba(139, 92, 246, 0.3);
 
     /* Extra text shades */
     --text-heading: #e2e8f0;
@@ -156,6 +169,12 @@
 [data-theme="light"] {
     --accent: #0d9488;
     --accent-rgb: 13, 148, 136;
+    --accent-violet: #7c3aed;
+    --accent-violet-rgb: 124, 58, 237;
+    --accent-amber: #d97706;
+    --accent-gradient: linear-gradient(135deg, #0d9488 0%, #7c3aed 100%);
+    --accent-gradient-text: linear-gradient(135deg, #0f172a 30%, #0d9488 70%, #7c3aed 100%);
+    --accent-gradient-glow: linear-gradient(135deg, rgba(13, 148, 136, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
 
     --bg-primary: #f8fafc;
     --bg-secondary: #f1f5f9;
@@ -169,6 +188,7 @@
 
     --border: rgba(15, 23, 42, 0.1);
     --border-strong: rgba(15, 23, 42, 0.22);
+    --glass-border: rgba(15, 23, 42, 0.08);
 
     /* Section gradient stops */
     --section-bg-deep: #f1f5f9;
@@ -176,11 +196,17 @@
     --section-bg-tint: #e8edf3;
 
     /* Glass / card surfaces */
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-fg: rgba(241, 245, 249, 0.7);
-    --card-bg: rgba(241, 245, 249, 0.65);
-    --card-bg-strong: rgba(241, 245, 249, 0.92);
+    --glass-bg: rgba(255, 255, 255, 0.88);
+    --glass-fg: rgba(241, 245, 249, 0.75);
+    --card-bg: rgba(241, 245, 249, 0.75);
+    --card-bg-strong: rgba(241, 245, 249, 0.95);
     --card-bg-solid: #ffffff;
+
+    /* Elevation & Layered Shadows */
+    --shadow-elevation-1: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.05);
+    --shadow-elevation-2: 0 16px 40px -4px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(13, 148, 136, 0.2);
+    --shadow-glow-accent: 0 0 35px -5px rgba(13, 148, 136, 0.2);
+    --shadow-glow-violet: 0 0 35px -5px rgba(124, 58, 237, 0.2);
 
     /* Extra text shades */
     --text-heading: #1e293b;
@@ -472,4 +498,49 @@ body:not(.inertia-navigating) #app {
         transition: none;
         opacity: 1;
     }
+}
+
+/* ================================================================
+   High-End Glassmorphic & Spotlight Utilities
+   ---------------------------------------------------------------- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-elevation-1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+    box-shadow: var(--shadow-elevation-2);
+    border-color: rgba(var(--accent-rgb), 0.25);
+}
+
+.text-gradient-accent {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.text-gradient-hero {
+    background: var(--accent-gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.glow-pill {
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.22);
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.12);
+}
+
+.glow-pill-violet {
+    background: rgba(var(--accent-violet-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-violet-rgb), 0.22);
+    color: var(--accent-violet);
+    box-shadow: 0 0 15px rgba(var(--accent-violet-rgb), 0.12);
 }

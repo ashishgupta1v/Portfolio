@@ -68,6 +68,30 @@ const liveUrl = computed(() => {
     return props.project.liveUrl || props.project.externalUrl || null
 })
 
+const cardRef = ref<HTMLElement | null>(null)
+
+function handlePointerMove(e: PointerEvent) {
+    if (!cardRef.value) return
+    const rect = cardRef.value.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -5
+    const rotateY = ((x - centerX) / centerX) * 5
+
+    cardRef.value.style.setProperty('--mouse-x', `${x}px`)
+    cardRef.value.style.setProperty('--mouse-y', `${y}px`)
+    cardRef.value.style.setProperty('--tilt-x', `${rotateX.toFixed(2)}deg`)
+    cardRef.value.style.setProperty('--tilt-y', `${rotateY.toFixed(2)}deg`)
+}
+
+function handlePointerLeave() {
+    if (!cardRef.value) return
+    cardRef.value.style.setProperty('--tilt-x', '0deg')
+    cardRef.value.style.setProperty('--tilt-y', '0deg')
+}
+
 function onImageError() {
     imgFailed.value = true
 }
@@ -78,12 +102,20 @@ function handleQuickView() {
 </script>
 
 <template>
-    <article class="work-card">
+    <article
+        ref="cardRef"
+        class="work-card glass-panel"
+        @pointermove="handlePointerMove"
+        @pointerleave="handlePointerLeave"
+    >
+        <!-- Dynamic Cursor Spotlight -->
+        <div class="card-spotlight" aria-hidden="true" />
+
         <!-- Badges Row -->
         <div class="card-badges">
             <span
-                class="badge-type"
-                :class="{ 'badge-type--mobile': isMobile }"
+                class="badge-type glow-pill"
+                :class="{ 'badge-type--mobile glow-pill-violet': isMobile }"
             >
                 <span class="pulse-dot" />
                 {{ projectType }}
@@ -104,7 +136,7 @@ function handleQuickView() {
         </h3>
 
         <!-- Metric Highlight Strip -->
-        <div v-if="metricDisplay" class="card-metric-strip">
+        <div v-if="metricDisplay" class="card-metric-strip glow-pill">
             <span class="metric-spark">⚡</span>
             <span>{{ metricDisplay }}</span>
         </div>
@@ -230,22 +262,41 @@ function handleQuickView() {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: var(--card-bg-color);
-    border: 1px solid var(--card-border-color);
+    background: var(--card-bg-strong);
+    border: 1px solid var(--glass-border);
     border-radius: 1.25rem;
-    padding: 1.5rem;
+    padding: 1.6rem;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
+    overflow: hidden;
+    box-shadow: var(--shadow-elevation-1);
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
 }
 
 .work-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(45, 212, 191, 0.4);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35),
-                0 0 25px rgba(45, 212, 191, 0.1);
+    border-color: rgba(94, 234, 212, 0.38);
+    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(94, 234, 212, 0.14);
+}
+
+.card-spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 1.25rem;
+    background: radial-gradient(
+        450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(94, 234, 212, 0.12),
+        transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.work-card:hover .card-spotlight {
+    opacity: 1;
 }
 
 /* ── Badges ── */
