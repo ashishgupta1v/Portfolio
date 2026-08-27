@@ -87,11 +87,15 @@ Experiences:
 4. TCS (Jul 2017 - Mar 2022): System Engineer. Automated aviation engine configuration tracking (eliminated 70% manual entries), developed predictive maintenance modules for diagnostics (reduced repair costs by 11%).
 
 Featured Projects:
-1. ZoetiCoach AI (https://zoeticoach.com/): A WhatsApp-first B2B2C accountability SaaS built with Laravel 13, Vue 3, WhatsApp API, pgvector, and OpenAI.
-2. Krishan Balram Gaushala (https://krishanbalramgaushala.com/): Devotee engagement and event management portal built with Laravel, Vue 3, WhatsApp Business API. Included canvas compression and SQLite WAL concurrency tuning.
-3. Habuilt Tracker (https://habuilt.com/): Habit tracking and performance app built with Next.js, React, Tailwind CSS, TypeScript, and Node.js.
-4. Digital Builders (https://digitalbuilders.in/): B2B delivery engine bringing Silicon Valley engineering discipline and autonomous AI agents to high-scale businesses.
-5. shaiyra (https://shaiyra.com/): Secure, client-side encrypted baby-tracking journal and health ledger. Built with Vue 3, Laravel, client-side encryption.
+1. ZoetiCoach AI (https://zoeticoach.com/): A WhatsApp-first B2B2C accountability SaaS built with Laravel 13, Vue 3, WhatsApp API, pgvector, and OpenAI RAG.
+2. Habuilt (https://www.habuilt.com/): Habit building & fitness coaching platform scaled to 500K+ users with Next.js, TypeScript, and microservices architecture.
+3. Dhanda Diary (https://dhandadiary.cloud/): Micro-business ERP & accounting execution OS built with Vue 3, Laravel 13, SQLite WAL, and multi-tenant ledger.
+4. GutTalks (https://guttalks.in/): Integrative telehealth & clinical protocol engine with HIPAA-aligned patient workflows, automated consult scheduling, and secure records.
+5. MyAstrova (https://myastrova.com/): Vedic astrology consultation & commerce platform with real-time audio/video consultations, ephemeris calculations, and payment gateway.
+6. Krishan Balram Gaushala (https://krishanbalramgaushala.com/): Devotee engagement and event management portal built with Laravel, Vue 3, WhatsApp Business API, SQLite WAL concurrency.
+7. SportsEntertainmentClub: High-performance cross-platform mobile app for court booking, player matchmaking, and tournament management built with Vue/Capacitor and offline SQLite.
+8. Garg Enterprises: B2B industrial supply chain & order tracking mobile application with offline-first sync and barcode inventory scanning.
+9. Digital Builders / Ashish Gupta Hub (https://digitalbuilders.in/ / https://ashishgupta.dev): B2B engineering delivery platform bringing Silicon Valley engineering discipline and autonomous AI agents to high-scale businesses.
 
 Skills:
 - Core Stack: JavaScript, TypeScript, PHP, Node.js, Laravel, PostgreSQL, MySQL

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import type { Profile, SocialLink, Education } from '@/types/portfolio'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -196,6 +196,11 @@ onMounted(() => {
                         <span class="credit-name">{{ profile.name }}</span>
                     </p>
                     <p class="credit-year">&copy; {{ currentYear }}</p>
+                    <div class="credit-legal">
+                        <Link href="/privacy" class="legal-link">Privacy Policy</Link>
+                        <span class="legal-sep">·</span>
+                        <Link href="/terms" class="legal-link">Terms of Service</Link>
+                    </div>
                     <p class="credit-stack">
                         Built with VILT Stack
                         <br />
@@ -290,6 +295,10 @@ onMounted(() => {
                         {{ form.processing ? 'Sending…' : 'Send message' }}
                         <ArrowUpRight :size="14" />
                     </button>
+                    <p class="form-consent-note">
+                        By submitting, you agree to direct communication regarding your inquiry per our
+                        <Link href="/privacy" class="consent-link">Privacy Policy</Link>.
+                    </p>
                 </form>
             </div>
 
@@ -469,6 +478,25 @@ onMounted(() => {
     color: var(--text-3);
     margin-top: 0.5rem;
 }
+.credit-legal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.76rem;
+}
+.legal-link {
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.legal-link:hover {
+    color: var(--accent);
+}
+.legal-sep {
+    color: var(--text-3);
+    opacity: 0.5;
+}
 .credit-stack {
     margin-top: 1.5rem;
     font-size: 0.82rem;
@@ -479,6 +507,17 @@ onMounted(() => {
     font-size: 0.72rem;
     color: rgba(var(--accent-rgb), 0.5);
     letter-spacing: 0.05em;
+}
+
+.form-consent-note {
+    font-size: 0.74rem;
+    color: var(--text-3);
+    line-height: 1.4;
+    margin-top: 0.75rem;
+}
+.consent-link {
+    color: var(--accent);
+    text-decoration: underline;
 }
 
 /* ── Availability badge ── */

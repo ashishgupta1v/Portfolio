@@ -28,10 +28,27 @@ const data = ref<GitHubStats | null>(null)
 const statsCards = computed(() => {
     if (!data.value) return []
     return [
-        { label: 'Public Repos', value: data.value.publicRepos },
-        { label: 'Stars Earned', value: data.value.totalStars },
-        { label: 'Top Languages', value: data.value.topLanguages.slice(0, 3).join(', ') },
+        { label: 'Public Repos', value: data.value.publicRepos || 15 },
+        { label: 'Primary Focus', value: 'Full-Stack & AI Architecture' },
+        { label: 'Top Languages', value: (data.value.topLanguages || ['PHP', 'Vue', 'TypeScript']).slice(0, 3).join(', ') },
     ]
+})
+
+const curatedRepos = computed(() => {
+    if (!data.value || !data.value.recentRepos) return []
+    const fallbackDescriptions: Record<string, string> = {
+        Portfolio: 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+        DigitalBuilders: 'Autonomous AI-assisted agency platform & conversion engine.',
+        Habuilt: 'High-performance habit tracking and personal accountability engine.',
+        JobBot: 'Automated job discovery and application workflow tool.',
+    }
+
+    return data.value.recentRepos
+        .filter(r => r.name.toLowerCase() !== 'ashishgupta1v' && r.name.toLowerCase() !== 'ashishgup1')
+        .map(r => ({
+            ...r,
+            description: r.description || fallbackDescriptions[r.name] || 'Open-source software component & architecture modules.',
+        }))
 })
 
 const languageColors: Record<string, string> = {
@@ -82,7 +99,7 @@ onMounted(async () => {
             totalStars: 0,
             topLanguages: ['PHP', 'Vue', 'TypeScript', 'JavaScript', 'Python'],
             recentRepos: [],
-            profileUrl: 'https://github.com/ashishgup1',
+            profileUrl: 'https://github.com/ashishgupta1v',
             avatarUrl: null,
         }
     } finally {
@@ -138,11 +155,11 @@ onMounted(async () => {
                 </div>
 
                 <div
-                    v-if="data && data.recentRepos.length"
+                    v-if="curatedRepos.length"
                     class="github-repos"
                 >
                     <a
-                        v-for="repo in data.recentRepos"
+                        v-for="repo in curatedRepos"
                         :key="repo.name"
                         :href="repo.url"
                         target="_blank"
@@ -155,11 +172,8 @@ onMounted(async () => {
                             </svg>
                             <h3 class="repo-name">{{ repo.name }}</h3>
                         </div>
-                        <p v-if="repo.description" class="repo-desc">
+                        <p class="repo-desc">
                             {{ repo.description }}
-                        </p>
-                        <p v-else class="repo-desc repo-desc--empty">
-                            No description provided.
                         </p>
                         <div class="repo-meta">
                             <span

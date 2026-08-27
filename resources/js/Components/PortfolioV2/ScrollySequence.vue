@@ -166,9 +166,11 @@ onUnmounted(() => {
                     ref="videoRef"
                     muted
                     playsinline
-                    preload="auto"
+                    preload="metadata"
+                    poster="/images/ashish-gupta-avatar.webp"
                     class="hero-video"
                     @canplaythrough="onVideoCanPlay"
+                    @loadedmetadata="onVideoCanPlay"
                     @error="onVideoError"
                 >
                     <source src="/videos/hero-sequence.webm" type="video/webm">

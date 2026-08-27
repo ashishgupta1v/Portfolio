@@ -46,6 +46,7 @@ final class PortfolioController
         $name = $profile['name'] ?? 'Ashish Gupta';
         $title = $profile['title'] ?? 'Senior Full-Stack Architect';
         $bio = $profile['bio'] ?? '';
+        $metaDescription = 'Senior Full-Stack Architect with 9+ years experience in VILT stack (Vue 3, Laravel 13, Inertia, Tailwind) and legacy modernization at enterprise scale.';
 
         $sameAs = array_values(array_filter(
             array_map(static fn (array $link): string => (string) ($link['url'] ?? ''), $socialLinks),
@@ -63,7 +64,7 @@ final class PortfolioController
 
         return [
             'title' => "{$name} — {$title}",
-            'description' => $bio,
+            'description' => $metaDescription,
             'path' => '/',
             'type' => 'website',
             'schemas' => [

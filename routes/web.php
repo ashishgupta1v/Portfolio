@@ -18,6 +18,8 @@ Route::get('/case-studies/{slug}', CaseStudyShowController::class)->name('case-s
 Route::get('/blog', BlogIndexController::class)->name('blog.index');
 Route::get('/blog/{slug}', BlogShowController::class)->name('blog.show');
 Route::get('/engagements', EngagementsPageController::class)->name('engagements.index');
+Route::get('/privacy', fn () => \Inertia\Inertia::render('Legal/Privacy'))->name('privacy');
+Route::get('/terms', fn () => \Inertia\Inertia::render('Legal/Terms'))->name('terms');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 Route::post('/contact', ContactController::class)
 	->middleware('throttle:contact-submissions')

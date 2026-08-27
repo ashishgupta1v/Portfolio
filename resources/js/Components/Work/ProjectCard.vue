@@ -14,6 +14,19 @@ const emit = defineEmits<{
 
 const imgFailed = ref(false)
 
+const projectTitle = computed(() => {
+    return props.project.name || props.project.title || 'Project'
+})
+
+const isMobile = computed(() => {
+    return Boolean(props.project.isMobile || (props.project.type && props.project.type.includes('Mobile')))
+})
+
+const projectType = computed(() => {
+    if (props.project.type) return props.project.type
+    return isMobile.value ? 'Mobile App (iOS/Android)' : 'Live Web App'
+})
+
 const showImage = computed(() => {
     const src = props.project.image || props.project.imageUrl
     return !!src && !imgFailed.value
@@ -24,16 +37,24 @@ const imageSrc = computed(() => {
 })
 
 const monogram = computed(() => {
-    const words = (props.project.name || props.project.title || '').trim().split(/\s+/)
+    const words = (projectTitle.value).trim().split(/\s+/)
     if (words.length === 1) return words[0].slice(0, 2).toUpperCase()
-    return (words[0][0] + words[1][0]).toUpperCase()
+    return (words[0][0] + (words[1] ? words[1][0] : '')).toUpperCase()
 })
 
 const metricDisplay = computed(() => {
-    if (props.project.metrics && props.project.metrics.length > 0) {
+    if (props.project.metrics && Array.isArray(props.project.metrics) && props.project.metrics.length > 0) {
         return props.project.metrics.join(' · ')
     }
+    if (props.project.metricBadge) {
+        return props.project.metricBadge
+    }
     return ''
+})
+
+const techList = computed(() => {
+    const list = props.project.tech || props.project.tools || []
+    return Array.isArray(list) ? list.slice(0, 5) : []
 })
 
 const caseStudyUrl = computed(() => {
@@ -62,12 +83,12 @@ function handleQuickView() {
         <div class="card-badges">
             <span
                 class="badge-type"
-                :class="{ 'badge-type--mobile': project.isMobile || (project.type ?? '').includes('Mobile') }"
+                :class="{ 'badge-type--mobile': isMobile }"
             >
                 <span class="pulse-dot" />
-                {{ project.type }}
+                {{ projectType }}
             </span>
-            <span class="badge-category">
+            <span v-if="project.category" class="badge-category">
                 {{ project.category }}
             </span>
         </div>
@@ -79,7 +100,7 @@ function handleQuickView() {
 
         <!-- Title -->
         <h3 class="card-title">
-            {{ project.name || project.title }}
+            {{ projectTitle }}
         </h3>
 
         <!-- Metric Highlight Strip -->
@@ -93,14 +114,14 @@ function handleQuickView() {
             <button
                 type="button"
                 class="preview-trigger"
-                :aria-label="`Open a quick preview of ${project.name || project.title}`"
+                :aria-label="`Open a quick preview of ${projectTitle}`"
                 @click="handleQuickView"
             >
                 <!-- Real Image -->
                 <img
                     v-if="showImage"
                     :src="imageSrc"
-                    :alt="`${project.name || project.title} live interface preview`"
+                    :alt="`${projectTitle} live interface preview`"
                     class="preview-image"
                     loading="lazy"
                     decoding="async"
@@ -113,7 +134,7 @@ function handleQuickView() {
                     <div class="placeholder-monogram">{{ monogram }}</div>
                     <div class="placeholder-footer">
                         <Sparkles :size="12" />
-                        <span>{{ project.name || project.title }}</span>
+                        <span>{{ projectTitle }}</span>
                     </div>
                 </div>
 
@@ -133,9 +154,9 @@ function handleQuickView() {
         </p>
 
         <!-- Tech Chips -->
-        <div class="card-tech-chips">
+        <div v-if="techList.length" class="card-tech-chips">
             <span
-                v-for="tech in (project.tech || project.tools || []).slice(0, 5)"
+                v-for="tech in techList"
                 :key="tech"
                 class="tech-chip"
             >

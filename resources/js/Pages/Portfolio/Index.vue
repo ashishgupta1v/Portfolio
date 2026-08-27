@@ -57,9 +57,20 @@ const heroProgress = ref(0)
 const minLoaderElapsed = ref(false)
 let minTimer: number | null = null
 
+const isAlreadyBooted = typeof window !== 'undefined' && Boolean(sessionStorage.getItem('ag_portfolio_booted'))
+const skippedLoader = ref(isAlreadyBooted)
+
 const showInitialLoader = computed(() => {
+    if (skippedLoader.value) return false
     return !(heroReady.value && pageReady.value && minLoaderElapsed.value)
 })
+
+function handleSkipLoader() {
+    skippedLoader.value = true
+    if (typeof window !== 'undefined') {
+        sessionStorage.setItem('ag_portfolio_booted', 'true')
+    }
+}
 
 function handleHeroReady() {
     heroReady.value = true
@@ -99,6 +110,9 @@ function initScrollDepth() {
 onMounted(() => {
     minTimer = window.setTimeout(() => {
         minLoaderElapsed.value = true
+        if (typeof window !== 'undefined') {
+            sessionStorage.setItem('ag_portfolio_booted', 'true')
+        }
     }, 700)
 
     if (document.readyState === 'complete') {
@@ -127,7 +141,11 @@ onUnmounted(() => {
     <Head :title="profile.name + ' — ' + profile.title" />
 
     <div class="v2-page" :style="depthVars">
-        <InitialLoader :visible="showInitialLoader" :progress="heroProgress" />
+        <InitialLoader
+            :visible="showInitialLoader"
+            :progress="heroProgress"
+            @skip="handleSkipLoader"
+        />
 
         <CustomCursor />
         <ToastContainer />

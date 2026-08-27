@@ -129,6 +129,13 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
 
+        app.config.errorHandler = (err, instance, info) => {
+            console.error('[Vue Global Error]', err, info)
+            if (sentryDsn) {
+                Sentry.captureException(err, { extra: { info } })
+            }
+        }
+
         initSentry(app)
 
         app.mount(el)

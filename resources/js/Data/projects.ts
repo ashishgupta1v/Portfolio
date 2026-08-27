@@ -6,6 +6,7 @@ export interface ShowcaseProject {
     category: 'AI SaaS' | 'SaaS & FinTech' | 'Health & Telehealth' | 'Consumer & AstroTech' | 'Trust & NGO' | 'Mobile Apps' | 'Engineering' | string
     positioning: string
     metrics: string[]
+    metricBadge?: string | null
     image: string | null
     imageUrl?: string | null
     description: string

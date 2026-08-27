@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { ArrowUpRight, BookOpen, MessageCircle, Sparkles, X } from 'lucide-vue-next'
 import type { ShowcaseProject } from '@/Data/projects'
@@ -15,6 +15,49 @@ const emit = defineEmits<{
 const modalContainer = ref<HTMLElement | null>(null)
 const lastFocusedElement = ref<HTMLElement | null>(null)
 const imgFailed = ref(false)
+
+const projectTitle = computed(() => {
+    if (!props.project) return 'Project Preview'
+    return props.project.name || props.project.title || 'Project'
+})
+
+const isMobile = computed(() => {
+    if (!props.project) return false
+    return Boolean(props.project.isMobile || (props.project.type && props.project.type.includes('Mobile')))
+})
+
+const projectType = computed(() => {
+    if (!props.project) return 'Live Web App'
+    if (props.project.type) return props.project.type
+    return isMobile.value ? 'Mobile App (iOS/Android)' : 'Live Web App'
+})
+
+const metricDisplay = computed(() => {
+    if (!props.project) return ''
+    if (props.project.metrics && Array.isArray(props.project.metrics) && props.project.metrics.length > 0) {
+        return props.project.metrics.join(' · ')
+    }
+    if (props.project.metricBadge) {
+        return props.project.metricBadge
+    }
+    return ''
+})
+
+const imageSrc = computed(() => {
+    if (!props.project) return ''
+    return props.project.image || props.project.imageUrl || ''
+})
+
+const techList = computed(() => {
+    if (!props.project) return []
+    const list = props.project.tech || props.project.tools || []
+    return Array.isArray(list) ? list : []
+})
+
+const liveUrl = computed(() => {
+    if (!props.project) return null
+    return props.project.liveUrl || props.project.externalUrl || null
+})
 
 function handleKeyDown(e: KeyboardEvent) {
     if (!props.project) return
@@ -109,21 +152,21 @@ onBeforeUnmount(() => {
                         <div class="modal-badge-row">
                             <span
                                 class="badge-type"
-                                :class="{ 'badge-type--mobile': project.isMobile || (project.type ?? '').includes('Mobile') }"
+                                :class="{ 'badge-type--mobile': isMobile }"
                             >
                                 <span class="pulse-dot" />
-                                {{ project.type }}
+                                {{ projectType }}
                             </span>
-                            <span class="badge-category">
+                            <span v-if="project.category" class="badge-category">
                                 {{ project.category }}
                             </span>
-                            <span v-if="project.metrics && project.metrics.length" class="badge-metric">
-                                ⚡ {{ project.metrics.join(' · ') }}
+                            <span v-if="metricDisplay" class="badge-metric">
+                                ⚡ {{ metricDisplay }}
                             </span>
                         </div>
 
                         <h2 id="modal-project-title" class="modal-title">
-                            {{ project.name || project.title }}
+                            {{ projectTitle }}
                         </h2>
                         <p v-if="project.positioning" class="modal-positioning">
                             {{ project.positioning }}
@@ -136,16 +179,16 @@ onBeforeUnmount(() => {
                     <!-- 16:9 Image or Placeholder -->
                     <div class="modal-image-wrapper">
                         <img
-                            v-if="(project.image || project.imageUrl) && !imgFailed"
-                            :src="project.image || project.imageUrl || ''"
-                            :alt="`${project.name || project.title} production interface preview`"
+                            v-if="imageSrc && !imgFailed"
+                            :src="imageSrc"
+                            :alt="`${projectTitle} production interface preview`"
                             class="modal-image"
                             loading="lazy"
                             @error="imgFailed = true"
                         />
                         <div v-else class="modal-placeholder" aria-hidden="true">
                             <Sparkles :size="28" class="placeholder-icon" />
-                            <span class="placeholder-text">{{ project.name || project.title }}</span>
+                            <span class="placeholder-text">{{ projectTitle }}</span>
                         </div>
                         <div class="modal-image-overlay">
                             <span class="modal-image-badge">Production Interface Snapshot</span>
@@ -153,9 +196,9 @@ onBeforeUnmount(() => {
                     </div>
 
                     <!-- Tech Stack Tags -->
-                    <div class="modal-tech-stack">
+                    <div v-if="techList.length" class="modal-tech-stack">
                         <span
-                            v-for="tool in (project.tech || project.tools || [])"
+                            v-for="tool in techList"
                             :key="tool"
                             class="modal-tech-tag"
                         >
@@ -208,8 +251,8 @@ onBeforeUnmount(() => {
                     <!-- Action Footer -->
                     <div class="modal-footer">
                         <a
-                            v-if="project.liveUrl || project.externalUrl"
-                            :href="(project.liveUrl || project.externalUrl) || undefined"
+                            v-if="liveUrl"
+                            :href="liveUrl"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="btn-primary"
@@ -238,7 +281,7 @@ onBeforeUnmount(() => {
                         </Link>
 
                         <a
-                            :href="`https://wa.me/919915234506?text=${encodeURIComponent(`Hi Ashish, I saw your ${project.name || project.title} project on your portfolio and would like to discuss building something similar.`)}`"
+                            :href="`https://wa.me/919915234506?text=${encodeURIComponent(`Hi Ashish, I saw your ${projectTitle} project on your portfolio and would like to discuss building something similar.`)}`"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="btn-whatsapp"

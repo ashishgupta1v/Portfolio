@@ -28,6 +28,15 @@ final class ProjectShowController
         GetProjectAction $action,
         CaseStudyRepositoryInterface $caseStudyRepo
     ): Response {
+        $legacyRedirects = [
+            'habuilt-tracker' => '/projects/habuilt',
+            'digital-builders' => '/case-studies/digital-builders-agency-conversion-platform',
+        ];
+
+        if (isset($legacyRedirects[$slug])) {
+            return redirect($legacyRedirects[$slug], 301);
+        }
+
         $project = $action->execute($slug);
 
         abort_if($project === null, 404);

@@ -106,7 +106,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ContactSection.vue": {
-    "file": "assets/ContactSection-DMq53QXM.js",
+    "file": "assets/ContactSection-CuJIN341.js",
     "name": "ContactSection",
     "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
     "isDynamicEntry": true,
@@ -121,7 +121,7 @@
       "_message-square-Bvd_ioeL.js"
     ],
     "css": [
-      "assets/ContactSection-CQEvZnjA.css"
+      "assets/ContactSection-vJ6zDbr2.css"
     ]
   },
   "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue": {
@@ -138,7 +138,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/GitHubActivity.vue": {
-    "file": "assets/GitHubActivity-CcJYhPms.js",
+    "file": "assets/GitHubActivity-3xbWu9d4.js",
     "name": "GitHubActivity",
     "src": "resources/js/Components/PortfolioV2/GitHubActivity.vue",
     "isDynamicEntry": true,
@@ -147,11 +147,11 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/GitHubActivity-HmiTNvBY.css"
+      "assets/GitHubActivity-BqAyHMSs.css"
     ]
   },
   "resources/js/Components/PortfolioV2/MetricsSection.vue": {
-    "file": "assets/MetricsSection-xAK59rk8.js",
+    "file": "assets/MetricsSection-8XSDVuc2.js",
     "name": "MetricsSection",
     "src": "resources/js/Components/PortfolioV2/MetricsSection.vue",
     "isDynamicEntry": true,
@@ -161,11 +161,11 @@
       "_ScrollTrigger-Dkj2McpB.js"
     ],
     "css": [
-      "assets/MetricsSection-CCKYUlWa.css"
+      "assets/MetricsSection-BC6cT1JK.css"
     ]
   },
   "resources/js/Components/PortfolioV2/ScrollySequence.vue": {
-    "file": "assets/ScrollySequence-CpBR_Uwt.js",
+    "file": "assets/ScrollySequence-5FIDFScF.js",
     "name": "ScrollySequence",
     "src": "resources/js/Components/PortfolioV2/ScrollySequence.vue",
     "isDynamicEntry": true,
@@ -174,7 +174,7 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/ScrollySequence-CSkEM9nl.css"
+      "assets/ScrollySequence-CUE35Pw-.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
@@ -220,7 +220,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/WorksSection.vue": {
-    "file": "assets/WorksSection-C-n9XiZg.js",
+    "file": "assets/WorksSection-vlj81Djo.js",
     "name": "WorksSection",
     "src": "resources/js/Components/PortfolioV2/WorksSection.vue",
     "isDynamicEntry": true,
@@ -233,7 +233,7 @@
       "_x-7wqJzS1g.js"
     ],
     "css": [
-      "assets/WorksSection-BKh3kq1c.css"
+      "assets/WorksSection-CjSrp9F4.css"
     ]
   },
   "resources/js/Pages/Admin/Telemetry.vue": {
@@ -334,8 +334,34 @@
       "assets/NotFound-D59nEgDR.css"
     ]
   },
+  "resources/js/Pages/Legal/Privacy.vue": {
+    "file": "assets/Privacy-uB_03U4o.js",
+    "name": "Privacy",
+    "src": "resources/js/Pages/Legal/Privacy.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-QKFMMAHA.js",
+      "_vendor-inertia-eP9c9ylc.js"
+    ],
+    "css": [
+      "assets/Privacy-ZguslBWy.css"
+    ]
+  },
+  "resources/js/Pages/Legal/Terms.vue": {
+    "file": "assets/Terms-D9zkj7_y.js",
+    "name": "Terms",
+    "src": "resources/js/Pages/Legal/Terms.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-QKFMMAHA.js",
+      "_vendor-inertia-eP9c9ylc.js"
+    ],
+    "css": [
+      "assets/Terms-CDacexfc.css"
+    ]
+  },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-BfWtRHPi.js",
+    "file": "assets/Index-_rXR199h.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -363,11 +389,11 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-CxQ0sDae.css"
+      "assets/Index-C8YdT09o.css"
     ]
   },
   "resources/js/Pages/Projects/Show.vue": {
-    "file": "assets/Show--Lrw0vXG.js",
+    "file": "assets/Show-Ct-0Iii-.js",
     "name": "Show",
     "src": "resources/js/Pages/Projects/Show.vue",
     "isDynamicEntry": true,
@@ -385,7 +411,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-hF_37_i8.js",
+    "file": "assets/app-CHygLjW4.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -401,6 +427,8 @@
       "resources/js/Pages/CaseStudies/Show.vue",
       "resources/js/Pages/Engagements/Index.vue",
       "resources/js/Pages/Errors/NotFound.vue",
+      "resources/js/Pages/Legal/Privacy.vue",
+      "resources/js/Pages/Legal/Terms.vue",
       "resources/js/Pages/Portfolio/Index.vue",
       "resources/js/Pages/Projects/Show.vue"
     ],

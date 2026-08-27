@@ -58,6 +58,10 @@ function handlePointerMove(event: PointerEvent) {
     pointerY.value = Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100))
 }
 
+const emit = defineEmits<{
+    (e: 'skip'): void
+}>()
+
 function handlePointerLeave() {
     pointerX.value = 50
     pointerY.value = 50
@@ -140,7 +144,16 @@ function activateNode(index: number) {
                     </button>
                 </div>
 
-                <p class="loader-hint">Move your cursor to steer the AG core.</p>
+                <div class="loader-footer-row">
+                    <p class="loader-hint">Move your cursor to steer the AG core.</p>
+                    <button
+                        type="button"
+                        class="btn-skip-boot"
+                        @click="emit('skip')"
+                    >
+                        Skip Intro ↗
+                    </button>
+                </div>
             </div>
         </div>
     </Transition>
@@ -374,11 +387,40 @@ function activateNode(index: number) {
     box-shadow: 0 0 20px rgba(94, 234, 212, 0.42);
 }
 
+.loader-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    width: 100%;
+}
+
 .loader-hint {
-    margin-top: 0.66rem;
     font-size: 0.69rem;
     color: rgba(148, 163, 184, 0.9);
     letter-spacing: 0.04em;
+    margin: 0;
+}
+
+.btn-skip-boot {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    color: var(--accent, #5eead4);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-skip-boot:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    transform: translateY(-1px);
 }
 
 .loader-fade-enter-active,

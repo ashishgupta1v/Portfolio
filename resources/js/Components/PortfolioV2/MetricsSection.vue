@@ -49,8 +49,8 @@ const METRICS: Metric[] = [
 
 const sectionRef = ref<HTMLElement | null>(null)
 
-/** Reactive counters displayed inside each card */
-const counters = ref<number[]>(METRICS.map(() => 0))
+/** Reactive counters displayed inside each card (initialized to targets for instant SSR/deep-link accuracy) */
+const counters = ref<number[]>(METRICS.map((m) => m.target))
 
 let triggers: ScrollTrigger[] = []
 
@@ -65,7 +65,7 @@ onMounted(() => {
         gsap.from(cards, {
             scrollTrigger: {
                 trigger: sectionRef.value,
-                start: 'top 80%',
+                start: 'top 85%',
             },
             y: 52,
             opacity: 0,
@@ -76,14 +76,11 @@ onMounted(() => {
     }
 
     // ── Number count-up ────────────────────────────────────────────────
-    // Individual scalar keys, not an array-valued "values" prop — GSAP 3.14.2
-    // reserves that name internally and throws `t.values.map is not a
-    // function`, silently killing the tween before onUpdate ever fires.
     const proxy: Record<string, number> = {}
     METRICS.forEach((_, i) => { proxy[`n${i}`] = 0 })
 
     const tweenVars: Record<string, unknown> = {
-        duration: 1.8,
+        duration: 1.6,
         ease: 'power2.out',
         paused: true,
         onUpdate() {
@@ -96,7 +93,7 @@ onMounted(() => {
 
     const st = ScrollTrigger.create({
         trigger: sectionRef.value,
-        start: 'top 75%',
+        start: 'top 90%',
         once: true,
         onEnter() {
             tween.play()
