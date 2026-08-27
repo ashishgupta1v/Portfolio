@@ -34,14 +34,16 @@ async function subscribe() {
     <div class="nl-wrap">
         <form class="nl-form" @submit.prevent="subscribe">
             <input
+                id="newsletter-email"
                 v-model="email"
                 type="email"
                 class="nl-input"
                 placeholder="your@email.com"
+                aria-label="Email address for newsletter"
                 required
                 :disabled="loading"
             />
-            <button type="submit" class="nl-btn" :disabled="loading">
+            <button type="submit" class="nl-btn" :disabled="loading" aria-label="Subscribe to newsletter">
                 {{ loading ? 'Subscribing...' : 'Subscribe' }}
             </button>
         </form>

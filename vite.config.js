@@ -37,6 +37,7 @@ export default defineConfig({
         noExternal: ['@inertiajs/vue3'],
     },
     build: {
+        emptyOutDir: false,
         rollupOptions: {
             output: {
                 // Vite already code-splits the async page sections well on its

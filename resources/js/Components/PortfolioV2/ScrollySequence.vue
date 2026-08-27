@@ -206,6 +206,7 @@ onBeforeUnmount(() => {
                         </Transition>
                         <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
                             <template v-if="idx === 0">
+                                <span class="hero-kicker-line">Hello! I'm </span>
                                 <span class="name-line">Ashish <span class="name-surname">Gupta</span></span>
                             </template>
                             <template v-else>
@@ -376,9 +377,10 @@ onBeforeUnmount(() => {
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
 }
 
-.greeting-line {
+.greeting-line,
+.hero-kicker-line {
     display: block;
-    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+    font-size: clamp(0.9rem, 2vw, 1.25rem);
     font-weight: 700;
     color: var(--accent, #5eead4);
     letter-spacing: 0.1em;

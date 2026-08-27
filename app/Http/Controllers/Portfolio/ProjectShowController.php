@@ -71,7 +71,7 @@ final class ProjectShowController
             ],
         ])->toResponse($request);
 
-        $response->headers->set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+        $response->headers->set('Cache-Control', 'no-cache, private');
 
         return $response;
     }

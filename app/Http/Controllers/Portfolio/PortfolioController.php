@@ -29,7 +29,7 @@ final class PortfolioController
             'services' => $portfolio?->services ?? [],
             'seo' => $this->seo($profile, $socialLinks, $skills),
         ])->toResponse($request)
-          ->header('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+          ->header('Cache-Control', 'no-cache, private');
     }
 
     /**

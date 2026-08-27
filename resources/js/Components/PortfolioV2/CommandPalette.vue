@@ -282,6 +282,7 @@ onMounted(() => {
                             class="cp-input"
                             type="text"
                             placeholder="Type a command or search..."
+                            aria-label="Search actions, projects, and pages"
                             autocomplete="off"
                             spellcheck="false"
                             @keydown="onInputKeydown"

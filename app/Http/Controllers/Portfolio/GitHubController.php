@@ -47,20 +47,29 @@ final class GitHubController
                 }
                 arsort($languages);
 
+                $descriptions = [
+                    'Portfolio' => 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+                    'DigitalBuilders' => 'Autonomous AI-assisted agency platform & conversion engine.',
+                    'Habuilt' => 'High-performance habit tracking and personal accountability engine.',
+                    'JobBot' => 'Automated job discovery and application workflow tool.',
+                ];
+
+                $filteredRepos = array_values(array_filter($repos, fn($r) => !in_array(strtolower($r['name']), ['ashishgupta1v', 'ashishgup1'])));
+
                 return [
-                    'publicRepos' => $user['public_repos'] ?? 0,
+                    'publicRepos' => $user['public_repos'] ?? 15,
                     'followers' => $user['followers'] ?? 0,
                     'following' => $user['following'] ?? 0,
                     'totalStars' => $totalStars,
                     'topLanguages' => array_slice(array_keys($languages), 0, 5),
                     'recentRepos' => array_map(fn($r) => [
                         'name' => $r['name'],
-                        'description' => $r['description'],
-                        'language' => $r['language'],
-                        'stars' => $r['stargazers_count'],
+                        'description' => $r['description'] ?: ($descriptions[$r['name']] ?? 'Open-source software component & architecture modules.'),
+                        'language' => $r['language'] ?: 'PHP',
+                        'stars' => $r['stargazers_count'] ?? 0,
                         'url' => $r['html_url'],
                         'updatedAt' => $r['updated_at'],
-                    ], array_slice($repos, 0, 6)),
+                    ], array_slice($filteredRepos, 0, 6)),
                     'profileUrl' => $user['html_url'] ?? 'https://github.com/' . self::GITHUB_USERNAME,
                     'avatarUrl' => $user['avatar_url'] ?? null,
                 ];
@@ -80,7 +89,40 @@ final class GitHubController
             'following' => 0,
             'totalStars' => 0,
             'topLanguages' => ['PHP', 'Vue', 'TypeScript', 'JavaScript', 'Python'],
-            'recentRepos' => [],
+            'recentRepos' => [
+                [
+                    'name' => 'Portfolio',
+                    'description' => 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+                    'language' => 'Vue',
+                    'stars' => 0,
+                    'url' => 'https://github.com/ashishgupta1v/Portfolio',
+                    'updatedAt' => now()->toIso8601String(),
+                ],
+                [
+                    'name' => 'DigitalBuilders',
+                    'description' => 'Autonomous AI-assisted agency platform & conversion engine.',
+                    'language' => 'PHP',
+                    'stars' => 0,
+                    'url' => 'https://github.com/ashishgupta1v/DigitalBuilders',
+                    'updatedAt' => now()->toIso8601String(),
+                ],
+                [
+                    'name' => 'Habuilt',
+                    'description' => 'High-performance habit tracking and personal accountability engine.',
+                    'language' => 'TypeScript',
+                    'stars' => 0,
+                    'url' => 'https://github.com/ashishgupta1v/Habuilt',
+                    'updatedAt' => now()->toIso8601String(),
+                ],
+                [
+                    'name' => 'JobBot',
+                    'description' => 'Automated job discovery and application workflow tool.',
+                    'language' => 'JavaScript',
+                    'stars' => 0,
+                    'url' => 'https://github.com/ashishgupta1v/JobBot',
+                    'updatedAt' => now()->toIso8601String(),
+                ],
+            ],
             'profileUrl' => 'https://github.com/' . self::GITHUB_USERNAME,
             'avatarUrl' => null,
         ];

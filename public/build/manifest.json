@@ -114,7 +114,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ContactSection.vue": {
-    "file": "assets/ContactSection-BxHLTNwI.js",
+    "file": "assets/ContactSection-CZj3_hdv.js",
     "name": "ContactSection",
     "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
     "isDynamicEntry": true,
@@ -129,7 +129,7 @@
       "_message-square-Bvd_ioeL.js"
     ],
     "css": [
-      "assets/ContactSection-B6bXPcCi.css"
+      "assets/ContactSection-DoicYGVn.css"
     ]
   },
   "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue": {
@@ -173,7 +173,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ScrollySequence.vue": {
-    "file": "assets/ScrollySequence-Bq0omTnP.js",
+    "file": "assets/ScrollySequence-CllTdFbj.js",
     "name": "ScrollySequence",
     "src": "resources/js/Components/PortfolioV2/ScrollySequence.vue",
     "isDynamicEntry": true,
@@ -182,7 +182,7 @@
       "_vendor-inertia-eP9c9ylc.js"
     ],
     "css": [
-      "assets/ScrollySequence-CaHvnX-q.css"
+      "assets/ScrollySequence-DKKoqi0a.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TechStackSection.vue": {
@@ -199,7 +199,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/TestimonialsSection.vue": {
-    "file": "assets/TestimonialsSection-DYmWI8xX.js",
+    "file": "assets/TestimonialsSection-3Vr5mPst.js",
     "name": "TestimonialsSection",
     "src": "resources/js/Components/PortfolioV2/TestimonialsSection.vue",
     "isDynamicEntry": true,
@@ -210,7 +210,7 @@
       "_createLucideIcon-DYQFh9rd.js"
     ],
     "css": [
-      "assets/TestimonialsSection-CeqpB3RH.css"
+      "assets/TestimonialsSection-CrgEH_Gd.css"
     ]
   },
   "resources/js/Components/PortfolioV2/TimelineSection.vue": {
@@ -370,7 +370,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-Buk9ytNR.js",
+    "file": "assets/Index-DBQChAmA.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -399,7 +399,7 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-w7Z8udxw.css"
+      "assets/Index-B_vevA8-.css"
     ]
   },
   "resources/js/Pages/Projects/Show.vue": {
@@ -421,7 +421,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-dgJ9X35L.js",
+    "file": "assets/app-B-GgNWbU.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,

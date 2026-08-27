@@ -127,7 +127,7 @@ function initials(name: string): string {
 
                     <p class="testimonial-quote">“{{ t.quote }}”</p>
 
-                    <footer class="testimonial-attribution">
+                    <div class="testimonial-attribution">
                         <div class="testimonial-avatar">
                             <span class="avatar-letter">{{ initials(t.company || t.name) }}</span>
                         </div>
@@ -137,7 +137,7 @@ function initials(name: string): string {
                                 {{ t.role }}<template v-if="t.company"> · <span class="highlight-company">{{ t.company }}</span></template>
                             </div>
                         </div>
-                    </footer>
+                    </div>
                 </article>
             </div>
         </div>

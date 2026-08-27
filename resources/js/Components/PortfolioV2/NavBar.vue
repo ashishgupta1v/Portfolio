@@ -131,6 +131,7 @@ onUnmounted(() => {
                         rel="noopener noreferrer"
                         class="mobile-social-icon"
                         :title="link.label"
+                        :aria-label="link.label || link.platform"
                         @click="mobileOpen = false"
                     >
                         <component :is="iconMap[link.platform] || Mail" :size="20" />
@@ -142,7 +143,7 @@ onUnmounted(() => {
     </Transition>
 
     <!-- Left social sidebar -->
-    <aside v-if="socialLinks?.length" class="social-sidebar">
+    <aside v-if="socialLinks?.length" class="social-sidebar" aria-label="Social media links">
         <a
             v-for="link in socialLinks"
             :key="link.platform"
@@ -151,6 +152,7 @@ onUnmounted(() => {
             rel="noopener noreferrer"
             class="sidebar-icon"
             :title="link.label"
+            :aria-label="link.label || link.platform"
         >
             <component :is="iconMap[link.platform] || Mail" :size="18" />
         </a>

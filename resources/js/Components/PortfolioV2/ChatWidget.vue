@@ -192,7 +192,7 @@ const sendMessage = async () => {
                         aria-label="Ask Ashish's AI assistant a question"
                         @keyup.enter="sendMessage"
                     />
-                    <button @click="sendMessage" :disabled="!input.trim() || isTyping">
+                    <button @click="sendMessage" :disabled="!input.trim() || isTyping" aria-label="Send message to AI assistant">
                         <Send :size="18" />
                     </button>
                 </div>
