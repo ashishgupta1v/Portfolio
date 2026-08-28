@@ -19,7 +19,7 @@ import { Head, Link } from '@inertiajs/vue3'
             <nav class="topbar-nav">
                 <Link href="/" class="topbar-link">Portfolio</Link>
                 <Link href="/case-studies" class="topbar-link">Case Studies</Link>
-                <Link href="/hiring" class="topbar-link">For Hiring Managers</Link>
+                <Link href="/for-hiring-managers" class="topbar-link">For Hiring Managers</Link>
                 <Link href="/blog" class="topbar-link">Blog</Link>
             </nav>
         </header>

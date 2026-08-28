@@ -17,8 +17,9 @@ Route::get('/case-studies', CaseStudyIndexController::class)->name('case-studies
 Route::get('/case-studies/{slug}', CaseStudyShowController::class)->name('case-studies.show');
 Route::get('/blog', BlogIndexController::class)->name('blog.index');
 Route::get('/blog/{slug}', BlogShowController::class)->name('blog.show');
-Route::get('/hiring', HiringPageController::class)->name('hiring.index');
-Route::redirect('/engagements', '/hiring', 301);
+Route::get('/for-hiring-managers', HiringPageController::class)->name('hiring.index');
+Route::redirect('/hiring', '/for-hiring-managers', 301);
+Route::redirect('/engagements', '/for-hiring-managers', 301);
 Route::get('/privacy', fn () => \Inertia\Inertia::render('Legal/Privacy'))->name('privacy');
 Route::get('/terms', fn () => \Inertia\Inertia::render('Legal/Terms'))->name('terms');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');

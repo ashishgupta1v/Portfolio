@@ -28,12 +28,12 @@ final class ContactFormTest extends TestCase
         ]);
     }
 
-    public function test_contact_form_accepts_contract_freelance_option(): void
+    public function test_contact_form_accepts_contract_role_option(): void
     {
         $response = $this->post('/contact', [
             'name' => 'Founder Dave',
             'email' => 'dave@startup.io',
-            'project_type' => 'Contract / Freelance',
+            'project_type' => 'Contract Role',
             'message' => 'Need architecture advisory on our Laravel codebase.',
             'form_started_at' => now()->subSeconds(10)->timestamp * 1000,
         ]);
@@ -41,7 +41,41 @@ final class ContactFormTest extends TestCase
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('contact_inquiries', [
             'email' => 'dave@startup.io',
-            'project_type' => 'Contract / Freelance',
+            'project_type' => 'Contract Role',
+        ]);
+    }
+
+    public function test_contact_form_accepts_recruiter_intro_option(): void
+    {
+        $response = $this->post('/contact', [
+            'name' => 'Sarah Talent',
+            'email' => 'sarah@talent.com',
+            'project_type' => 'Recruiter Intro',
+            'message' => 'Reaching out regarding a Staff Architect role at our company.',
+            'form_started_at' => now()->subSeconds(10)->timestamp * 1000,
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('contact_inquiries', [
+            'email' => 'sarah@talent.com',
+            'project_type' => 'Recruiter Intro',
+        ]);
+    }
+
+    public function test_contact_form_accepts_referral_option(): void
+    {
+        $response = $this->post('/contact', [
+            'name' => 'Alex Referrer',
+            'email' => 'alex@network.io',
+            'project_type' => 'Referral',
+            'message' => 'Passing along a warm referral for an Engineering Lead position.',
+            'form_started_at' => now()->subSeconds(10)->timestamp * 1000,
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('contact_inquiries', [
+            'email' => 'alex@network.io',
+            'project_type' => 'Referral',
         ]);
     }
 

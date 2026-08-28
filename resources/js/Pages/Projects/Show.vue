@@ -111,7 +111,7 @@ const resumeUrl = '/resume/ashish-gupta-resume.pdf'
                     <p class="project-body">
                         <Link href="/#contact" class="inline-link">Discuss an engineering role</Link>
                         &nbsp;·&nbsp;
-                        <Link href="/hiring" class="inline-link">For hiring managers</Link>
+                        <Link href="/for-hiring-managers" class="inline-link">For hiring managers</Link>
                         &nbsp;·&nbsp;
                         <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="inline-link">Download Résumé</a>
                     </p>

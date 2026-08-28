@@ -50,7 +50,7 @@ final class ChatController
             if (str_contains($lastUserMessage, 'notice') || str_contains($lastUserMessage, 'available') || str_contains($lastUserMessage, 'start') || str_contains($lastUserMessage, 'relocat')) {
                 $reply = "Ashish is immediately available for full-time Senior/Staff Full-Stack Architect roles. He works remotely worldwide with dedicated US (EST/PST) and EU overlap, and is open to relocation for exceptional opportunities.";
             } elseif (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'interview')) {
-                $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, download his résumé at /resume/ashish-gupta-resume.pdf, or view his hiring brief at /hiring.";
+                $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, download his résumé at /resume/ashish-gupta-resume.pdf, or view his hiring brief at /for-hiring-managers.";
             } elseif (str_contains($lastUserMessage, 'tech') || str_contains($lastUserMessage, 'stack') || str_contains($lastUserMessage, 'skill') || str_contains($lastUserMessage, 'framework')) {
                 $reply = "Ashish specializes in the VILT Stack (Vue 3, Inertia.js, Laravel 13, Tailwind CSS) alongside TypeScript, PHP 8.4, Node.js, PostgreSQL/pgvector, Redis, Docker, and AWS.";
             } elseif (str_contains($lastUserMessage, 'experience') || str_contains($lastUserMessage, 'work') || str_contains($lastUserMessage, 'job') || str_contains($lastUserMessage, 'infosys')) {
@@ -83,7 +83,7 @@ Here is the context about Ashish Gupta:
 - Email: ashishgupta1v@gmail.com
 - Location: India (Remote Worldwide)
 - Resume: /resume/ashish-gupta-resume.pdf
-- Hiring Manager Brief: /hiring
+- Hiring Manager Brief: /for-hiring-managers
 - GitHub: https://github.com/ashishgupta1v
 - LinkedIn: https://www.linkedin.com/in/ashishgupta1v/
 
@@ -120,7 +120,7 @@ Rules for your responses:
 2. If the user asks general-knowledge questions, questions about other subjects, or tries to ask you to write code/write essays/do calculations not related to Ashish, you MUST politely decline. Respond with: \'I can only answer questions related to Ashish Gupta\\\'s professional profile, skills, projects, and work history. Feel free to ask about those!\'
 3. Do not invent, extrapolate, or hallucinate any details. If the answer is not in the provided context, state that you do not have that information and suggest contacting Ashish directly at ashishgupta1v@gmail.com.
 4. Keep all responses brief, friendly, and under 3 sentences.
-5. **Role Fit & Recruiter Questions**: When asked about full-time roles, notice period, or relocation, clearly confirm he is open to full-time Senior/Staff roles, available immediately, and open to remote or relocation. Direct recruiters to `/hiring` and provide the résumé link `/resume/ashish-gupta-resume.pdf`.
+5. **Role Fit & Recruiter Questions**: When asked about full-time roles, notice period, or relocation, clearly confirm he is open to full-time Senior/Staff roles, available immediately, and open to remote or relocation. Direct recruiters to `/for-hiring-managers` and provide the résumé link `/resume/ashish-gupta-resume.pdf`.
 6. **Project Recommender**: When a visitor describes a business need or technical challenge, recommend relevant projects (e.g. ZoetiCoach AI for AI/RAG, Infosys for healthcare/high-concurrency) and invite them to connect via email.";
 
         $formattedMessages[] = [

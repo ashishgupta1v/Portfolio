@@ -19,7 +19,7 @@ import { Head, Link } from '@inertiajs/vue3'
             <nav class="topbar-nav">
                 <Link href="/" class="topbar-link">Portfolio</Link>
                 <Link href="/case-studies" class="topbar-link">Case Studies</Link>
-                <Link href="/hiring" class="topbar-link">For Hiring Managers</Link>
+                <Link href="/for-hiring-managers" class="topbar-link">For Hiring Managers</Link>
                 <Link href="/blog" class="topbar-link">Blog</Link>
             </nav>
         </header>
@@ -52,7 +52,7 @@ import { Head, Link } from '@inertiajs/vue3'
                 <section class="section-block">
                     <h2>3. Advisory &amp; Estimates</h2>
                     <p>
-                        The case studies, performance benchmarks, and pricing estimates shown on this website (including on the <Link href="/engagements" class="accent-link">Engagements page</Link>) are indicative and illustrative. Official engineering engagements and deliverables are governed exclusively by formal, written Statement of Work (SOW) agreements.
+                        The case studies, performance benchmarks, and architectural information shown on this website (including on the <Link href="/for-hiring-managers" class="accent-link">For Hiring Managers page</Link>) are indicative and illustrative of technical capabilities and past delivery outcomes.
                     </p>
                 </section>
 

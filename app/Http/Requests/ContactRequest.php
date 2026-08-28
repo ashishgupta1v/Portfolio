@@ -24,6 +24,10 @@ final class ContactRequest extends FormRequest
             'budget' => ['nullable', 'string', 'max:100'],
             'project_type' => ['required', Rule::in([
                 'Full-Time Role',
+                'Contract Role',
+                'Recruiter Intro',
+                'Referral',
+                'Other',
                 'Contract / Architecture Advisory',
                 'Referral / Introduction',
                 'Contract / Freelance',
@@ -36,7 +40,6 @@ final class ContactRequest extends FormRequest
                 'Automation Workflow',
                 'Legacy Modernization',
                 'AI Integration',
-                'Other',
             ])],
             'timeline' => ['nullable', Rule::in([
                 'Urgent (within 2 weeks)',

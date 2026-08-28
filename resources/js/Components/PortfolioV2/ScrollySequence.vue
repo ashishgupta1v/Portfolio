@@ -229,22 +229,42 @@ onBeforeUnmount(() => {
                         <p class="statement-subtitle">{{ item.subtitle }}</p>
 
                         <!-- Above-the-fold Hero Action Row -->
-                        <div v-if="idx === 0" class="hero-actions">
-                            <a href="/resume/ashish-gupta-resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)">
-                                <span>Download Résumé</span>
-                                <span class="hero-btn-arrow" aria-hidden="true">↗</span>
-                            </a>
-                            <a href="#about" class="hero-btn hero-btn--primary">
-                                <span>Explore Architecture</span>
-                                <span class="hero-btn-arrow" aria-hidden="true">↓</span>
-                            </a>
-                            <a href="/hiring" class="hero-btn hero-btn--secondary">
-                                <span>For Hiring Managers</span>
-                                <span class="hero-btn-arrow" aria-hidden="true">→</span>
-                            </a>
-                            <a href="#contact" class="hero-btn hero-btn--ghost">
-                                <span>Get in Touch</span>
-                            </a>
+                        <div v-if="idx === 0" class="hero-actions-container">
+                            <div class="hero-actions">
+                                <a href="/resume/ashish-gupta-resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)">
+                                    <span>Download Résumé</span>
+                                    <span class="hero-btn-arrow" aria-hidden="true">↗</span>
+                                </a>
+                                <a href="#contact" class="hero-btn hero-btn--outline">
+                                    <span>Get in touch</span>
+                                    <span class="hero-btn-arrow" aria-hidden="true">↓</span>
+                                </a>
+                            </div>
+
+                            <div class="hero-secondary-links">
+                                <a href="https://www.linkedin.com/in/ashishgupta1v/" target="_blank" rel="noopener noreferrer" class="hero-sec-link">
+                                    <span>LinkedIn</span>
+                                    <span class="hero-sec-arrow">↗</span>
+                                </a>
+                                <span class="hero-sec-dot">·</span>
+                                <a href="mailto:ashishgupta1v@gmail.com" class="hero-sec-link">
+                                    <span>Email</span>
+                                </a>
+                                <span class="hero-sec-dot">·</span>
+                                <a href="https://github.com/ashishgupta1v" target="_blank" rel="noopener noreferrer" class="hero-sec-link">
+                                    <span>GitHub</span>
+                                    <span class="hero-sec-arrow">↗</span>
+                                </a>
+                                <span class="hero-sec-dot">·</span>
+                                <a href="/for-hiring-managers" class="hero-sec-link hero-sec-link--highlight">
+                                    <span>For Hiring Managers</span>
+                                    <span class="hero-sec-arrow">→</span>
+                                </a>
+                            </div>
+
+                            <p class="hero-microcopy">
+                                Senior Full-Stack Architect · 9+ years · Open to full-time remote roles.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -440,11 +460,17 @@ onBeforeUnmount(() => {
     align-items: center;
 }
 
+.hero-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+}
+
 .hero-actions {
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    margin-top: 0.6rem;
     flex-wrap: wrap;
 }
 
@@ -452,8 +478,8 @@ onBeforeUnmount(() => {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.65rem 1.25rem;
-    font-size: 0.82rem;
+    padding: 0.68rem 1.4rem;
+    font-size: 0.84rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     border-radius: 999px;
@@ -474,28 +500,62 @@ onBeforeUnmount(() => {
     box-shadow: 0 0 32px rgba(167, 139, 250, 0.65), 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
-.hero-btn--primary {
-    background: linear-gradient(135deg, #5eead4, #2dd4bf);
-    color: #03211e;
-    box-shadow: 0 0 20px rgba(94, 234, 212, 0.35), 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.hero-btn--primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(94, 234, 212, 0.5), 0 6px 18px rgba(0, 0, 0, 0.5);
-}
-
-.hero-btn--secondary {
-    background: rgba(255, 255, 255, 0.08);
+.hero-btn--outline {
+    background: rgba(255, 255, 255, 0.05);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     backdrop-filter: blur(8px);
 }
 
-.hero-btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(94, 234, 212, 0.5);
+.hero-btn--outline:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(94, 234, 212, 0.6);
+    color: var(--accent, #5eead4);
     transform: translateY(-2px);
+}
+
+.hero-secondary-links {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: var(--text-3, rgba(255, 255, 255, 0.6));
+}
+
+.hero-sec-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--text-2, rgba(255, 255, 255, 0.8));
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.hero-sec-link:hover {
+    color: var(--accent, #5eead4);
+}
+
+.hero-sec-link--highlight {
+    color: var(--accent, #5eead4);
+    font-weight: 600;
+}
+
+.hero-sec-arrow {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.hero-sec-dot {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.hero-microcopy {
+    font-size: 0.75rem;
+    color: var(--text-3, rgba(255, 255, 255, 0.55));
+    letter-spacing: 0.02em;
+    margin: 0;
 }
 
 .hero-btn--ghost {

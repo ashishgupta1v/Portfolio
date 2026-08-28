@@ -188,7 +188,7 @@ onMounted(() => {
                             <span>{{ link.label }}</span>
                             <ExternalLink :size="12" class="ext-icon" />
                         </a>
-                        <Link href="/hiring" class="social-link hiring-badge-link">
+                        <Link href="/for-hiring-managers" class="social-link hiring-badge-link">
                             <ArrowUpRight :size="16" />
                             <span>For Hiring Managers Brief</span>
                             <ExternalLink :size="12" class="ext-icon" />
@@ -229,7 +229,7 @@ onMounted(() => {
                 </div>
                 <form v-else class="contact-form" @submit.prevent="submitContact">
                     <p class="form-note">
-                        Hiring for a role, discussing architecture, or exploring collaboration? Drop me a note and I'll respond within a business day.
+                        Hiring, recruiting, or referring? Drop me a note and I'll reply within a business day.
                     </p>
                     <div class="honeypot-wrap" aria-hidden="true">
                         <label for="cf-company-website">Company website</label>
@@ -268,9 +268,10 @@ onMounted(() => {
                     <div class="form-field">
                         <label for="cf-project-type" class="form-label">What brings you here?</label>
                         <select id="cf-project-type" v-model="form.project_type" class="form-input" required>
-                            <option value="Full-Time Role">Full-Time Role (Senior / Staff / Lead)</option>
-                            <option value="Contract / Architecture Advisory">Contract / Architecture Advisory</option>
-                            <option value="Referral / Introduction">Referral / Introduction</option>
+                            <option value="Full-Time Role">Full-time role</option>
+                            <option value="Contract Role">Contract role</option>
+                            <option value="Recruiter Intro">Recruiter / talent intro</option>
+                            <option value="Referral">Referral</option>
                             <option value="Other">Other</option>
                         </select>
                         <span v-if="form.errors.project_type" class="form-error">{{ form.errors.project_type }}</span>

@@ -13,9 +13,9 @@ final class HiringPageController
     {
         return Inertia::render('Hiring/Index', [
             'seo' => [
-                'title' => 'For Hiring Managers — Ashish Gupta (Senior Full-Stack Architect)',
-                'description' => 'Role preferences, availability, architectural strengths, and recruiter briefing for Senior/Staff Full-Stack Architect roles.',
-                'path' => '/hiring',
+                'title' => 'For Hiring Managers & Recruiters — Ashish Gupta (Senior Full-Stack Architect)',
+                'description' => '9+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles.',
+                'path' => '/for-hiring-managers',
             ],
             'recruiterBrief' => [
                 'targetRole' => 'Senior Full-Stack Architect / Staff Engineer / Engineering Lead',

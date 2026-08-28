@@ -97,7 +97,7 @@ onUnmounted(() => {
                 <button class="nav-link" :class="{ active: activeSection === 'career' }" @click="scrollTo('career')">EXPERIENCE</button>
                 <button class="nav-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">WORK</button>
                 <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
-                <Link href="/hiring" class="nav-link nav-link-anchor nav-link-highlight">FOR HIRING</Link>
+                <Link href="/for-hiring-managers" class="nav-link nav-link-anchor nav-link-highlight">FOR HIRING</Link>
                 <Link href="/blog" class="nav-link nav-link-anchor">BLOG</Link>
                 <button class="nav-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">CONTACT</button>
                 
@@ -132,7 +132,7 @@ onUnmounted(() => {
                 <button class="mobile-link" :class="{ active: activeSection === 'career' }" @click="scrollTo('career')">Experience</button>
                 <button class="mobile-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">Work</button>
                 <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
-                <Link href="/hiring" class="mobile-link mobile-link-highlight" @click="mobileOpen = false">For Hiring Managers</Link>
+                <Link href="/for-hiring-managers" class="mobile-link mobile-link-highlight" @click="mobileOpen = false">For Hiring Managers</Link>
                 <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
                 <button class="mobile-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">Contact</button>
                 <div class="mobile-theme-row">
