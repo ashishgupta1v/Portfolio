@@ -194,12 +194,15 @@ function downloadPdf() {
                     </div>
                 </div>
                 <div class="rail-card cta-card">
-                    <span class="rail-label">Need similar work?</span>
+                    <span class="rail-label">Looking to Hire?</span>
                     <p>
-                        I build websites, dashboards, SaaS workflows, internal tools, automation, and software
-                        upgrades for growing businesses.
+                        I architect and ship production systems end-to-end. Open to Senior / Staff Full-Stack Architect and Engineering Lead roles.
                     </p>
-                    <a :href="whatsappHref" class="cta-link" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+                    <div class="cta-card-actions">
+                        <Link href="/#contact" class="cta-link">Discuss an Engineering Role</Link>
+                        <Link href="/hiring" class="cta-link cta-link-secondary">Hiring Manager Brief</Link>
+                        <a href="/resume/ashish-gupta-resume.pdf" target="_blank" rel="noopener noreferrer" class="cta-link cta-link-secondary">Download Résumé (PDF)</a>
+                    </div>
                 </div>
             </aside>
         </main>
@@ -422,14 +425,36 @@ function downloadPdf() {
     padding: 1.1rem;
 }
 
+.cta-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
 .cta-link {
     display: inline-flex;
-    margin-top: 1rem;
     color: var(--accent);
     font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.cta-link:hover {
+    opacity: 0.85;
+}
+
+.cta-link-secondary {
+    color: var(--text-2);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.cta-link-secondary:hover {
+    color: var(--accent);
 }
 
 @media (max-width: 920px) {

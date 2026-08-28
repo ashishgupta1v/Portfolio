@@ -221,14 +221,15 @@ function handleQuickView() {
                 <span>Visit Live</span>
                 <ArrowUpRight :size="13" aria-hidden="true" />
             </a>
-            <a
+            <button
                 v-else
-                href="#contact"
+                type="button"
                 class="btn-action btn-action--demo"
+                @click="handleQuickView"
             >
-                <span>Request Demo</span>
+                <span>View Details</span>
                 <ArrowUpRight :size="13" aria-hidden="true" />
-            </a>
+            </button>
 
             <!-- 2. Quick View Button -->
             <button

@@ -49,7 +49,7 @@ final class ChatControllerTest extends TestCase
             ->assertJson([
                 'offline' => true,
             ])
-            ->assertJsonPath('reply', 'You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, call him at +91-9087021592, or connect on LinkedIn (https://www.linkedin.com/in/ashishgupta1v/).');
+            ->assertJsonPath('reply', 'You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, download his résumé at /resume/ashish-gupta-resume.pdf, or view his hiring brief at /hiring.');
     }
 
     public function test_it_returns_successful_response_from_openai_api(): void

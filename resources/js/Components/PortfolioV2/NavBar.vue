@@ -2,7 +2,7 @@
 import { Link, router } from '@inertiajs/vue3'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
-import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X } from 'lucide-vue-next'
+import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X, ArrowUpRight } from 'lucide-vue-next'
 import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 const props = defineProps<{
@@ -94,10 +94,25 @@ onUnmounted(() => {
             <!-- Right: section links (desktop) -->
             <div class="nav-links">
                 <button class="nav-link" :class="{ active: activeSection === 'about' }" @click="scrollTo('about')">ABOUT</button>
+                <button class="nav-link" :class="{ active: activeSection === 'career' }" @click="scrollTo('career')">EXPERIENCE</button>
                 <button class="nav-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">WORK</button>
                 <Link href="/case-studies" class="nav-link nav-link-anchor">CASE STUDIES</Link>
+                <Link href="/hiring" class="nav-link nav-link-anchor nav-link-highlight">FOR HIRING</Link>
                 <Link href="/blog" class="nav-link nav-link-anchor">BLOG</Link>
                 <button class="nav-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">CONTACT</button>
+                
+                <a
+                    v-if="resumeUrl"
+                    :href="resumeUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="nav-resume-pill glow-pill"
+                    aria-label="Download Ashish Gupta's Résumé (PDF)"
+                >
+                    <span>RÉSUMÉ</span>
+                    <ArrowUpRight :size="12" aria-hidden="true" />
+                </a>
+
                 <ThemeToggle class="nav-link a11y-toggle" />
             </div>
 
@@ -114,8 +129,10 @@ onUnmounted(() => {
         <div v-if="mobileOpen" class="mobile-overlay" @click.self="mobileOpen = false">
             <nav class="mobile-menu">
                 <button class="mobile-link" :class="{ active: activeSection === 'about' }" @click="scrollTo('about')">About</button>
+                <button class="mobile-link" :class="{ active: activeSection === 'career' }" @click="scrollTo('career')">Experience</button>
                 <button class="mobile-link" :class="{ active: activeSection === 'work' }" @click="scrollTo('work')">Work</button>
                 <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
+                <Link href="/hiring" class="mobile-link mobile-link-highlight" @click="mobileOpen = false">For Hiring Managers</Link>
                 <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
                 <button class="mobile-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">Contact</button>
                 <div class="mobile-theme-row">
@@ -137,7 +154,7 @@ onUnmounted(() => {
                         <component :is="iconMap[link.platform] || Mail" :size="20" />
                     </a>
                 </div>
-                <a v-if="resumeUrl" :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="mobile-resume" @click="mobileOpen = false">Download Resume</a>
+                <a v-if="resumeUrl" :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="mobile-resume" @click="mobileOpen = false">Download Résumé (PDF)</a>
             </nav>
         </div>
     </Transition>
@@ -276,6 +293,36 @@ onUnmounted(() => {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+}
+
+.nav-link-highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.nav-resume-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    color: var(--text-on-accent);
+    background: var(--accent);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-resume-pill:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.mobile-link-highlight {
+    color: var(--accent);
+    font-weight: 700;
 }
 
 .a11y-toggle {

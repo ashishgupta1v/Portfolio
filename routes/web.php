@@ -6,7 +6,7 @@ use App\Http\Controllers\CaseStudies\CaseStudyIndexController;
 use App\Http\Controllers\CaseStudies\CaseStudyShowController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\LeadManagementController;
-use App\Http\Controllers\Engagements\EngagementsPageController;
+use App\Http\Controllers\Hiring\HiringPageController;
 use App\Http\Controllers\Portfolio\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,8 @@ Route::get('/case-studies', CaseStudyIndexController::class)->name('case-studies
 Route::get('/case-studies/{slug}', CaseStudyShowController::class)->name('case-studies.show');
 Route::get('/blog', BlogIndexController::class)->name('blog.index');
 Route::get('/blog/{slug}', BlogShowController::class)->name('blog.show');
-Route::get('/engagements', EngagementsPageController::class)->name('engagements.index');
+Route::get('/hiring', HiringPageController::class)->name('hiring.index');
+Route::redirect('/engagements', '/hiring', 301);
 Route::get('/privacy', fn () => \Inertia\Inertia::render('Legal/Privacy'))->name('privacy');
 Route::get('/terms', fn () => \Inertia\Inertia::render('Legal/Terms'))->name('terms');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');

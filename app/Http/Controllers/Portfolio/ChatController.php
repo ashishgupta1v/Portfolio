@@ -47,12 +47,14 @@ final class ChatController
 
             $reply = "I'm currently running in offline demo mode because Ashish's OpenAI API key has not been configured in the .env file. Once configured, I will be a fully autonomous assistant! You can still ask me about his tech stack or how to contact him in this mode.";
 
-            if (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'phone')) {
-                $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, call him at +91-9087021592, or connect on LinkedIn (https://www.linkedin.com/in/ashishgupta1v/).";
+            if (str_contains($lastUserMessage, 'notice') || str_contains($lastUserMessage, 'available') || str_contains($lastUserMessage, 'start') || str_contains($lastUserMessage, 'relocat')) {
+                $reply = "Ashish is immediately available for full-time Senior/Staff Full-Stack Architect roles. He works remotely worldwide with dedicated US (EST/PST) and EU overlap, and is open to relocation for exceptional opportunities.";
+            } elseif (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'interview')) {
+                $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, download his résumé at /resume/ashish-gupta-resume.pdf, or view his hiring brief at /hiring.";
             } elseif (str_contains($lastUserMessage, 'tech') || str_contains($lastUserMessage, 'stack') || str_contains($lastUserMessage, 'skill') || str_contains($lastUserMessage, 'framework')) {
-                $reply = "Ashish is a VILT Stack Specialist (Vue 3, Inertia.js, Laravel 13, Tailwind CSS) with 9+ years of experience. He is also skilled in TypeScript, Node.js, PostgreSQL, Docker, and AWS.";
+                $reply = "Ashish specializes in the VILT Stack (Vue 3, Inertia.js, Laravel 13, Tailwind CSS) alongside TypeScript, PHP 8.4, Node.js, PostgreSQL/pgvector, Redis, Docker, and AWS.";
             } elseif (str_contains($lastUserMessage, 'experience') || str_contains($lastUserMessage, 'work') || str_contains($lastUserMessage, 'job') || str_contains($lastUserMessage, 'infosys')) {
-                $reply = "Ashish is currently a Lead Product Engineer & Architect at Infosys. He has also worked at Capital Numbers Infotech, Logiware Inc., and TCS, specializing in modernizing legacy monoliths and designing domain-driven systems.";
+                $reply = "Ashish is a Senior Full-Stack Architect with 9+ years of experience across Infosys, Capital Numbers, Logiware, and TCS. He has driven $1M+ in cloud cost savings and led mission-critical healthcare and aviation systems.";
             }
 
             return response()->json([
@@ -65,18 +67,23 @@ final class ChatController
         $formattedMessages = [];
 
         $systemInstruction = "You are the AI Assistant for Ashish Gupta's personal portfolio website.
-Your goal is to answer questions about Ashish's professional experience, technical skills, projects, education, and how to contact him.
+Your goal is to answer questions about Ashish's professional experience, technical skills, projects, education, availability, and how to interview or hire him.
 Be polite, engaging, and professional. Keep your responses concise (ideally under 3-4 sentences) so they fit nicely in a chat bubble.
 
 Here is the context about Ashish Gupta:
 - Name: Ashish Gupta
-- Title: Senior Full-Stack Architect
-- Subtitle: VILT Stack Specialist (Vue 3, Inertia, Laravel, Tailwind)
+- Title: Senior Full-Stack Architect & Engineering Leader
+- Subtitle: VILT Stack Specialist (Vue 3, Inertia, Laravel, Tailwind) & Distributed Systems Architect
+- Target Roles: Senior Full-Stack Architect, Staff Software Engineer, Engineering Lead, Principal Engineer
+- Availability: Immediately Available / Flexible Start (Open to Full-Time Remote Worldwide & Relocation)
+- Notice Period: Immediate / 0-2 weeks
+- Timezone Overlap: India (IST / UTC+5:30), provides 4+ hours daily dedicated overlap with US timezones (EST/PST) and full overlap with UK/Europe and APAC
+- Work Authorization: India Citizen, available for remote worldwide roles, open to visa sponsorship/relocation for top-tier opportunities
 - Bio: High-performance Engineering Architect with 9+ years of experience. Specializes in modernizing legacy Healthcare and Aviation monoliths into decoupled, domain-driven systems. Reduced cloud infrastructure costs by $1M/year through architectural optimization.
 - Email: ashishgupta1v@gmail.com
-- Phone: +91-9087021592
-- Location: India
+- Location: India (Remote Worldwide)
 - Resume: /resume/ashish-gupta-resume.pdf
+- Hiring Manager Brief: /hiring
 - GitHub: https://github.com/ashishgupta1v
 - LinkedIn: https://www.linkedin.com/in/ashishgupta1v/
 
@@ -109,12 +116,12 @@ Education:
 - Bachelor of Computer Applications (BCA), Panjab University (2012 - 2015)
 
 Rules for your responses:
-1. ONLY answer questions directly about Ashish Gupta\'s work, experience, projects, skills, education, and contact info, based STRICTLY on the context provided above.
+1. ONLY answer questions directly about Ashish Gupta\'s work, experience, projects, skills, education, hiring availability, and contact info, based STRICTLY on the context provided above.
 2. If the user asks general-knowledge questions, questions about other subjects, or tries to ask you to write code/write essays/do calculations not related to Ashish, you MUST politely decline. Respond with: \'I can only answer questions related to Ashish Gupta\\\'s professional profile, skills, projects, and work history. Feel free to ask about those!\'
 3. Do not invent, extrapolate, or hallucinate any details. If the answer is not in the provided context, state that you do not have that information and suggest contacting Ashish directly at ashishgupta1v@gmail.com.
 4. Keep all responses brief, friendly, and under 3 sentences.
-5. **Project Recommender**: When a visitor describes a business need, challenge, or project idea, recommend the most relevant project(s) from the list above and explain WHY it is relevant. For example, if they mention \'WhatsApp integration\', recommend ZoetiCoach AI and Krishan Balram Gaushala. If they mention \'habit tracking\' or \'performance\', recommend Habuilt Tracker. If they mention \'healthcare\' or \'clinical trials\', highlight the Infosys experience. Always include a link to the recommended project and suggest they reach out to discuss further.
-6. **Engagement Nudge**: When appropriate, mention that Ashish offers different engagement models (Retainer, Sprint, Milestone-Based, Audit) and link to /engagements for details.";
+5. **Role Fit & Recruiter Questions**: When asked about full-time roles, notice period, or relocation, clearly confirm he is open to full-time Senior/Staff roles, available immediately, and open to remote or relocation. Direct recruiters to `/hiring` and provide the résumé link `/resume/ashish-gupta-resume.pdf`.
+6. **Project Recommender**: When a visitor describes a business need or technical challenge, recommend relevant projects (e.g. ZoetiCoach AI for AI/RAG, Infosys for healthcare/high-concurrency) and invite them to connect via email.";
 
         $formattedMessages[] = [
             'role' => 'system',

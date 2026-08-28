@@ -199,11 +199,20 @@ onBeforeUnmount(() => {
                 >
                     <div class="statement-card">
                         <div class="statement-scrim" aria-hidden="true" />
-                        <Transition name="greeting-fade">
-                            <span v-if="idx === 0 && visitorContext.greeting" class="hero-greeting glow-pill">
+                        
+                        <!-- Recruiter Signal Badge Row -->
+                        <div v-if="idx === 0" class="hero-signal-row">
+                            <span v-if="visitorContext.greeting" class="hero-greeting glow-pill">
                                 {{ visitorContext.greeting }}
                             </span>
-                        </Transition>
+                            <span class="hero-signal-badge glow-pill">
+                                💼 Open to Full-Time Senior / Staff Roles
+                            </span>
+                            <span class="hero-signal-badge glow-pill-violet">
+                                ⚡ Available Immediately · Remote Worldwide
+                            </span>
+                        </div>
+
                         <component :is="idx === 0 ? 'h1' : 'h2'" class="statement-title">
                             <template v-if="idx === 0">
                                 <span class="hero-kicker-line">Hello! I'm </span>
@@ -221,16 +230,20 @@ onBeforeUnmount(() => {
 
                         <!-- Above-the-fold Hero Action Row -->
                         <div v-if="idx === 0" class="hero-actions">
-                            <a href="#about" class="hero-btn hero-btn--primary glow-pill">
+                            <a href="/resume/ashish-gupta-resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)">
+                                <span>Download Résumé</span>
+                                <span class="hero-btn-arrow" aria-hidden="true">↗</span>
+                            </a>
+                            <a href="#about" class="hero-btn hero-btn--primary">
                                 <span>Explore Architecture</span>
                                 <span class="hero-btn-arrow" aria-hidden="true">↓</span>
                             </a>
-                            <a href="#works" class="hero-btn hero-btn--secondary">
-                                <span>View Work</span>
-                                <span class="hero-btn-arrow" aria-hidden="true">↗</span>
+                            <a href="/hiring" class="hero-btn hero-btn--secondary">
+                                <span>For Hiring Managers</span>
+                                <span class="hero-btn-arrow" aria-hidden="true">→</span>
                             </a>
                             <a href="#contact" class="hero-btn hero-btn--ghost">
-                                <span>Let's Talk</span>
+                                <span>Get in Touch</span>
                             </a>
                         </div>
                     </div>
@@ -409,6 +422,24 @@ onBeforeUnmount(() => {
     color: #ffffff;
 }
 
+.hero-signal-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+}
+
+.hero-signal-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+}
+
 .hero-actions {
     display: flex;
     align-items: center;
@@ -429,6 +460,18 @@ onBeforeUnmount(() => {
     text-decoration: none;
     transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
+}
+
+.hero-btn--resume {
+    background: linear-gradient(135deg, #a78bfa 0%, #818cf8 100%);
+    color: #0d0f1d;
+    font-weight: 800;
+    box-shadow: 0 0 22px rgba(167, 139, 250, 0.45), 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.hero-btn--resume:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 32px rgba(167, 139, 250, 0.65), 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-btn--primary {

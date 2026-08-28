@@ -50,13 +50,13 @@ const capabilities = [
     },
     {
         icon: Trophy,
-        tag: 'Growth & Retention',
-        title: 'Behavioral Loops & Retention Systems',
-        description: 'I engineer transformation engines that convert passive consumption into measurable user action through WhatsApp-native bots and event-sourced ledgers.',
+        tag: 'Engineering Leadership',
+        title: 'Technical Ownership & Delivery',
+        description: 'I mentor engineering teams, establish automated testing pipelines, author clear architectural RFCs, and transform complex product requirements into resilient production systems.',
         details: [
-            'Event-sourced discipline & point balance ledgers',
-            'WhatsApp-native automated accountability & check-in bots',
-            'Streak mechanics, progressive milestone tracking, and user retention loops',
+            'Architecture RFCs & ADRs aligning engineering and product roadmaps',
+            'Comprehensive automated test suites (Unit, Integration, E2E) ensuring zero regressions',
+            'Active mentorship on Clean Code, Domain-Driven Design, and modern TypeScript/PHP',
         ],
     },
 ]

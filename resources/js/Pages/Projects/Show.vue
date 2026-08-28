@@ -27,11 +27,7 @@ const props = defineProps<{
     project: Project
     caseStudySlug?: string | null
 }>()
-
-const whatsappHref = computed(() => {
-    const msg = `Hi Ashish, I saw your ${props.project.title} project on ashishgupta.dev. I'd like to discuss something similar for my business.`
-    return `https://wa.me/919087021592?text=${encodeURIComponent(msg)}`
-})
+const resumeUrl = '/resume/ashish-gupta-resume.pdf'
 </script>
 
 <template>
@@ -39,7 +35,7 @@ const whatsappHref = computed(() => {
 
     <main class="project-page">
         <div class="project-shell">
-            <Link href="/#work" class="project-back">
+            <Link href="/#works" class="project-back">
                 <ArrowLeft :size="14" aria-hidden="true" />
                 <span>All work</span>
             </Link>
@@ -65,16 +61,14 @@ const whatsappHref = computed(() => {
                         :href="`/case-studies/${caseStudySlug}`"
                         class="project-cta project-cta--ghost"
                     >
-                        <span>Read case study</span>
+                        <span>Read architecture case study</span>
                         <ArrowUpRight :size="14" aria-hidden="true" />
                     </Link>
                     <a
-                        :href="whatsappHref"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="mailto:ashishgupta1v@gmail.com"
                         class="project-cta project-cta--ghost"
                     >
-                        <span>Chat on WhatsApp</span>
+                        <span>Contact Ashish</span>
                         <ArrowUpRight :size="14" aria-hidden="true" />
                     </a>
                 </div>
@@ -90,8 +84,8 @@ const whatsappHref = computed(() => {
                     :alt="`Preview of ${project.title}`"
                     :width="1200"
                     :height="720"
-                    sizes="(max-width: 720px) 100vw, 720px"
-                    eager
+                    :eager="true"
+                    class="project-image"
                 />
             </section>
 
@@ -109,16 +103,17 @@ const whatsappHref = computed(() => {
                 </div>
 
                 <div>
-                    <h2 class="project-h2">Next steps</h2>
+                    <h2 class="project-h2">Role &amp; Opportunity</h2>
                     <p class="project-body">
-                        Want something similar built for your team?
-                        Read a full case study of a related engagement,
-                        or drop me a note — I read every enquiry personally.
+                        Looking for a Senior / Staff Full-Stack Architect who can lead technical initiatives,
+                        design scalable systems, and execute end-to-end with high velocity?
                     </p>
                     <p class="project-body">
-                        <Link href="/#contact" class="inline-link">Send a message</Link>
+                        <Link href="/#contact" class="inline-link">Discuss an engineering role</Link>
                         &nbsp;·&nbsp;
-                        <Link href="/engagements" class="inline-link">Review engagement models</Link>
+                        <Link href="/hiring" class="inline-link">For hiring managers</Link>
+                        &nbsp;·&nbsp;
+                        <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="inline-link">Download Résumé</a>
                     </p>
                 </div>
             </section>

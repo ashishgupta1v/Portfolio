@@ -10,7 +10,7 @@ defineProps<{
 
 const suggestions = [
     { label: 'Case Studies', href: '/case-studies', icon: ArrowUpRight },
-    { label: 'Engagement Models', href: '/engagements', icon: ArrowUpRight },
+    { label: 'For Hiring Managers', href: '/hiring', icon: ArrowUpRight },
     { label: 'Get in touch', href: '/#contact', icon: ArrowUpRight },
 ]
 </script>

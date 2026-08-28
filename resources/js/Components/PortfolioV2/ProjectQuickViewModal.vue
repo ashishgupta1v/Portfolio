@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { ArrowUpRight, BookOpen, MessageCircle, X } from 'lucide-vue-next'
+import { ArrowUpRight, BookOpen, Mail, X } from 'lucide-vue-next'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{
@@ -190,13 +190,11 @@ onBeforeUnmount(() => {
                         </Link>
 
                         <a
-                            :href="`https://wa.me/919915234506?text=${encodeURIComponent(`Hi Ashish, I saw your ${project.title} project on your portfolio and would like to discuss building something similar.`)}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn-whatsapp"
+                            href="mailto:ashishgupta1v@gmail.com"
+                            class="btn-email"
                         >
-                            <MessageCircle :size="15" />
-                            <span>Discuss Architecture</span>
+                            <Mail :size="15" />
+                            <span>Discuss Role</span>
                         </a>
 
                         <button
@@ -552,24 +550,25 @@ onBeforeUnmount(() => {
     transform: translateY(-2px);
 }
 
-.btn-whatsapp {
+.btn-email {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     min-height: 42px;
     padding: 0.6rem 1.25rem;
     border-radius: 999px;
-    background: rgba(37, 211, 102, 0.12);
-    border: 1px solid rgba(37, 211, 102, 0.35);
-    color: #25d366;
+    background: rgba(var(--accent-rgb), 0.12);
+    border: 1px solid rgba(var(--accent-rgb), 0.4);
+    color: var(--accent);
     font-size: 0.82rem;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
-.btn-whatsapp:hover {
-    background: rgba(37, 211, 102, 0.22);
+.btn-email:hover {
+    background: rgba(var(--accent-rgb), 0.22);
+    border-color: var(--accent);
     transform: translateY(-2px);
 }
 

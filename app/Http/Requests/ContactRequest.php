@@ -24,6 +24,8 @@ final class ContactRequest extends FormRequest
             'budget' => ['nullable', 'string', 'max:100'],
             'project_type' => ['required', Rule::in([
                 'Full-Time Role',
+                'Contract / Architecture Advisory',
+                'Referral / Introduction',
                 'Contract / Freelance',
                 'Technical Co-founder',
                 'Consulting',

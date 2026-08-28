@@ -110,11 +110,11 @@ onMounted(() => {
             <div class="section-header">
                 <div class="section-header-wrapper">
                     <h2 class="section-title">
-                        <span class="section-title-word">Let's Build</span>
-                        <span class="section-title-word accent">Something Great</span>
+                        <span class="section-title-word">Let's Discuss</span>
+                        <span class="section-title-word accent">an Engineering Role</span>
                     </h2>
                 </div>
-                <p class="section-subtitle">Hiring, consulting, or technical co-founding — let's engineer something measurable.</p>
+                <p class="section-subtitle">Open to Senior / Staff Full-Stack Architect &amp; Engineering Lead opportunities (Remote worldwide or Relocation).</p>
                 <div class="section-separator" />
                 <AvailabilityBadge class="contact-availability" />
             </div>
@@ -122,7 +122,7 @@ onMounted(() => {
             <div class="ct-grid">
                 <!-- Connect -->
                 <div class="ct-column glass-panel">
-                    <h3 class="col-title">Connect</h3>
+                    <h3 class="col-title">Direct Contact</h3>
                     <a
                         :href="`mailto:${profile.email}`"
                         class="ct-email"
@@ -130,22 +130,34 @@ onMounted(() => {
                         {{ profile.email }}
                         <ArrowUpRight :size="14" class="arrow" />
                     </a>
-                    <p v-if="profile.phone" class="ct-phone">{{ profile.phone }}</p>
-                    <p v-if="profile.location" class="ct-location">{{ profile.location }}</p>
-
+                    <p v-if="profile.location" class="ct-location">{{ profile.location }} · Remote Worldwide</p>
+                    
                     <a
-                        :href="whatsappHref"
+                        v-if="profile.resumeUrl"
+                        :href="profile.resumeUrl"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="chat-btn glow-pill"
+                        class="resume-btn glow-pill-violet"
+                        style="margin-bottom: 1.2rem;"
                     >
-                        Quick chat on WhatsApp
+                        Download Résumé (PDF)
                         <ArrowUpRight :size="14" />
                     </a>
 
                     <div class="schedule-call-wrap">
                         <ScheduleCall />
                     </div>
+
+                    <a
+                        :href="whatsappHref"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="chat-btn glow-pill"
+                        style="margin-bottom: 1.5rem;"
+                    >
+                        Message on WhatsApp
+                        <ArrowUpRight :size="14" />
+                    </a>
 
                     <div v-if="educations.length" class="edu-list">
                         <div
@@ -160,9 +172,9 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- Social -->
+                <!-- Social & Hiring Links -->
                 <div class="ct-column glass-panel">
-                    <h3 class="col-title">Social</h3>
+                    <h3 class="col-title">Profiles &amp; Briefing</h3>
                     <div class="social-list">
                         <a
                             v-for="link in socialLinks"
@@ -176,23 +188,17 @@ onMounted(() => {
                             <span>{{ link.label }}</span>
                             <ExternalLink :size="12" class="ext-icon" />
                         </a>
+                        <Link href="/hiring" class="social-link hiring-badge-link">
+                            <ArrowUpRight :size="16" />
+                            <span>For Hiring Managers Brief</span>
+                            <ExternalLink :size="12" class="ext-icon" />
+                        </Link>
                     </div>
-
-                    <a
-                        v-if="profile.resumeUrl"
-                        :href="profile.resumeUrl"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="resume-btn glow-pill-violet"
-                    >
-                        Resume
-                        <ArrowUpRight :size="14" />
-                    </a>
                 </div>
 
                 <!-- Credit -->
                 <div class="ct-column glass-panel">
-                    <h3 class="col-title">Credit</h3>
+                    <h3 class="col-title">Architecture &amp; Legal</h3>
                     <p class="credit-text">
                         Designed &amp; Developed by
                         <span class="credit-name">{{ profile.name }}</span>
@@ -213,20 +219,17 @@ onMounted(() => {
 
             <!-- Contact Form -->
             <div class="ct-form-row glass-panel">
-                <h3 class="form-title">Get in touch</h3>
+                <h3 class="form-title">Send a message</h3>
                 <div v-if="submitted" class="form-success" role="status" aria-live="polite">
                     <p>{{ successMessage }}</p>
                     <p class="ai-prequalify-hint">
                         <MessageSquare :size="14" class="ai-hint-icon" />
                         While you wait, try the <button type="button" class="ai-hint-btn" @click="openAiChat">AI Assistant</button> to learn more about my experience and stack.
                     </p>
-                    <div class="next-steps">
-                        <a :href="whatsappHref" target="_blank" rel="noopener noreferrer" class="next-step-link">Chat on WhatsApp</a>
-                    </div>
                 </div>
                 <form v-else class="contact-form" @submit.prevent="submitContact">
                     <p class="form-note">
-                        Hiring, collaborating, or just want to connect? Drop me a note and I'll respond within a business day.
+                        Hiring for a role, discussing architecture, or exploring collaboration? Drop me a note and I'll respond within a business day.
                     </p>
                     <div class="honeypot-wrap" aria-hidden="true">
                         <label for="cf-company-website">Company website</label>
@@ -241,7 +244,7 @@ onMounted(() => {
                                 type="text"
                                 class="form-input"
                                 :class="{ 'form-input-error': form.errors.name }"
-                                placeholder="Your name"
+                                placeholder="Your name or company"
                                 autocomplete="name"
                                 required
                             />
@@ -265,11 +268,9 @@ onMounted(() => {
                     <div class="form-field">
                         <label for="cf-project-type" class="form-label">What brings you here?</label>
                         <select id="cf-project-type" v-model="form.project_type" class="form-input" required>
-                            <option value="Full-Time Role">Full-time role</option>
-                            <option value="Contract / Freelance">Contract / Freelance</option>
-                            <option value="Technical Co-founder">Technical co-founder opportunity</option>
-                            <option value="Consulting">Consulting / Advisory</option>
-                            <option value="Collaboration">Open-source / Collaboration</option>
+                            <option value="Full-Time Role">Full-Time Role (Senior / Staff / Lead)</option>
+                            <option value="Contract / Architecture Advisory">Contract / Architecture Advisory</option>
+                            <option value="Referral / Introduction">Referral / Introduction</option>
                             <option value="Other">Other</option>
                         </select>
                         <span v-if="form.errors.project_type" class="form-error">{{ form.errors.project_type }}</span>
@@ -281,7 +282,7 @@ onMounted(() => {
                             v-model="form.message"
                             class="form-input form-textarea"
                             :class="{ 'form-input-error': form.errors.message }"
-                            placeholder="Tell me about the role, your team, or what you're building…"
+                            placeholder="Tell me about the role, your team, technical challenges, or what you're building…"
                             rows="4"
                             :maxlength="MESSAGE_MAX"
                             required
@@ -458,6 +459,14 @@ onMounted(() => {
     transition: color 0.3s ease;
 }
 .social-link:hover { color: var(--accent); }
+
+.hiring-badge-link {
+    color: var(--accent);
+    font-weight: 700;
+    margin-top: 0.5rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
 
 .ext-icon {
     opacity: 0;
