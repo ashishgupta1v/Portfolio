@@ -172,7 +172,7 @@
     ]
   },
   "resources/js/Components/PortfolioV2/ContactSection.vue": {
-    "file": "assets/ContactSection-BSVtucsw.js",
+    "file": "assets/ContactSection-Xlcmc1uL.js",
     "name": "ContactSection",
     "src": "resources/js/Components/PortfolioV2/ContactSection.vue",
     "isDynamicEntry": true,
@@ -188,7 +188,7 @@
       "_mail-76WLA47f.js"
     ],
     "css": [
-      "assets/ContactSection-DELaIufU.css"
+      "assets/ContactSection-DZ7ot78Q.css"
     ]
   },
   "resources/js/Components/PortfolioV2/FeaturedCaseStudySection.vue": {
@@ -448,7 +448,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-DSxTwNM8.js",
+    "file": "assets/Index-Cmc2kZsl.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -505,7 +505,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-D06OiYVH.js",
+    "file": "assets/app-BsNj7joE.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,

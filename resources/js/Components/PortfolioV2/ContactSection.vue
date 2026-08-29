@@ -96,8 +96,9 @@ onMounted(() => {
 
     if (columns.length > 0 && grid) {
         gsap.from(columns, {
-            scrollTrigger: { trigger: grid, start: 'top 78%' },
-            y: 40, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 95%' },
+            y: 20, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+            clearProps: 'all',
         })
     }
 })
@@ -108,15 +109,15 @@ onMounted(() => {
         <div class="ct-ambient-glow" aria-hidden="true" />
         <div class="ct-shell">
             <div class="section-header">
-                <div class="section-header-wrapper">
+                <div class="header-top-row">
                     <h2 class="section-title">
                         <span class="section-title-word">Let's Discuss</span>
                         <span class="section-title-word accent">an Engineering Role</span>
                     </h2>
+                    <AvailabilityBadge class="contact-availability" />
                 </div>
                 <p class="section-subtitle">Open to Senior / Staff Full-Stack Architect &amp; Engineering Lead opportunities (Remote worldwide or Relocation).</p>
                 <div class="section-separator" />
-                <AvailabilityBadge class="contact-availability" />
             </div>
 
             <div class="ct-grid">
@@ -320,10 +321,25 @@ onMounted(() => {
 .ct-section {
     position: relative;
     background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-    padding: 7.5rem 1.5rem 5rem;
+    padding: 3.5rem 1.5rem 4.5rem;
     border-top: 1px solid var(--border);
     overflow: hidden;
     overflow-x: clip;
+}
+
+.header-top-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.section-header {
+    position: relative;
+    margin-bottom: 2rem;
+    text-align: left;
 }
 
 .ct-ambient-glow {
@@ -557,7 +573,7 @@ onMounted(() => {
 
 /* ── Availability badge ── */
 .contact-availability {
-    margin-top: 1.2rem;
+    margin-top: 0;
 }
 
 /* ── Mobile ── */
