@@ -86,8 +86,8 @@ const COMMANDS: Record<string, () => string> = {
       {
         email: 'ashishgupta1v@gmail.com',
         phone: '+91-9087021592',
-        linkedin: 'https://linkedin.com/in/ashishgupta1v',
-        website: 'https://ashish.dev',
+        linkedin: 'https://www.linkedin.com/in/ashish-gupta-dev/',
+        website: 'https://ashishgupta.dev',
       },
       null,
       2,

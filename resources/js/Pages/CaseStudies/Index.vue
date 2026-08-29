@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
 import type { CaseStudiesIndexPageProps } from '@/types/caseStudies'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 defineProps<CaseStudiesIndexPageProps>()
 </script>
@@ -22,7 +23,8 @@ defineProps<CaseStudiesIndexPageProps>()
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <span class="topbar-current">Case Studies</span>
                     <Link href="/blog" class="topbar-link">Blog</Link>
-                    <Link href="/engagements" class="topbar-link">Engagements</Link>
+                    <Link href="/for-hiring-managers" class="topbar-link">For Hiring</Link>
+                    <ThemeToggle class="topbar-link" />
                 </div>
             </div>
 

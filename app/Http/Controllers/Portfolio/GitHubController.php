@@ -48,10 +48,14 @@ final class GitHubController
                 arsort($languages);
 
                 $descriptions = [
-                    'Portfolio' => 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
-                    'DigitalBuilders' => 'Autonomous AI-assisted agency platform & conversion engine.',
-                    'Habuilt' => 'High-performance habit tracking and personal accountability engine.',
-                    'JobBot' => 'Automated job discovery and application workflow tool.',
+                    'Portfolio' => 'Full-stack portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+                    'DigitalBuilders' => 'Autonomous agency platform & conversion-optimized client dashboard.',
+                    'Habuilt' => 'High-performance habit tracking & personal accountability web application.',
+                    'JobBot' => 'Automated job discovery pipeline and submission tracking utility.',
+                    'ZoetiCoach' => 'AI executive coaching platform with pgvector RAG and multi-tenant billing.',
+                    'Gaushala' => 'Herd management ERP with real-time health metrics and telemetry.',
+                    'DhandaDiary' => 'Offline-first merchant ledger and WhatsApp Cloud API notification engine.',
+                    'MyAstrova' => 'Astrology consultation platform with high-concurrency booking queues.',
                 ];
 
                 $filteredRepos = array_values(array_filter($repos, fn($r) => !in_array(strtolower($r['name']), ['ashishgupta1v', 'ashishgup1'])));
@@ -64,7 +68,7 @@ final class GitHubController
                     'topLanguages' => array_slice(array_keys($languages), 0, 5),
                     'recentRepos' => array_map(fn($r) => [
                         'name' => $r['name'],
-                        'description' => $r['description'] ?: ($descriptions[$r['name']] ?? 'Open-source software component & architecture modules.'),
+                        'description' => $r['description'] ?: ($descriptions[$r['name']] ?? ($r['name'] . ' — modular full-stack codebase & architecture patterns.')),
                         'language' => $r['language'] ?: 'PHP',
                         'stars' => $r['stargazers_count'] ?? 0,
                         'url' => $r['html_url'],

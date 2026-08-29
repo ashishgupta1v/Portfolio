@@ -1,22 +1,30 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import {
     ArrowUpRight,
     Award,
+    Bot,
     Briefcase,
     Calendar,
     CheckCircle2,
     Clock,
     Code2,
+    Cpu,
+    Database,
     FileText,
     Globe,
     Layers,
     Mail,
+    Menu,
     Shield,
+    ShieldCheck,
     Sparkles,
     Users,
+    X,
     Zap,
 } from 'lucide-vue-next'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 defineProps<{
     recruiterBrief?: {
@@ -31,9 +39,11 @@ defineProps<{
     }
 }>()
 
+const mobileOpen = ref(false)
+
 const resumeUrl = '/resume/ashish-gupta-resume.pdf'
 const emailHref = 'mailto:ashishgupta1v@gmail.com'
-const linkedinUrl = 'https://www.linkedin.com/in/ashishgupta1v/'
+const linkedinUrl = 'https://www.linkedin.com/in/ashish-gupta-dev/'
 const calendlyUrl = 'https://calendly.com/ashishgupta1v/30min'
 const githubUrl = 'https://github.com/ashishgupta1v'
 
@@ -75,6 +85,29 @@ const conversationPoints = [
     },
 ]
 
+const aiEngineeringPillars = [
+    {
+        title: 'RAG & Vector Search',
+        description: 'Production Retrieval-Augmented Generation with pgvector embeddings and semantic search; grounded answers over real business data.',
+        icon: Database,
+    },
+    {
+        title: 'LLM Integration',
+        description: 'OpenAI & Claude APIs with function-calling/structured outputs and streaming, wired into Laravel/Vue product workflows (e.g., WhatsApp-native AI).',
+        icon: Cpu,
+    },
+    {
+        title: 'AI Safety & Guardrails',
+        description: 'Prompt-injection defense, hallucination mitigation, and scope-limited assistants (the assistant on this site refuses jailbreaks by design).',
+        icon: ShieldCheck,
+    },
+    {
+        title: 'Agentic Automation',
+        description: 'Autonomous, tool-using agents that offload repetitive business logic and review work.',
+        icon: Bot,
+    },
+]
+
 const howIWork = [
     {
         title: 'Domain-Driven Design',
@@ -100,6 +133,7 @@ const howIWork = [
 
 const coreStack = {
     languages: 'PHP, JavaScript, TypeScript, Python, SQL',
+    aiEngineering: 'RAG Pipelines, pgvector, Vector Embeddings (OpenAI), Tool Use / Function Calling, Prompt Injection Defense, Autonomous Agents',
     frameworks: 'Laravel 13, Vue 3, Inertia.js, Node.js, Nuxt.js, React / Next.js',
     data: 'PostgreSQL, MySQL, Redis, pgvector, SQLite (WAL)',
     cloud: 'AWS (S3, RDS, ECS, CloudFront), Docker, Nginx, Jenkins, GitHub Actions',
@@ -109,9 +143,9 @@ const coreStack = {
 
 <template>
     <Head title="For Hiring Managers & Recruiters — Ashish Gupta (Senior Full-Stack Architect)">
-        <meta name="description" content="9+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles." />
+        <meta name="description" content="10+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles." />
         <meta property="og:title" content="For Hiring Managers & Recruiters — Ashish Gupta" />
-        <meta property="og:description" content="9+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles." />
+        <meta property="og:description" content="10+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ashishgupta.dev/for-hiring-managers" />
         <link rel="canonical" href="https://ashishgupta.dev/for-hiring-managers" />
@@ -120,21 +154,75 @@ const coreStack = {
     <div class="hiring-page">
         <!-- Top bar navigation -->
         <header class="topbar">
-            <Link href="/" class="brand">
-                <span class="brand-name">Ashish Gupta</span>
-                <span class="brand-role">Senior Full-Stack Architect</span>
-            </Link>
-            <nav class="topbar-nav" aria-label="Page navigation">
-                <Link href="/" class="topbar-link">Home</Link>
-                <Link href="/case-studies" class="topbar-link">Case Studies</Link>
-                <Link href="/blog" class="topbar-link">Blog</Link>
-                <span class="topbar-current">For Hiring Managers</span>
-                <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="topbar-resume glow-pill">
-                    <span>RÉSUMÉ (PDF)</span>
-                    <ArrowUpRight :size="13" aria-hidden="true" />
-                </a>
-            </nav>
+            <div class="topbar-inner">
+                <Link href="/" class="brand">
+                    <span class="brand-name">Ashish Gupta</span>
+                    <span class="brand-role">Senior Full-Stack Architect</span>
+                </Link>
+
+                <nav class="topbar-nav" aria-label="Page navigation">
+                    <Link href="/" class="topbar-link">Home</Link>
+                    <Link href="/case-studies" class="topbar-link">Case Studies</Link>
+                    <Link href="/blog" class="topbar-link">Blog</Link>
+                    <span class="topbar-current">For Hiring Managers</span>
+                    <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="topbar-resume glow-pill">
+                        <span>RÉSUMÉ (PDF)</span>
+                        <ArrowUpRight :size="13" aria-hidden="true" />
+                    </a>
+                    <ThemeToggle class="topbar-link topbar-theme-btn" />
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button
+                    class="hamburger-btn"
+                    :aria-expanded="mobileOpen"
+                    aria-label="Toggle mobile menu"
+                    @click="mobileOpen = !mobileOpen"
+                >
+                    <X v-if="mobileOpen" :size="22" />
+                    <Menu v-else :size="22" />
+                </button>
+            </div>
         </header>
+
+        <!-- Mobile Drawer Overlay -->
+        <Transition name="mobile-drawer">
+            <div v-if="mobileOpen" class="mobile-overlay" @click.self="mobileOpen = false">
+                <nav class="mobile-drawer" aria-label="Mobile navigation">
+                    <div class="mobile-drawer-header">
+                        <span class="drawer-title">Navigation</span>
+                        <button class="drawer-close" aria-label="Close menu" @click="mobileOpen = false">
+                            <X :size="20" />
+                        </button>
+                    </div>
+                    <div class="mobile-links-list">
+                        <Link href="/" class="mobile-link" @click="mobileOpen = false">Home</Link>
+                        <Link href="/case-studies" class="mobile-link" @click="mobileOpen = false">Case Studies</Link>
+                        <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
+                        <span class="mobile-link mobile-link--current">For Hiring Managers</span>
+                    </div>
+
+                    <div class="mobile-actions">
+                        <div class="mobile-theme-row">
+                            <span class="mobile-theme-label">Theme</span>
+                            <ThemeToggle class="mobile-theme-toggle" />
+                        </div>
+
+                        <a
+                            :href="resumeUrl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mobile-resume-btn glow-pill"
+                            @click="mobileOpen = false"
+                        >
+                            <FileText :size="16" />
+                            <span>Download Résumé (PDF)</span>
+                            <ArrowUpRight :size="14" />
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </Transition>
 
         <main class="content-shell">
             <!-- Hero Section -->
@@ -154,7 +242,7 @@ const coreStack = {
                     Senior Full-Stack Architect, <span class="text-gradient">open to full-time roles.</span>
                 </h1>
                 <p class="hero-subtitle">
-                    9+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. I modernize legacy monoliths into scalable, domain-driven platforms and own them from architecture through production.
+                    10+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. I modernize legacy monoliths into scalable, domain-driven platforms and own them from architecture through production.
                 </p>
 
                 <!-- Primary CTAs -->
@@ -232,6 +320,29 @@ const coreStack = {
                 </div>
             </section>
 
+            <!-- AI Engineering Section -->
+            <section class="ai-section">
+                <div class="section-heading-row">
+                    <h2 class="section-heading">
+                        <Sparkles :size="18" class="heading-icon accent-icon" />
+                        AI Engineering — production systems, not demos
+                    </h2>
+                </div>
+                <p class="section-subtext">
+                    I build LLM features that survive real users — grounded in retrieval, guarded against failure, and shipped inside products people already use.
+                </p>
+
+                <div class="ai-grid">
+                    <div v-for="pillar in aiEngineeringPillars" :key="pillar.title" class="ai-card glass-panel">
+                        <div class="ai-header">
+                            <component :is="pillar.icon" :size="20" class="ai-icon" />
+                            <h3 class="ai-title">{{ pillar.title }}</h3>
+                        </div>
+                        <p class="ai-desc">{{ pillar.description }}</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- How I Work -->
             <section class="how-i-work-section">
                 <h2 class="section-heading">
@@ -258,6 +369,10 @@ const coreStack = {
                 </h2>
 
                 <div class="stack-card glass-panel">
+                    <div class="stack-item">
+                        <span class="stack-category">AI Engineering &amp; LLMs</span>
+                        <span class="stack-values">{{ coreStack.aiEngineering }}</span>
+                    </div>
                     <div class="stack-item">
                         <span class="stack-category">Languages</span>
                         <span class="stack-values">{{ coreStack.languages }}</span>
@@ -350,7 +465,7 @@ const coreStack = {
         </main>
 
         <!-- Minimal Footer -->
-        <footer class="hiring-footer">
+        <footer class="hiring-footer" role="contentinfo">
             <div class="footer-inner">
                 <span>© {{ new Date().getFullYear() }} Ashish Gupta · Senior Full-Stack Architect</span>
                 <div class="footer-links">
@@ -367,9 +482,10 @@ const coreStack = {
 <style scoped>
 .hiring-page {
     min-height: 100vh;
-    background: var(--bg-primary, #090a0f);
-    color: var(--text-1, #f8fafc);
+    background: var(--bg-primary);
+    color: var(--text-1);
     font-family: inherit;
+    overflow-x: hidden;
 }
 
 /* ── Topbar ── */
@@ -377,13 +493,20 @@ const coreStack = {
     position: sticky;
     top: 0;
     z-index: 50;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--nav-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.topbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.9rem 2rem;
-    background: rgba(10, 12, 18, 0.85);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.9rem 1.5rem;
 }
 
 .brand {
@@ -396,42 +519,44 @@ const coreStack = {
     font-weight: 800;
     font-size: 1.05rem;
     letter-spacing: 0.02em;
-    color: #ffffff;
+    color: var(--text-1);
+    transition: color 0.2s ease;
 }
 
 .brand-role {
     font-size: 0.72rem;
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .topbar-nav {
     display: flex;
     align-items: center;
-    gap: 1.4rem;
+    gap: 1.3rem;
 }
 
 .topbar-link {
     font-size: 0.84rem;
     font-weight: 600;
-    color: var(--text-2, rgba(255, 255, 255, 0.75));
+    color: var(--text-2);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .topbar-link:hover {
-    color: var(--accent, #5eead4);
+    color: var(--accent);
 }
 
 .topbar-current {
     font-size: 0.84rem;
     font-weight: 700;
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     padding: 0.25rem 0.6rem;
-    background: rgba(94, 234, 212, 0.1);
-    border-radius: 4px;
+    background: rgba(var(--accent-rgb), 0.12);
+    border-radius: 6px;
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
 }
 
 .topbar-resume {
@@ -442,17 +567,155 @@ const coreStack = {
     font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.08em;
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     text-decoration: none;
-    border: 1px solid rgba(94, 234, 212, 0.4);
+    border: 1px solid rgba(var(--accent-rgb), 0.4);
     border-radius: 999px;
-    background: rgba(94, 234, 212, 0.08);
+    background: rgba(var(--accent-rgb), 0.08);
     transition: all 0.2s ease;
 }
 
 .topbar-resume:hover {
-    background: var(--accent, #5eead4);
-    color: #03211e;
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.topbar-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-2);
+    transition: color 0.2s ease;
+}
+
+.topbar-theme-btn:hover {
+    color: var(--accent);
+}
+
+/* ── Mobile Hamburger Button ── */
+.hamburger-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-1);
+    padding: 0.4rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hamburger-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ── Mobile Drawer Overlay ── */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mobile-drawer {
+    width: min(320px, 85vw);
+    height: 100%;
+    background: var(--surface, var(--bg-elevated, #0c1521));
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-title {
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    color: var(--text-2);
+    cursor: pointer;
+    padding: 0.3rem;
+}
+
+.drawer-close:hover {
+    color: var(--text-1);
+}
+
+.mobile-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.5rem 0;
+}
+
+.mobile-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-1);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.mobile-link:hover {
+    color: var(--accent);
+}
+
+.mobile-link--current {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+}
+
+.mobile-theme-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-2);
+}
+
+.mobile-resume-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    text-decoration: none;
 }
 
 /* ── Content Shell ── */
@@ -463,6 +726,7 @@ const coreStack = {
     display: flex;
     flex-direction: column;
     gap: 3.5rem;
+    box-sizing: border-box;
 }
 
 /* ── Brief Hero ── */
@@ -490,6 +754,18 @@ const coreStack = {
     border-radius: 999px;
 }
 
+.glow-pill {
+    background: rgba(var(--accent-rgb, 94, 234, 212), 0.12);
+    border: 1px solid rgba(var(--accent-rgb, 94, 234, 212), 0.35);
+    color: var(--accent);
+}
+
+.glow-pill-violet {
+    background: rgba(var(--accent-violet-rgb, 124, 58, 237), 0.12);
+    border: 1px solid rgba(var(--accent-violet-rgb, 124, 58, 237), 0.35);
+    color: var(--accent-violet);
+}
+
 .pill-icon {
     opacity: 0.9;
 }
@@ -499,12 +775,12 @@ const coreStack = {
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.025em;
-    color: #ffffff;
+    color: var(--text-1);
     margin: 0;
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #5eead4 0%, #a78bfa 100%);
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -512,7 +788,7 @@ const coreStack = {
 .hero-subtitle {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: var(--text-2, rgba(255, 255, 255, 0.82));
+    color: var(--text-2);
     max-width: 820px;
     margin: 0;
 }
@@ -531,20 +807,20 @@ const coreStack = {
     align-items: center;
     gap: 0.5rem;
     padding: 0.72rem 1.4rem;
-    background: linear-gradient(135deg, #a78bfa 0%, #818cf8 100%);
-    color: #0d0f1d;
+    background: var(--accent-gradient);
+    color: #ffffff;
     font-weight: 800;
     font-size: 0.85rem;
     letter-spacing: 0.03em;
     border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 0 24px rgba(167, 139, 250, 0.45), 0 4px 14px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15), var(--shadow-glow-violet);
     transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 34px rgba(167, 139, 250, 0.65), 0 6px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), var(--shadow-glow-violet);
 }
 
 .btn-secondary {
@@ -552,20 +828,20 @@ const coreStack = {
     align-items: center;
     gap: 0.5rem;
     padding: 0.72rem 1.3rem;
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
+    background: var(--card-bg);
+    color: var(--text-1);
     font-weight: 700;
     font-size: 0.85rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border);
     text-decoration: none;
     transition: all 0.24s ease;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(94, 234, 212, 0.6);
-    color: var(--accent, #5eead4);
+    background: var(--surface-raised);
+    border-color: var(--accent);
+    color: var(--accent);
     transform: translateY(-2px);
 }
 
@@ -575,28 +851,30 @@ const coreStack = {
     gap: 0.45rem;
     padding: 0.72rem 1.1rem;
     background: transparent;
-    color: var(--text-2, rgba(255, 255, 255, 0.75));
+    color: var(--text-2);
     font-weight: 600;
     font-size: 0.85rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     text-decoration: none;
     transition: all 0.24s ease;
 }
 
 .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #ffffff;
+    background: var(--surface-raised);
+    border-color: var(--border-strong);
+    color: var(--text-1);
     transform: translateY(-2px);
 }
 
 /* ── Glass Panel ── */
 .glass-panel {
-    background: rgba(16, 18, 27, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: var(--card-bg, var(--glass-bg));
+    border: 1px solid var(--border);
     border-radius: 12px;
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-elevation-1);
 }
 
 /* ── Headings ── */
@@ -616,17 +894,17 @@ const coreStack = {
     font-size: 1.3rem;
     font-weight: 800;
     letter-spacing: -0.01em;
-    color: #ffffff;
+    color: var(--text-1);
     margin-bottom: 1.2rem;
 }
 
 .section-heading-hint {
     font-size: 0.82rem;
-    color: var(--text-3, rgba(255, 255, 255, 0.5));
+    color: var(--text-3);
 }
 
 .heading-icon {
-    color: var(--accent, #5eead4);
+    color: var(--accent);
 }
 
 /* ── Snapshot Section ── */
@@ -641,7 +919,7 @@ const coreStack = {
 }
 
 .snapshot-row {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--border);
 }
 
 .snapshot-row:last-child {
@@ -652,7 +930,7 @@ const coreStack = {
     padding: 0.85rem 1rem 0.85rem 0;
     font-weight: 700;
     font-size: 0.88rem;
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     white-space: nowrap;
     width: 22%;
     vertical-align: top;
@@ -662,13 +940,13 @@ const coreStack = {
     padding: 0.85rem 0;
     font-size: 0.92rem;
     line-height: 1.5;
-    color: var(--text-1, #f8fafc);
+    color: var(--text-1);
 }
 
 /* ── Seeking Section ── */
 .seeking-card {
     padding: 1.8rem 2rem;
-    border-left: 3px solid var(--accent, #5eead4);
+    border-left: 3px solid var(--accent);
 }
 
 .seeking-title {
@@ -677,19 +955,19 @@ const coreStack = {
     gap: 0.6rem;
     font-size: 1.2rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-1);
     margin-bottom: 0.75rem;
 }
 
 .seeking-body {
     font-size: 1rem;
     line-height: 1.65;
-    color: var(--text-2, rgba(255, 255, 255, 0.85));
+    color: var(--text-2);
     margin: 0;
 }
 
 .seeking-body strong {
-    color: #ffffff;
+    color: var(--text-1);
 }
 
 /* ── Why I'm Worth a Conversation ── */
@@ -709,7 +987,7 @@ const coreStack = {
 
 .conv-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(94, 234, 212, 0.4);
+    border-color: var(--accent);
 }
 
 .conv-metric {
@@ -722,14 +1000,69 @@ const coreStack = {
 .conv-label {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text-1);
     margin: 0;
 }
 
 .conv-desc {
     font-size: 0.84rem;
     line-height: 1.5;
-    color: var(--text-2, rgba(255, 255, 255, 0.75));
+    color: var(--text-2);
+    margin: 0;
+}
+
+/* ── Section Subtext ── */
+.section-subtext {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    margin: -0.6rem 0 1.2rem;
+    max-width: 780px;
+}
+
+/* ── AI Engineering Section ── */
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+}
+
+.ai-card {
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 20px rgba(var(--accent-rgb), 0.1);
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.ai-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.ai-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-1);
+    margin: 0;
+}
+
+.ai-desc {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--text-2);
     margin: 0;
 }
 
@@ -750,7 +1083,7 @@ const coreStack = {
 
 .how-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(167, 139, 250, 0.4);
+    border-color: var(--accent-violet);
 }
 
 .how-header {
@@ -760,21 +1093,21 @@ const coreStack = {
 }
 
 .how-icon {
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     flex-shrink: 0;
 }
 
 .how-title {
     font-size: 1rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-1);
     margin: 0;
 }
 
 .how-desc {
     font-size: 0.86rem;
     line-height: 1.55;
-    color: var(--text-2, rgba(255, 255, 255, 0.78));
+    color: var(--text-2);
     margin: 0;
 }
 
@@ -791,7 +1124,7 @@ const coreStack = {
     flex-direction: column;
     gap: 0.25rem;
     padding-bottom: 0.85rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--border);
 }
 
 .stack-item:last-child {
@@ -804,13 +1137,13 @@ const coreStack = {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--accent, #5eead4);
+    color: var(--accent);
 }
 
 .stack-values {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: var(--text-1, #f8fafc);
+    color: var(--text-1);
 }
 
 /* ── Proof Grid ── */
@@ -826,7 +1159,7 @@ const coreStack = {
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
-    color: #ffffff;
+    color: var(--text-1);
     font-weight: 700;
     font-size: 0.92rem;
     transition: all 0.2s ease;
@@ -834,19 +1167,19 @@ const coreStack = {
 
 .proof-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(94, 234, 212, 0.5);
-    background: rgba(94, 234, 212, 0.06);
-    color: var(--accent, #5eead4);
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    color: var(--accent);
 }
 
 .proof-card--highlight {
-    background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(129, 140, 248, 0.15) 100%);
-    border-color: rgba(167, 139, 250, 0.35);
+    background: rgba(var(--accent-violet-rgb), 0.1);
+    border-color: rgba(var(--accent-violet-rgb), 0.35);
 }
 
 .proof-card--highlight:hover {
-    border-color: rgba(167, 139, 250, 0.6);
-    color: #a78bfa;
+    border-color: var(--accent-violet);
+    color: var(--accent-violet);
 }
 
 .proof-arrow {
@@ -869,19 +1202,19 @@ const coreStack = {
     gap: 0.6rem;
     font-size: 1.2rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-1);
     margin-bottom: 0.75rem;
 }
 
 .references-body {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: var(--text-2, rgba(255, 255, 255, 0.8));
+    color: var(--text-2);
     margin: 0;
 }
 
 .inline-link {
-    color: var(--accent, #5eead4);
+    color: var(--accent);
     text-decoration: underline;
     font-weight: 600;
 }
@@ -890,8 +1223,8 @@ const coreStack = {
 .close-section {
     padding: 2.5rem 2rem;
     text-align: center;
-    background: linear-gradient(180deg, rgba(16, 18, 27, 0.8) 0%, rgba(24, 28, 42, 0.9) 100%);
-    border: 1px solid rgba(167, 139, 250, 0.25);
+    background: var(--card-bg-strong, var(--glass-bg));
+    border: 1px solid var(--border-strong, var(--border));
 }
 
 .close-inner {
@@ -906,14 +1239,14 @@ const coreStack = {
 .close-title {
     font-size: clamp(1.6rem, 3vw, 2.1rem);
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-1);
     margin: 0;
 }
 
 .close-body {
     font-size: 1.02rem;
     line-height: 1.55;
-    color: var(--text-2, rgba(255, 255, 255, 0.82));
+    color: var(--text-2);
     margin: 0;
 }
 
@@ -928,9 +1261,9 @@ const coreStack = {
 
 /* ── Footer ── */
 .hiring-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border);
     padding: 2rem 1.5rem;
-    background: rgba(10, 12, 18, 0.95);
+    background: var(--bg-secondary);
 }
 
 .footer-inner {
@@ -942,7 +1275,7 @@ const coreStack = {
     flex-wrap: wrap;
     gap: 1rem;
     font-size: 0.82rem;
-    color: var(--text-3, rgba(255, 255, 255, 0.5));
+    color: var(--text-3);
 }
 
 .footer-links {
@@ -951,28 +1284,55 @@ const coreStack = {
 }
 
 .footer-link {
-    color: var(--text-2, rgba(255, 255, 255, 0.7));
+    color: var(--text-2);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footer-link:hover {
-    color: var(--accent, #5eead4);
+    color: var(--accent);
+}
+
+/* ── Mobile Transitions ── */
+.mobile-drawer-enter-active,
+.mobile-drawer-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.mobile-drawer-enter-active .mobile-drawer,
+.mobile-drawer-leave-active .mobile-drawer {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-drawer-enter-from,
+.mobile-drawer-leave-to {
+    opacity: 0;
+}
+
+.mobile-drawer-enter-from .mobile-drawer,
+.mobile-drawer-leave-to .mobile-drawer {
+    transform: translateX(100%);
 }
 
 @media (max-width: 768px) {
-    .topbar {
+    .topbar-inner {
         padding: 0.75rem 1rem;
     }
     .topbar-nav {
-        gap: 0.85rem;
+        display: none;
+    }
+    .hamburger-btn {
+        display: inline-flex;
     }
     .content-shell {
         padding: 2rem 1rem 4rem;
         gap: 2.8rem;
     }
+    .snapshot-card {
+        padding: 0.75rem 1rem;
+    }
     .snapshot-label {
-        width: 32%;
+        width: 35%;
     }
 }
 </style>

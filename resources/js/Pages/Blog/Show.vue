@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import type { BlogShowPageProps } from '@/types/blog'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 const props = defineProps<BlogShowPageProps>()
 
@@ -87,7 +88,8 @@ const breadcrumbSchema = computed(() => JSON.stringify({
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <Link href="/blog" class="topbar-link">Blog</Link>
-                    <Link href="/engagements" class="topbar-link">Engagements</Link>
+                    <Link href="/for-hiring-managers" class="topbar-link">For Hiring</Link>
+                    <ThemeToggle class="topbar-link" />
                 </div>
             </div>
 

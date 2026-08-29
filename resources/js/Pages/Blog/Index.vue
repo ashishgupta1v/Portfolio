@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
 import type { BlogIndexPageProps } from '@/types/blog'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 defineProps<BlogIndexPageProps>()
 
@@ -30,7 +31,8 @@ function formatDate(value: string): string {
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <span class="topbar-current">Blog</span>
-                    <Link href="/engagements" class="topbar-link">Engagements</Link>
+                    <Link href="/for-hiring-managers" class="topbar-link">For Hiring</Link>
+                    <ThemeToggle class="topbar-link" />
                 </div>
             </div>
 

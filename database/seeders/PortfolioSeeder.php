@@ -23,7 +23,7 @@ final class PortfolioSeeder extends Seeder
                 'name' => 'Ashish Gupta',
                 'title' => 'Senior Full-Stack Architect',
                 'subtitle' => 'VILT Stack Specialist',
-                'bio' => 'High-performance Engineering Architect with 9+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 13, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
+                'bio' => 'High-performance Engineering Architect with 10+ years of experience specializing in the VILT Stack (Vue 3, Inertia, Laravel 13, Tailwind). Unique value proposition lies in modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Proven track record of reducing cloud infrastructure costs by $1M/year through architectural optimization.',
                 'phone' => '+91-9087021592',
                 'location' => 'India',
                 'avatar_url' => '/images/ashish-gupta-avatar.webp',
@@ -343,7 +343,7 @@ final class PortfolioSeeder extends Seeder
                 'slug' => 'ashishgupta-hub',
                 'category' => 'Engineering',
                 'positioning' => 'Engineering Architecture Showcase',
-                'metric_badge' => 'VILT Stack · 9+ Yrs IT · $1M Cloud Savings',
+                'metric_badge' => 'VILT Stack · 10+ Yrs IT · $1M Cloud Savings',
                 'description' => 'Engineering hub showcasing legacy modernization, live telemetry, and high-performance VILT architecture.',
                 'solution' => 'High-speed VILT platform on DDD with automated security headers, sub-50ms routing, and live telemetry.',
                 'impact' => 'Documented $1M/yr cloud infrastructure savings across enterprise modernization projects.',
@@ -358,7 +358,7 @@ final class PortfolioSeeder extends Seeder
                 ],
                 'business_impact' => [
                     '100/100 Core Web Vitals and lightning sub-100ms time to interactive.',
-                    'Demonstrated architectural leadership across 9+ enterprise case studies and open-source contributions.',
+                    'Demonstrated architectural leadership across 10+ enterprise case studies and open-source contributions.',
                     'Built-in AI assistant for instant recruiter and client pre-qualification.',
                 ],
                 'tools' => ['Laravel 13', 'Vue 3', 'Inertia', 'Tailwind CSS', 'PWA Offline', 'Filament CMS'],
@@ -405,17 +405,24 @@ final class PortfolioSeeder extends Seeder
             ['name' => 'SOLID', 'category' => 'Architecture', 'sort_order' => 17],
             ['name' => 'Microservices', 'category' => 'Architecture', 'sort_order' => 18],
             ['name' => 'RESTful API Design', 'category' => 'Architecture', 'sort_order' => 19],
-            // Tooling & Quality
-            ['name' => 'npm', 'category' => 'Tooling & Quality', 'sort_order' => 20],
-            ['name' => 'Docker', 'category' => 'Tooling & Quality', 'sort_order' => 21],
-            ['name' => 'Apache', 'category' => 'Tooling & Quality', 'sort_order' => 22],
-            ['name' => 'Nginx', 'category' => 'Tooling & Quality', 'sort_order' => 23],
-            ['name' => 'Jenkins', 'category' => 'Tooling & Quality', 'sort_order' => 24],
-            // AI & Cloud
-            ['name' => 'Cursor', 'category' => 'AI & Cloud', 'sort_order' => 25],
-            ['name' => 'Claude Code', 'category' => 'AI & Cloud', 'sort_order' => 26],
-            ['name' => 'OpenClaw', 'category' => 'AI & Cloud', 'sort_order' => 27],
-            ['name' => 'AWS', 'category' => 'AI & Cloud', 'sort_order' => 28],
+            // AI Engineering & LLMs
+            ['name' => 'RAG Pipelines', 'category' => 'AI Engineering', 'sort_order' => 20],
+            ['name' => 'pgvector', 'category' => 'AI Engineering', 'sort_order' => 21],
+            ['name' => 'OpenAI & Claude APIs', 'category' => 'AI Engineering', 'sort_order' => 22],
+            ['name' => 'Vector Embeddings', 'category' => 'AI Engineering', 'sort_order' => 23],
+            ['name' => 'Prompt Injection Defense', 'category' => 'AI Engineering', 'sort_order' => 24],
+            ['name' => 'Autonomous AI Agents', 'category' => 'AI Engineering', 'sort_order' => 25],
+            ['name' => 'MCP (Model Context Protocol)', 'category' => 'AI Engineering', 'sort_order' => 26],
+            // AI Dev Tooling
+            ['name' => 'Claude Code', 'category' => 'AI Dev Tooling', 'sort_order' => 27],
+            ['name' => 'Cursor', 'category' => 'AI Dev Tooling', 'sort_order' => 28],
+            ['name' => 'GitHub Copilot', 'category' => 'AI Dev Tooling', 'sort_order' => 29],
+            // Cloud & DevOps
+            ['name' => 'AWS', 'category' => 'Cloud & DevOps', 'sort_order' => 30],
+            ['name' => 'Docker', 'category' => 'Cloud & DevOps', 'sort_order' => 31],
+            ['name' => 'Nginx', 'category' => 'Cloud & DevOps', 'sort_order' => 32],
+            ['name' => 'Jenkins', 'category' => 'Cloud & DevOps', 'sort_order' => 33],
+            ['name' => 'GitHub Actions', 'category' => 'Cloud & DevOps', 'sort_order' => 34],
         ];
 
         $allowedNames = array_column($skills, 'name');
@@ -433,7 +440,7 @@ final class PortfolioSeeder extends Seeder
     {
         $links = [
             ['platform' => 'github', 'url' => 'https://github.com/ashishgupta1v', 'label' => 'GitHub'],
-            ['platform' => 'linkedin', 'url' => 'https://www.linkedin.com/in/ashishgupta1v/', 'label' => 'LinkedIn'],
+            ['platform' => 'linkedin', 'url' => 'https://www.linkedin.com/in/ashish-gupta-dev/', 'label' => 'LinkedIn'],
             ['platform' => 'email', 'url' => 'mailto:ashishgupta1v@gmail.com', 'label' => 'Email'],
         ];
 

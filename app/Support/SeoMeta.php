@@ -33,7 +33,7 @@ final readonly class SeoMeta
     {
         return new self(
             title: 'Ashish Gupta — Senior Full-Stack Architect',
-            description: 'Senior Full-Stack Architect with 9+ years modernizing legacy Healthcare and Aviation monoliths into scalable, domain-driven systems. Vue 3, Laravel, Inertia.js.',
+            description: 'Senior Full-Stack Architect with 10+ years shipping VILT stack (Vue 3, Laravel 13, Inertia) platforms & legacy modernization. Open to full-time roles.',
         );
     }
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 </script>
 
 <template>
@@ -21,6 +22,7 @@ import { Head, Link } from '@inertiajs/vue3'
                 <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                 <Link href="/for-hiring-managers" class="topbar-link">For Hiring Managers</Link>
                 <Link href="/blog" class="topbar-link">Blog</Link>
+                <ThemeToggle class="topbar-link" />
             </nav>
         </header>
 

@@ -288,7 +288,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
         type: 'Live Web App',
         category: 'Engineering',
         positioning: 'Engineering Architecture Showcase',
-        metrics: ['VILT Stack', '9+ Yrs IT', '$1M Cloud Savings'],
+        metrics: ['VILT Stack', '10+ Yrs IT', '$1M Cloud Savings'],
         image: '/images/portfolio/ashishgupta.jpg',
         imageUrl: '/images/portfolio/ashishgupta.jpg',
         description: 'Engineering hub showcasing legacy modernization, live telemetry, and high-performance VILT architecture.',
@@ -309,7 +309,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
         ],
         businessImpact: [
             '100/100 Core Web Vitals and lightning sub-100ms time to interactive.',
-            'Demonstrated architectural leadership across 9+ enterprise case studies and open-source contributions.',
+            'Demonstrated architectural leadership across 10+ enterprise case studies and open-source contributions.',
             'Built-in AI assistant for instant recruiter and client pre-qualification.',
         ],
     },

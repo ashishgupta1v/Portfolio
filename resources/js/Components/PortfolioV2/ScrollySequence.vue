@@ -48,7 +48,7 @@ const statements = computed<HeroStatement[]>(() => [
         z: 60,
     },
     {
-        title: '9+ Years Shipping.',
+        title: '10+ Years Shipping.',
         subtitle: 'Vue, Laravel, DDD — from legacy modernization to greenfield at scale.',
         align: 'left',
         start: 0.34,
@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
                             </div>
 
                             <div class="hero-secondary-links">
-                                <a href="https://www.linkedin.com/in/ashishgupta1v/" target="_blank" rel="noopener noreferrer" class="hero-sec-link">
+                                <a href="https://www.linkedin.com/in/ashish-gupta-dev/" target="_blank" rel="noopener noreferrer" class="hero-sec-link">
                                     <span>LinkedIn</span>
                                     <span class="hero-sec-arrow">↗</span>
                                 </a>
@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
                             </div>
 
                             <p class="hero-microcopy">
-                                Senior Full-Stack Architect · 9+ years · Open to full-time remote roles.
+                                Senior Full-Stack Architect · 10+ years · Open to full-time remote roles.
                             </p>
                         </div>
                     </div>

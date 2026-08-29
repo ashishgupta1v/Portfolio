@@ -196,8 +196,8 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- Credit -->
-                <div class="ct-column glass-panel">
+                <!-- Credit & Legal Landmark -->
+                <footer class="ct-column glass-panel" role="contentinfo">
                     <h3 class="col-title">Architecture &amp; Legal</h3>
                     <p class="credit-text">
                         Designed &amp; Developed by
@@ -214,7 +214,7 @@ onMounted(() => {
                         <br />
                         <span class="stack-detail">Vue 3 · Inertia.js · Laravel 13 · Tailwind CSS</span>
                     </p>
-                </div>
+                </footer>
             </div>
 
             <!-- Contact Form -->
@@ -323,13 +323,15 @@ onMounted(() => {
     padding: 7.5rem 1.5rem 5rem;
     border-top: 1px solid var(--border);
     overflow: hidden;
+    overflow-x: clip;
 }
 
 .ct-ambient-glow {
     position: absolute;
     bottom: 10%;
-    left: 30%;
-    width: 700px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(700px, 90vw);
     height: 400px;
     background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(94, 234, 212, 0.08) 50%, transparent 70%);
     filter: blur(60px);

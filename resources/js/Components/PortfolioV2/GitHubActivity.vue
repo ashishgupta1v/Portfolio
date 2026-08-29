@@ -111,7 +111,7 @@ onMounted(async () => {
             recentRepos: [
                 {
                     name: 'Portfolio',
-                    description: 'Modern personal engineering portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
+                    description: 'Full-stack portfolio built with Laravel 13, Vue 3, Inertia.js, and Tailwind CSS.',
                     language: 'Vue',
                     stars: 0,
                     url: 'https://github.com/ashishgupta1v/Portfolio',
@@ -119,7 +119,7 @@ onMounted(async () => {
                 },
                 {
                     name: 'DigitalBuilders',
-                    description: 'Autonomous AI-assisted agency platform & conversion engine.',
+                    description: 'Autonomous agency platform & conversion-optimized client dashboard.',
                     language: 'PHP',
                     stars: 0,
                     url: 'https://github.com/ashishgupta1v/DigitalBuilders',
@@ -127,7 +127,7 @@ onMounted(async () => {
                 },
                 {
                     name: 'Habuilt',
-                    description: 'High-performance habit tracking and personal accountability engine.',
+                    description: 'High-performance habit tracking & personal accountability web application.',
                     language: 'TypeScript',
                     stars: 0,
                     url: 'https://github.com/ashishgupta1v/Habuilt',
@@ -135,7 +135,7 @@ onMounted(async () => {
                 },
                 {
                     name: 'JobBot',
-                    description: 'Automated job discovery and application workflow tool.',
+                    description: 'Automated job discovery pipeline and submission tracking utility.',
                     language: 'JavaScript',
                     stars: 0,
                     url: 'https://github.com/ashishgupta1v/JobBot',

@@ -202,7 +202,7 @@ import { Head, Link } from '@inertiajs/vue3'
                     <span class="proof-label">clinical trial monitoring latency reduction</span>
                 </div>
                 <div class="proof-stat">
-                    <span class="proof-num">9+ yrs</span>
+                    <span class="proof-num">10+ yrs</span>
                     <span class="proof-label">across Healthcare, Aviation, Logistics, SaaS</span>
                 </div>
             </div>
@@ -233,7 +233,7 @@ import { Head, Link } from '@inertiajs/vue3'
                 <Link href="/case-studies" class="footer-link">Case Studies</Link>
                 <Link href="/blog" class="footer-link">Blog</Link>
                 <a href="https://github.com/ashishgupta1v" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
-                <a href="https://www.linkedin.com/in/ashishgupta1v/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/ashish-gupta-dev/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
             </div>
             <p class="footer-copy">© {{ new Date().getFullYear() }} Ashish Gupta · Senior Full-Stack Architect</p>
         </footer>

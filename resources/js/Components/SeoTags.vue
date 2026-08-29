@@ -34,7 +34,7 @@ const jsonLd = computed(() => {
         "url": "https://ashishgupta.dev",
         "sameAs": [
             "https://github.com/ashishgupta1v",
-            "https://linkedin.com/in/ashishgupta1v"
+            "https://www.linkedin.com/in/ashish-gupta-dev/"
         ]
     })
 })

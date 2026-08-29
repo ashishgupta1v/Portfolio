@@ -419,7 +419,7 @@ a {
 
     /* Sections stack cleanly, no scroll perspective. */
     .depth-sections,
-    .depth-sections :deep(> *) {
+    .depth-sections > * {
         perspective: none !important;
         transform: none !important;
         opacity: 1 !important;

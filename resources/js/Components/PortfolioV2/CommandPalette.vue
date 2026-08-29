@@ -106,12 +106,12 @@ const actions: PaletteAction[] = [
         execute: () => router.visit('/case-studies'),
     },
     {
-        id: 'page-engagements',
-        label: 'Open Engagements',
+        id: 'page-hiring',
+        label: 'For Hiring Managers',
         group: 'Pages',
         icon: Handshake,
         hint: '',
-        execute: () => router.visit('/engagements'),
+        execute: () => router.visit('/for-hiring-managers'),
     },
     // Actions
     {

@@ -5,6 +5,7 @@ import type { CaseStudyShowPageProps } from '@/types/caseStudies'
 import { Download } from 'lucide-vue-next'
 import ArchitectureDiagram from '@/Components/PortfolioV2/ArchitectureDiagram.vue'
 import ShareButtons from '@/Components/PortfolioV2/ShareButtons.vue'
+import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -124,12 +125,13 @@ function downloadPdf() {
                     <Link href="/" class="topbar-link">Portfolio</Link>
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <Link href="/blog" class="topbar-link">Blog</Link>
-                    <Link href="/engagements" class="topbar-link">Engagements</Link>
+                    <Link href="/for-hiring-managers" class="topbar-link">For Hiring</Link>
                     <ShareButtons :url="shareUrl" :title="caseStudy.title" :description="caseStudy.seoDescription" />
                     <button class="pdf-download-btn" @click="downloadPdf" aria-label="Download as PDF">
                         <Download :size="14" />
                         <span>Download PDF</span>
                     </button>
+                    <ThemeToggle class="topbar-link" />
                 </div>
             </div>
 

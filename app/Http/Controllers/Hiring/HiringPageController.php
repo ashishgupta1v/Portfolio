@@ -14,12 +14,12 @@ final class HiringPageController
         return Inertia::render('Hiring/Index', [
             'seo' => [
                 'title' => 'For Hiring Managers & Recruiters — Ashish Gupta (Senior Full-Stack Architect)',
-                'description' => '9+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles.',
+                'description' => '10+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. Senior Full-Stack Architect open to full-time roles.',
                 'path' => '/for-hiring-managers',
             ],
             'recruiterBrief' => [
                 'targetRole' => 'Senior Full-Stack Architect / Staff Engineer / Engineering Lead',
-                'experience' => '9+ Years Professional Software Architecture & Delivery',
+                'experience' => '10+ Years Professional Software Architecture & Delivery',
                 'availability' => 'Immediately Available / Flexible Start',
                 'location' => 'India (IST / UTC+5:30) · Open to Remote Worldwide',
                 'workAuth' => 'India (Citizen) · Remote / Visa Sponsorship & Relocation for eligible roles',

@@ -39,7 +39,7 @@ const METRICS: Metric[] = [
         description: 'Knitwear ERP modernization',
     },
     {
-        target: 9,
+        target: 10,
         prefix: '',
         suffix: '+',
         label: 'Years of Engineering Experience',
