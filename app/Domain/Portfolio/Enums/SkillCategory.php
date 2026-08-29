@@ -11,4 +11,7 @@ enum SkillCategory: string
     case ARCHITECTURE = 'Architecture';
     case TOOLING = 'Tooling & Quality';
     case AI_CLOUD = 'AI & Cloud';
+    case AI_ENGINEERING = 'AI Engineering';
+    case AI_DEV_TOOLING = 'AI Dev Tooling';
+    case CLOUD_DEVOPS = 'Cloud & DevOps';
 }
