@@ -288,4 +288,21 @@ function formatMetric(index: number): string {
         padding: 1.6rem 1.4rem;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .metric-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .metric-card--featured {
+    background: linear-gradient(135deg, #ffffff, rgba(13, 148, 136, 0.05));
+    border-color: rgba(13, 148, 136, 0.35);
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .metric-number {
+    color: #0d9488;
+}
 </style>

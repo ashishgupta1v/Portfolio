@@ -174,7 +174,7 @@ onMounted(() => {
     top: 1rem;
     bottom: 1rem;
     width: 2px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--border-strong);
     z-index: 0;
 }
 
@@ -182,7 +182,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, var(--accent) 0%, var(--accent-violet) 50%, #38bdf8 100%);
-    box-shadow: 0 0 12px rgba(94, 234, 212, 0.5);
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
     transform-origin: top;
     transform: scaleY(0);
 }
@@ -199,8 +199,8 @@ onMounted(() => {
 }
 
 .tl-row:hover {
-    border-color: rgba(var(--accent-rgb), 0.35);
-    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.6), 0 0 25px rgba(94, 234, 212, 0.1);
+    border-color: rgba(var(--accent-rgb), 0.45);
+    box-shadow: var(--shadow-elevation-2);
 }
 
 /* Node indicator */
@@ -414,5 +414,27 @@ onMounted(() => {
     .tl-role {
         font-size: 1.1rem;
     }
+}
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .tl-row {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .tl-row:hover {
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .tl-node {
+    background: #ffffff;
+    border-color: #0d9488;
+    box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+}
+
+:global([data-theme="light"]) .tl-company {
+    color: #0d9488;
 }
 </style>

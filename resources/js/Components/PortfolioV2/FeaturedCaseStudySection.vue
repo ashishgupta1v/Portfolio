@@ -307,4 +307,17 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
         grid-template-columns: 1fr;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .primary-card,
+:global([data-theme="light"]) .signal-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .featured-panel {
+    background: rgba(241, 245, 249, 0.7);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
 </style>

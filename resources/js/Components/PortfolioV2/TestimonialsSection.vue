@@ -257,7 +257,7 @@ function initials(name: string): string {
     align-items: center;
     gap: 0.8rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border);
 }
 
 .testimonial-avatar {
@@ -266,13 +266,13 @@ function initials(name: string): string {
     border-radius: 0.65rem;
     overflow: hidden;
     flex-shrink: 0;
-    background: linear-gradient(135deg, rgba(94, 234, 212, 0.15), rgba(139, 92, 246, 0.15));
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15), rgba(var(--accent-violet-rgb), 0.15));
     display: grid;
     place-items: center;
     color: var(--accent);
     font-weight: 800;
     font-size: 0.82rem;
-    border: 1px solid rgba(94, 234, 212, 0.3);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
 }
 
 .avatar-letter {
@@ -319,5 +319,17 @@ function initials(name: string): string {
     .testimonial-card {
         padding: 1.25rem 1.15rem;
     }
+}
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .testimonial-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .testimonial-card:hover {
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
 }
 </style>

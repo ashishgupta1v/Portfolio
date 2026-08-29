@@ -360,4 +360,32 @@ onMounted(() => {
         padding: 4rem 1rem 4rem;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .filter-pill {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .filter-pill:hover {
+    border-color: #0d9488;
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .filter-pill--active {
+    background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(124, 58, 237, 0.1));
+    border-color: #0d9488;
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .pill-count {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+:global([data-theme="light"]) .filter-pill--active .pill-count {
+    background: #0d9488;
+    color: #ffffff;
+}
 </style>

@@ -444,4 +444,33 @@ const sendMessage = async () => {
         height: 400px;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .chat-window {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 16px 40px -4px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .chat-header {
+    background: #f8fafc;
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .bubble-assistant {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .chat-input-area {
+    background: #f8fafc;
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .chat-input-area input {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.12);
+}
 </style>

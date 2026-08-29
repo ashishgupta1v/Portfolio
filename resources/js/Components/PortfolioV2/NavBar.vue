@@ -211,24 +211,24 @@ onUnmounted(() => {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.nav:not(.scrolled) .nav-logo {
-    color: #f8fafc;
+.nav .nav-logo {
+    color: var(--text-1);
 }
 
-.nav:not(.scrolled) .nav-link {
-    color: rgba(248, 250, 252, 0.85);
+.nav .nav-link {
+    color: var(--text-2);
 }
 
-.nav:not(.scrolled) .nav-link:hover {
-    color: #ffffff;
+.nav .nav-link:hover {
+    color: var(--text-1);
 }
 
-.nav:not(.scrolled) .nav-link.active {
+.nav .nav-link.active {
     color: var(--accent);
 }
 
-.nav:not(.scrolled) .hamburger {
-    color: #f8fafc;
+.nav .hamburger {
+    color: var(--text-1);
 }
 
 .nav-inner {

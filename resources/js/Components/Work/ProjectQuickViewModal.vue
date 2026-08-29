@@ -347,16 +347,17 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--text-muted, #94a3b8);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text-2);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .modal-close-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
+    background: var(--surface);
+    color: var(--text-1);
+    border-color: var(--accent);
     transform: rotate(90deg);
 }
 
@@ -619,7 +620,7 @@ onBeforeUnmount(() => {
     gap: 0.75rem;
     padding-top: 1.5rem;
     margin-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border);
 }
 
 .btn-primary {
@@ -650,9 +651,9 @@ onBeforeUnmount(() => {
     min-height: 42px;
     padding: 0.6rem 1.25rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text-1);
     font-size: 0.82rem;
     font-weight: 700;
     text-decoration: none;
@@ -660,8 +661,9 @@ onBeforeUnmount(() => {
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.35);
+    background: var(--surface);
+    border-color: var(--accent);
+    color: var(--accent);
     transform: translateY(-2px);
 }
 
@@ -674,7 +676,7 @@ onBeforeUnmount(() => {
     border-radius: 999px;
     background: rgba(37, 211, 102, 0.12);
     border: 1px solid rgba(37, 211, 102, 0.35);
-    color: #25d366;
+    color: #16a34a;
     font-size: 0.82rem;
     font-weight: 700;
     text-decoration: none;
@@ -693,8 +695,8 @@ onBeforeUnmount(() => {
     padding: 0.6rem 1.25rem;
     border-radius: 999px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-muted, #94a3b8);
+    border: 1px solid var(--border);
+    color: var(--text-2);
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
@@ -703,8 +705,8 @@ onBeforeUnmount(() => {
 }
 
 .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    background: var(--surface-raised);
+    color: var(--text-1);
 }
 
 .btn-primary:focus-visible,
@@ -762,5 +764,39 @@ onBeforeUnmount(() => {
         margin-left: 0;
         justify-content: center;
     }
+}
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .modal-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 24px 60px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .modal-backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+
+:global([data-theme="light"]) .preview-box {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .badge-category {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .badge-metric {
+    background: rgba(2, 132, 199, 0.08);
+    border-color: rgba(2, 132, 199, 0.25);
+    color: #0284c7;
+}
+
+:global([data-theme="light"]) .tech-tag {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.08);
+    color: #0f172a;
 }
 </style>

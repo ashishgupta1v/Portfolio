@@ -376,7 +376,7 @@ onMounted(() => {
 .card-disclosure {
     margin-top: 1.1rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border);
     animation: fadeIn 0.25s ease;
 }
 
@@ -418,7 +418,7 @@ onMounted(() => {
     width: 2rem;
     height: 2rem;
     border: 1px solid var(--border-strong);
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--surface-raised);
     color: var(--text-2);
     display: inline-flex;
     align-items: center;
@@ -428,8 +428,8 @@ onMounted(() => {
 }
 
 .expand-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    background: var(--surface);
+    color: var(--text-1);
     border-color: var(--accent);
 }
 
@@ -455,5 +455,41 @@ onMounted(() => {
     .combo-intro {
         padding: 1.8rem 1.4rem;
     }
+}
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .combo-intro {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .combo-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .combo-card.active,
+:global([data-theme="light"]) .combo-card:hover {
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .ghost-numeral {
+    color: #475569;
+    opacity: 0.18;
+}
+
+:global([data-theme="light"]) .expand-btn {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .expand-btn:hover {
+    background: #ffffff;
+    border-color: #0d9488;
+    color: #0d9488;
 }
 </style>

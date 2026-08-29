@@ -587,4 +587,31 @@ onMounted(() => {
     background: var(--border);
     border-radius: 2px;
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .cp-overlay {
+    background: rgba(15, 23, 42, 0.4);
+}
+
+:global([data-theme="light"]) .cp-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.12);
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .cp-header {
+    background: #f8fafc;
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .cp-footer {
+    background: #f8fafc;
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .cp-kbd {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: rgba(15, 23, 42, 0.12);
+}
 </style>
