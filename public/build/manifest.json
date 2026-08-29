@@ -448,7 +448,7 @@
     ]
   },
   "resources/js/Pages/Portfolio/Index.vue": {
-    "file": "assets/Index-D7yrGHaC.js",
+    "file": "assets/Index-DJjqFNA2.js",
     "name": "Index",
     "src": "resources/js/Pages/Portfolio/Index.vue",
     "isDynamicEntry": true,
@@ -483,7 +483,7 @@
       "resources/js/Components/PortfolioV2/ContactSection.vue"
     ],
     "css": [
-      "assets/Index-DgvJcBeG.css"
+      "assets/Index-CP95C7s_.css"
     ]
   },
   "resources/js/Pages/Projects/Show.vue": {
@@ -505,7 +505,7 @@
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-B-gq-LFu.js",
+    "file": "assets/app-C0WVK5LA.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,

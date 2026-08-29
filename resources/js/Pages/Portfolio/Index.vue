@@ -99,25 +99,11 @@ function handlePageLoaded() {
 }
 
 function initScrollDepth() {
+    // Keep sections crisp and fully opaque without low-contrast scrub dimming
     if (!depthRef.value) return
     const sections = depthRef.value.querySelectorAll(':scope > *')
-    sections.forEach((section, i) => {
-        gsap.fromTo(section,
-            { z: -80, opacity: 0.3, rotateX: 2 },
-            {
-                z: 0,
-                opacity: 1,
-                rotateX: 0,
-                duration: 1,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: section as Element,
-                    start: 'top 90%',
-                    end: 'top 40%',
-                    scrub: 0.8,
-                },
-            }
-        )
+    sections.forEach((section) => {
+        gsap.set(section, { opacity: 1, z: 0, rotateX: 0, clearProps: 'opacity,transform' })
     })
 }
 
@@ -137,7 +123,7 @@ onMounted(() => {
         window.addEventListener('load', handlePageLoaded, { once: true })
     }
 
-    setTimeout(() => nextTick(initScrollDepth), 300)
+    setTimeout(() => nextTick(initScrollDepth), 150)
 })
 
 onUnmounted(() => {
