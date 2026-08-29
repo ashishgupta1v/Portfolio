@@ -425,7 +425,11 @@ function activateNode(index: number) {
 
 .loader-fade-enter-active,
 .loader-fade-leave-active {
-    transition: opacity 420ms ease;
+    transition: opacity 350ms ease;
+}
+
+.loader-fade-leave-active {
+    pointer-events: none !important;
 }
 
 .loader-fade-enter-from,

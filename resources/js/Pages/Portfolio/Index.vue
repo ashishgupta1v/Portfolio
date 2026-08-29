@@ -66,7 +66,7 @@ function handleTrackCta(type: string) {
 // emitted server-side, where crawlers can actually read them.
 
 const heroReady = ref(true)
-const pageReady = ref(false)
+const pageReady = ref(true)
 const heroProgress = ref(100)
 const minLoaderElapsed = ref(false)
 let minTimer: number | null = null
@@ -94,10 +94,6 @@ function handleHeroProgress(value: number) {
     heroProgress.value = value
 }
 
-function handlePageLoaded() {
-    pageReady.value = true
-}
-
 function initScrollDepth() {
     // Keep sections crisp and fully opaque without low-contrast scrub dimming
     if (!depthRef.value) return
@@ -108,6 +104,7 @@ function initScrollDepth() {
 }
 
 onMounted(() => {
+    pageReady.value = true
     initLenis()
 
     minTimer = window.setTimeout(() => {
@@ -115,21 +112,14 @@ onMounted(() => {
         if (typeof window !== 'undefined') {
             sessionStorage.setItem('ag_portfolio_booted', 'true')
         }
-    }, 700)
+    }, 450)
 
-    if (document.readyState === 'complete') {
-        pageReady.value = true
-    } else {
-        window.addEventListener('load', handlePageLoaded, { once: true })
-    }
-
-    setTimeout(() => nextTick(initScrollDepth), 150)
+    setTimeout(() => nextTick(initScrollDepth), 100)
 })
 
 onUnmounted(() => {
     destroyLenis()
     if (minTimer) clearTimeout(minTimer)
-    window.removeEventListener('load', handlePageLoaded)
 })
 </script>
 
