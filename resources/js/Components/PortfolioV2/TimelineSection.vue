@@ -54,8 +54,8 @@ onMounted(() => {
     const titleWords = q('.section-title-word')
     if (titleWords.length) {
         gsap.from(titleWords, {
-            scrollTrigger: { trigger: sectionRef.value, start: 'top 80%' },
-            y: 60, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out',
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 92%', once: true },
+            y: 30, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out', clearProps: 'all',
         })
     }
 
@@ -78,8 +78,8 @@ onMounted(() => {
     const rows = q('.tl-row')
     if (rows.length && gridEl.length) {
         gsap.from(rows, {
-            scrollTrigger: { trigger: gridEl, start: 'top 72%' },
-            y: 40, opacity: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out',
+            scrollTrigger: { trigger: gridEl, start: 'top 90%', once: true },
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out', clearProps: 'all',
         })
     }
 })

@@ -62,36 +62,30 @@ onMounted(() => {
         const q = gsap.utils.selector(sectionRef.value)
         const headerEls = q('.section-header, .filter-fieldset')
         if (headerEls.length) {
-            gsap.fromTo(
-                headerEls,
-                { y: 30, opacity: 0 },
-                {
-                    scrollTrigger: { trigger: sectionRef.value, start: 'top 85%' },
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: 'power3.out',
-                }
-            )
+            gsap.from(headerEls, {
+                scrollTrigger: { trigger: sectionRef.value, start: 'top 92%', once: true },
+                y: 24,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: 'power3.out',
+                clearProps: 'all',
+            })
         }
 
         const cards = q('.work-grid-item')
         if (cards.length) {
-            gsap.fromTo(
-                cards,
-                { y: 35, opacity: 0 },
-                {
-                    scrollTrigger: { trigger: sectionRef.value, start: 'top 75%' },
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.65,
-                    stagger: 0.08,
-                    ease: 'power3.out',
-                }
-            )
+            gsap.from(cards, {
+                scrollTrigger: { trigger: sectionRef.value, start: 'top 88%', once: true },
+                y: 28,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: 'power3.out',
+                clearProps: 'all',
+            })
         }
-    }, 150)
+    }, 100)
 })
 </script>
 

@@ -65,13 +65,15 @@ onMounted(() => {
         gsap.from(cards, {
             scrollTrigger: {
                 trigger: sectionRef.value,
-                start: 'top 85%',
+                start: 'top 90%',
+                once: true,
             },
-            y: 52,
+            y: 30,
             opacity: 0,
-            duration: 0.72,
-            stagger: 0.12,
+            duration: 0.65,
+            stagger: 0.1,
             ease: 'power3.out',
+            clearProps: 'all',
         })
     }
 

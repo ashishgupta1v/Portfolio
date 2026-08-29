@@ -4,11 +4,24 @@ export function useMouseDepth(strength: number = 1) {
     const mx = ref(0)
     const my = ref(0)
     const enabled = ref(true)
+    let rafId: number | null = null
+    let latestClientX = 0
+    let latestClientY = 0
+
+    function updateCoordinates() {
+        if (!enabled.value) return
+        mx.value = parseFloat(((latestClientX / window.innerWidth - 0.5) * 2).toFixed(3))
+        my.value = parseFloat(((latestClientY / window.innerHeight - 0.5) * 2).toFixed(3))
+        rafId = null
+    }
 
     function onMove(e: MouseEvent) {
         if (!enabled.value) return
-        mx.value = (e.clientX / window.innerWidth - 0.5) * 2
-        my.value = (e.clientY / window.innerHeight - 0.5) * 2
+        latestClientX = e.clientX
+        latestClientY = e.clientY
+        if (!rafId) {
+            rafId = requestAnimationFrame(updateCoordinates)
+        }
     }
 
     function checkReducedMotion() {
@@ -22,15 +35,16 @@ export function useMouseDepth(strength: number = 1) {
 
     onUnmounted(() => {
         window.removeEventListener('mousemove', onMove)
+        if (rafId) cancelAnimationFrame(rafId)
     })
 
     const depthVars = computed(() => ({
-        '--mx': mx.value.toFixed(4),
-        '--my': my.value.toFixed(4),
-        '--depth-rx': `${(-my.value * strength * 2).toFixed(3)}deg`,
-        '--depth-ry': `${(mx.value * strength * 2).toFixed(3)}deg`,
-        '--depth-tx': `${(mx.value * strength * 8).toFixed(2)}px`,
-        '--depth-ty': `${(my.value * strength * 8).toFixed(2)}px`,
+        '--mx': `${mx.value}`,
+        '--my': `${my.value}`,
+        '--depth-rx': `${(-my.value * strength * 2).toFixed(2)}deg`,
+        '--depth-ry': `${(mx.value * strength * 2).toFixed(2)}deg`,
+        '--depth-tx': `${(mx.value * strength * 8).toFixed(1)}px`,
+        '--depth-ty': `${(my.value * strength * 8).toFixed(1)}px`,
     }) as Record<string, string>)
 
     return { mx, my, depthVars, enabled }

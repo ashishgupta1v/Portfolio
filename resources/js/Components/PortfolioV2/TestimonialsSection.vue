@@ -75,12 +75,13 @@ onMounted(() => {
     if (!cards.length) return
 
     gsap.from(cards, {
-        scrollTrigger: { trigger: sectionRef.value, start: 'top 78%' },
-        y: 44,
+        scrollTrigger: { trigger: sectionRef.value, start: 'top 88%', once: true },
+        y: 30,
         opacity: 0,
-        duration: 0.72,
-        stagger: 0.14,
+        duration: 0.65,
+        stagger: 0.1,
         ease: 'power3.out',
+        clearProps: 'all',
     })
 })
 

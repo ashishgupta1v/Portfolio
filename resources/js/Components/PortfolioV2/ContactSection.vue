@@ -96,7 +96,7 @@ onMounted(() => {
 
     if (columns.length > 0 && grid) {
         gsap.from(columns, {
-            scrollTrigger: { trigger: sectionRef.value, start: 'top 95%' },
+            scrollTrigger: { trigger: sectionRef.value, start: 'top 95%', once: true },
             y: 20, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
             clearProps: 'all',
         })
