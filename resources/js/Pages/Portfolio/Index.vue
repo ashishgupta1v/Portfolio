@@ -12,6 +12,7 @@ import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 gsap.registerPlugin(ScrollTrigger)
 
 import SectionSkeleton from '@/Components/PortfolioV2/SectionSkeleton.vue'
+import SplitHero from '@/Components/PortfolioV2/SplitHero.vue'
 
 // Each async section shares the same skeleton placeholder while its chunk
 // loads. `delay` prevents a flash of skeleton on fast connections — nothing
@@ -20,7 +21,6 @@ import SectionSkeleton from '@/Components/PortfolioV2/SectionSkeleton.vue'
 // the skeleton silently rather than showing a scary error box).
 const asyncOpts = { loadingComponent: SectionSkeleton, delay: 200, timeout: 12_000 } as const
 
-const ScrollySequence = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/ScrollySequence.vue'), ...asyncOpts })
 const AboutSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/AboutSection.vue'), ...asyncOpts })
 const TimelineSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/TimelineSection.vue'), ...asyncOpts })
 const WorksSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/WorksSection.vue'), ...asyncOpts })
@@ -50,13 +50,24 @@ const { initLenis, destroyLenis } = useLenisSmoothScroll()
 useKeyboardShortcuts()
 
 const linkedinLink = props.socialLinks.find(l => l.platform === 'linkedin')
+const githubLink = props.socialLinks.find(l => l.platform === 'github')
+
+function handleOpenAiAssistant() {
+    window.dispatchEvent(new CustomEvent('open-ai-assistant'))
+}
+
+function handleTrackCta(type: string) {
+    if (typeof window !== 'undefined' && (window as any).plausible) {
+        (window as any).plausible('hero_cta', { props: { type } })
+    }
+}
 
 // Person and WebSite JSON-LD now come from PortfolioController::seo() and are
 // emitted server-side, where crawlers can actually read them.
 
-const heroReady = ref(false)
+const heroReady = ref(true)
 const pageReady = ref(false)
-const heroProgress = ref(0)
+const heroProgress = ref(100)
 const minLoaderElapsed = ref(false)
 let minTimer: number | null = null
 
@@ -163,13 +174,18 @@ onUnmounted(() => {
             :resume-url="profile.resumeUrl"
         />
 
-        <ScrollySequence
+        <SplitHero
             :name="profile.name"
             :title="profile.title"
             :subtitle="profile.subtitle"
-            :image-url="profile.avatarUrl"
-            @hero-ready="handleHeroReady"
-            @hero-progress="handleHeroProgress"
+            :resume-url="profile.resumeUrl"
+            :contact-email="profile.email"
+            :linkedin-url="linkedinLink?.url"
+            :github-url="githubLink?.url"
+            :avatar-url="profile.avatarUrl"
+            panel-mode="architecture"
+            @open-assistant="handleOpenAiAssistant"
+            @cta="handleTrackCta"
         />
 
         <main id="main-content" ref="depthRef" class="depth-sections" role="main">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { MessageSquare, X, Send, Sparkles } from 'lucide-vue-next'
 import axios from 'axios'
 
@@ -77,6 +77,18 @@ const messagesContainer = ref<HTMLElement | null>(null)
 const toggleChat = () => {
     isOpen.value = !isOpen.value
 }
+
+function handleOpenAssistant() {
+    isOpen.value = true
+}
+
+onMounted(() => {
+    window.addEventListener('open-ai-assistant', handleOpenAssistant)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('open-ai-assistant', handleOpenAssistant)
+})
 
 const scrollToBottom = async () => {
     await nextTick()
