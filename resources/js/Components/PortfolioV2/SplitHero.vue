@@ -1080,52 +1080,156 @@ onBeforeUnmount(() => {
     color: var(--text-1, #0f172a);
 }
 
+:global([data-theme="light"]) .hero-headline {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .gradient-accent {
+    background: linear-gradient(135deg, #0d9488 0%, #0284c7 45%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+:global([data-theme="light"]) .hero-eyebrow {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .eyebrow-line {
+    background-color: #0d9488;
+}
+
+:global([data-theme="light"]) .proof-line {
+    color: #0d9488;
+    font-weight: 700;
+}
+
+:global([data-theme="light"]) .hero-bio {
+    color: #334155 !important;
+}
+
+:global([data-theme="light"]) .hero-bio strong {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .status-pill {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #475569;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .status-pill.available {
+    color: #0f172a;
+    border-color: rgba(13, 148, 136, 0.35);
+}
+
+:global([data-theme="light"]) .social-link {
+    color: #475569;
+}
+
+:global([data-theme="light"]) .social-link:hover,
+:global([data-theme="light"]) .social-link.highlight {
+    color: #0d9488;
+}
+
 :global([data-theme="light"]) .hero-panel {
     background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05);
 }
 
 :global([data-theme="light"]) .panel-header {
-    background: #f1f5f9;
-    border-color: rgba(0, 0, 0, 0.06);
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .panel-title-tag {
+    color: #64748b;
 }
 
 :global([data-theme="light"]) .arch-node-item {
     background: #f8fafc;
-    border-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(15, 23, 42, 0.08);
 }
 
 :global([data-theme="light"]) .arch-node-item.is-active {
     background: #f0fdfa;
-    border-color: rgba(13, 148, 136, 0.3);
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.08);
+}
+
+:global([data-theme="light"]) .node-icon-box {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+:global([data-theme="light"]) .node-title {
+    color: #0f172a !important;
+    font-weight: 700;
+}
+
+:global([data-theme="light"]) .node-sub {
+    color: #64748b !important;
+    font-weight: 500;
 }
 
 :global([data-theme="light"]) .btn-primary {
     background-color: #0d9488;
     color: #ffffff;
-    box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25);
+    box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3);
 }
 
 :global([data-theme="light"]) .btn-primary:hover {
     background-color: #0f766e;
+    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45);
 }
 
 :global([data-theme="light"]) .btn-secondary {
     background: #ffffff;
     color: #0f172a;
-    border-color: rgba(0, 0, 0, 0.12);
+    border-color: rgba(15, 23, 42, 0.15);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #0d9488;
+    color: #0d9488;
 }
 
 :global([data-theme="light"]) .btn-ai {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));
-    color: #4338ca;
-    border-color: rgba(168, 85, 247, 0.25);
+    background: #ffffff;
+    color: #6366f1;
+    border-color: rgba(99, 102, 241, 0.35);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+}
+
+:global([data-theme="light"]) .btn-ai:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: #6366f1;
+    color: #4f46e5;
 }
 
 :global([data-theme="light"]) .proof-chip {
     background: #f8fafc;
-    border-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .chip-val {
+    color: #0d9488 !important;
+    font-weight: 800;
+}
+
+:global([data-theme="light"]) .chip-lbl {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .scroll-link {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .scroll-link:hover {
+    color: #0d9488;
 }
 
 /* Responsive adjustments */
