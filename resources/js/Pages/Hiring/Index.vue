@@ -1335,4 +1335,41 @@ const coreStack = {
         width: 35%;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .hiring-page {
+    background: var(--bg-primary, #f8fafc);
+}
+
+:global([data-theme="light"]) .hiring-topbar {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .mobile-drawer {
+    background: #ffffff;
+    border-left-color: rgba(15, 23, 42, 0.1);
+}
+
+:global([data-theme="light"]) .snapshot-card,
+:global([data-theme="light"]) .proof-card,
+:global([data-theme="light"]) .ai-card,
+:global([data-theme="light"]) .how-card,
+:global([data-theme="light"]) .stack-card,
+:global([data-theme="light"]) .comp-table-wrap,
+:global([data-theme="light"]) .contact-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .comp-head-col,
+:global([data-theme="light"]) .comp-col-ashish {
+    background: rgba(13, 148, 136, 0.06);
+}
+
+:global([data-theme="light"]) .callout-card {
+    background: linear-gradient(135deg, rgba(13, 148, 136, 0.08), rgba(124, 58, 237, 0.06));
+    border-color: rgba(13, 148, 136, 0.25);
+}
 </style>

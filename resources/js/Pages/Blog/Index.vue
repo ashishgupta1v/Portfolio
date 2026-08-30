@@ -264,4 +264,26 @@ function formatDate(value: string): string {
         justify-content: flex-start;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .blog-page {
+    background: var(--bg-primary, #f8fafc);
+}
+
+:global([data-theme="light"]) .topbar {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .post-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .tag-chip {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #334155;
+}
 </style>

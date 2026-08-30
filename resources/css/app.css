@@ -212,7 +212,7 @@
     --text-heading: #1e293b;
     --text-body: rgba(15, 23, 42, 0.88);
     --text-muted: rgba(51, 65, 85, 0.72);
-    --text-on-accent: #052e2b;
+    --text-on-accent: #ffffff;
 
     /* Navigation — light translucent bar so dark link text is readable */
     --nav-bg: rgba(248, 250, 252, 0.94);

@@ -265,13 +265,14 @@ onUnmounted(() => {
 .nav-linkedin:hover { color: var(--text-2); }
 
 .nav-spacer {
-    width: 18rem;
-    max-width: 34vw;
+    flex: 1;
+    min-width: 1rem;
 }
 
 .nav-links {
     display: flex;
-    gap: 2.2rem;
+    align-items: center;
+    gap: clamp(1rem, 1.4vw, 2rem);
 }
 
 .nav-link {
@@ -492,14 +493,47 @@ onUnmounted(() => {
     transform: translateX(100%);
 }
 
-/* ── Mobile ── */
-@media (max-width: 768px) {
-    .nav { padding: 0 1rem; height: 3.2rem; }
+/* ── Mobile Responsive Breakpoint ── */
+@media (max-width: 1024px) {
+    .nav { padding: 0 1.25rem; height: 3.6rem; }
     .nav-spacer { display: none; }
     .nav-links { display: none; }
     .hamburger { display: flex; }
     .social-sidebar { display: none; }
     .resume-float { display: none; }
-    .nav-logo { font-size: 0.95rem; }
+    .nav-logo { font-size: 1rem; }
+}
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .nav.scrolled {
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .mobile-menu {
+    background: #ffffff;
+    border-left-color: rgba(15, 23, 42, 0.1);
+    box-shadow: -8px 0 32px rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .mobile-link {
+    color: #334155;
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .mobile-link:hover,
+:global([data-theme="light"]) .mobile-link.active {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .mobile-theme-label {
+    color: #334155;
+}
+
+:global([data-theme="light"]) .mobile-resume {
+    background: #0d9488;
+    color: #ffffff;
+    border-color: #0d9488;
 }
 </style>
