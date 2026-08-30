@@ -1240,6 +1240,26 @@ onBeforeUnmount(() => {
     color: #0d9488;
 }
 
+:global([data-theme="light"]) .product-badge {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .product-image-container {
+    background: #f1f5f9;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+:global([data-theme="light"]) .product-name {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .product-desc {
+    color: #475569 !important;
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 960px) {
     .hero-container {

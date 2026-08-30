@@ -494,4 +494,70 @@ function activateNode(index: number) {
         font-size: 1.02rem;
     }
 }
+
+/* Light Theme Overrides */
+:global([data-theme="light"]) .initial-loader {
+    background: radial-gradient(circle at 12% 16%, rgba(94, 234, 212, 0.3), transparent 36%),
+                radial-gradient(circle at 82% 72%, rgba(56, 189, 248, 0.3), transparent 40%),
+                linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+:global([data-theme="light"]) .loader-grid {
+    mask-image: radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.1), transparent 75%);
+}
+:global([data-theme="light"]) .loader-core {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.85));
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+:global([data-theme="light"]) .reactor-center {
+    background: radial-gradient(circle at 35% 25%, rgba(13, 148, 136, 0.1), transparent 42%),
+                linear-gradient(180deg, #ffffff, #f1f5f9);
+    border-color: rgba(13, 148, 136, 0.25);
+    color: #0d9488;
+    box-shadow: 0 0 30px rgba(13, 148, 136, 0.15), inset 0 0 18px rgba(13, 148, 136, 0.1);
+}
+:global([data-theme="light"]) .loader-label {
+    color: #64748b;
+}
+:global([data-theme="light"]) .loader-phase {
+    color: #0284c7;
+}
+:global([data-theme="light"]) .loader-progress {
+    color: #0d9488;
+}
+:global([data-theme="light"]) .loader-track {
+    background: rgba(15, 23, 42, 0.06);
+}
+:global([data-theme="light"]) .loader-hint {
+    color: #64748b;
+}
+:global([data-theme="light"]) .stage-pill {
+    background: rgba(241, 245, 249, 0.9);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #475569;
+}
+:global([data-theme="light"]) .stage-pill.is-done {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+    color: #0284c7;
+}
+:global([data-theme="light"]) .play-node {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #0d9488;
+}
+:global([data-theme="light"]) .play-node.is-active {
+    background: linear-gradient(135deg, #ccfbf1, #e0f2fe);
+    color: #0f766e;
+    border-color: #5eead4;
+}
+:global([data-theme="light"]) .btn-skip-boot {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #0d9488;
+}
+:global([data-theme="light"]) .btn-skip-boot:hover {
+    background: #f1f5f9;
+    color: #0f766e;
+}
 </style>

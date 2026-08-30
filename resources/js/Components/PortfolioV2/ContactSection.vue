@@ -876,4 +876,12 @@ onMounted(() => {
     background: rgba(13, 148, 136, 0.08);
     border-color: #0d9488;
 }
+
+:global([data-theme="light"]) .col-title {
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .hiring-badge-link {
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
 </style>

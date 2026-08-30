@@ -658,7 +658,51 @@ onBeforeUnmount(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .scroll-hint-line { animation: none; }
     .statement { transition: none; }
+}
+
+/* Light Theme Overrides */
+:global([data-theme="light"]) .hero-vignette {
+    background: radial-gradient(circle at center, transparent 35%, rgba(248, 250, 252, 0.8) 100%);
+}
+:global([data-theme="light"]) .statement-scrim {
+    background: radial-gradient(ellipse at 25% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 70%, rgba(241, 245, 249, 0.6) 100%);
+    border-color: var(--border, rgba(15, 23, 42, 0.12));
+    box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1);
+}
+:global([data-theme="light"]) .statement-title,
+:global([data-theme="light"]) .title-line,
+:global([data-theme="light"]) .name-line {
+    color: var(--text-1, #0f172a);
+    text-shadow: none;
+}
+:global([data-theme="light"]) .statement-subtitle {
+    color: var(--text-2, #475569);
+    text-shadow: none;
+}
+:global([data-theme="light"]) .hero-btn--outline {
+    background: var(--bg-primary, #ffffff);
+    color: var(--text-1, #0f172a);
+    border-color: var(--border, rgba(15, 23, 42, 0.2));
+}
+:global([data-theme="light"]) .hero-btn--outline:hover {
+    background: var(--bg-secondary, #f1f5f9);
+    color: var(--accent, #0d9488);
+    border-color: var(--accent, #0d9488);
+}
+:global([data-theme="light"]) .hero-secondary-links,
+:global([data-theme="light"]) .hero-microcopy,
+:global([data-theme="light"]) .hero-sec-dot {
+    color: var(--text-3, #64748b);
+}
+:global([data-theme="light"]) .hero-sec-link {
+    color: var(--text-2, #475569);
+}
+:global([data-theme="light"]) .hero-sec-link:hover,
+:global([data-theme="light"]) .hero-sec-link--highlight {
+    color: var(--accent, #0d9488);
+}
+:global([data-theme="light"]) .scroll-hint-text {
+    color: var(--text-3, #64748b);
 }
 </style>
