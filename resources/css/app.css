@@ -110,8 +110,10 @@
 /* ========================================
    Portfolio - Global Styles
    ======================================== */
-
-:root {
+:root,
+:root[data-theme="dark"],
+html[data-theme="dark"],
+[data-theme="dark"] {
     --accent: #5eead4;
     --accent-rgb: 94, 234, 212;
     --accent-violet: #8b5cf6;
@@ -166,6 +168,9 @@
     --nav-border: rgba(148, 163, 184, 0.15);
 }
 
+:root[data-theme="light"],
+html[data-theme="light"],
+body[data-theme="light"],
 [data-theme="light"] {
     --accent: #0d9488;
     --accent-rgb: 13, 148, 136;
@@ -209,9 +214,9 @@
     --shadow-glow-violet: 0 0 35px -5px rgba(124, 58, 237, 0.2);
 
     /* Extra text shades */
-    --text-heading: #1e293b;
-    --text-body: rgba(15, 23, 42, 0.88);
-    --text-muted: rgba(51, 65, 85, 0.72);
+    --text-heading: #0f172a;
+    --text-body: #1e293b;
+    --text-muted: #64748b;
     --text-on-accent: #ffffff;
 
     /* Navigation — light translucent bar so dark link text is readable */

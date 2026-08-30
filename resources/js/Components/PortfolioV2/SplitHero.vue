@@ -1080,6 +1080,14 @@ onBeforeUnmount(() => {
     color: var(--text-1, #0f172a);
 }
 
+:global([data-theme="light"]) .glow-orb {
+    opacity: 0.04;
+}
+
+:global([data-theme="light"]) .grid-overlay {
+    opacity: 0.12;
+}
+
 :global([data-theme="light"]) .hero-headline {
     color: #0f172a !important;
 }
