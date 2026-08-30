@@ -464,6 +464,18 @@ onMounted(() => {
     box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.04);
 }
 
+:global([data-theme="light"]) .combo-heading-line {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .combo-primary {
+    color: #1e293b !important;
+}
+
+:global([data-theme="light"]) .combo-secondary {
+    color: #475569 !important;
+}
+
 :global([data-theme="light"]) .combo-card {
     background: #ffffff;
     border-color: rgba(15, 23, 42, 0.08);
@@ -474,6 +486,34 @@ onMounted(() => {
 :global([data-theme="light"]) .combo-card:hover {
     border-color: rgba(13, 148, 136, 0.4);
     box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .card-title {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .card-text {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .card-detail-item {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .card-disclosure {
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .card-icon-box {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.25);
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .card-tag {
+    background: rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.2);
+    color: #7c3aed;
 }
 
 :global([data-theme="light"]) .ghost-numeral {

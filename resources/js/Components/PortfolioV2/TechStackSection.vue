@@ -433,6 +433,14 @@ onUnmounted(() => {
 }
 
 /* ── Light-mode overrides: make bubbles visible against white/light backgrounds ── */
+:global([data-theme="light"]) .section-title-word {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .section-subtitle {
+    color: #475569 !important;
+}
+
 :global([data-theme="light"]) .bubble {
     background: radial-gradient(
         ellipse at 30% 30%,
@@ -454,8 +462,9 @@ onUnmounted(() => {
 }
 
 :global([data-theme="light"]) .bubble-text {
-    color: #1e293b;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+    color: #0f172a !important;
+    font-weight: 750 !important;
+    text-shadow: none !important;
 }
 
 :global([data-theme="light"]) .bubble-field {

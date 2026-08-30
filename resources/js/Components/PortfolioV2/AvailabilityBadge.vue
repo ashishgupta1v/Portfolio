@@ -103,4 +103,9 @@ const statusText = computed(() => {
         display: inline;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .availability-badge {
+    color: #475569;
+}
 </style>

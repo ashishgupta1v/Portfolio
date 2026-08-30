@@ -457,6 +457,22 @@ const sendMessage = async () => {
     border-bottom-color: rgba(15, 23, 42, 0.08);
 }
 
+:global([data-theme="light"]) .chat-header-title {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .chat-header-status {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .chat-close-btn {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .chat-close-btn:hover {
+    color: #0f172a;
+}
+
 :global([data-theme="light"]) .bubble-assistant {
     background: #f1f5f9;
     color: #0f172a;

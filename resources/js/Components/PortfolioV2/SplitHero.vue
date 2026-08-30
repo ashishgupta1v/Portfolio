@@ -1093,22 +1093,22 @@ onBeforeUnmount(() => {
 }
 
 :global([data-theme="light"]) .gradient-accent {
-    background: linear-gradient(135deg, #0d9488 0%, #0284c7 45%, #7c3aed 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, #0f766e 0%, #0284c7 45%, #6d28d9 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
 }
 
 :global([data-theme="light"]) .hero-eyebrow {
-    color: #0d9488;
+    color: #0d9488 !important;
 }
 
 :global([data-theme="light"]) .eyebrow-line {
-    background-color: #0d9488;
+    background-color: #0d9488 !important;
 }
 
 :global([data-theme="light"]) .proof-line {
-    color: #0d9488;
-    font-weight: 700;
+    color: #0f766e !important;
+    font-weight: 700 !important;
 }
 
 :global([data-theme="light"]) .hero-bio {

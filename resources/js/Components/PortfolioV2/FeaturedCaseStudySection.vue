@@ -309,11 +309,52 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
 }
 
 /* ── Light Mode Polish ── */
+:global([data-theme="light"]) .featured-heading {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .summary {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .featured-copy {
+    background: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
 :global([data-theme="light"]) .primary-card,
 :global([data-theme="light"]) .signal-card {
     background: #ffffff;
     border-color: rgba(15, 23, 42, 0.08);
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .primary-card h3 {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .primary-card p {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .signal-card strong {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .signal-kicker {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .secondary-cta {
+    background: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .secondary-cta:hover {
+    background: #f1f5f9 !important;
+    border-color: #0d9488 !important;
+    color: #0d9488 !important;
 }
 
 :global([data-theme="light"]) .featured-panel {

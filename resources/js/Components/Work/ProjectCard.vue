@@ -718,15 +718,61 @@ function handleQuickView() {
     box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
 }
 
+:global([data-theme="light"]) .card-title {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .card-positioning {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .card-description {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .badge-category {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .tech-chip {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #334155;
+}
+
+:global([data-theme="light"]) .outcome-text {
+    color: #334155 !important;
+}
+
 :global([data-theme="light"]) .preview-container {
     background: #f1f5f9;
     border-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .preview-placeholder {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+:global([data-theme="light"]) .placeholder-monogram {
+    color: rgba(15, 23, 42, 0.15);
 }
 
 :global([data-theme="light"]) .card-metric-strip {
     background: rgba(2, 132, 199, 0.08);
     border-color: rgba(2, 132, 199, 0.22);
     color: #0284c7;
+}
+
+:global([data-theme="light"]) .btn-action--casestudy {
+    color: #0d9488 !important;
+    border-color: rgba(13, 148, 136, 0.35);
+}
+
+:global([data-theme="light"]) .btn-action--casestudy:hover {
+    background: #f0fdfa;
+    border-color: #0d9488;
 }
 
 :global([data-theme="light"]) .btn-action--quickview {

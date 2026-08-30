@@ -604,9 +604,39 @@ onMounted(() => {
     border-bottom-color: rgba(15, 23, 42, 0.08);
 }
 
+:global([data-theme="light"]) .cp-input {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .cp-input::placeholder {
+    color: #94a3b8;
+}
+
+:global([data-theme="light"]) .cp-item {
+    color: #334155;
+}
+
+:global([data-theme="light"]) .cp-item.is-selected {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .cp-item-title {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .cp-item-desc {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .cp-group-label {
+    color: #64748b;
+}
+
 :global([data-theme="light"]) .cp-footer {
     background: #f8fafc;
     border-top-color: rgba(15, 23, 42, 0.08);
+    color: #64748b;
 }
 
 :global([data-theme="light"]) .cp-kbd {

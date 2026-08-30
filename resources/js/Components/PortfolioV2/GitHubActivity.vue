@@ -669,4 +669,57 @@ onMounted(async () => {
         padding: 2.8rem 0.8rem;
     }
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .stat-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .stat-value {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .stat-label {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .repo-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .repo-card:hover {
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .repo-name {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .repo-name:hover {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .repo-desc {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .repo-meta {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .github-profile-link {
+    background: #ffffff;
+    border-color: rgba(13, 148, 136, 0.35);
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .github-profile-link:hover {
+    background: #f0fdfa;
+    border-color: #0d9488;
+}
 </style>

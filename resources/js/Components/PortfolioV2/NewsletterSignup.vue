@@ -123,4 +123,24 @@ async function subscribe() {
 .nl-feedback--error {
     color: #f87171;
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .nl-input {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .nl-input::placeholder {
+    color: #94a3b8;
+}
+
+:global([data-theme="light"]) .nl-btn {
+    background: #0d9488;
+    color: #ffffff;
+}
+
+:global([data-theme="light"]) .nl-btn:hover:not(:disabled) {
+    background: #0f766e;
+}
 </style>

@@ -882,6 +882,76 @@ onMounted(() => {
 }
 
 :global([data-theme="light"]) .hiring-badge-link {
+    color: #0d9488 !important;
     border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .ct-email {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .ct-email:hover {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .ct-location {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .edu-degree {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .edu-inst {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .edu-year {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .social-link {
+    color: #334155 !important;
+}
+
+:global([data-theme="light"]) .social-link:hover {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .credit-text {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .credit-name {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .credit-year,
+:global([data-theme="light"]) .credit-stack {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .stack-detail {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .form-note {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .form-label {
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+:global([data-theme="light"]) .chat-btn {
+    background: #ffffff !important;
+    border-color: rgba(13, 148, 136, 0.3) !important;
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .chat-btn:hover {
+    background: #0d9488 !important;
+    color: #ffffff !important;
 }
 </style>

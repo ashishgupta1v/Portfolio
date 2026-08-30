@@ -292,6 +292,14 @@ function formatMetric(index: number): string {
 }
 
 /* ── Light Mode Polish ── */
+:global([data-theme="light"]) .section-title-word {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .section-subtitle {
+    color: #475569 !important;
+}
+
 :global([data-theme="light"]) .metric-card {
     background: #ffffff;
     border-color: rgba(15, 23, 42, 0.08);
@@ -305,6 +313,20 @@ function formatMetric(index: number): string {
 }
 
 :global([data-theme="light"]) .metric-number {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .metric-label {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .metric-desc {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .metric-chip {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.2);
     color: #0d9488;
 }
 </style>

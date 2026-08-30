@@ -323,6 +323,14 @@ function initials(name: string): string {
 }
 
 /* ── Light Mode Polish ── */
+:global([data-theme="light"]) .section-title-word {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .section-subtitle {
+    color: #475569 !important;
+}
+
 :global([data-theme="light"]) .testimonial-card {
     background: #ffffff;
     border-color: rgba(15, 23, 42, 0.08);
@@ -332,5 +340,42 @@ function initials(name: string): string {
 :global([data-theme="light"]) .testimonial-card:hover {
     border-color: rgba(13, 148, 136, 0.4);
     box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1), 0 0 24px rgba(13, 148, 136, 0.12);
+}
+
+:global([data-theme="light"]) .testimonial-quote {
+    color: #1e293b !important;
+}
+
+:global([data-theme="light"]) .testimonial-name {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .testimonial-role {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .highlight-company {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .quote-box {
+    background: rgba(13, 148, 136, 0.08);
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .verified-chip {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.2);
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .testimonial-attribution {
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .testimonial-avatar {
+    background: #f1f5f9;
+    border-color: rgba(13, 148, 136, 0.3);
+    color: #0d9488;
 }
 </style>

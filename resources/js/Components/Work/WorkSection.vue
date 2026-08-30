@@ -356,21 +356,42 @@ onMounted(() => {
 }
 
 /* ── Light Mode Polish ── */
+:global([data-theme="light"]) .section-title {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .section-title .accent {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .section-subtitle {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .section-eyebrow {
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .filter-pills {
+    border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+}
+
 :global([data-theme="light"]) .filter-pill {
     background: #ffffff;
-    border-color: rgba(15, 23, 42, 0.1);
+    border-color: rgba(15, 23, 42, 0.12);
     color: #475569;
 }
 
 :global([data-theme="light"]) .filter-pill:hover {
     border-color: #0d9488;
     color: #0f172a;
+    background: #f0fdfa;
 }
 
 :global([data-theme="light"]) .filter-pill--active {
-    background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(124, 58, 237, 0.1));
+    background: #0d9488;
     border-color: #0d9488;
-    color: #0d9488;
+    color: #ffffff;
 }
 
 :global([data-theme="light"]) .pill-count {
@@ -379,7 +400,13 @@ onMounted(() => {
 }
 
 :global([data-theme="light"]) .filter-pill--active .pill-count {
-    background: #0d9488;
+    background: rgba(255, 255, 255, 0.25);
     color: #ffffff;
+}
+
+:global([data-theme="light"]) .work-empty-state {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #475569;
 }
 </style>

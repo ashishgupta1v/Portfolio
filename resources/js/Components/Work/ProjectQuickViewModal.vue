@@ -777,6 +777,18 @@ onBeforeUnmount(() => {
     background: rgba(15, 23, 42, 0.45);
 }
 
+:global([data-theme="light"]) .modal-title {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .modal-description {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .modal-positioning {
+    color: #0d9488 !important;
+}
+
 :global([data-theme="light"]) .preview-box {
     background: #f1f5f9;
     border-color: rgba(15, 23, 42, 0.08);
@@ -797,6 +809,53 @@ onBeforeUnmount(() => {
 :global([data-theme="light"]) .tech-tag {
     background: #f1f5f9;
     border-color: rgba(15, 23, 42, 0.08);
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .problem-box {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+:global([data-theme="light"]) .modal-action-item,
+:global([data-theme="light"]) .modal-impact-item {
+    color: #334155 !important;
+}
+
+:global([data-theme="light"]) .modal-footer {
+    border-top-color: rgba(15, 23, 42, 0.1);
+}
+
+:global([data-theme="light"]) .btn-secondary {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .btn-secondary:hover {
+    background: #f1f5f9;
+    border-color: #0d9488;
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .btn-outline {
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .btn-outline:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .modal-close-btn {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .modal-close-btn:hover {
+    background: #e2e8f0;
     color: #0f172a;
 }
 </style>

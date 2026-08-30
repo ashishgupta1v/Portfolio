@@ -434,7 +434,31 @@ onMounted(() => {
     box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
 }
 
+:global([data-theme="light"]) .tl-date {
+    color: #0f172a !important;
+}
+
+:global([data-theme="light"]) .tl-role {
+    color: #0f172a !important;
+}
+
 :global([data-theme="light"]) .tl-company {
-    color: #0d9488;
+    color: #0d9488 !important;
+}
+
+:global([data-theme="light"]) .tl-location {
+    color: #64748b !important;
+}
+
+:global([data-theme="light"]) .tl-desc {
+    color: #334155 !important;
+}
+
+:global([data-theme="light"]) .tl-list li {
+    color: #475569 !important;
+}
+
+:global([data-theme="light"]) .center-line {
+    background: rgba(15, 23, 42, 0.12);
 }
 </style>

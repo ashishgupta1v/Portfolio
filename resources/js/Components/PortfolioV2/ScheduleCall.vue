@@ -227,4 +227,39 @@ onUnmounted(() => {
 .modal-fade-leave-to {
     opacity: 0;
 }
+
+/* ── Light Mode Polish ── */
+:global([data-theme="light"]) .schedule-btn {
+    color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.2);
+    background: #ffffff;
+}
+
+:global([data-theme="light"]) .schedule-btn:hover {
+    background: #f0fdfa;
+    border-color: #0d9488;
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .schedule-modal {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+}
+
+:global([data-theme="light"]) .schedule-modal-header {
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .schedule-modal-header h3 {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .schedule-info {
+    color: #334155;
+}
+
+:global([data-theme="light"]) .schedule-alt {
+    color: #64748b;
+}
 </style>
