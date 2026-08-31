@@ -1,17 +1,17 @@
-const CACHE_NAME = 'ashish-portfolio-v2'
+const CACHE_NAME = 'ashish-portfolio-v3'
 const OFFLINE_URL = '/offline'
 
 const PRECACHE_URLS = [
-    '/',
     '/offline',
     '/manifest.json',
 ]
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting()
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(PRECACHE_URLS)
-        }).then(() => self.skipWaiting())
+        })
     )
 })
 
@@ -28,6 +28,10 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+    // Only handle GET requests
+    if (event.request.method !== 'GET') return
+
+    // Network-first for navigation (HTML)
     if (event.request.mode === 'navigate') {
         event.respondWith(
             fetch(event.request).catch(() => {
@@ -42,22 +46,16 @@ self.addEventListener('fetch', (event) => {
         return
     }
 
-    // For assets: cache-first strategy
-    if (event.request.destination === 'style' ||
-        event.request.destination === 'script' ||
-        event.request.destination === 'image' ||
-        event.request.destination === 'font') {
+    // For build assets: Stale-While-Revalidate or Network-First to never lock on broken chunks
+    if (event.request.url.includes('/build/assets/')) {
         event.respondWith(
-            caches.match(event.request).then((cached) => {
-                if (cached) return cached
-                return fetch(event.request).then((response) => {
-                    if (response.ok) {
-                        const clone = response.clone()
-                        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
-                    }
-                    return response
-                }).catch(() => new Response('', { status: 408 }))
-            })
+            fetch(event.request).then((networkResponse) => {
+                if (networkResponse && networkResponse.status === 200) {
+                    const responseClone = networkResponse.clone()
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone))
+                }
+                return networkResponse
+            }).catch(() => caches.match(event.request))
         )
         return
     }
@@ -67,3 +65,4 @@ self.addEventListener('fetch', (event) => {
         fetch(event.request).catch(() => caches.match(event.request))
     )
 })
+
