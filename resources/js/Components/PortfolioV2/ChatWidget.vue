@@ -58,8 +58,8 @@ function inline(text: string): string {
     return text
         // Inline code first, so ** inside `` is treated as code.
         .replace(/`([^`]+)`/g, '<code>$1</code>')
-        // Links — only http/https, and the URL is re-escaped for quotes.
-        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        // Links — http/https, relative (/resume/...), and mailto:
+        .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/|mailto:)[^\s)]+)\)/g,
             (_m, label, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`)
         // Bold before italic so **word** doesn't consume as italic-in-italic.
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
@@ -103,10 +103,10 @@ const MAX_INPUT_LENGTH = 1000
 
 const promptChips = [
     'Is he open to full-time — and when can he start?',
-    'What’s his strongest stack?',
+    "What's his strongest stack?",
     'Show me his AI / RAG experience.',
     'Notice period, timezone & work authorization?',
-    'What’s his biggest measurable impact?',
+    "What's his biggest measurable impact?",
 ]
 
 const sendPromptChip = (chip: string) => {
