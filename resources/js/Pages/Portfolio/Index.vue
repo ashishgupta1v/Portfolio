@@ -68,19 +68,12 @@ function handleTrackCta(type: string) {
 const heroReady = ref(true)
 const pageReady = ref(true)
 const heroProgress = ref(100)
-const minLoaderElapsed = ref(false)
-let minTimer: number | null = null
+const minLoaderElapsed = ref(true)
 
-const isAlreadyBooted = typeof window !== 'undefined' && Boolean(sessionStorage.getItem('ag_portfolio_booted'))
-const skippedLoader = ref(isAlreadyBooted)
-
-const showInitialLoader = computed(() => {
-    if (skippedLoader.value) return false
-    return !(heroReady.value && pageReady.value && minLoaderElapsed.value)
-})
+const showInitialLoader = ref(false)
 
 function handleSkipLoader() {
-    skippedLoader.value = true
+    showInitialLoader.value = false
     if (typeof window !== 'undefined') {
         sessionStorage.setItem('ag_portfolio_booted', 'true')
     }
@@ -107,19 +100,15 @@ onMounted(() => {
     pageReady.value = true
     initLenis()
 
-    minTimer = window.setTimeout(() => {
-        minLoaderElapsed.value = true
-        if (typeof window !== 'undefined') {
-            sessionStorage.setItem('ag_portfolio_booted', 'true')
-        }
-    }, 450)
+    if (typeof window !== 'undefined') {
+        sessionStorage.setItem('ag_portfolio_booted', 'true')
+    }
 
     setTimeout(() => nextTick(initScrollDepth), 100)
 })
 
 onUnmounted(() => {
     destroyLenis()
-    if (minTimer) clearTimeout(minTimer)
 })
 </script>
 
@@ -134,12 +123,6 @@ onUnmounted(() => {
     <Head :title="profile.name + ' — ' + profile.title" />
 
     <div class="v2-page" :style="depthVars">
-        <InitialLoader
-            :visible="showInitialLoader"
-            :progress="heroProgress"
-            @skip="handleSkipLoader"
-        />
-
         <CustomCursor />
         <ToastContainer />
 
