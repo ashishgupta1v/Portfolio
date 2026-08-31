@@ -505,6 +505,58 @@ onUnmounted(() => {
 }
 
 /* ── Light Mode Polish ── */
+:global([data-theme="light"]) .nav {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .nav-logo {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .nav-logo:hover {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .nav-link {
+    color: #334155;
+}
+
+:global([data-theme="light"]) .nav-link:hover {
+    color: #0f172a;
+}
+
+:global([data-theme="light"]) .nav-link.active {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .nav-linkedin {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .nav-linkedin:hover {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .sidebar-icon {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .sidebar-icon:hover {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .resume-float {
+    color: #64748b;
+}
+
+:global([data-theme="light"]) .resume-float:hover {
+    color: #0d9488;
+}
+
+:global([data-theme="light"]) .hamburger {
+    color: #0f172a;
+}
+
 :global([data-theme="light"]) .nav.scrolled {
     background: rgba(255, 255, 255, 0.94);
     border-bottom-color: rgba(15, 23, 42, 0.08);
