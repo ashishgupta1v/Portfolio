@@ -351,7 +351,20 @@ onMounted(() => {
 
 @media (max-width: 640px) {
     .work-section {
-        padding: 4rem 1rem 4rem;
+        padding: 4rem 1rem 3.5rem;
+    }
+    .filter-pills {
+        gap: 0.4rem;
+    }
+    .filter-pill {
+        padding: 0.38rem 0.8rem;
+        font-size: 0.76rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .work-section {
+        padding: 3rem 0.8rem 2.5rem;
     }
 }
 

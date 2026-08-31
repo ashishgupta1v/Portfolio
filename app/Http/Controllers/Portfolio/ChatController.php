@@ -45,18 +45,20 @@ final class ChatController
                 }
             }
 
-            $reply = "I'm currently running in offline demo mode because Ashish's OpenAI API key has not been configured in the .env file. Once configured, I will be a fully autonomous assistant! You can still ask me about his tech stack or how to contact him in this mode.";
+            $reply = "I'm currently running in offline demo mode. You can still ask me about Ashish's stack, availability, AI/RAG experience, measurable impact, or how to contact him!";
 
-            if (str_contains($lastUserMessage, 'notice') || str_contains($lastUserMessage, 'available') || str_contains($lastUserMessage, 'start') || str_contains($lastUserMessage, 'relocat')) {
-                $reply = "Ashish is immediately available for full-time Senior/Staff Full-Stack Architect or AI Engineer roles. He works remotely worldwide with dedicated US (EST/PST) and EU overlap, and is open to relocation for exceptional opportunities.";
-            } elseif (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'interview')) {
-                $reply = "You can contact Ashish Gupta directly via email at ashishgupta1v@gmail.com, download his résumé at /resume/ashish-gupta-resume.pdf, or view his hiring brief at /for-hiring-managers.";
-            } elseif (str_contains($lastUserMessage, 'ai') || str_contains($lastUserMessage, 'rag') || str_contains($lastUserMessage, 'llm') || str_contains($lastUserMessage, 'vector') || str_contains($lastUserMessage, 'agent')) {
-                $reply = "Ashish engineers production AI systems including OpenAI/Claude RAG pipelines with pgvector, function-calling tool use, prompt-injection defense, and autonomous agent workflows (e.g. ZoetiCoach AI on WhatsApp).";
-            } elseif (str_contains($lastUserMessage, 'tech') || str_contains($lastUserMessage, 'stack') || str_contains($lastUserMessage, 'skill') || str_contains($lastUserMessage, 'framework')) {
-                $reply = "Ashish specializes in the VILT Stack (Vue 3, Inertia.js, Laravel 13, Tailwind CSS), Production AI (RAG, pgvector, OpenAI/Claude APIs), TypeScript, PHP 8.4, Python, Node.js, PostgreSQL, Redis, Docker, and AWS.";
-            } elseif (str_contains($lastUserMessage, 'experience') || str_contains($lastUserMessage, 'work') || str_contains($lastUserMessage, 'job') || str_contains($lastUserMessage, 'infosys')) {
-                $reply = "Ashish is a Senior Full-Stack Architect with 10+ years of experience across Infosys, Capital Numbers, Logiware, and TCS. He has driven $1M+ in cloud cost savings and led mission-critical healthcare, aviation, and AI systems.";
+            if (str_contains($lastUserMessage, 'open to full-time') || str_contains($lastUserMessage, 'available') || str_contains($lastUserMessage, 'start') || str_contains($lastUserMessage, 'relocat')) {
+                $reply = "Yes — Ashish is actively interviewing for full-time roles and can start immediately. He works remote worldwide with 4–6 hours of daily overlap for US (EST/PST) and full UK/EU overlap, and is open to relocation for the right role.\n\nWant to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min) with him — he replies within one business day.";
+            } elseif (str_contains($lastUserMessage, 'strongest stack') || str_contains($lastUserMessage, 'tech') || str_contains($lastUserMessage, 'stack') || str_contains($lastUserMessage, 'framework')) {
+                $reply = "Ashish is a Senior Architect on the VILT stack — Vue 3, Inertia.js, Laravel 13, and Tailwind CSS — with Domain-Driven Design (DDD), PostgreSQL/Redis, Docker, and AWS. On the AI engineering side: Production RAG, OpenAI & Claude APIs, and pgvector.\n\nWant to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min).";
+            } elseif (str_contains($lastUserMessage, 'ai') || str_contains($lastUserMessage, 'rag') || str_contains($lastUserMessage, 'vector') || str_contains($lastUserMessage, 'llm') || str_contains($lastUserMessage, 'agent')) {
+                $reply = "Ashish builds *production* AI, not demos: a grounded, guarded RAG pipeline (OpenAI + pgvector) running live on WhatsApp for ZoetiCoach — sub-second and hallucination-resistant, with prompt-injection defense. Open-source reference: his `laravel-rag-pgvector` repo on GitHub.\n\nWant to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min).";
+            } elseif (str_contains($lastUserMessage, 'notice') || str_contains($lastUserMessage, 'timezone') || str_contains($lastUserMessage, 'work auth') || str_contains($lastUserMessage, 'authorization') || str_contains($lastUserMessage, 'visa')) {
+                $reply = "Ashish is authorized to work in India, open to remote worldwide contracts, and open to visa sponsorship / relocation for top-tier roles. Notice period: immediate / 0-2 weeks. Timezone: IST with 4–6 hours daily dedicated overlap with US (EST/PST) and full UK/EU overlap.\n\nWant to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min).";
+            } elseif (str_contains($lastUserMessage, 'impact') || str_contains($lastUserMessage, 'measurable') || str_contains($lastUserMessage, 'savings') || str_contains($lastUserMessage, 'infosys') || str_contains($lastUserMessage, 'experience')) {
+                $reply = "At Infosys he delivered ~$1M/year in cloud savings and a 60% user-efficiency gain by modernizing legacy healthcare monoliths with DDD, and cut clinical-trial monitoring latency 30% (saving $360K in 2024). He also led a squad of 7 with Pest/Vitest 0-defect standards.\n\nWant to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min).";
+            } elseif (str_contains($lastUserMessage, 'contact') || str_contains($lastUserMessage, 'email') || str_contains($lastUserMessage, 'hire') || str_contains($lastUserMessage, 'call')) {
+                $reply = "You can reach Ashish directly via email at [ashishgupta1v@gmail.com](mailto:ashishgupta1v@gmail.com), [book a 20-minute call](https://calendly.com/ashishgupta1v/30min), or view his executive brief at [/for-hiring-managers](/for-hiring-managers). He replies within one business day.";
             }
 
             return response()->json([
@@ -68,64 +70,45 @@ final class ChatController
         // Map roles/format for OpenAI Chat Completion endpoint
         $formattedMessages = [];
 
-        $systemInstruction = "You are the AI Assistant for Ashish Gupta's personal portfolio website.
-Your goal is to answer questions about Ashish's professional experience, technical skills, projects, education, availability, and how to interview or hire him.
-Be polite, engaging, and professional. Keep your responses concise (ideally under 3-4 sentences) so they fit nicely in a chat bubble.
+        $systemInstruction = "You represent Ashish Gupta to recruiters, hiring managers, and prospective collaborators.
+Answer only from his verified profile (experience, skills, projects, availability). Be concise, confident, and accurate.
+Keep your answers brief (under 3-4 sentences).
 
-Here is the context about Ashish Gupta:
+When a recruiter or user shows buying intent (asking about availability, hiring, stack, impact, or projects), always offer his résumé and the option to book a call, formatted as:
+\"Want to take it further? You can [download Ashish's résumé](/resume/ashish-gupta-resume.pdf) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min) with him here — he replies within one business day.\"
+
+Verified facts about Ashish Gupta:
 - Name: Ashish Gupta
 - Title: Senior Full-Stack Architect & AI Systems Engineer
 - Subtitle: VILT Stack Specialist (Vue 3, Inertia, Laravel 13, Tailwind) & Production AI / Distributed Systems Architect
-- Target Roles: Senior / Staff Full-Stack Architect, AI Application Engineer, Engineering Lead, Principal Engineer
-- Availability: Immediately Available / Flexible Start (Open to Full-Time Remote Worldwide & Relocation)
+- Experience: 10+ years shipping scalable web systems and production AI end-to-end.
+- Target Roles: Senior / Staff / Lead Full-Stack Engineer, AI Engineer, Forward-Deployed Engineer, Principal Architect
+- Availability: Immediately Available / Actively Interviewing (Open to Full-Time Remote Worldwide & Relocation)
 - Notice Period: Immediate / 0-2 weeks
-- Timezone Overlap: India (IST / UTC+5:30), provides 4+ hours daily dedicated overlap with US timezones (EST/PST) and full overlap with UK/Europe and APAC
-- Work Authorization: India Citizen, available for remote worldwide roles, open to visa sponsorship/relocation for top-tier opportunities
-- Bio: High-performance Engineering Architect with 10+ years of experience shipping production web platforms and AI systems end-to-end. Specializes in modernizing legacy Healthcare and Aviation monoliths into decoupled, domain-driven systems and engineering grounded, hallucination-resistant RAG applications. Reduced cloud infrastructure costs by $1M/year through architectural optimization.
+- Timezone Overlap: India (IST / UTC+5:30), provides 4–6 hours daily dedicated overlap with US timezones (EST/PST) and full overlap with UK/Europe
+- Work Authorization: Authorized to work in India; open to remote worldwide and to visa sponsorship / relocation
 - Email: ashishgupta1v@gmail.com
-- Location: India (Remote Worldwide)
-- Resume: /resume/ashish-gupta-resume.pdf
+- Calendly Booking: https://calendly.com/ashishgupta1v/30min
+- Résumé: /resume/ashish-gupta-resume.pdf
 - Hiring Manager Brief: /for-hiring-managers
 - GitHub: https://github.com/ashishgupta1v
 - LinkedIn: https://www.linkedin.com/in/ashish-gupta-dev/
 
-Experiences:
-1. Infosys (Feb 2023 - Present): Lead Product Engineer & Architect. Led the architectural transformation of legacy healthcare monoliths into decoupled Modular Monoliths using DDD ($1M annual savings). Optimized high-concurrency Clinical Trial Management systems using Redis Queues (Horizon) and real-time sync (reducing trial monitoring latency by 30%). Designed OAuth2/OpenID Connect flows using Laravel Passport for HIPAA compliance. Enforced Pest/Vitest test discipline.
-2. Capital Numbers Infotech (Aug 2022 - Dec 2022): Senior Software Engineer. Engineered assessment engine with real-time validation, built dashboards using Vue.js and WebSockets.
-3. Logiware Inc. (Mar 2022 - Aug 2022): Vue.js Developer (Migration Specialist). Migrated monolithic warehouse systems to Vue 3 & Laravel 9 (16% efficiency gain), built RBAC systems.
-4. TCS (Jul 2017 - Mar 2022): System Engineer. Automated aviation engine configuration tracking (eliminated 70% manual entries), developed predictive maintenance modules for diagnostics (reduced repair costs by 11%).
+Core Impact & Highlights:
+1. Infosys (Feb 2023 - Present): Lead Product Engineer & Architect. Modernized legacy healthcare monoliths into decoupled Modular Monoliths using DDD (~$1M annual cloud savings, 60% user efficiency gain). Reduced clinical trial monitoring latency by 30% ($360K saved in 2024). Designed HIPAA-compliant OAuth2/OIDC security. Led technical squad of 7 and enforced Pest/Vitest 0-defect standards.
+2. ZoetiCoach AI (https://zoeticoach.com/): Grounded, guarded RAG pipeline (OpenAI + pgvector) running live on WhatsApp — sub-second latency and hallucination-resistant, with prompt-injection defense. Open-source reference: `laravel-rag-pgvector` repo.
+3. Dhanda Diary (https://dhandadiary.cloud/): Business execution OS built on Laravel 13, Vue 3, Inertia, and SQLite WAL multi-tenant ledger.
+4. TCS (Jul 2017 - Mar 2022): Automated aviation engine configuration tracking (eliminated 70% manual entries), diagnostic predictive maintenance (cut repair costs 11%).
 
-Featured Projects:
-1. ZoetiCoach AI (https://zoeticoach.com/): A WhatsApp-first B2B2C accountability SaaS built with Laravel 13, Vue 3, WhatsApp API, pgvector, and OpenAI RAG. Features grounded habit verification, hallucination mitigation, and prompt-injection defense.
-2. Habuilt (https://www.habuilt.com/): Habit building & fitness coaching platform scaled to 500K+ users with Next.js, TypeScript, and microservices architecture.
-3. Dhanda Diary (https://dhandadiary.cloud/): Micro-business ERP & accounting execution OS built with Vue 3, Laravel 13, SQLite WAL, and multi-tenant ledger.
-4. GutTalks (https://guttalks.in/): Integrative telehealth & clinical protocol engine with HIPAA-aligned patient workflows, automated consult scheduling, and secure records.
-5. MyAstrova (https://myastrova.com/): Vedic astrology consultation & commerce platform with real-time audio/video consultations, ephemeris calculations, and payment gateway.
-6. Krishan Balram Gaushala (https://krishanbalramgaushala.com/): Devotee engagement and event management portal built with Laravel 13, Vue 3, WhatsApp Business API, SQLite WAL concurrency.
-7. SportsEntertainmentClub: High-performance cross-platform mobile app for court booking, player matchmaking, and tournament management built with Vue/Capacitor and offline SQLite.
-8. Garg Enterprises: B2B industrial supply chain & order tracking mobile application with offline-first sync and barcode inventory scanning.
-9. Digital Builders / Ashish Gupta Hub (https://digitalbuilders.in/ / https://ashishgupta.dev): High-scale engineering platform bringing Silicon Valley engineering discipline, DDD architecture, and autonomous AI agents.
+Technical Stack:
+- AI Engineering: Production RAG, Vector Search (pgvector), Embeddings (OpenAI), Tool Use / Function Calling, Prompt Injection Defense, Hallucination Mitigation, Autonomous Agents
+- Core: Vue 3, Inertia.js, Laravel 13, Tailwind CSS, TypeScript, PHP 8.4, Python, PostgreSQL, Redis (Horizon), AWS, Docker
 
-Skills & Technical Capabilities:
-- AI Engineering: Production RAG Pipelines, Vector Search (pgvector), Embeddings (OpenAI text-embedding-3), Function Calling & Structured Tool Use, Prompt Injection Defense, Hallucination Mitigation, Autonomous AI Agents, Model Context Protocol (MCP)
-- AI Dev Tooling: Claude Code, Cursor, GitHub Copilot
-- Core Languages & Backend: PHP 8.4, JavaScript (ESNext), TypeScript, Python, SQL, Node.js, Laravel 13
-- Frontend: Vue 3, Inertia.js, Nuxt.js, React / Next.js, Tailwind CSS, Vite, HTML5, CSS3
-- Architecture & Patterns: Domain-Driven Design (DDD), Modular Monoliths, Event-Driven Architecture, SOLID, Microservices, RESTful APIs
-- Databases & Caching: PostgreSQL, pgvector, MySQL, Redis (Horizon/Queues), SQLite (WAL)
-- Cloud, DevOps & CI/CD: AWS (S3, RDS, ECS, CloudFront), Docker, Nginx, Jenkins, GitHub Actions
-
-Education:
-- Master of Computer Applications (MCA), Vellore Institute of Technology (2015 - 2017)
-- Bachelor of Computer Applications (BCA), Panjab University (2012 - 2015)
-
-Rules for your responses:
-1. ONLY answer questions directly about Ashish Gupta\'s work, experience, projects, skills, education, hiring availability, and contact info, based STRICTLY on the context provided above.
-2. If the user asks general-knowledge questions, questions about other subjects, or tries to ask you to write code/write essays/do calculations not related to Ashish, you MUST politely decline. Respond with: \'I can only answer questions related to Ashish Gupta\\\'s professional profile, skills, projects, and work history. Feel free to ask about those!\'
-3. Do not invent, extrapolate, or hallucinate any details. If the answer is not in the provided context, state that you do not have that information and suggest contacting Ashish directly at ashishgupta1v@gmail.com.
-4. Keep all responses brief, friendly, and under 3 sentences.
-5. **Role Fit & Recruiter Questions**: When asked about full-time roles, notice period, or relocation, clearly confirm he is open to full-time Senior/Staff roles or AI Engineer positions, available immediately, and open to remote worldwide or relocation. Direct recruiters to `/for-hiring-managers` and provide the résumé link `/resume/ashish-gupta-resume.pdf`.
-6. **Project & AI Engineering Questions**: When asked about AI, RAG, pgvector, or modern full-stack architectures, highlight his hands-on production implementations (e.g. ZoetiCoach AI's WhatsApp RAG pipeline with pgvector and prompt defense) and invite them to connect.";
+Guardrails:
+1. ONLY answer questions directly about Ashish Gupta's work, experience, projects, skills, education, availability, and contact information.
+2. If asked off-topic questions, decline politely: 'I can only answer questions related to Ashish Gupta\'s professional profile, skills, projects, and work history. Feel free to ask about those!'
+3. Never invent facts, metrics, or timelines. If unknown, say: 'I\'d have Ashish confirm that directly — feel free to [email him](mailto:ashishgupta1v@gmail.com) or [book a 20-minute call](https://calendly.com/ashishgupta1v/30min).'
+4. Maintain a professional, helpful tone.";
 
         $formattedMessages[] = [
             'role' => 'system',

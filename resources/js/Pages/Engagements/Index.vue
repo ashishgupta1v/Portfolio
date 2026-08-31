@@ -268,7 +268,7 @@ import { Head, Link } from '@inertiajs/vue3'
     text-decoration: none;
 }
 .brand:hover { color: var(--accent); }
-.topbar-nav { display: flex; gap: 1.2rem; }
+.topbar-nav { display: flex; gap: 0.75rem 1.2rem; align-items: center; flex-wrap: wrap; }
 .topbar-link {
     color: var(--text-muted);
     font-size: 0.78rem;
@@ -595,10 +595,18 @@ import { Head, Link } from '@inertiajs/vue3'
     .proof-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
-    .topbar { padding: 1.2rem 1.2rem; }
+    .topbar { padding: 1.2rem 1.2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
     .hero, .tiers, .process, .proof, .final-cta { padding: 2.5rem 1.2rem; }
     .proof-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
     .hero-cta-row { flex-direction: column; }
     .btn-primary, .btn-ghost { text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .topbar { padding: 1rem 0.85rem; }
+    .hero, .tiers, .process, .proof, .final-cta { padding: 2rem 0.85rem; }
+    .hero-title { font-size: clamp(2rem, 8vw, 3rem); }
+    .proof-grid { grid-template-columns: 1fr; }
+    .tier-card { padding: 1.5rem 1.1rem; }
 }
 </style>

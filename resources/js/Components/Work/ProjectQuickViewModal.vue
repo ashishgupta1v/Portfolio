@@ -749,18 +749,31 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 640px) {
+    .modal-backdrop {
+        padding: 0.75rem;
+    }
     .modal-card {
-        padding: 1.5rem;
+        padding: 1.35rem 1.1rem;
         border-radius: 1.2rem;
+        max-height: 94vh;
     }
     .modal-title {
-        font-size: 1.45rem;
+        font-size: 1.4rem;
+        line-height: 1.2;
+    }
+    .modal-badge-row {
+        padding-right: 2.5rem;
     }
     .modal-footer {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
     }
-    .btn-outline {
+    .btn-outline,
+    .btn-secondary,
+    .btn-primary,
+    .btn-whatsapp {
+        width: 100%;
         margin-left: 0;
         justify-content: center;
     }

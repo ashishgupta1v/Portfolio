@@ -291,4 +291,10 @@ const resumeUrl = '/resume/ashish-gupta-resume.pdf'
 @media (max-width: 768px) {
     .project-page { padding: 3rem 1rem 4rem; }
 }
+
+@media (max-width: 480px) {
+    .project-page { padding: 2rem 0.8rem 3rem; }
+    .project-title { font-size: clamp(1.65rem, 6.8vw, 2.2rem); }
+    .project-cta { width: 100%; justify-content: center; }
+}
 </style>

@@ -13,7 +13,7 @@
 import { computed, onMounted, ref } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Quote } from 'lucide-vue-next'
+import { Quote, ArrowUpRight } from 'lucide-vue-next'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -140,6 +140,18 @@ function initials(name: string): string {
                         </div>
                     </div>
                 </article>
+            </div>
+
+            <div class="testimonials-footer-row">
+                <a
+                    href="https://www.linkedin.com/in/ashish-gupta-dev/details/recommendations/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="linkedin-proof-cta glow-pill"
+                >
+                    <span>View all recommendations on LinkedIn</span>
+                    <ArrowUpRight :size="14" />
+                </a>
             </div>
         </div>
     </section>
@@ -299,6 +311,32 @@ function initials(name: string): string {
 .highlight-company {
     color: var(--accent);
     font-weight: 600;
+}
+
+.testimonials-footer-row {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkedin-proof-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.3rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.linkedin-proof-cta:hover {
+    transform: translateY(-2px);
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.35);
 }
 
 @media (max-width: 1024px) {

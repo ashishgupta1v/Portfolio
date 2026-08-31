@@ -225,25 +225,63 @@ const coreStack = {
         </Transition>
 
         <main class="content-shell">
-            <!-- Hero Section -->
+            <!-- Why Hire Me — Executive Pitch Block -->
             <section class="brief-hero">
                 <div class="brief-badge-row">
                     <span class="brief-pill glow-pill">
                         <Briefcase :size="13" class="pill-icon" />
-                        For Hiring Managers &amp; Recruiters
+                        Why hire me
                     </span>
                     <span class="brief-pill glow-pill-violet">
                         <Clock :size="13" class="pill-icon" />
-                        Executive Snapshot
+                        Available Immediately · Open to Full-Time
                     </span>
                 </div>
 
                 <h1 class="hero-title">
-                    Senior Full-Stack Architect, <span class="text-gradient">open to full-time roles.</span>
+                    An engineer who ships scalable systems <span class="text-gradient">and production AI — end to end.</span>
                 </h1>
-                <p class="hero-subtitle">
-                    10+ years shipping production systems end-to-end — Vue, Laravel, DDD, and AI. I modernize legacy monoliths into scalable, domain-driven platforms and own them from architecture through production.
+                
+                <p class="hero-subline">
+                    <strong>Senior Full-Stack &amp; AI Systems Architect</strong> · 10+ years · Open to full-time (Remote worldwide / Relocation) · Available immediately.
                 </p>
+
+                <!-- Three Proof Cards -->
+                <div class="pitch-cards-grid">
+                    <div class="pitch-card glass-panel">
+                        <div class="pitch-card-head">
+                            <span class="pitch-card-badge">Business impact</span>
+                        </div>
+                        <p class="pitch-card-text">
+                            Delivered <strong>$1M/year</strong> in cloud savings and <strong>−30%</strong> latency by re-architecting legacy healthcare &amp; aviation monoliths with DDD.
+                        </p>
+                    </div>
+
+                    <div class="pitch-card glass-panel">
+                        <div class="pitch-card-head">
+                            <span class="pitch-card-badge accent-badge">Production AI</span>
+                        </div>
+                        <p class="pitch-card-text">
+                            Shipped a <strong>grounded, guarded RAG pipeline</strong> (OpenAI + pgvector) live on WhatsApp — sub-second, hallucination-resistant, not a demo.
+                        </p>
+                    </div>
+
+                    <div class="pitch-card glass-panel">
+                        <div class="pitch-card-head">
+                            <span class="pitch-card-badge">Trust &amp; leadership</span>
+                        </div>
+                        <p class="pitch-card-text">
+                            <strong>HIPAA-grade</strong> security (OAuth2/OIDC), <strong>0-defect</strong> deploys with Pest/Vitest, and led a <strong>squad of 7</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Best-Fit Banner -->
+                <div class="best-fit-banner glass-panel">
+                    <p class="best-fit-text">
+                        🎯 <strong>Best fit for:</strong> Senior / Staff / Lead Full-Stack, AI Engineer, or Forward-Deployed Engineer roles in product teams where ownership matters.
+                    </p>
+                </div>
 
                 <!-- Primary CTAs -->
                 <div class="hero-actions">
@@ -252,7 +290,12 @@ const coreStack = {
                         <span>Download Résumé (PDF)</span>
                         <ArrowUpRight :size="14" />
                     </a>
-                    <a :href="emailHref" class="btn-secondary">
+                    <a :href="calendlyUrl" target="_blank" rel="noopener noreferrer" class="btn-secondary btn-calendly-accent">
+                        <Calendar :size="16" />
+                        <span>Book a 20-min call</span>
+                        <ArrowUpRight :size="14" />
+                    </a>
+                    <a :href="emailHref" class="btn-ghost">
                         <Mail :size="16" />
                         <span>Email me</span>
                     </a>
@@ -261,12 +304,10 @@ const coreStack = {
                         <span>Connect on LinkedIn</span>
                         <ArrowUpRight :size="14" />
                     </a>
-                    <a :href="calendlyUrl" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-                        <Calendar :size="16" />
-                        <span>Book a 20-min call</span>
-                        <ArrowUpRight :size="14" />
-                    </a>
                 </div>
+                <p class="hero-microcopy">
+                    *I read every message personally and reply within one business day.*
+                </p>
             </section>
 
             <!-- Snapshot Fact Bar -->
@@ -426,12 +467,23 @@ const coreStack = {
             <!-- References -->
             <section class="references-section">
                 <div class="references-card glass-panel">
-                    <h2 class="references-title">
-                        <Users :size="20" class="heading-icon" />
-                        References
-                    </h2>
+                    <div class="references-header-row">
+                        <h2 class="references-title">
+                            <Users :size="20" class="heading-icon" />
+                            References &amp; Verified Recommendations
+                        </h2>
+                        <a
+                            :href="linkedinUrl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="ref-linkedin-btn glow-pill"
+                        >
+                            <span>LinkedIn Recommendations</span>
+                            <ArrowUpRight :size="13" />
+                        </a>
+                    </div>
                     <p class="references-body">
-                        Recommendations available on <a :href="linkedinUrl" target="_blank" rel="noopener noreferrer" class="inline-link">LinkedIn</a> — plus the manager and engineering quotes featured on the homepage. Happy to arrange reference calls on request.
+                        Full recommendations and endorsements available directly on <a :href="linkedinUrl" target="_blank" rel="noopener noreferrer" class="inline-link">LinkedIn (Ashish Gupta)</a> — alongside verified feedback from engineering leaders at Infosys, ZoetiCoach AI, and healthcare platforms. Happy to arrange direct reference calls upon request.
                     </p>
                 </div>
             </section>
@@ -785,12 +837,105 @@ const coreStack = {
     -webkit-text-fill-color: transparent;
 }
 
-.hero-subtitle {
-    font-size: 1.1rem;
+.hero-subtitle,
+.hero-subline {
+    font-size: 1.05rem;
     line-height: 1.6;
     color: var(--text-2);
     max-width: 820px;
     margin: 0;
+}
+
+.hero-subline strong {
+    color: var(--text-1);
+    font-weight: 700;
+}
+
+/* Pitch proof cards grid */
+.pitch-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+.pitch-card {
+    padding: 1.25rem 1.15rem;
+    border-radius: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.pitch-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--accent-rgb), 0.35);
+}
+
+.pitch-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pitch-card-badge {
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-2);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+.pitch-card-badge.accent-badge {
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    border-color: rgba(var(--accent-rgb), 0.25);
+}
+
+.pitch-card-text {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text-2);
+    margin: 0;
+}
+
+.pitch-card-text strong {
+    color: var(--text-1);
+    font-weight: 650;
+}
+
+/* Best fit banner */
+.best-fit-banner {
+    padding: 0.85rem 1.15rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--accent-rgb), 0.05);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+}
+
+.best-fit-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-1);
+    margin: 0;
+}
+
+.best-fit-text strong {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.hero-microcopy {
+    font-size: 0.8125rem;
+    font-style: italic;
+    color: var(--text-3);
+    margin-top: 0.3rem;
 }
 
 .hero-actions {
@@ -798,7 +943,7 @@ const coreStack = {
     align-items: center;
     gap: 0.85rem;
     flex-wrap: wrap;
-    margin-top: 0.8rem;
+    margin-top: 0.5rem;
 }
 
 /* ── Buttons ── */
@@ -1196,6 +1341,33 @@ const coreStack = {
     padding: 1.8rem 2rem;
 }
 
+.references-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+}
+
+.ref-linkedin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+.ref-linkedin-btn:hover {
+    transform: translateY(-1px);
+    background: var(--accent);
+    color: #ffffff;
+}
+
 .references-title {
     display: flex;
     align-items: center;
@@ -1203,7 +1375,7 @@ const coreStack = {
     font-size: 1.2rem;
     font-weight: 800;
     color: var(--text-1);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
 }
 
 .references-body {
@@ -1328,11 +1500,39 @@ const coreStack = {
         padding: 2rem 1rem 4rem;
         gap: 2.8rem;
     }
+    .pitch-cards-grid {
+        grid-template-columns: 1fr;
+    }
     .snapshot-card {
         padding: 0.75rem 1rem;
     }
     .snapshot-label {
         width: 35%;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-shell {
+        padding: 1.5rem 0.75rem 3.5rem;
+        gap: 2.2rem;
+    }
+    .hero-title {
+        font-size: clamp(1.65rem, 6.8vw, 2.2rem);
+    }
+    .hero-subline {
+        font-size: 0.92rem;
+    }
+    .snapshot-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    .snapshot-label {
+        width: 100%;
+        font-size: 0.76rem;
+    }
+    .snapshot-value {
+        font-size: 0.88rem;
     }
 }
 
@@ -1357,10 +1557,30 @@ const coreStack = {
 :global([data-theme="light"]) .how-card,
 :global([data-theme="light"]) .stack-card,
 :global([data-theme="light"]) .comp-table-wrap,
-:global([data-theme="light"]) .contact-card {
+:global([data-theme="light"]) .contact-card,
+:global([data-theme="light"]) .pitch-card,
+:global([data-theme="light"]) .references-card,
+:global([data-theme="light"]) .close-section {
     background: #ffffff;
     border-color: rgba(15, 23, 42, 0.08);
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+:global([data-theme="light"]) .best-fit-banner {
+    background: #f0fdfa;
+    border-color: rgba(13, 148, 136, 0.3);
+}
+
+:global([data-theme="light"]) .pitch-card-badge {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #475569;
+}
+
+:global([data-theme="light"]) .pitch-card-badge.accent-badge {
+    background: #f0fdfa;
+    border-color: rgba(13, 148, 136, 0.3);
+    color: #0d9488;
 }
 
 :global([data-theme="light"]) .comp-head-col,

@@ -101,6 +101,20 @@ const scrollToBottom = async () => {
 const MAX_HISTORY = 10
 const MAX_INPUT_LENGTH = 1000
 
+const promptChips = [
+    'Is he open to full-time — and when can he start?',
+    'What’s his strongest stack?',
+    'Show me his AI / RAG experience.',
+    'Notice period, timezone & work authorization?',
+    'What’s his biggest measurable impact?',
+]
+
+const sendPromptChip = (chip: string) => {
+    if (isTyping.value) return
+    input.value = chip
+    sendMessage()
+}
+
 const sendMessage = async () => {
     // Guard re-entry: without this, a fast double-submit fires two requests
     // and interleaves two replies into the transcript.
@@ -192,6 +206,19 @@ const sendMessage = async () => {
                     <div v-if="isTyping" class="chat-bubble bubble-assistant typing-indicator">
                         <span></span><span></span><span></span>
                     </div>
+                </div>
+                
+                <div class="chat-chips-row" aria-label="Suggested questions">
+                    <button
+                        v-for="(chip, idx) in promptChips"
+                        :key="idx"
+                        type="button"
+                        class="chat-chip"
+                        :disabled="isTyping"
+                        @click="sendPromptChip(chip)"
+                    >
+                        {{ chip }}
+                    </button>
                 </div>
                 
                 <div class="chat-input-area">
@@ -374,8 +401,49 @@ const sendMessage = async () => {
     40% { transform: scale(1); }
 }
 
+.chat-chips-row {
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-elevated);
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-top: 1px solid var(--border);
+}
+
+.chat-chips-row::-webkit-scrollbar {
+    display: none;
+}
+
+.chat-chip {
+    white-space: nowrap;
+    font-size: 0.73rem;
+    font-weight: 600;
+    padding: 0.32rem 0.65rem;
+    border-radius: 999px;
+    background: var(--card-bg-solid);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.chat-chip:hover:not(:disabled) {
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    background: rgba(var(--accent-rgb), 0.08);
+    transform: translateY(-1px);
+}
+
+.chat-chip:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .chat-input-area {
-    padding: 1rem;
+    padding: 0.75rem 1rem 1rem;
     background: var(--bg-elevated);
     border-top: 1px solid var(--border);
     display: flex;
@@ -436,12 +504,16 @@ const sendMessage = async () => {
 
 @media (max-width: 480px) {
     .chat-widget-wrapper {
-        bottom: 1rem;
-        left: 1rem;
+        bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+        left: calc(0.75rem + env(safe-area-inset-left, 0px));
     }
     .chat-window {
-        width: calc(100vw - 2rem);
-        height: 400px;
+        width: calc(100vw - 1.5rem);
+        height: min(480px, calc(100dvh - 5.5rem));
+    }
+    .chat-toggle-btn {
+        width: 3rem;
+        height: 3rem;
     }
 }
 
@@ -477,6 +549,23 @@ const sendMessage = async () => {
     background: #f1f5f9;
     color: #0f172a;
     border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .chat-chips-row {
+    background: #f8fafc;
+    border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+:global([data-theme="light"]) .chat-chip {
+    background: #ffffff;
+    color: #475569;
+    border-color: rgba(15, 23, 42, 0.12);
+}
+
+:global([data-theme="light"]) .chat-chip:hover:not(:disabled) {
+    color: #0d9488;
+    background: #f0fdfa;
+    border-color: rgba(13, 148, 136, 0.35);
 }
 
 :global([data-theme="light"]) .chat-input-area {

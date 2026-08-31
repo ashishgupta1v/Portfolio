@@ -792,6 +792,10 @@ onMounted(() => {
     .ct-form-row { padding: 1.6rem 1.2rem; }
 }
 
+@media (max-width: 480px) {
+    .ct-form-row { padding: 1.3rem 0.9rem; }
+}
+
 /* ── Newsletter ── */
 .ct-newsletter-row {
     margin-top: 3.5rem;

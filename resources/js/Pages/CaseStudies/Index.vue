@@ -118,8 +118,9 @@ defineProps<CaseStudiesIndexPageProps>()
 
 .topbar-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .topbar-link,
@@ -261,7 +262,7 @@ defineProps<CaseStudiesIndexPageProps>()
 
 @media (max-width: 640px) {
     .hero-shell {
-        padding-top: 5rem;
+        padding-top: 3.5rem;
     }
     .library-header {
         flex-direction: column;
@@ -269,6 +270,22 @@ defineProps<CaseStudiesIndexPageProps>()
     }
     .study-card {
         padding: 1.25rem 1.15rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-shell {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    .hero-copy h1 {
+        font-size: clamp(1.65rem, 6.8vw, 2.2rem);
+    }
+    .study-card {
+        padding: 1.1rem 0.9rem;
+    }
+    .study-title {
+        font-size: 1.35rem;
     }
 }
 

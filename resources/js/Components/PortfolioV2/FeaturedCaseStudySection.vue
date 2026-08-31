@@ -80,11 +80,12 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.95fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr);
     gap: 1.8rem;
     align-items: stretch;
     position: relative;
     z-index: 1;
+    min-width: 0;
 }
 
 .featured-copy,
@@ -286,25 +287,53 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
     line-height: 1.5;
 }
 
-@media (max-width: 940px) {
+@media (max-width: 960px) {
     .featured-shell {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 }
 
 @media (max-width: 720px) {
     .featured-section {
-        padding: 4.5rem 1rem;
+        padding: 4.5rem 1rem 4rem;
     }
 
-    .featured-copy,
+    .featured-copy {
+        padding: 1.8rem 1.4rem;
+    }
+
     .featured-panel {
-        border-radius: 1.3rem;
         padding: 1rem;
     }
 
     .signal-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-section {
+        padding: 3.5rem 0.8rem 3rem;
+    }
+
+    .featured-copy {
+        padding: 1.5rem 1.1rem;
+    }
+
+    .featured-heading {
+        font-size: clamp(1.75rem, 7vw, 2.3rem);
+    }
+
+    .summary {
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+
+    .primary-cta,
+    .secondary-cta {
+        width: 100%;
+        text-align: center;
     }
 }
 

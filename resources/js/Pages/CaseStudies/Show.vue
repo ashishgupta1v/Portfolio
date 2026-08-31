@@ -263,7 +263,9 @@ function downloadPdf() {
 
 .topbar-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.65rem 0.9rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .topbar-link {
@@ -481,7 +483,32 @@ function downloadPdf() {
     .hero-aside,
     .signal-band,
     .rail-card {
-        padding: 1rem;
+        padding: 1.25rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-shell {
+        width: calc(100vw - 1rem);
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(1.6rem, 6.5vw, 2.1rem);
+    }
+
+    .hero-text {
+        font-size: 0.95rem;
+    }
+
+    .article-card,
+    .hero-aside,
+    .signal-band,
+    .rail-card {
+        padding: 1.1rem 0.85rem;
+    }
+
+    .signal-band {
+        grid-template-columns: 1fr;
     }
 }
 

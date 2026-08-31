@@ -387,7 +387,9 @@ onUnmounted(() => {
     border: none;
     color: var(--text-2);
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
     transition: color 0.25s;
@@ -409,12 +411,14 @@ onUnmounted(() => {
     right: 0;
     width: min(320px, 85vw);
     height: 100vh;
+    height: 100dvh;
     background: var(--bg-elevated);
     border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    padding: 5rem 2rem 2.5rem;
+    padding: calc(4.5rem + env(safe-area-inset-top, 0px)) 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
     gap: 0.4rem;
+    overflow-y: auto;
 }
 .mobile-link {
     background: none;

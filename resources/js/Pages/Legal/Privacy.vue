@@ -116,7 +116,9 @@ import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 .topbar-nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .topbar-link {
@@ -229,6 +231,22 @@ import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
         gap: 1rem;
         align-items: flex-start;
         padding: 1rem 1.25rem;
+    }
+    .content-shell {
+        margin-top: 2rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .doc-title {
+        font-size: clamp(1.65rem, 6.8vw, 2.2rem);
+    }
+    .topbar {
+        padding: 0.85rem 0.9rem;
+    }
+    .content-shell {
+        padding: 0 0.8rem;
     }
 }
 </style>

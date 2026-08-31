@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { 
     Download, 
     Mail, 
+    Calendar,
     Sparkles, 
     ArrowDown, 
     ArrowUpRight, 
@@ -31,6 +32,7 @@ const props = withDefaults(
         resumeUrl?: string | null
         contactEmail?: string | null
         linkedinUrl?: string | null
+        calendlyUrl?: string | null
         githubUrl?: string | null
         avatarUrl?: string | null
         panelMode?: 'architecture' | 'products'
@@ -43,6 +45,7 @@ const props = withDefaults(
         resumeUrl: '/resume/ashish-gupta-resume.pdf',
         contactEmail: 'ashishgupta1v@gmail.com',
         linkedinUrl: 'https://www.linkedin.com/in/ashish-gupta-dev/',
+        calendlyUrl: 'https://calendly.com/ashishgupta1v/30min',
         githubUrl: 'https://github.com/ashishgupta1v',
         avatarUrl: '/images/ashish-gupta-avatar.webp',
         panelMode: 'architecture',
@@ -74,7 +77,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
     (e: 'open-assistant'): void
-    (e: 'cta', type: 'resume' | 'contact' | 'linkedin' | 'github' | 'ai'): void
+    (e: 'cta', type: 'resume' | 'contact' | 'linkedin' | 'github' | 'ai' | 'calendly'): void
 }>()
 
 // Kinetic proof rotator
@@ -133,7 +136,7 @@ const archNodes = [
     },
 ]
 
-function handleCtaClick(type: 'resume' | 'contact' | 'linkedin' | 'github' | 'ai') {
+function handleCtaClick(type: 'resume' | 'contact' | 'linkedin' | 'github' | 'ai' | 'calendly') {
     emit('cta', type)
     if (typeof window !== 'undefined' && (window as any).plausible) {
         (window as any).plausible('hero_cta', { props: { type } })
@@ -250,11 +253,23 @@ onBeforeUnmount(() => {
                     </a>
 
                     <a
+                        :href="calendlyUrl || 'https://calendly.com/ashishgupta1v/30min'"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-secondary btn-calendly"
+                        @click="handleCtaClick('calendly')"
+                    >
+                        <Calendar class="btn-icon text-amber-400" :size="17" />
+                        <span>Book a 20-min call</span>
+                        <ArrowUpRight class="btn-icon-sub" :size="14" />
+                    </a>
+
+                    <a
                         href="#contact"
                         class="btn-secondary"
                         @click="scrollToContact"
                     >
-                        <Mail class="btn-icon" :size="18" />
+                        <Mail class="btn-icon" :size="17" />
                         <span>Get in touch</span>
                     </a>
 
@@ -499,10 +514,11 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: 1280px;
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: 3.5rem;
     align-items: center;
     margin: 0 auto;
+    min-width: 0;
 }
 
 /* Left Content Styles */
@@ -510,6 +526,9 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 .status-row {
@@ -517,6 +536,8 @@ onBeforeUnmount(() => {
     flex-wrap: wrap;
     gap: 0.75rem;
     align-items: center;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .status-pill {
@@ -532,6 +553,7 @@ onBeforeUnmount(() => {
     background: var(--card-bg, rgba(15, 23, 42, 0.6));
     backdrop-filter: blur(8px);
     color: var(--text-2, #94a3b8);
+    max-width: 100%;
 }
 
 .status-pill.available {
@@ -572,12 +594,16 @@ onBeforeUnmount(() => {
 }
 
 .hero-headline {
-    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+    font-size: clamp(1.85rem, 4.2vw, 3.75rem);
     font-weight: 800;
-    line-height: 1.12;
+    line-height: 1.14;
     letter-spacing: -0.025em;
     color: var(--text-1, #f8fafc);
     margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .gradient-accent {
@@ -589,13 +615,17 @@ onBeforeUnmount(() => {
 
 /* Proof Rotator */
 .rotator-container {
-    height: 2rem;
+    min-height: 2rem;
     display: flex;
     align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .proof-line {
-    font-size: 1.0625rem;
+    font-size: clamp(0.8125rem, 2.5vw, 1.0625rem);
     font-weight: 600;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     color: var(--accent, #5eead4);
@@ -603,6 +633,8 @@ onBeforeUnmount(() => {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .proof-slide-enter-active,
@@ -626,6 +658,10 @@ onBeforeUnmount(() => {
     color: var(--text-2, #94a3b8);
     max-width: 580px;
     margin: 0;
+    min-width: 0;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .hero-bio strong {
@@ -640,6 +676,9 @@ onBeforeUnmount(() => {
     gap: 0.875rem;
     align-items: center;
     margin-top: 0.5rem;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
 }
 
 .btn-primary {
@@ -1263,8 +1302,8 @@ onBeforeUnmount(() => {
 /* Responsive adjustments */
 @media (max-width: 960px) {
     .hero-container {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.25rem;
     }
 
     .hero-content {
@@ -1272,7 +1311,7 @@ onBeforeUnmount(() => {
     }
 
     .hero-headline {
-        font-size: clamp(2rem, 6.5vw, 2.75rem);
+        font-size: clamp(1.85rem, 5.5vw, 2.6rem);
     }
 
     .panel-proof-strip {
@@ -1286,6 +1325,28 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 480px) {
+    .split-hero {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: calc(var(--nav-height, 4.5rem) + 1rem);
+        padding-bottom: 2.5rem;
+    }
+
+    .hero-headline {
+        font-size: clamp(1.65rem, 7.5vw, 2.15rem);
+        line-height: 1.16;
+    }
+
+    .hero-bio {
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    .status-pill {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.65rem;
+    }
+
     .cta-group {
         width: 100%;
         flex-direction: column;
@@ -1294,6 +1355,7 @@ onBeforeUnmount(() => {
 
     .btn-primary, .btn-secondary, .btn-ai {
         justify-content: center;
+        width: 100%;
     }
 
     .hero-panel-wrapper {

@@ -82,19 +82,20 @@ function initCluster() {
     const w = field.clientWidth
     const count = stackSkills.length
 
-    // Set fixed central area for cluster
-    const neededH = 500
+    // Adaptive height and scale based on container width
+    const neededH = w < 480 ? 400 : (w < 768 ? 460 : 520)
     field.style.minHeight = `${neededH}px`
 
     const centerX = w / 2
     const centerY = neededH / 2
+    const responsiveScale = w < 480 ? 0.78 : (w < 768 ? 0.9 : BUBBLE_SCALE)
 
     state.length = 0
     for (let i = 0; i < count; i++) {
-        // Base width calculation: 4.1rem is roughly 65.6px root -> r is half
-        const r = 32.8 * stackSkills[i].size * BUBBLE_SCALE
-        const homeX = centerX + (Math.random() - 0.5) * 50
-        const homeY = centerY + (Math.random() - 0.5) * 50
+        // Responsive bubble radius calculation
+        const r = 32.8 * stackSkills[i].size * responsiveScale
+        const homeX = centerX + (Math.random() - 0.5) * 40
+        const homeY = centerY + (Math.random() - 0.5) * 40
 
         state.push({
             x: homeX,
@@ -220,6 +221,20 @@ function onMouseLeave() {
     mouse.active = false
 }
 
+function onTouchMove(e: TouchEvent) {
+    if (!e.touches.length) return
+    const field = bubbleFieldRef.value
+    if (!field) return
+    const rect = field.getBoundingClientRect()
+    mouse.x = e.touches[0].clientX - rect.left
+    mouse.y = e.touches[0].clientY - rect.top
+    mouse.active = true
+}
+
+function onTouchEnd() {
+    mouse.active = false
+}
+
 function onResize() {
     initCluster()
 }
@@ -288,6 +303,9 @@ onUnmounted(() => {
                 class="bubble-field"
                 @mousemove="onMouseMove"
                 @mouseleave="onMouseLeave"
+                @touchmove.passive="onTouchMove"
+                @touchend="onTouchEnd"
+                @touchcancel="onTouchEnd"
             >
                 <div
                     v-for="(skill, index) in stackSkills"

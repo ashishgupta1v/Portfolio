@@ -254,29 +254,41 @@ a {
     text-decoration: none;
 }
 
-/* Section Container */
+/* Section Container — Fluid & Adaptive */
 .section-container {
-    width: 90%;
-    max-width: var(--container-max);
+    width: min(100% - 2.5rem, var(--container-max));
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0;
 }
 
-@media (min-width: 1600px) {
+@media (max-width: 768px) {
     .section-container {
-        max-width: 1200px;
+        width: calc(100% - 1.75rem);
     }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 480px) {
     .section-container {
-        max-width: 900px;
+        width: calc(100% - 1.25rem);
     }
 }
 
-@media (max-width: 900px) {
-    .section-container {
-        max-width: 500px;
+/* Global Responsive Safeguards */
+img, video, svg, canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+pre, code {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent iOS Safari 16px Auto-Zoom on form input focus */
+@media (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px !important;
     }
 }
 

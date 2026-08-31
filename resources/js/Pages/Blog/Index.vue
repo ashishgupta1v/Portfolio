@@ -116,8 +116,9 @@ function formatDate(value: string): string {
 
 .topbar-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .topbar-link,
@@ -262,6 +263,25 @@ function formatDate(value: string): string {
 
     .post-meta-row {
         justify-content: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-shell {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(1.65rem, 6.8vw, 2.2rem);
+    }
+
+    .post-card {
+        padding: 1.1rem 0.9rem;
+    }
+
+    .post-title {
+        font-size: 1.35rem;
     }
 }
 
