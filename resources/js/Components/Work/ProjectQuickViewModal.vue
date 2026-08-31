@@ -755,7 +755,7 @@ onBeforeUnmount(() => {
     .modal-card {
         padding: 1.35rem 1.1rem;
         border-radius: 1.2rem;
-        max-height: 94vh;
+        max-height: 92dvh;
     }
     .modal-title {
         font-size: 1.4rem;
@@ -776,6 +776,20 @@ onBeforeUnmount(() => {
         width: 100%;
         margin-left: 0;
         justify-content: center;
+    }
+}
+
+@media (max-height: 520px) {
+    .modal-backdrop {
+        padding: 0.4rem;
+    }
+    .modal-card {
+        padding: 1rem 0.9rem;
+        max-height: 94dvh;
+        border-radius: 0.85rem;
+    }
+    .modal-title {
+        font-size: 1.15rem;
     }
 }
 

@@ -449,11 +449,58 @@ onMounted(() => {
 
 @media (max-width: 768px) {
     .combo-section {
-        padding: 4.5rem 1rem;
+        padding: 4rem 1rem;
     }
 
     .combo-intro {
-        padding: 1.8rem 1.4rem;
+        padding: 1.6rem 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .combo-section {
+        padding: 3.2rem 0.85rem;
+    }
+
+    .combo-intro {
+        padding: 1.4rem 1rem;
+    }
+
+    .combo-card {
+        padding: 1.4rem 1.15rem;
+    }
+
+    .ghost-numeral {
+        font-size: 2.2rem;
+        opacity: 0.08;
+        top: 0.6rem;
+        right: 0.8rem;
+    }
+
+    .card-title {
+        font-size: 1.05rem;
+        padding-right: 1rem;
+    }
+
+    .expand-btn {
+        width: 2.25rem;
+        height: 2.25rem;
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .combo-section {
+        padding: 2.8rem 0.65rem;
+    }
+
+    .combo-card {
+        padding: 1.2rem 0.9rem;
+    }
+
+    .ghost-numeral {
+        display: none;
     }
 }
 

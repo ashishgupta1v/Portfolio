@@ -628,6 +628,13 @@ onMounted(async () => {
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+    .github-repos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
     .github-section {
         padding: 3.2rem 1rem 3.4rem;
@@ -667,6 +674,31 @@ onMounted(async () => {
 @media (max-width: 480px) {
     .github-section {
         padding: 2.8rem 0.8rem;
+    }
+
+    .stat-card {
+        padding: 0.85rem 1rem;
+    }
+
+    .repo-card {
+        padding: 1.1rem 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .github-section {
+        padding: 2.4rem 0.6rem;
+    }
+
+    .stat-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .github-profile-link {
+        width: 100%;
+        justify-content: center;
     }
 }
 

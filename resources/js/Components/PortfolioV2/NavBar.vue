@@ -415,6 +415,8 @@ onUnmounted(() => {
     padding: calc(4.5rem + env(safe-area-inset-top, 0px)) 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
     gap: 0.4rem;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 .mobile-link {
     background: none;
@@ -433,22 +435,6 @@ onUnmounted(() => {
 }
 .mobile-link:hover { color: var(--accent); }
 .mobile-link.active { color: var(--accent); }
-.mobile-theme-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--border);
-}
-.mobile-theme-label {
-    color: var(--text-2);
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-}
-.mobile-theme-toggle {
-    color: var(--text-2);
-}
 .mobile-socials {
     display: flex;
     gap: 1.2rem;

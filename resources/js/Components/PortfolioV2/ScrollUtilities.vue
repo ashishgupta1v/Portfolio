@@ -89,10 +89,10 @@ onUnmounted(() => {
 
 .back-to-top {
     position: fixed;
-    right: 1.25rem;
+    right: max(1rem, calc(1rem + env(safe-area-inset-right, 0px)));
     /* Sits above the chat toggle (which lives bottom-left). Keeps clear of
        iOS home indicator on small screens. */
-    bottom: calc(1.25rem + env(safe-area-inset-bottom));
+    bottom: max(1.25rem, calc(1.25rem + env(safe-area-inset-bottom, 0px)));
     z-index: 40;
 
     width: 2.75rem;

@@ -411,8 +411,35 @@ onMounted(() => {
     .timeline-section {
         padding: 3rem 0.8rem;
     }
+    .tl-row {
+        padding: 1.1rem 0.85rem;
+    }
     .tl-role {
-        font-size: 1.1rem;
+        font-size: 1.08rem;
+    }
+    .tl-date {
+        font-size: 1.2rem;
+    }
+    .tl-list li {
+        font-size: 0.84rem;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 360px) {
+    .timeline-section {
+        padding: 2.5rem 0.6rem;
+    }
+    .tl-row {
+        padding: 0.95rem 0.65rem;
+    }
+    .tl-role {
+        font-size: 1rem;
+    }
+    .company-badge-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
     }
 }
 

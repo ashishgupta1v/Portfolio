@@ -332,8 +332,8 @@ onUnmounted(() => {
 /* ------------------------------------------------------------------ */
 .terminal-window {
   position: relative;
-  width: min(96vw, 900px);
-  height: min(80vh, 600px);
+  width: min(calc(100vw - 1.5rem), 900px);
+  height: min(84dvh, 600px);
   display: flex;
   flex-direction: column;
   background: #0a0e14;
@@ -524,6 +524,29 @@ onUnmounted(() => {
   to {
     transform: scale(0.95) translateY(10px);
     opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-window {
+    font-size: 0.78rem;
+    height: min(88dvh, 540px);
+  }
+  .terminal-output {
+    padding: 8px 10px;
+  }
+  .terminal-input-line {
+    padding: 6px 10px 10px;
+  }
+}
+
+@media (max-height: 520px) {
+  .terminal-window {
+    height: 94dvh;
+    font-size: 0.75rem;
+  }
+  .terminal-output {
+    padding: 6px 10px;
   }
 }
 

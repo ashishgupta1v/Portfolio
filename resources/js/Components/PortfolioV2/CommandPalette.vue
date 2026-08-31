@@ -380,7 +380,7 @@ onMounted(() => {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    max-height: min(70vh, 480px);
+    max-height: min(75dvh, 480px);
 }
 
 /* ─── Header / search ─────────────────────────────────────────────── */
@@ -573,6 +573,28 @@ onMounted(() => {
     .cp-fade-enter-from .cp-card,
     .cp-fade-leave-to .cp-card {
         transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .cp-card {
+        margin: 0 0.5rem;
+        max-height: min(82dvh, 480px);
+    }
+    .cp-header {
+        padding: 0.75rem 0.85rem;
+    }
+    .cp-item {
+        padding: 0.5rem 0.85rem;
+    }
+    .cp-footer-hint {
+        display: none;
+    }
+}
+
+@media (max-height: 520px) {
+    .cp-card {
+        max-height: 92dvh;
     }
 }
 

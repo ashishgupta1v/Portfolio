@@ -1349,17 +1349,62 @@ onBeforeUnmount(() => {
 
     .cta-group {
         width: 100%;
+        display: flex;
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
     }
 
     .btn-primary, .btn-secondary, .btn-ai {
         justify-content: center;
         width: 100%;
+        min-height: 46px;
     }
 
     .hero-panel-wrapper {
         margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .split-hero {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .status-row {
+        gap: 0.4rem;
+    }
+
+    .status-pill {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .btn-primary, .btn-secondary, .btn-ai {
+        font-size: 0.85rem;
+        padding: 0.65rem 0.85rem;
+    }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+    .split-hero {
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+        min-height: auto;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .hero-headline {
+        font-size: 1.6rem;
+    }
+
+    .scroll-cue {
+        display: none;
     }
 }
 

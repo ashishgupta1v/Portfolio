@@ -341,22 +341,45 @@ function initials(name: string): string {
 
 @media (max-width: 1024px) {
     .testimonials-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
     }
 }
 
 @media (max-width: 768px) {
     .testimonials-section {
-        padding: 4.5rem 1rem 3.5rem;
+        padding: 4rem 1rem 3rem;
+    }
+    .testimonials-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 480px) {
     .testimonials-section {
-        padding: 3rem 0.8rem;
+        padding: 3rem 0.8rem 2.5rem;
     }
     .testimonial-card {
-        padding: 1.25rem 1.15rem;
+        padding: 1.3rem 1.1rem;
+        gap: 0.9rem;
+    }
+    .testimonial-quote {
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 360px) {
+    .testimonials-section {
+        padding: 2.5rem 0.6rem 2rem;
+    }
+    .testimonial-card {
+        padding: 1.1rem 0.85rem;
+    }
+    .testimonial-attribution {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }
 

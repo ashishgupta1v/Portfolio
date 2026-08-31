@@ -354,9 +354,22 @@ onMounted(() => {
         padding: 4rem 1rem 3.5rem;
     }
     .filter-pills {
-        gap: 0.4rem;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: contain;
+        gap: 0.45rem;
+        padding-bottom: 0.65rem;
+        scrollbar-width: none;
+    }
+    .filter-pills::-webkit-scrollbar {
+        display: none;
     }
     .filter-pill {
+        flex-shrink: 0;
+        scroll-snap-align: start;
         padding: 0.38rem 0.8rem;
         font-size: 0.76rem;
     }
@@ -365,6 +378,12 @@ onMounted(() => {
 @media (max-width: 480px) {
     .work-section {
         padding: 3rem 0.8rem 2.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .work-section {
+        padding: 2.5rem 0.6rem 2rem;
     }
 }
 

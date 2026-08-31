@@ -410,6 +410,9 @@ const sendMessage = async () => {
     scrollbar-width: none;
     -ms-overflow-style: none;
     border-top: 1px solid var(--border);
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
 }
 
 .chat-chips-row::-webkit-scrollbar {
@@ -418,6 +421,7 @@ const sendMessage = async () => {
 
 .chat-chip {
     white-space: nowrap;
+    scroll-snap-align: start;
     font-size: 0.73rem;
     font-weight: 600;
     padding: 0.32rem 0.65rem;
