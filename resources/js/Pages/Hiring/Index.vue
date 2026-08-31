@@ -203,11 +203,6 @@ const coreStack = {
                     </div>
 
                     <div class="mobile-actions">
-                        <div class="mobile-theme-row">
-                            <span class="mobile-theme-label">Theme</span>
-                            <ThemeToggle class="mobile-theme-toggle" />
-                        </div>
-
                         <a
                             :href="resumeUrl"
                             target="_blank"

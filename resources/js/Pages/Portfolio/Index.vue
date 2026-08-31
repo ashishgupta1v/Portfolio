@@ -5,7 +5,6 @@ import type { PortfolioPageProps } from '@/types/portfolio'
 import { useMouseDepth } from '@/Composables/useMouseDepth'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import CustomCursor from '@/Components/Portfolio/CustomCursor.vue'
 import NavBar from '@/Components/PortfolioV2/NavBar.vue'
 import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
 
@@ -123,7 +122,6 @@ onUnmounted(() => {
     <Head :title="profile.name + ' — ' + profile.title" />
 
     <div class="v2-page" :style="depthVars">
-        <CustomCursor />
         <ToastContainer />
 
         <NavBar

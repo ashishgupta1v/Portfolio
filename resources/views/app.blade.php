@@ -8,9 +8,7 @@
              the wrong palette then flashes to the right one. --}}
         <script>
             (function () {
-                var stored = localStorage.getItem('theme');
-                var dark = stored === 'dark' || (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', 'dark');
             })();
         </script>
 

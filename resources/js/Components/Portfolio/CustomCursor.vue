@@ -1,32 +1,5 @@
-<script setup lang="ts">
-import { useCursor } from '@/Composables/useCursor'
-import { useIsDesktop } from '@/Composables/useMediaQuery'
-
-const { dotX, dotY, ringX, ringY, cursorScale, cursorVisible } = useCursor()
-const isDesktop = useIsDesktop()
-</script>
-
 <template>
-    <div
-        v-if="isDesktop"
-        class="custom-cursor"
-        :class="{ visible: cursorVisible }"
-    >
-        <!-- The dot moves instantly to feel perfectly responsive -->
-        <div 
-            class="cursor-dot" 
-            :style="{
-                transform: `translate(${dotX}px, ${dotY}px) scale(${cursorScale})`,
-            }"
-        />
-        <!-- The ring trails smoothly behind -->
-        <div 
-            class="cursor-ring" 
-            :style="{
-                transform: `translate(${ringX}px, ${ringY}px) scale(${cursorScale})`,
-            }"
-        />
-    </div>
+    <!-- Custom cursor disabled per user preference -->
 </template>
 
 <style scoped>

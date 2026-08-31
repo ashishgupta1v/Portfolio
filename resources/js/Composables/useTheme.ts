@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 export type ThemePreference = 'light' | 'dark' | 'system'
 type ResolvedTheme = 'light' | 'dark'
 
-const theme = ref<ThemePreference>('system')
+const theme = ref<ThemePreference>('dark')
 const resolvedTheme = ref<ResolvedTheme>('dark')
 
 let mediaQuery: MediaQueryList | null = null
@@ -17,27 +17,14 @@ function applyResolvedTheme(resolved: ResolvedTheme) {
 }
 
 function applyThemeSettings(pref: ThemePreference) {
-    if (typeof window === 'undefined') return
-    const systemPrefersDark = mediaQuery ? mediaQuery.matches : window.matchMedia('(prefers-color-scheme: dark)').matches
-    const resolved: ResolvedTheme = pref === 'system' ? (systemPrefersDark ? 'dark' : 'light') : pref
-    applyResolvedTheme(resolved)
+    applyResolvedTheme('dark')
 }
 
 function initTheme() {
     if (initialized || typeof window === 'undefined') return
     initialized = true
-
-    const stored = localStorage.getItem('theme')
-    theme.value = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system'
-
-    mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', (e) => {
-        if (theme.value === 'system') {
-            applyResolvedTheme(e.matches ? 'dark' : 'light')
-        }
-    })
-
-    applyThemeSettings(theme.value)
+    theme.value = 'dark'
+    applyResolvedTheme('dark')
 }
 
 export function useTheme() {

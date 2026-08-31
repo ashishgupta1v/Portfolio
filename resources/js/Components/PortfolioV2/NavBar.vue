@@ -135,10 +135,6 @@ onUnmounted(() => {
                 <Link href="/for-hiring-managers" class="mobile-link mobile-link-highlight" @click="mobileOpen = false">For Hiring Managers</Link>
                 <Link href="/blog" class="mobile-link" @click="mobileOpen = false">Blog</Link>
                 <button class="mobile-link" :class="{ active: activeSection === 'contact' }" @click="scrollTo('contact')">Contact</button>
-                <div class="mobile-theme-row">
-                    <span class="mobile-theme-label">Theme</span>
-                    <ThemeToggle class="mobile-theme-toggle" />
-                </div>
                 <div v-if="socialLinks?.length" class="mobile-socials">
                     <a
                         v-for="link in socialLinks"
