@@ -15,6 +15,7 @@ import {
     Terminal, 
     ExternalLink 
 } from 'lucide-vue-next'
+import { trackResumeDownload, trackCalendlyOpen, trackAiAssistantOpen } from '@/Utils/analytics'
 
 interface ProductShot {
     title: string
@@ -53,7 +54,7 @@ const props = withDefaults(
             {
                 title: 'ZoetiCoach AI',
                 tag: 'Production AI & RAG',
-                description: 'WhatsApp-first accountability system with pgvector RAG & event-sourced ledger.',
+                description: 'Production RAG on WhatsApp — human-in-the-loop approval + full AI audit trail.',
                 imageUrl: '/images/portfolio/zoeticoach.jpg',
                 url: 'https://zoeticoach.com',
             },
@@ -141,7 +142,12 @@ function handleCtaClick(type: 'resume' | 'contact' | 'linkedin' | 'github' | 'ai
     if (typeof window !== 'undefined' && (window as any).plausible) {
         (window as any).plausible('hero_cta', { props: { type } })
     }
-    if (type === 'ai') {
+    if (type === 'resume') {
+        trackResumeDownload('hero')
+    } else if (type === 'calendly') {
+        trackCalendlyOpen('hero')
+    } else if (type === 'ai') {
+        trackAiAssistantOpen('hero')
         emit('open-assistant')
         window.dispatchEvent(new CustomEvent('open-ai-assistant'))
     }
@@ -193,7 +199,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <header class="split-hero" aria-label="Introduction & Architecture Overview">
+    <section class="split-hero" role="region" aria-label="Introduction & Architecture Overview">
         <!-- Decorative Ambient Background Grid & Glow -->
         <div class="hero-mesh" aria-hidden="true">
             <div class="glow-orb glow-1"></div>
@@ -444,7 +450,7 @@ onBeforeUnmount(() => {
                 <ArrowDown class="scroll-icon animate-bounce" :size="14" />
             </a>
         </div>
-    </header>
+    </section>
 </template>
 
 <style scoped>
@@ -630,11 +636,19 @@ onBeforeUnmount(() => {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     color: var(--accent, #5eead4);
     margin: 0;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
     max-width: 100%;
+}
+
+@media (max-width: 360px) {
+    .proof-line {
+        font-size: 0.76rem;
+        line-height: 1.25;
+    }
 }
 
 .proof-slide-enter-active,

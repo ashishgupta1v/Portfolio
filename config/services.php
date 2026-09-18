@@ -46,8 +46,8 @@ return [
      * analytics entirely — the script tag is only emitted when configured.
      */
     'plausible' => [
-        'domain' => env('PLAUSIBLE_DOMAIN'),
-        'src' => env('PLAUSIBLE_SRC', 'https://plausible.io/js/script.js'),
+        'domain' => env('PLAUSIBLE_DOMAIN', 'ashishgupta.dev'),
+        'src' => env('PLAUSIBLE_SRC', 'https://plausible.io/js/script.tagged-events.outbound-links.js'),
     ],
 
 ];

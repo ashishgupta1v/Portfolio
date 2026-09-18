@@ -29,23 +29,42 @@ const props = defineProps<{
 const activeNode = ref<string | null>(null)
 
 const architectures: Record<string, ArchitectureData> = {
-    'zoeticoach-ai': {
-        title: 'ZoetiCoach AI Architecture',
+    'zoeticoach-ai-whatsapp-accountability-engine': {
+        title: 'ZoetiCoach AI Production Architecture (RAG + Human-in-the-Loop)',
         nodes: [
-            { id: 'wa', label: 'WhatsApp API', tech: 'Webhook', x: 50, y: 30, color: '#25D366' },
-            { id: 'api', label: 'Laravel API', tech: 'Laravel 13', x: 200, y: 30, color: '#FF2D20' },
-            { id: 'ai', label: 'AI Engine', tech: 'OpenAI + pgvector', x: 350, y: 30, color: '#10a37f' },
-            { id: 'db', label: 'Database', tech: 'PostgreSQL', x: 200, y: 130, color: '#336791' },
-            { id: 'queue', label: 'Queue Worker', tech: 'Redis / Horizon', x: 350, y: 130, color: '#DC382D' },
-            { id: 'ui', label: 'Dashboard', tech: 'Vue 3 + Inertia', x: 50, y: 130, color: '#42b883' },
+            { id: 'wa', label: 'WhatsApp API', tech: 'Meta Webhooks', x: 20, y: 30, color: '#25D366' },
+            { id: 'api', label: 'Laravel Ingress', tech: 'Event Ledger', x: 160, y: 30, color: '#FF2D20' },
+            { id: 'rag', label: 'pgvector RAG', tech: 'HNSW 1536d Cosine', x: 310, y: 30, color: '#336791' },
+            { id: 'guard', label: 'Safety & Guardrails', tech: 'Delimiters + Eval', x: 310, y: 130, color: '#f59e0b' },
+            { id: 'queue', label: 'Approval Queue', tech: 'Human-in-the-Loop', x: 160, y: 130, color: '#8b5cf6' },
+            { id: 'coach', label: 'Coach Portal', tech: 'Vue 3 + Inertia', x: 20, y: 130, color: '#42b883' },
         ],
         edges: [
-            { from: 'wa', to: 'api', label: 'Webhook' },
-            { from: 'api', to: 'ai', label: 'Prompt' },
-            { from: 'api', to: 'db', label: 'CRUD' },
-            { from: 'api', to: 'queue', label: 'Dispatch' },
-            { from: 'ui', to: 'api', label: 'Inertia' },
-            { from: 'queue', to: 'db', label: 'Process' },
+            { from: 'wa', to: 'api', label: 'Signed Post' },
+            { from: 'api', to: 'rag', label: 'Vector Query' },
+            { from: 'rag', to: 'guard', label: 'Context Chunks' },
+            { from: 'guard', to: 'queue', label: 'Draft Action' },
+            { from: 'queue', to: 'coach', label: 'Review / Edit' },
+            { from: 'coach', to: 'wa', label: 'Approved Send' },
+        ],
+    },
+    'zoeticoach-ai': {
+        title: 'ZoetiCoach AI Production Architecture (RAG + Human-in-the-Loop)',
+        nodes: [
+            { id: 'wa', label: 'WhatsApp API', tech: 'Meta Webhooks', x: 20, y: 30, color: '#25D366' },
+            { id: 'api', label: 'Laravel Ingress', tech: 'Event Ledger', x: 160, y: 30, color: '#FF2D20' },
+            { id: 'rag', label: 'pgvector RAG', tech: 'HNSW 1536d Cosine', x: 310, y: 30, color: '#336791' },
+            { id: 'guard', label: 'Safety & Guardrails', tech: 'Delimiters + Eval', x: 310, y: 130, color: '#f59e0b' },
+            { id: 'queue', label: 'Approval Queue', tech: 'Human-in-the-Loop', x: 160, y: 130, color: '#8b5cf6' },
+            { id: 'coach', label: 'Coach Portal', tech: 'Vue 3 + Inertia', x: 20, y: 130, color: '#42b883' },
+        ],
+        edges: [
+            { from: 'wa', to: 'api', label: 'Signed Post' },
+            { from: 'api', to: 'rag', label: 'Vector Query' },
+            { from: 'rag', to: 'guard', label: 'Context Chunks' },
+            { from: 'guard', to: 'queue', label: 'Draft Action' },
+            { from: 'queue', to: 'coach', label: 'Review / Edit' },
+            { from: 'coach', to: 'wa', label: 'Approved Send' },
         ],
     },
     'digital-builders': {

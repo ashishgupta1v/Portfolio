@@ -50,6 +50,29 @@ const stackSkills: BubbleSkill[] = [
     { name: 'Cursor', hue: 220, size: 0.8 },
 ]
 
+const skillCategories = [
+    {
+        name: 'Production AI & Vector RAG',
+        color: '#a855f7',
+        skills: ['RAG Systems', 'pgvector', 'OpenAI API', 'Claude Code', 'AI Agents', 'Prompt-Injection Defense', 'Human-in-the-Loop', 'Hallucination Mitigation'],
+    },
+    {
+        name: 'Backend & Domain Architecture',
+        color: '#f43f5e',
+        skills: ['Laravel 13', 'PHP 8.4', 'Domain-Driven Design (DDD)', 'PostgreSQL', 'Redis', 'Event Sourcing', 'Microservices', 'RESTful APIs', 'SOLID Principles'],
+    },
+    {
+        name: 'Modern Frontend & VILT Stack',
+        color: '#06b6d4',
+        skills: ['Vue 3', 'Inertia.js', 'TypeScript', 'Tailwind CSS', 'Vite', 'GSAP Motion', 'HTML5 Semantic A11y'],
+    },
+    {
+        name: 'Cloud, Infrastructure & Tooling',
+        color: '#10b981',
+        skills: ['AWS (SES/S3/EC2)', 'Docker', 'GitHub Actions CI/CD', 'Nginx', 'Linux / Bash', 'Cursor AI', 'Pest / Vitest'],
+    },
+]
+
 const sectionRef = ref<HTMLElement | null>(null)
 const bubbleFieldRef = ref<HTMLElement | null>(null)
 
@@ -92,8 +115,10 @@ function initCluster() {
 
     state.length = 0
     for (let i = 0; i < count; i++) {
-        // Responsive bubble radius calculation
-        const r = 32.8 * stackSkills[i].size * responsiveScale
+        // Responsive bubble radius calculation with text length accommodation
+        const textLen = stackSkills[i].name.length
+        const lenMultiplier = textLen > 16 ? 1.4 : (textLen > 10 ? 1.2 : 1.0)
+        const r = 32.8 * stackSkills[i].size * responsiveScale * lenMultiplier
         const homeX = centerX + (Math.random() - 0.5) * 40
         const homeY = centerY + (Math.random() - 0.5) * 40
 
@@ -322,6 +347,21 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
+
+            <!-- Grouped & Scannable Domain Breakdown for ATS & Recruiters -->
+            <div class="tech-grouped-grid">
+                <div v-for="cat in skillCategories" :key="cat.name" class="tech-group-card glass-panel">
+                    <h3 class="tech-group-title">
+                        <span class="tech-group-dot" :style="{ background: cat.color }"></span>
+                        {{ cat.name }}
+                    </h3>
+                    <div class="tech-chips-wrap">
+                        <span v-for="skill in cat.skills" :key="skill" class="tech-chip-item glow-pill">
+                            {{ skill }}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </template>
@@ -356,22 +396,22 @@ onUnmounted(() => {
     --s: calc(var(--size, 1) * 1);
     --bubble-scale: 1.1;
     position: absolute;
-    width: calc(4.1rem * var(--s) * var(--bubble-scale));
-    height: calc(4.1rem * var(--s) * var(--bubble-scale));
-    min-width: 3.2rem;
-    min-height: 3.2rem;
+    width: auto;
+    min-width: 5.5rem;
+    height: auto;
     will-change: transform, opacity;
     left: 0;
     top: 0;
 }
 
 .bubble {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    min-width: 5.5rem;
+    padding: 0.5rem 0.85rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 9999px;
     background: radial-gradient(ellipse at 30% 30%,
         hsla(var(--hue, 190), 92%, 88%, 0.26) 0%,
         hsla(var(--hue, 190), 75%, 70%, 0.14) 42%,
@@ -399,14 +439,70 @@ onUnmounted(() => {
     font-weight: 700;
     color: var(--text-1);
     text-align: center;
-    line-height: 1.2;
-    padding: 0.22rem;
+    line-height: 1.15;
+    padding: 0.15rem 0.25rem;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
     user-select: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 90%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: 100%;
+}
+
+/* ── Grouped scannable grid ── */
+.tech-grouped-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.tech-group-card {
+    padding: 1.25rem 1.4rem;
+    border-radius: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.tech-group-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.tech-group-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.tech-chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.tech-chip-item {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-2);
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    background: var(--card-bg-solid);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.tech-chip-item:hover {
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.45);
+    background: rgba(var(--accent-rgb), 0.08);
 }
 
 @media (max-width: 768px) {

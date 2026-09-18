@@ -19,20 +19,18 @@ const env = import.meta.env.VITE_APP_ENV as string | undefined;
  * quota healthy — errors always send, but only a slice of traces do.
  */
 function initSentry(app: VueApp): void {
+    if (typeof window !== 'undefined') {
+        (window as any).Sentry = Sentry
+    }
+
     if (!sentryDsn) return
 
     Sentry.init({
         app,
         dsn: sentryDsn,
         environment: env ?? 'production',
-        // browserTracingIntegration's typed `router` option expects a Vue
-        // Router instance; this app uses Inertia, not vue-router. Sentry's
-        // default heuristics still capture navigation transactions from
-        // popstate/pushstate, they just won't be labeled with named routes.
         integrations: [Sentry.browserTracingIntegration()],
-        tracesSampleRate: env === 'production' ? 0.1 : 0,
-        // Session Replay is off by default — enable per-DSN in the Sentry
-        // dashboard if wanted; it adds ~100KB and PII considerations.
+        tracesSampleRate: env === 'production' ? 0.1 : 0.05,
     })
 }
 

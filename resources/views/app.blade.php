@@ -19,15 +19,14 @@
              Inertia's <Head> component depends on. --}}
         @include('partials.seo')
 
-        {{-- Privacy-friendly analytics. Loaded only if configured, so local
-             dev and unauthenticated preview environments send nothing. Set
-             PLAUSIBLE_DOMAIN in .env (e.g. "ashishgupta.dev") to enable.
-             The script is async — no blocking on first paint. --}}
+        {{-- Privacy-friendly analytics via Plausible.
+             Queue snippet ensures early calls to window.plausible() do not fail before script loads. --}}
+        <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };</script>
         @if(config('services.plausible.domain'))
             <script
                 defer
                 data-domain="{{ config('services.plausible.domain') }}"
-                src="{{ config('services.plausible.src', 'https://plausible.io/js/script.js') }}"
+                src="{{ config('services.plausible.src', 'https://plausible.io/js/script.tagged-events.outbound-links.js') }}"
             ></script>
         @endif
 

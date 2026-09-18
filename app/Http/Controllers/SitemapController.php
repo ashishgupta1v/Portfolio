@@ -26,7 +26,9 @@ final class SitemapController
             ->add(Url::create('/')->setPriority(1.0)->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY))
             ->add(Url::create('/case-studies')->setPriority(0.8)->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY))
             ->add(Url::create('/for-hiring-managers')->setPriority(0.8)->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY))
-            ->add(Url::create('/blog')->setPriority(0.8)->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY));
+            ->add(Url::create('/blog')->setPriority(0.8)->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY))
+            ->add(Url::create('/privacy')->setPriority(0.3)->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY))
+            ->add(Url::create('/terms')->setPriority(0.3)->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY));
 
         // Project detail pages — one per profile.projects row.
         $profile = $this->portfolio->getProfileWithRelations();

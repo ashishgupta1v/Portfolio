@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { Calendar } from 'lucide-vue-next'
+import { trackCalendlyOpen } from '@/Utils/analytics'
 
 const showModal = ref(false)
 const closeBtnRef = ref<HTMLButtonElement | null>(null)
@@ -8,6 +9,7 @@ const triggerBtnRef = ref<HTMLButtonElement | null>(null)
 const CALENDLY_URL = 'https://calendly.com/ashishgupta1v/30min'
 
 function openScheduler() {
+    trackCalendlyOpen('modal_trigger')
     showModal.value = true
 }
 
@@ -83,7 +85,7 @@ onUnmounted(() => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="schedule-external-link"
-                                @click="closeModal"
+                                @click="closeModal(); trackCalendlyOpen('modal_link')"
                             >
                                 <Calendar :size="18" aria-hidden="true" />
                                 <span>Open Calendly to book a slot</span>

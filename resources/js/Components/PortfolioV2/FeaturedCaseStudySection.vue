@@ -26,15 +26,18 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
             <aside class="featured-panel glass-panel">
                 <div class="panel-card primary-card">
                     <div class="panel-header-row">
-                        <span class="panel-label glow-pill">Featured System</span>
+                        <span class="panel-label glow-pill">Flagship Production System</span>
                         <div class="metric-badges-row">
                             <span class="feat-metric glow-pill">⚡ 99.8% Bot Uptime</span>
                             <span class="feat-metric glow-pill-violet">✦ Sub-Second RAG</span>
                         </div>
                     </div>
                     <h3>ZoetiCoach AI</h3>
+                    <p class="feat-tagline" style="color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">
+                        Production RAG on WhatsApp — human-in-the-loop approval + full AI audit trail
+                    </p>
                     <p>
-                        A systems deep-dive on engineering a coaching product where the operating surface is WhatsApp, the unit of truth is accountability evidence ledgers, and AI speeds up human review loops with prompt-injection defense.
+                        A systems deep-dive on engineering a production WhatsApp-first accountability platform: pgvector HNSW cosine search, multi-tier prompt-injection defense, an asynchronous Human-in-the-Loop Approval Queue, and an immutable Trust &amp; Audit Log tracking every similarity score and token cost.
                     </p>
                 </div>
 
@@ -44,12 +47,12 @@ const featuredHref = '/case-studies/zoeticoach-ai-whatsapp-accountability-engine
                         <strong>WhatsApp-Native UX</strong>
                     </div>
                     <div class="signal-card glass-panel">
-                        <span class="signal-kicker">Architecture</span>
-                        <strong>Laravel Events + Vector RAG</strong>
+                        <span class="signal-kicker">RAG &amp; Safety</span>
+                        <strong>pgvector HNSW + Approval Queue</strong>
                     </div>
                     <div class="signal-card glass-panel">
-                        <span class="signal-kicker">Measured Impact</span>
-                        <strong>3.4x Higher Daily Active Retention</strong>
+                        <span class="signal-kicker">Observability</span>
+                        <strong>Trust &amp; Audit Log (0 Breaches)</strong>
                     </div>
                 </div>
             </aside>

@@ -78,6 +78,7 @@ if command -v systemctl >/dev/null 2>&1; then
     systemctl reload "$PHP_FPM_SERVICE" || true
     systemctl reload nginx || true
     systemctl try-restart portfolio-queue.service || true
+    systemctl try-restart portfolio-ssr.service || true
 fi
 
 echo "Deployment complete."

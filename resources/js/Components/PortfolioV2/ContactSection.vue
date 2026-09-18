@@ -8,6 +8,7 @@ import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight, MessageSquare } fro
 import AvailabilityBadge from '@/Components/PortfolioV2/AvailabilityBadge.vue'
 import NewsletterSignup from '@/Components/PortfolioV2/NewsletterSignup.vue'
 import ScheduleCall from '@/Components/PortfolioV2/ScheduleCall.vue'
+import { trackContactSubmit, trackResumeDownload } from '@/Utils/analytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -60,6 +61,7 @@ function submitContact() {
     form.post('/contact', {
         preserveScroll: true,
         onSuccess: (page: any) => {
+            trackContactSubmit(form.project_type)
             successMessage.value = page?.props?.flash?.success ?? FALLBACK_SUCCESS
             submitted.value = true
             form.reset()
@@ -136,10 +138,12 @@ onMounted(() => {
                     <a
                         v-if="profile.resumeUrl"
                         :href="profile.resumeUrl"
+                        download="Ashish-Gupta-Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="resume-btn glow-pill-violet"
                         style="margin-bottom: 1.2rem;"
+                        @click="trackResumeDownload('contact_section')"
                     >
                         Download Résumé (PDF)
                         <ArrowUpRight :size="14" />
@@ -327,6 +331,12 @@ onMounted(() => {
     overflow-x: clip;
 }
 
+@media (max-width: 768px) {
+    .ct-section {
+        padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+    }
+}
+
 .header-top-row {
     display: flex;
     flex-wrap: wrap;
@@ -475,6 +485,8 @@ onMounted(() => {
     color: var(--text-2);
     text-decoration: none;
     font-size: 0.88rem;
+    min-height: 44px;
+    padding: 0.25rem 0;
     transition: color 0.3s ease;
 }
 .social-link:hover { color: var(--accent); }
@@ -539,6 +551,10 @@ onMounted(() => {
 .legal-link {
     color: var(--text-3);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.25rem 0.5rem;
     transition: color 0.2s ease;
 }
 .legal-link:hover {

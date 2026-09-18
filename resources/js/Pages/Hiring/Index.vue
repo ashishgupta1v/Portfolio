@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
+import { trackHiringPageView, trackResumeDownload, trackCalendlyOpen } from '@/Utils/analytics'
 import {
     ArrowUpRight,
     Award,
@@ -47,6 +48,10 @@ const linkedinUrl = 'https://www.linkedin.com/in/ashish-gupta-dev/'
 const calendlyUrl = 'https://calendly.com/ashishgupta1v/30min'
 const githubUrl = 'https://github.com/ashishgupta1v'
 
+onMounted(() => {
+    trackHiringPageView()
+})
+
 const snapshot = [
     { label: 'Status', value: 'Actively interviewing — open to full-time' },
     { label: 'Target role', value: 'Senior / Staff / Lead Full-Stack Engineer · Architect' },
@@ -88,22 +93,22 @@ const conversationPoints = [
 const aiEngineeringPillars = [
     {
         title: 'RAG & Vector Search',
-        description: 'Production Retrieval-Augmented Generation with pgvector embeddings and semantic search; grounded answers over real business data.',
+        description: 'Production Retrieval-Augmented Generation with pgvector embeddings (HNSW cosine search) and semantic re-ranking; grounded answers over habit evidence.',
         icon: Database,
     },
     {
-        title: 'LLM Integration',
-        description: 'OpenAI & Claude APIs with function-calling/structured outputs and streaming, wired into Laravel/Vue product workflows (e.g., WhatsApp-native AI).',
+        title: 'LLM Integration & Human Approval Queue',
+        description: 'OpenAI APIs wired to an asynchronous Approval Queue — keeping coaches in the loop and preventing direct unreviewed LLM output to clients on WhatsApp.',
         icon: Cpu,
     },
     {
-        title: 'AI Safety & Guardrails',
-        description: 'Prompt-injection defense, hallucination mitigation, and scope-limited assistants (the assistant on this site refuses jailbreaks by design).',
+        title: 'AI Safety & Trust Audit Log',
+        description: 'Multi-tier prompt-injection defense, hallucination evaluation, and full telemetry logging (tokens, latency, confidence score) for every AI event.',
         icon: ShieldCheck,
     },
     {
         title: 'Agentic Automation',
-        description: 'Autonomous, tool-using agents that offload repetitive business logic and review work.',
+        description: 'Autonomous accountability and intake workflows that turn loose chat threads into verified event-sourced ledger records.',
         icon: Bot,
     },
 ]
@@ -116,7 +121,7 @@ const howIWork = [
     },
     {
         title: 'Production AI & Vector RAG',
-        subtitle: 'RAG pipelines (OpenAI + pgvector), grounded and hallucination-resistant with prompt-injection defense.',
+        subtitle: 'Grounded RAG pipelines (OpenAI + pgvector) running live on WhatsApp with human-in-the-loop Approval Queue and full Trust & Audit logging.',
         icon: Sparkles,
     },
     {
@@ -252,14 +257,14 @@ const coreStack = {
                         </p>
                     </div>
 
-                    <div class="pitch-card glass-panel">
+                    <Link href="/case-studies/zoeticoach-ai-whatsapp-accountability-engine" class="pitch-card glass-panel pitch-card--link" aria-label="Read ZoetiCoach AI case study">
                         <div class="pitch-card-head">
-                            <span class="pitch-card-badge accent-badge">Production AI</span>
+                            <span class="pitch-card-badge accent-badge">Production AI ↗</span>
                         </div>
                         <p class="pitch-card-text">
-                            Shipped a <strong>grounded, guarded RAG pipeline</strong> (OpenAI + pgvector) live on WhatsApp — sub-second, hallucination-resistant, not a demo.
+                            Shipped a <strong>grounded, guarded RAG pipeline</strong> (OpenAI + pgvector) on WhatsApp for ZoetiCoach AI with an <strong>Approval Queue</strong> &amp; <strong>Trust &amp; Audit Log</strong> — sub-second, not a demo.
                         </p>
-                    </div>
+                    </Link>
 
                     <div class="pitch-card glass-panel">
                         <div class="pitch-card-head">
@@ -376,6 +381,14 @@ const coreStack = {
                         </div>
                         <p class="ai-desc">{{ pillar.description }}</p>
                     </div>
+                </div>
+
+                <div class="ai-cta-row" style="margin-top: 1.5rem; text-align: center;">
+                    <Link href="/case-studies/zoeticoach-ai-whatsapp-accountability-engine" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0.6rem 1.25rem;">
+                        <FileText :size="16" />
+                        <span>Read Flagship Case Study: ZoetiCoach AI (RAG, Approval Queue &amp; Audit Trail)</span>
+                        <ArrowUpRight :size="14" />
+                    </Link>
                 </div>
             </section>
 
@@ -1453,6 +1466,10 @@ const coreStack = {
 .footer-link {
     color: var(--text-2);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.25rem 0.5rem;
     transition: color 0.2s ease;
 }
 
@@ -1482,6 +1499,9 @@ const coreStack = {
 }
 
 @media (max-width: 768px) {
+    .hiring-footer {
+        padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    }
     .topbar-inner {
         padding: 0.75rem 1rem;
     }

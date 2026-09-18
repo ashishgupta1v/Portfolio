@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useVisitorPersonalization } from '@/Composables/useVisitorPersonalization'
+import { trackResumeDownload } from '@/Utils/analytics'
 
 interface HeroStatement {
     title: string
@@ -231,7 +232,7 @@ onBeforeUnmount(() => {
                         <!-- Above-the-fold Hero Action Row -->
                         <div v-if="idx === 0" class="hero-actions-container">
                             <div class="hero-actions">
-                                <a href="/resume/ashish-gupta-resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)">
+                                <a href="/resume/ashish-gupta-resume.pdf" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)" @click="trackResumeDownload('scrolly')">
                                     <span>Download Résumé</span>
                                     <span class="hero-btn-arrow" aria-hidden="true">↗</span>
                                 </a>

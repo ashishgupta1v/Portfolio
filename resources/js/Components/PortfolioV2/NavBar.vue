@@ -3,6 +3,7 @@ import { Link, router } from '@inertiajs/vue3'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SocialLink } from '@/types/portfolio'
 import { Github, Linkedin, Mail, Youtube, Instagram, Menu, X, ArrowUpRight } from 'lucide-vue-next'
+import { trackResumeDownload } from '@/Utils/analytics'
 import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 
 const props = defineProps<{
@@ -104,10 +105,12 @@ onUnmounted(() => {
                 <a
                     v-if="resumeUrl"
                     :href="resumeUrl"
+                    download="Ashish-Gupta-Resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="nav-resume-pill glow-pill"
                     aria-label="Download Ashish Gupta's Résumé (PDF)"
+                    @click="trackResumeDownload('navbar')"
                 >
                     <span>RÉSUMÉ</span>
                     <ArrowUpRight :size="12" aria-hidden="true" />
@@ -150,7 +153,7 @@ onUnmounted(() => {
                         <component :is="iconMap[link.platform] || Mail" :size="20" />
                     </a>
                 </div>
-                <a v-if="resumeUrl" :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="mobile-resume" @click="mobileOpen = false">Download Résumé (PDF)</a>
+                <a v-if="resumeUrl" :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="mobile-resume" @click="mobileOpen = false; trackResumeDownload('mobile_nav')">Download Résumé (PDF)</a>
             </nav>
         </div>
     </Transition>
@@ -175,9 +178,11 @@ onUnmounted(() => {
     <a
         v-if="resumeUrl"
         :href="resumeUrl"
+        download="Ashish-Gupta-Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         class="resume-float"
+        @click="trackResumeDownload('float')"
     >
         RESUME
     </a>
@@ -353,7 +358,11 @@ onUnmounted(() => {
 .sidebar-icon {
     color: var(--text-3);
     transition: all 0.3s ease;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
 }
 .sidebar-icon:hover {
     color: var(--accent);
@@ -442,7 +451,11 @@ onUnmounted(() => {
 }
 .mobile-social-icon {
     color: var(--text-3);
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     transition: color 0.2s;
 }
 .mobile-social-icon:hover { color: var(--accent); }

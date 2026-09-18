@@ -1,0 +1,16 @@
+[Unit]
+Description=Portfolio Inertia SSR server
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=5
+WorkingDirectory=/var/www/portfolio/current
+ExecStart=/usr/bin/php artisan inertia:start-ssr
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

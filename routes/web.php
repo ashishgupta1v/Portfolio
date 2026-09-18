@@ -23,6 +23,7 @@ Route::redirect('/engagements', '/for-hiring-managers', 301);
 Route::get('/privacy', fn () => \Inertia\Inertia::render('Legal/Privacy'))->name('privacy');
 Route::get('/terms', fn () => \Inertia\Inertia::render('Legal/Terms'))->name('terms');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+Route::redirect('/contact', '/#contact', 301);
 Route::post('/contact', ContactController::class)
 	->middleware('throttle:contact-submissions')
 	->name('contact.submit');

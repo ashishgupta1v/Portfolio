@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { MessageSquare, X, Send, Sparkles } from 'lucide-vue-next'
 import axios from 'axios'
+import { trackAiAssistantOpen } from '@/Utils/analytics'
 
 /**
  * Renders a small, whitelisted subset of Markdown to HTML.
@@ -76,9 +77,15 @@ const messagesContainer = ref<HTMLElement | null>(null)
 
 const toggleChat = () => {
     isOpen.value = !isOpen.value
+    if (isOpen.value) {
+        trackAiAssistantOpen('toggle_button')
+    }
 }
 
 function handleOpenAssistant() {
+    if (!isOpen.value) {
+        trackAiAssistantOpen('event_trigger')
+    }
     isOpen.value = true
 }
 
