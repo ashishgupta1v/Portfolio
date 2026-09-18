@@ -49,6 +49,9 @@ export default defineConfig({
                 // Rolldown (Vite 8) only accepts the function form here.
                 manualChunks(id) {
                     if (!id.includes('node_modules')) return;
+                    if (id.includes('lucide-vue-next')) return 'vendor-icons';
+                    if (id.includes('gsap') || id.includes('lenis')) return 'vendor-animation';
+                    if (id.includes('@sentry')) return 'vendor-sentry';
                     if (id.includes('@inertiajs')) return 'vendor-inertia';
                     if (id.includes('axios')) return 'vendor-http';
                 },

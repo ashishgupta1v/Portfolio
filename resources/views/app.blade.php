@@ -45,6 +45,62 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
+        <!-- Critical Above-The-Fold CSS -->
+        <style>
+            :root {
+                --bg-primary: #090e14;
+                --text-1: #f8fafc;
+                --text-2: #94a3b8;
+                --accent: #5eead4;
+            }
+            html, body {
+                margin: 0;
+                padding: 0;
+                background-color: #090e14;
+                color: #f8fafc;
+                font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+            }
+            .split-hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero-title {
+                font-size: clamp(2rem, 5vw, 3.75rem);
+                font-weight: 800;
+                line-height: 1.1;
+                letter-spacing: -0.02em;
+                margin: 0 0 1rem;
+            }
+            .gradient-text {
+                background: linear-gradient(135deg, #ffffff 30%, #5eead4 70%, #a78bfa 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .hero-bio {
+                font-size: clamp(1rem, 1.5vw, 1.2rem);
+                line-height: 1.6;
+                color: #94a3b8;
+                max-width: 620px;
+                margin: 0 0 2rem;
+            }
+            .btn-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.85rem 1.75rem;
+                background: linear-gradient(135deg, #5eead4 0%, #38bdf8 100%);
+                color: #090e14;
+                font-weight: 700;
+                border-radius: 9999px;
+                text-decoration: none;
+            }
+        </style>
+
         <!-- Scripts -->
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead

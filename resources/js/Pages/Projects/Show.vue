@@ -27,7 +27,7 @@ const props = defineProps<{
     project: Project
     caseStudySlug?: string | null
 }>()
-const resumeUrl = '/resume/ashish-gupta-resume.pdf'
+const resumeUrl = '/resume'
 </script>
 
 <template>
@@ -113,7 +113,7 @@ const resumeUrl = '/resume/ashish-gupta-resume.pdf'
                         &nbsp;·&nbsp;
                         <Link href="/for-hiring-managers" class="inline-link">For hiring managers</Link>
                         &nbsp;·&nbsp;
-                        <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="inline-link">Download Résumé</a>
+                        <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" class="inline-link">Download Résumé</a>
                     </p>
                 </div>
             </section>

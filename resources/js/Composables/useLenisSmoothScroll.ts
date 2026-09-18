@@ -1,16 +1,14 @@
 import { ref } from 'vue'
-import Lenis from 'lenis'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
+import type Lenis from 'lenis'
 
 const lenisInstance = ref<Lenis | null>(null)
 
 export function useLenisSmoothScroll() {
     let tickerCallback: ((time: number) => void) | null = null
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let gsapInstance: any = null
 
-    function initLenis() {
+    async function initLenis() {
         if (typeof window === 'undefined') return
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
@@ -18,7 +16,16 @@ export function useLenisSmoothScroll() {
             lenisInstance.value.destroy()
         }
 
-        const lenis = new Lenis({
+        const [{ default: LenisClass }, { default: gsap }, { ScrollTrigger }] = await Promise.all([
+            import('lenis'),
+            import('gsap'),
+            import('gsap/ScrollTrigger'),
+        ])
+
+        gsap.registerPlugin(ScrollTrigger)
+        gsapInstance = gsap
+
+        const lenis = new LenisClass({
             duration: 1.15,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
@@ -42,8 +49,8 @@ export function useLenisSmoothScroll() {
     }
 
     function destroyLenis() {
-        if (tickerCallback) {
-            gsap.ticker.remove(tickerCallback)
+        if (tickerCallback && gsapInstance) {
+            gsapInstance.ticker.remove(tickerCallback)
             tickerCallback = null
         }
         if (lenisInstance.value) {

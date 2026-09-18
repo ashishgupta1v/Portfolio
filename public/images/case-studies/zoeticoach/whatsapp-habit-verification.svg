@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="waBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b141a"/>
+      <stop offset="100%" stop-color="#090e14"/>
+    </linearGradient>
+    <linearGradient id="clientBubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#005c4b"/>
+      <stop offset="100%" stop-color="#025143"/>
+    </linearGradient>
+    <linearGradient id="coachBubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#202c33"/>
+      <stop offset="100%" stop-color="#182229"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Container Box -->
+  <rect width="840" height="500" rx="14" fill="url(#waBg)" stroke="#22323d" stroke-width="1.5"/>
+
+  <!-- WhatsApp Header Bar -->
+  <rect x="0" y="0" width="840" height="60" rx="14" fill="#202c33" stroke="#22323d" stroke-width="1"/>
+  <circle cx="36" cy="30" r="16" fill="#00a884"/>
+  <text x="30" y="36" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700">ZC</text>
+  <text x="64" y="27" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">ZoetiCoach AI · Coach Sarah M.</text>
+  <text x="64" y="44" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="11">Official Business Account · Autonomous Habit Verification</text>
+
+  <!-- Verification Status Tag -->
+  <rect x="650" y="18" width="165" height="24" rx="12" fill="#0b241e" stroke="#00a884" stroke-width="1"/>
+  <circle cx="664" cy="30" r="4" fill="#00a884"/>
+  <text x="675" y="34" fill="#00a884" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">RAG GROUNDED · VERIFIED</text>
+
+  <!-- Date Pill -->
+  <rect x="365" y="78" width="110" height="22" rx="11" fill="#182229"/>
+  <text x="390" y="93" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500">TODAY</text>
+
+  <!-- Inbound Message (Client) -->
+  <rect x="260" y="115" width="540" height="96" rx="10" fill="url(#clientBubble)"/>
+  <text x="280" y="142" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="400">
+    Finished the 5-mile tempo run in 42 mins. Knee felt slightly tight
+  </text>
+  <text x="280" y="164" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="400">
+    around mile 4, but stretched out after. Sending over Garmin split screenshot!
+  </text>
+  <text x="735" y="196" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="11">07:12 AM</text>
+  <text x="785" y="196" fill="#53bdeb" font-family="system-ui, -apple-system, sans-serif" font-size="12">✓✓</text>
+
+  <!-- Telemetry Badge Over Client Message (Architecture Explainer) -->
+  <rect x="40" y="130" width="200" height="66" rx="8" fill="#111c24" stroke="#00a884" stroke-width="0.8"/>
+  <text x="52" y="149" fill="#00a884" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">1. WEBHOOK INGRESS (48ms)</text>
+  <text x="52" y="167" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="10.5">• XML Boundary Encapsulation</text>
+  <text x="52" y="184" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="10.5">• Prompt Injection Score: 0.00</text>
+
+  <!-- Outbound AI / Coach Message -->
+  <rect x="40" y="235" width="580" height="135" rx="10" fill="url(#coachBubble)"/>
+  <text x="60" y="264" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="400">
+    Outstanding pacing on the 42-minute split! That locks in Habit #12 for this week.
+  </text>
+  <text x="60" y="288" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="400">
+    Since your right knee had slight tightness near mile 4, follow Coach Sarah's
+  </text>
+  <text x="60" y="312" fill="#e9edef" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="400">
+    rehab protocol: 10 minutes cold compress before lunch. Streak is now at 18 days! 🔥
+  </text>
+  <text x="560" y="352" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="11">07:13 AM</text>
+
+  <!-- Telemetry Badge Over AI Response (Architecture Explainer) -->
+  <rect x="640" y="245" width="180" height="115" rx="8" fill="#111c24" stroke="#38bdf8" stroke-width="0.8"/>
+  <text x="652" y="266" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">2. RAG &amp; QUEUE VERDICT</text>
+  <text x="652" y="285" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="10.5">• Cosine Sim: 0.892</text>
+  <text x="652" y="303" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="10.5">• Chunks: Contract #12, Rehab</text>
+  <text x="652" y="321" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="10.5">• Tokens: 482 in / 114 out</text>
+  <text x="652" y="340" fill="#22c55e" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600">• Event: StreakIncremented(18)</text>
+
+  <!-- Bottom Interactive Bar -->
+  <rect x="0" y="440" width="840" height="60" rx="14" fill="#202c33"/>
+  <rect x="25" y="452" width="700" height="36" rx="18" fill="#2a3942"/>
+  <text x="45" y="475" fill="#8696a0" font-family="system-ui, -apple-system, sans-serif" font-size="13">Type a WhatsApp message or send habit photo evidence...</text>
+  <circle cx="760" cy="470" r="18" fill="#00a884"/>
+  <polygon points="755,463 768,470 755,477" fill="#ffffff"/>
+</svg>

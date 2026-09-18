@@ -132,7 +132,12 @@ const actions: PaletteAction[] = [
         icon: FileDown,
         hint: '',
         execute: () => {
-            window.open('/resume/ashish-gupta-resume.pdf', '_blank')
+            const link = document.createElement('a')
+            link.href = '/resume'
+            link.download = 'Ashish-Gupta-Resume.pdf'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
         },
     },
 ]

@@ -203,7 +203,7 @@ function downloadPdf() {
                     <div class="cta-card-actions">
                         <Link href="/#contact" class="cta-link">Discuss an Engineering Role</Link>
                         <Link href="/for-hiring-managers" class="cta-link cta-link-secondary">Hiring Manager Brief</Link>
-                        <a href="/resume/ashish-gupta-resume.pdf" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="cta-link cta-link-secondary">Download Résumé (PDF)</a>
+                        <a href="/resume" download="Ashish-Gupta-Resume.pdf" class="cta-link cta-link-secondary">Download Résumé (PDF)</a>
                     </div>
                 </div>
             </aside>

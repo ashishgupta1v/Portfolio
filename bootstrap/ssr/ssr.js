@@ -662,18 +662,18 @@ default2((page) => createInertiaApp({
 	title: (title) => title || appName,
 	render: renderToString,
 	resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, /* @__PURE__ */ Object.assign({
-		"./Pages/Admin/Telemetry.vue": () => import("./assets/Telemetry-hYTigPnK.js"),
-		"./Pages/Blog/Index.vue": () => import("./assets/Index-BApPkyvg.js"),
-		"./Pages/Blog/Show.vue": () => import("./assets/Show-C3qUjoem.js"),
-		"./Pages/CaseStudies/Index.vue": () => import("./assets/Index-D0rHX6ft.js"),
-		"./Pages/CaseStudies/Show.vue": () => import("./assets/Show-9xVLd7Tv.js"),
-		"./Pages/Engagements/Index.vue": () => import("./assets/Index-BNKInLra.js"),
-		"./Pages/Errors/NotFound.vue": () => import("./assets/NotFound-CnL23caQ.js"),
-		"./Pages/Hiring/Index.vue": () => import("./assets/Index-DbS6taJh.js"),
-		"./Pages/Legal/Privacy.vue": () => import("./assets/Privacy-Di8ckH5d.js"),
-		"./Pages/Legal/Terms.vue": () => import("./assets/Terms-C3GW7dh8.js"),
-		"./Pages/Portfolio/Index.vue": () => import("./assets/Index-DQ0ocaNq.js"),
-		"./Pages/Projects/Show.vue": () => import("./assets/Show-5H3-8dBl.js")
+		"./Pages/Admin/Telemetry.vue": () => import("./assets/Telemetry-Dtogi8GU.js"),
+		"./Pages/Blog/Index.vue": () => import("./assets/Index-CZjWLsJJ.js"),
+		"./Pages/Blog/Show.vue": () => import("./assets/Show-BzCTMrp5.js"),
+		"./Pages/CaseStudies/Index.vue": () => import("./assets/Index-DUkZ_GKp.js"),
+		"./Pages/CaseStudies/Show.vue": () => import("./assets/Show-DgSDXeEf.js"),
+		"./Pages/Engagements/Index.vue": () => import("./assets/Index-BUUwvWya.js"),
+		"./Pages/Errors/NotFound.vue": () => import("./assets/NotFound-TP5aITh0.js"),
+		"./Pages/Hiring/Index.vue": () => import("./assets/Index-DCYd76Cb.js"),
+		"./Pages/Legal/Privacy.vue": () => import("./assets/Privacy-DPVfNKy8.js"),
+		"./Pages/Legal/Terms.vue": () => import("./assets/Terms-acCzzrM4.js"),
+		"./Pages/Portfolio/Index.vue": () => import("./assets/Index-ojquVu1O.js"),
+		"./Pages/Projects/Show.vue": () => import("./assets/Show-B5RwQoXv.js")
 	})),
 	setup({ App, props, plugin }) {
 		return createSSRApp({ render: () => h(App, props) }).use(plugin).use(M);

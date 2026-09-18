@@ -42,7 +42,7 @@ defineProps<{
 
 const mobileOpen = ref(false)
 
-const resumeUrl = '/resume/ashish-gupta-resume.pdf'
+const resumeUrl = '/resume'
 const emailHref = 'mailto:ashishgupta1v@gmail.com'
 const linkedinUrl = 'https://www.linkedin.com/in/ashish-gupta-dev/'
 const calendlyUrl = 'https://calendly.com/ashishgupta1v/30min'
@@ -170,7 +170,7 @@ const coreStack = {
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <Link href="/blog" class="topbar-link">Blog</Link>
                     <span class="topbar-current">For Hiring Managers</span>
-                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="topbar-resume glow-pill">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" class="topbar-resume glow-pill">
                         <span>RÉSUMÉ (PDF)</span>
                         <ArrowUpRight :size="13" aria-hidden="true" />
                     </a>
@@ -211,8 +211,6 @@ const coreStack = {
                         <a
                             :href="resumeUrl"
                             download="Ashish-Gupta-Resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
                             class="mobile-resume-btn glow-pill"
                             @click="mobileOpen = false"
                         >
@@ -286,7 +284,7 @@ const coreStack = {
 
                 <!-- Primary CTAs -->
                 <div class="hero-actions">
-                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary glow-pill">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" class="btn-primary glow-pill">
                         <FileText :size="16" />
                         <span>Download Résumé (PDF)</span>
                         <ArrowUpRight :size="14" />
@@ -466,7 +464,7 @@ const coreStack = {
                         <span class="proof-title">GitHub</span>
                         <span class="proof-arrow">↗</span>
                     </a>
-                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="proof-card glass-panel proof-card--highlight">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" class="proof-card glass-panel proof-card--highlight">
                         <span class="proof-title">Download résumé (PDF)</span>
                         <span class="proof-arrow">↓</span>
                     </a>

@@ -372,7 +372,7 @@ final class PortfolioSeeder extends Seeder
                     'Configured hardened edge caching and asset optimization pipelines for instant global loading.',
                 ],
                 'business_impact' => [
-                    '100/100 Core Web Vitals and lightning sub-100ms time to interactive.',
+                    'Targeting 95+ Core Web Vitals with optimized edge SSR and sub-second first contentful paint.',
                     'Demonstrated architectural leadership across 10+ enterprise case studies and open-source contributions.',
                     'Built-in AI assistant for instant recruiter and client pre-qualification.',
                 ],

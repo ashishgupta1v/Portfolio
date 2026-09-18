@@ -43,7 +43,7 @@ const props = withDefaults(
         name: 'Ashish Gupta',
         title: 'Senior Full-Stack Architect & AI Systems Engineer',
         subtitle: 'VILT Stack Specialist · Production AI & RAG Architect',
-        resumeUrl: '/resume/ashish-gupta-resume.pdf',
+        resumeUrl: '/resume',
         contactEmail: 'ashishgupta1v@gmail.com',
         linkedinUrl: 'https://www.linkedin.com/in/ashish-gupta-dev/',
         calendlyUrl: 'https://calendly.com/ashishgupta1v/30min',

@@ -3,12 +3,7 @@ import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, nextTick }
 import { Head } from '@inertiajs/vue3'
 import type { PortfolioPageProps } from '@/types/portfolio'
 import { useMouseDepth } from '@/Composables/useMouseDepth'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import NavBar from '@/Components/PortfolioV2/NavBar.vue'
-import InitialLoader from '@/Components/PortfolioV2/InitialLoader.vue'
-
-gsap.registerPlugin(ScrollTrigger)
 
 import SectionSkeleton from '@/Components/PortfolioV2/SectionSkeleton.vue'
 import SplitHero from '@/Components/PortfolioV2/SplitHero.vue'
@@ -29,11 +24,14 @@ const FeaturedCaseStudySection = defineAsyncComponent({ loader: () => import('@/
 const TechStackSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/TechStackSection.vue'), ...asyncOpts })
 const GitHubActivity = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/GitHubActivity.vue'), ...asyncOpts })
 const ContactSection = defineAsyncComponent({ loader: () => import('@/Components/PortfolioV2/ContactSection.vue'), ...asyncOpts })
-import ChatWidget from '@/Components/PortfolioV2/ChatWidget.vue'
-import ScrollUtilities from '@/Components/PortfolioV2/ScrollUtilities.vue'
-import CommandPalette from '@/Components/PortfolioV2/CommandPalette.vue'
-import TerminalMode from '@/Components/PortfolioV2/TerminalMode.vue'
-import ToastContainer from '@/Components/PortfolioV2/ToastContainer.vue'
+
+// Below-the-fold auxiliary widgets and modals are loaded asynchronously
+const InitialLoader = defineAsyncComponent(() => import('@/Components/PortfolioV2/InitialLoader.vue'))
+const ChatWidget = defineAsyncComponent(() => import('@/Components/PortfolioV2/ChatWidget.vue'))
+const ScrollUtilities = defineAsyncComponent(() => import('@/Components/PortfolioV2/ScrollUtilities.vue'))
+const CommandPalette = defineAsyncComponent(() => import('@/Components/PortfolioV2/CommandPalette.vue'))
+const TerminalMode = defineAsyncComponent(() => import('@/Components/PortfolioV2/TerminalMode.vue'))
+const ToastContainer = defineAsyncComponent(() => import('@/Components/PortfolioV2/ToastContainer.vue'))
 import { useKeyboardShortcuts } from '@/Composables/useKeyboardShortcuts'
 
 import { useLenisSmoothScroll } from '@/Composables/useLenisSmoothScroll'
@@ -91,16 +89,36 @@ function initScrollDepth() {
     if (!depthRef.value) return
     const sections = depthRef.value.querySelectorAll(':scope > *')
     sections.forEach((section) => {
-        gsap.set(section, { opacity: 1, z: 0, rotateX: 0, clearProps: 'opacity,transform' })
+        const el = section as HTMLElement
+        el.style.opacity = '1'
+        el.style.transform = 'none'
     })
 }
 
 onMounted(() => {
     pageReady.value = true
-    initLenis()
 
     if (typeof window !== 'undefined') {
         sessionStorage.setItem('ag_portfolio_booted', 'true')
+
+        // Defer Lenis smooth scroll until idle or first interaction to keep FCP sub-second
+        const scheduleLenis = () => {
+            window.removeEventListener('scroll', scheduleLenis)
+            window.removeEventListener('pointerdown', scheduleLenis)
+            window.removeEventListener('keydown', scheduleLenis)
+            initLenis()
+        }
+        window.addEventListener('scroll', scheduleLenis, { passive: true, once: true })
+        window.addEventListener('pointerdown', scheduleLenis, { passive: true, once: true })
+        window.addEventListener('keydown', scheduleLenis, { passive: true, once: true })
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ('requestIdleCallback' in window) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).requestIdleCallback(() => initLenis(), { timeout: 2500 })
+        } else {
+            setTimeout(initLenis, 1500)
+        }
     }
 
     setTimeout(() => nextTick(initScrollDepth), 100)

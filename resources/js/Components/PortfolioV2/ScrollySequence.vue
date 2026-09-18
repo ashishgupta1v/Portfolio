@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
                         <!-- Above-the-fold Hero Action Row -->
                         <div v-if="idx === 0" class="hero-actions-container">
                             <div class="hero-actions">
-                                <a href="/resume/ashish-gupta-resume.pdf" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)" @click="trackResumeDownload('scrolly')">
+                                <a href="/resume" download="Ashish-Gupta-Resume.pdf" class="hero-btn hero-btn--resume glow-pill" aria-label="Download Ashish Gupta's Résumé (PDF)" @click="trackResumeDownload('scrolly')">
                                     <span>Download Résumé</span>
                                     <span class="hero-btn-arrow" aria-hidden="true">↗</span>
                                 </a>
