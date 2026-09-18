@@ -9,7 +9,6 @@ use App\Infrastructure\CaseStudies\Repositories\FileCaseStudyRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,7 +42,5 @@ class AppServiceProvider extends ServiceProvider
                 Limit::perHour(12)->by($request->ip().'|'.$email),
             ];
         });
-
-        Vite::prefetch(concurrency: 3);
     }
 }

@@ -29,8 +29,3 @@ function cycleTheme() {
     <!-- Theme toggle switch hidden by default (dark mode is primary) -->
 </template>
 
-<style scoped>
-.theme-toggle {
-    display: none !important;
-}
-</style>

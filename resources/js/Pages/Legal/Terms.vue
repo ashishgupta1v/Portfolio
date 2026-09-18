@@ -122,6 +122,9 @@ import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
     font-weight: 500;
     text-decoration: none;
     transition: color 0.2s;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .topbar-link:hover {
@@ -197,6 +200,7 @@ import ThemeToggle from '@/Components/PortfolioV2/ThemeToggle.vue'
 .btn-back {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     padding: 0.55rem 1.2rem;
     border-radius: 999px;
     background: var(--surface-raised);

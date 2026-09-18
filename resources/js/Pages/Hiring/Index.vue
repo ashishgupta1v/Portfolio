@@ -170,7 +170,7 @@ const coreStack = {
                     <Link href="/case-studies" class="topbar-link">Case Studies</Link>
                     <Link href="/blog" class="topbar-link">Blog</Link>
                     <span class="topbar-current">For Hiring Managers</span>
-                    <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="topbar-resume glow-pill">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="topbar-resume glow-pill">
                         <span>RÉSUMÉ (PDF)</span>
                         <ArrowUpRight :size="13" aria-hidden="true" />
                     </a>
@@ -210,6 +210,7 @@ const coreStack = {
                     <div class="mobile-actions">
                         <a
                             :href="resumeUrl"
+                            download="Ashish-Gupta-Resume.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="mobile-resume-btn glow-pill"
@@ -285,7 +286,7 @@ const coreStack = {
 
                 <!-- Primary CTAs -->
                 <div class="hero-actions">
-                    <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="btn-primary glow-pill">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary glow-pill">
                         <FileText :size="16" />
                         <span>Download Résumé (PDF)</span>
                         <ArrowUpRight :size="14" />
@@ -465,7 +466,7 @@ const coreStack = {
                         <span class="proof-title">GitHub</span>
                         <span class="proof-arrow">↗</span>
                     </a>
-                    <a :href="resumeUrl" target="_blank" rel="noopener noreferrer" class="proof-card glass-panel proof-card--highlight">
+                    <a :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="proof-card glass-panel proof-card--highlight">
                         <span class="proof-title">Download résumé (PDF)</span>
                         <span class="proof-arrow">↓</span>
                     </a>
@@ -1606,5 +1607,49 @@ const coreStack = {
 :global([data-theme="light"]) .callout-card {
     background: linear-gradient(135deg, rgba(13, 148, 136, 0.08), rgba(124, 58, 237, 0.06));
     border-color: rgba(13, 148, 136, 0.25);
+}
+
+/* ── Minimal Footer (WCAG 2.5.8: ≥44×44px touch targets) ── */
+.hiring-footer {
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    padding: 2.5rem 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-3, #64748b);
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-link {
+    color: var(--text-2, #94a3b8);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: color 0.2s ease, background 0.15s ease;
+}
+
+.footer-link:hover {
+    color: var(--accent, #5eead4);
+    background: rgba(94, 234, 212, 0.05);
 }
 </style>

@@ -1081,3 +1081,58 @@ body:not(.inertia-navigating) #app {
     border-color: rgba(13, 148, 136, 0.6) !important;
 }
 
+/* ── Merged Portfolio Index styles (Critical path optimization) ── */
+.v2-page {
+    min-height: 100vh;
+    background: var(--bg-primary);
+}
+
+.depth-sections {
+    position: relative;
+    z-index: 1;
+    perspective: 1200px;
+    perspective-origin: 50% 0%;
+}
+
+.depth-sections > * {
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.depth-sections article,
+.depth-sections .capability-card,
+.depth-sections .work-row,
+.depth-sections .timeline-node {
+    transition: transform 0.3s ease;
+}
+
+.depth-sections article:hover,
+.depth-sections .capability-card:hover,
+.depth-sections .work-row:hover {
+    transform:
+        perspective(800px)
+        rotateX(calc(var(--my, 0) * -1.5deg))
+        rotateY(calc(var(--mx, 0) * 1.5deg))
+        translateZ(12px);
+}
+
+@media (min-width: 1024px) {
+    .v2-page,
+    .v2-page * {
+        cursor: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .depth-sections article:hover,
+    .depth-sections .capability-card:hover,
+    .depth-sections .work-row:hover {
+        transform: none;
+    }
+}
+
+/* ThemeToggle styles */
+.theme-toggle {
+    display: none !important;
+}
+

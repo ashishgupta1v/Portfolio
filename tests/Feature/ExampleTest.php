@@ -21,4 +21,13 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_resume_download_returns_pdf_with_attachment_header(): void
+    {
+        $response = $this->get('/resume');
+
+        $response->assertStatus(200);
+        $response->assertHeader('content-type', 'application/pdf');
+        $this->assertStringContainsString('attachment; filename=Ashish-Gupta-Resume.pdf', (string) $response->headers->get('content-disposition'));
+    }
 }
