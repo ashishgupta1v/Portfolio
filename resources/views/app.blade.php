@@ -40,17 +40,19 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-title" content="Ashish Gupta">
 
-        <!-- Fonts (self-hosted — no third-party round-trip) -->
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
         <!-- Scripts -->
-        @routes
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
     <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
         @inertia
+        @routes
 
         @production
             <script>

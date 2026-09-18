@@ -403,8 +403,8 @@ onBeforeUnmount(() => {
                                 <span class="chip-lbl">Experience</span>
                             </div>
                             <div class="proof-chip">
-                                <span class="chip-val">100/100</span>
-                                <span class="chip-lbl">Core Vitals</span>
+                                <span class="chip-val">&lt;1s</span>
+                                <span class="chip-lbl">Target FCP</span>
                             </div>
                         </div>
                     </div>
@@ -777,16 +777,27 @@ onBeforeUnmount(() => {
     font-weight: 500;
     color: var(--text-2, #94a3b8);
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: all 0.15s ease;
+    /* WCAG 2.5.8: ≥44×44px touch target */
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
 }
 
 .social-link:hover {
     color: var(--accent, #5eead4);
+    background: rgba(94, 234, 212, 0.06);
+    border-color: rgba(94, 234, 212, 0.25);
 }
 
 .social-link.highlight {
     color: var(--accent, #5eead4);
     font-weight: 600;
+    background: rgba(94, 234, 212, 0.08);
+    border-color: rgba(94, 234, 212, 0.2);
 }
 
 /* Right Panel Window Styles */

@@ -485,11 +485,15 @@ onMounted(() => {
     color: var(--text-2);
     text-decoration: none;
     font-size: 0.88rem;
+    /* WCAG 2.5.8: ensure ≥44×44px touch target */
     min-height: 44px;
-    padding: 0.25rem 0;
-    transition: color 0.3s ease;
+    min-width: 44px;
+    padding: 0.25rem 0.75rem;
+    margin-left: -0.75rem; /* optical offset so text stays aligned */
+    border-radius: 0.375rem;
+    transition: color 0.3s ease, background 0.15s ease;
 }
-.social-link:hover { color: var(--accent); }
+.social-link:hover { color: var(--accent); background: rgba(94, 234, 212, 0.05); }
 
 .hiring-badge-link {
     color: var(--accent);
@@ -553,12 +557,17 @@ onMounted(() => {
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    /* WCAG 2.5.8: ≥44×44px touch target */
     min-height: 44px;
-    padding: 0.25rem 0.5rem;
-    transition: color 0.2s ease;
+    min-width: 44px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: color 0.2s ease, background 0.15s ease;
 }
 .legal-link:hover {
     color: var(--accent);
+    background: rgba(94, 234, 212, 0.05);
 }
 .legal-sep {
     color: var(--text-3);
@@ -585,6 +594,10 @@ onMounted(() => {
 .consent-link {
     color: var(--accent);
     text-decoration: underline;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.25rem 0.25rem;
 }
 
 /* ── Availability badge ── */

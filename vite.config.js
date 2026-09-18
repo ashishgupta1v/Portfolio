@@ -37,6 +37,7 @@ export default defineConfig({
         noExternal: ['@inertiajs/vue3'],
     },
     build: {
+        cssCodeSplit: false,
         emptyOutDir: false,
         rollupOptions: {
             output: {
