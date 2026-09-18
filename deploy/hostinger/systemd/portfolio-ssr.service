@@ -8,7 +8,9 @@ Group=www-data
 Restart=always
 RestartSec=5
 WorkingDirectory=/var/www/portfolio/current
-ExecStart=/usr/bin/php artisan inertia:start-ssr
+Environment=PORT=13715
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node /var/www/portfolio/current/bootstrap/ssr/ssr.js
 KillSignal=SIGTERM
 TimeoutStopSec=30
 

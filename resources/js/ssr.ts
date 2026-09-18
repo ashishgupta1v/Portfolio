@@ -7,20 +7,26 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 
 const appName = 'Ashish Gupta'
 
-createServer((page) =>
-    createInertiaApp({
-        page,
-        title: (title) => title || appName,
-        render: renderToString,
-        resolve: (name) =>
-            resolvePageComponent(
-                `./Pages/${name}.vue`,
-                import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
-            ),
-        setup({ App, props, plugin }) {
-            return createSSRApp({ render: () => h(App, props) })
-                .use(plugin)
-                .use(ZiggyVue)
-        },
-    }),
+declare const process: any
+const port = parseInt(process?.env?.PORT || '13715', 10)
+
+createServer(
+    (page) =>
+        createInertiaApp({
+            page,
+            title: (title) => title || appName,
+            render: renderToString,
+            resolve: (name) =>
+                resolvePageComponent(
+                    `./Pages/${name}.vue`,
+                    import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
+                ),
+            setup({ App, props, plugin }) {
+                return createSSRApp({ render: () => h(App, props) })
+                    .use(plugin)
+                    .use(ZiggyVue)
+            },
+        }),
+    port,
 )
+

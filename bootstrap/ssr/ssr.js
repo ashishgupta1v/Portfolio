@@ -678,6 +678,6 @@ default2((page) => createInertiaApp({
 	setup({ App, props, plugin }) {
 		return createSSRApp({ render: () => h(App, props) }).use(plugin).use(M);
 	}
-}));
+}), parseInt(process?.env?.PORT || "13715", 10));
 //#endregion
 export {};
