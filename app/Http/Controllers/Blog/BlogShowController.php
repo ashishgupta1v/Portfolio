@@ -19,12 +19,18 @@ final class BlogShowController
 
         $data = $post->toArray();
 
+        $postSlug = $data['slug'] ?? $slug;
+        $ogImage = file_exists(public_path('images/og/' . $postSlug . '.png'))
+            ? '/images/og/' . $postSlug . '.png'
+            : '/images/og-cover.png';
+
         $response = Inertia::render('Blog/Show', [
             'post' => $data,
             'seo' => [
                 'title' => ($data['title'] ?? 'Blog Post') . ' — Ashish Gupta',
                 'description' => $data['excerpt'] ?? '',
-                'path' => '/blog/' . ($data['slug'] ?? $slug),
+                'path' => '/blog/' . $postSlug,
+                'image' => $ogImage,
                 'type' => 'article',
             ],
         ])->toResponse($request);

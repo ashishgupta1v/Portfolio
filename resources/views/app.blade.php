@@ -101,14 +101,17 @@
             }
         </style>
 
-        <!-- Scripts -->
-        @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
+        <!-- Stylesheets -->
+        @vite('resources/css/app.css')
         @inertiaHead
     </head>
     <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
         @inertia
         @routes
+
+        <!-- Scripts placed at end of body so SSR HTML paints immediately with sub-second FCP -->
+        @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
 
         @production
             <script>

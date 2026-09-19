@@ -1,0 +1,9 @@
+[Unit]
+Description=Keep-alive ping to maintain warm SSR process and PHP-FPM worker
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+ExecStart=/usr/bin/curl -s -f -m 5 -o /dev/null http://127.0.0.1/

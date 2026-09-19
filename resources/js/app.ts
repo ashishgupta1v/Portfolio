@@ -5,33 +5,43 @@ import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, DefineComponent, h, nextTick, type App as VueApp } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import * as Sentry from '@sentry/vue';
-
 const appName = import.meta.env.VITE_APP_NAME || 'Ashish Gupta';
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string | undefined;
 const env = import.meta.env.VITE_APP_ENV as string | undefined;
 
+let sentryModule: typeof import('@sentry/vue') | null = null;
+
 /**
- * Initialise Sentry for the browser only when a DSN is provided. Keeping the
- * conditional here (rather than an unconditional init with an empty DSN) means
- * the SDK does no work at all in local dev, and the browser doesn't try to
- * POST to a non-existent endpoint. Sampling is aggressive to keep the free
- * quota healthy — errors always send, but only a slice of traces do.
+ * Initialise Sentry asynchronously during browser idle time only when a DSN
+ * is provided. Keeping the SDK completely out of the synchronous bundle
+ * removes ~454KB of vendor JS parsing from the critical First Contentful Paint.
  */
-function initSentry(app: VueApp): void {
-    if (typeof window !== 'undefined') {
-        (window as any).Sentry = Sentry
+function scheduleSentryInit(app: VueApp): void {
+    if (!sentryDsn || typeof window === 'undefined') return;
+
+    const loadAndInit = async () => {
+        try {
+            const Sentry = await import('@sentry/vue');
+            sentryModule = Sentry;
+            (window as any).Sentry = Sentry;
+
+            Sentry.init({
+                app,
+                dsn: sentryDsn,
+                environment: env ?? 'production',
+                integrations: [Sentry.browserTracingIntegration()],
+                tracesSampleRate: env === 'production' ? 0.1 : 0.05,
+            });
+        } catch (err) {
+            console.warn('[Sentry] Deferred initialization failed', err);
+        }
+    };
+
+    if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(loadAndInit, { timeout: 3500 });
+    } else {
+        setTimeout(loadAndInit, 2000);
     }
-
-    if (!sentryDsn) return
-
-    Sentry.init({
-        app,
-        dsn: sentryDsn,
-        environment: env ?? 'production',
-        integrations: [Sentry.browserTracingIntegration()],
-        tracesSampleRate: env === 'production' ? 0.1 : 0.05,
-    })
 }
 
 /**
@@ -130,11 +140,17 @@ createInertiaApp({
         app.config.errorHandler = (err, instance, info) => {
             console.error('[Vue Global Error]', err, info)
             if (sentryDsn) {
-                Sentry.captureException(err, { extra: { info } })
+                if (sentryModule) {
+                    sentryModule.captureException(err, { extra: { info } })
+                } else {
+                    import('@sentry/vue').then((Sentry) => {
+                        Sentry.captureException(err, { extra: { info } })
+                    }).catch(() => {})
+                }
             }
         }
 
-        initSentry(app)
+        scheduleSentryInit(app)
 
         app.mount(el)
 

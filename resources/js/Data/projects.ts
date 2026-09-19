@@ -54,7 +54,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
         ],
         businessImpact: [
             'Achieved a 65% lift in 30-day cohort retention vs manual WhatsApp follow-ups.',
-            'Zero prompt-injection breaches across 14,200+ live inbound client messages.',
+            'Zero prompt-injection breaches across 14,200+ automated evaluation traces.',
             'Scaled coach capacity 4.2x from 20–25 clients to 85–120 active clients.',
         ],
     },

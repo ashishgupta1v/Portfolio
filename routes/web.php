@@ -20,16 +20,23 @@ Route::get('/blog/{slug}', BlogShowController::class)->name('blog.show');
 Route::get('/for-hiring-managers', HiringPageController::class)->name('hiring.index');
 Route::redirect('/hiring', '/for-hiring-managers', 301);
 Route::redirect('/engagements', '/for-hiring-managers', 301);
-$resumeDownloadHandler = function () {
+Route::get('/resume', function () {
     $path = public_path('resume/ashish-gupta-resume.pdf');
     abort_unless(file_exists($path), 404);
     return response()->download($path, 'Ashish-Gupta-Resume.pdf', [
         'Content-Type' => 'application/pdf',
         'Content-Disposition' => 'attachment; filename="Ashish-Gupta-Resume.pdf"',
     ]);
-};
-Route::get('/resume', $resumeDownloadHandler)->name('resume.download');
-Route::get('/resume/ashish-gupta-resume.pdf', $resumeDownloadHandler)->name('resume.pdf');
+})->name('resume.download');
+
+Route::get('/resume/ashish-gupta-resume.pdf', function () {
+    $path = public_path('resume/ashish-gupta-resume.pdf');
+    abort_unless(file_exists($path), 404);
+    return response()->file($path, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="Ashish-Gupta-Resume.pdf"',
+    ]);
+})->name('resume.pdf');
 Route::get('/privacy', fn () => \Inertia\Inertia::render('Legal/Privacy'))->name('privacy');
 Route::get('/terms', fn () => \Inertia\Inertia::render('Legal/Terms'))->name('terms');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');

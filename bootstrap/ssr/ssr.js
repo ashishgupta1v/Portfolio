@@ -672,7 +672,7 @@ default2((page) => createInertiaApp({
 		"./Pages/Hiring/Index.vue": () => import("./assets/Index-DCYd76Cb.js"),
 		"./Pages/Legal/Privacy.vue": () => import("./assets/Privacy-DPVfNKy8.js"),
 		"./Pages/Legal/Terms.vue": () => import("./assets/Terms-acCzzrM4.js"),
-		"./Pages/Portfolio/Index.vue": () => import("./assets/Index-ojquVu1O.js"),
+		"./Pages/Portfolio/Index.vue": () => import("./assets/Index-BWNDukZw.js"),
 		"./Pages/Projects/Show.vue": () => import("./assets/Show-B5RwQoXv.js")
 	})),
 	setup({ App, props, plugin }) {

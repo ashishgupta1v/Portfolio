@@ -1,0 +1,12 @@
+[Unit]
+Description=Keep portfolio SSR and PHP-FPM hot in memory every 4 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=4min
+AccuracySec=5s
+Persistent=true
+Unit=portfolio-keepalive.service
+
+[Install]
+WantedBy=timers.target

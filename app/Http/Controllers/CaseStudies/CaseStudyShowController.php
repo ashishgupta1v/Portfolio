@@ -32,12 +32,18 @@ final class CaseStudyShowController
 
         $data = $caseStudy->toArray();
 
+        $caseSlug = $data['slug'] ?? $slug;
+        $ogImage = file_exists(public_path('images/og/' . $caseSlug . '.png'))
+            ? '/images/og/' . $caseSlug . '.png'
+            : '/images/og-cover.png';
+
         $response = Inertia::render('CaseStudies/Show', [
             'caseStudy' => $data,
             'seo' => [
                 'title' => ($data['title'] ?? 'Case Study') . ' — Ashish Gupta',
                 'description' => $data['summary'] ?? '',
-                'path' => '/case-studies/' . ($data['slug'] ?? $slug),
+                'path' => '/case-studies/' . $caseSlug,
+                'image' => $ogImage,
                 'type' => 'article',
             ],
         ])->toResponse($request);

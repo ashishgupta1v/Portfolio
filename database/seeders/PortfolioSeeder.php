@@ -27,7 +27,7 @@ final class PortfolioSeeder extends Seeder
                 'phone' => '+91-9087021592',
                 'location' => 'India',
                 'avatar_url' => '/images/ashish-gupta-avatar.webp',
-                'resume_url' => '/resume/ashish-gupta-resume.pdf',
+                'resume_url' => '/resume',
             ]
         );
 
@@ -51,7 +51,7 @@ final class PortfolioSeeder extends Seeder
                 'highlights' => [
                     'Architected a production WhatsApp-first accountability platform combining pgvector RAG (1,536-dim HNSW cosine search, <780ms median retrieval) and OpenAI with sub-second response times.',
                     'Engineered an asynchronous Human-in-the-Loop Approval Queue enabling coaches to review, edit, or 1-click approve AI responses, scaling coach capacity 4.2x.',
-                    'Implemented multi-tier prompt injection defense (XML <client_message> boundary isolation) with 0 breaches across 14,200+ live inbound client messages.',
+                    'Implemented multi-tier prompt injection defense (XML <client_message> boundary isolation) with 0 breaches across 14,200+ automated evaluation traces.',
                     'Built an immutable Trust & Audit Log tracking every vector similarity score, token count, and micro-dollar cost (~$0.018/client/day, +65% cohort retention).',
                 ],
                 'sort_order' => 1,
@@ -141,7 +141,7 @@ final class PortfolioSeeder extends Seeder
                 ],
                 'business_impact' => [
                     'Achieved a 65% lift in 30-day cohort retention vs manual WhatsApp follow-ups.',
-                    'Zero prompt-injection breaches across 14,200+ live inbound client messages.',
+                    'Zero prompt-injection breaches across 14,200+ automated evaluation traces.',
                     'Scaled coach capacity 4.2x from 20–25 clients to 85–120 active clients.',
                 ],
                 'tools' => ['Laravel 13', 'pgvector (HNSW 1536d)', 'OpenAI RAG', 'Human-in-the-Loop', 'Prompt Defense', 'WhatsApp Cloud API'],

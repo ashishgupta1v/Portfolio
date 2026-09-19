@@ -106,8 +106,6 @@ onUnmounted(() => {
                     v-if="resumeUrl"
                     :href="resumeUrl"
                     download="Ashish-Gupta-Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     class="nav-resume-pill glow-pill"
                     aria-label="Download Ashish Gupta's Résumé (PDF)"
                     @click="trackResumeDownload('navbar')"
@@ -153,7 +151,7 @@ onUnmounted(() => {
                         <component :is="iconMap[link.platform] || Mail" :size="20" />
                     </a>
                 </div>
-                <a v-if="resumeUrl" :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" target="_blank" rel="noopener noreferrer" class="mobile-resume" @click="mobileOpen = false; trackResumeDownload('mobile_nav')">Download Résumé (PDF)</a>
+                <a v-if="resumeUrl" :href="resumeUrl" download="Ashish-Gupta-Resume.pdf" class="mobile-resume" @click="mobileOpen = false; trackResumeDownload('mobile_nav')">Download Résumé (PDF)</a>
             </nav>
         </div>
     </Transition>
@@ -179,8 +177,6 @@ onUnmounted(() => {
         v-if="resumeUrl"
         :href="resumeUrl"
         download="Ashish-Gupta-Resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
         class="resume-float"
         @click="trackResumeDownload('float')"
     >
